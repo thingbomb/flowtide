@@ -1,0 +1,18 @@
+{
+  "hosting": {
+    "public": "public",
+    "cleanUrls": true,
+    "site": "flowtide",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

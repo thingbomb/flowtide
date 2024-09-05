@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Tab</title>
+    <link rel="icon" href="assets/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="styles/home.css" />
+  </head>
+  <body>
+    <div class="center">
+        <div id="clock"></div>
+        <div id="date"></div>
+        <div id="task"></div>
+    </div>
+    <div id="actionsbarcontainer" style="display: none;">
+    <div id="actionsbar">
+        <input type="text" id="actionSearch" placeholder="Search actions">
+        <div id="actions">
+        </div>
+    </div>
+    </div>
+    <div id="topbar">
+    <div id="bookmarks">
+        <button id="bookmarkToggle">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                <path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/>
+            </svg>
+            Bookmarks
+        </button>
+        <div class="content">
+        </div>
+    </div>  
+    <div id="weather">
+      <button id="weatherToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M260-160q-91 0-155.5-63T40-377q0-78 47-139t123-78q25-92 100-149t170-57q117 0 198.5 81.5T760-520q69 8 114.5 59.5T920-340q0 75-52.5 127.5T740-160H260Zm0-80h480q42 0 71-29t29-71q0-42-29-71t-71-29h-60v-80q0-83-58.5-141.5T480-720q-83 0-141.5 58.5T280-520h-20q-58 0-99 41t-41 99q0 58 41 99t99 41Zm220-240Z"/></svg>
+          <span id="weatherData">Loading weather</span>
+      </button>
+      <div class="content" id="weatherDataContainer">
+        <input id="weatherLocation" placeholder="Enter location (city, country)" type="text">
+        <div id="data" style="display: none;">
+        <br>
+        <h2 id="areaName"></h2>
+        <h3 id="condition"></h3>
+        <br>
+        <div id="dataGrid">
+        <div class="left">
+        <h1 id="temperature"></h1>
+        </div>
+        <div class="right">
+        <span id="feelsLike"></span>
+        <span id="rain"></span>
+        <span id="wind"></span>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+  </div>    
+    </div>
+    <script src="scripts/home.js"></script>
+  </body>
+</html>

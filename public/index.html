@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowtide - Beautiful New Tab for Chrome and Firefox</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.png" type="image/x-icon" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: left;
+        }
+        .content {
+            max-width: 600px;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: -moz-fit-content;
+            width: fit-content;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #FFFFFF;
+        }
+        .primary {
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+        .primary:hover {
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        .secondary {
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        .secondary:hover {
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+        @media (min-width: 640px) {
+            .button-group {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+    <meta name="description" content="Elevate your browsing experience with our beautiful and smart New Tab page. Easily complete tasks, like creating a Google Doc, using Actions. Install it today for your preferred browser.">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>Flowtide</h1>
+            <p>
+                Elevate your browsing experience with our beautiful and smart New Tab page. Easily complete tasks, like creating a Google Doc, using Actions. Install it today for your preferred browser. 
+            </p>
+            <div class="button-group">
+                <a href="https://addons.mozilla.org/en-US/firefox/addon/flowtide-new-tab/" class="button secondary">Add to Firefox</a>
+                <a href="https://github.com/Thingbomb/Flowtide" class="button secondary">View on GitHub</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
