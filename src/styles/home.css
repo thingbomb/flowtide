@@ -177,6 +177,8 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    padding-bottom: 20px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
 }
 
 #task {
