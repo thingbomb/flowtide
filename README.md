@@ -1,6 +1,6 @@
 # Flowtide
 
-Flowtide is a beautiful, smart New Tab page for your browser. One of its standout features is Actions. Actions lets you complete tasks (e.g. making a Google Doc or a Todoist task) quickly simply by pressing `/`.
+Flowtide is a beautiful, smart New Tab page for your browser. Magic Search is the core feature of Flowtide, allowing you to easily complete tasks (e.g. making a Google Doc or Excel workbook) and search your bookmarks all with `/`.
 
 ## Install for your browser
 
@@ -10,6 +10,24 @@ Flowtide is a beautiful, smart New Tab page for your browser. One of its standou
 ## License
 
 This project is licensed under the GPLv3 license.
+
+## Building the extension
+
+The extension's code is located in the `src` directory.
+
+First, install the dependencies:
+
+```bash
+pnpm dev
+```
+
+Then, start the development server:
+
+```bash
+pnpm dev
+```
+
+To test the extension in the browser, go to `chrome://extensions` and enable developer mode. Then, click on "Load unpacked" and select the `dist` directory.
 
 ## Contributions
 
