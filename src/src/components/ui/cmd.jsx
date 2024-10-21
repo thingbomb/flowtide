@@ -92,7 +92,11 @@ export function CommandPalette() {
     setActions(initialActions);
     setBookmarks([]);
     const down = (e) => {
-      if (((e.ctrlKey || e.metaKey) && e.key === "k") || e.key === "/") {
+      if (
+        ((e.ctrlKey || e.metaKey) && e.key === "k") ||
+        (e.key === "/" && e.target.tagName !== "INPUT")
+      ) {
+        console.log(e.target.tagName);
         e.preventDefault();
         setOpen((open) => !open);
       }
