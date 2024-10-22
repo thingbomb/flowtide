@@ -16,6 +16,7 @@ import { Sun } from "lucide-react";
 import { Moon } from "lucide-react";
 import { useTheme } from "./components/ui/theme-provider";
 import { Computer } from "lucide-react";
+import { cn } from "./lib/utils";
 
 const images = [
   { url: "assets/photos/1.jpg", color: "#FFFFFF" },
@@ -51,6 +52,7 @@ function App() {
   const [selectedImage, setSelectedImage] = useState({});
   const [selectedPage, setSelectedPage] = useState("none");
   const { setTheme } = useTheme();
+  const [font, setFont] = useState(localStorage.getItem("font") || "sans");
 
   useEffect(() => {
     const intervalId = setInterval(() => setTime(new Date()), 1000);
@@ -65,7 +67,11 @@ function App() {
 
   return (
     <div
-      className="flex flex-col items-center justify-center h-screen bg-white dark:bg-black text-black dark:text-white bg-cover"
+      className={cn(
+        "flex flex-col items-center justify-center h-screen bg-white dark:bg-black text-black dark:text-white bg-cover font-sans",
+        font === "serif" && "font-serif",
+        font === "monospace" && "font-mono"
+      )}
       style={{ backgroundImage: `url(${selectedImage.url})` }}
       id="app"
     >
@@ -83,12 +89,18 @@ function App() {
         <WordCounter setSelectedPage={setSelectedPage} />
       )}
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="fixed bottom-0 left-0 z-50">
+        <DropdownMenuTrigger asChild className="fixed bottom-0 left-0 z-50 m-4">
           <Button variant="outline" aria-label="Settings" size="icon">
             <SettingsIcon className="h-5 w-5" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
+        <DropdownMenuContent
+          className={cn(
+            "w-56 ml-4",
+            font === "serif" && "font-serif",
+            font === "monospace" && "font-mono"
+          )}
+        >
           <DropdownMenuLabel>Themes</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setTheme("dark")}>
@@ -102,6 +114,33 @@ function App() {
           <DropdownMenuItem onClick={() => setTheme("system")}>
             <Computer />
             <span>System default</span>
+          </DropdownMenuItem>
+          <br />
+          <DropdownMenuLabel>Font</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => {
+              setFont("sans");
+              localStorage.setItem("font", "sans");
+            }}
+          >
+            Sans
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              setFont("monospace");
+              localStorage.setItem("font", "monospace");
+            }}
+          >
+            Monospace
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              setFont("serif");
+              localStorage.setItem("font", "serif");
+            }}
+          >
+            Serif
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
