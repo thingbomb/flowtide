@@ -17,6 +17,17 @@ import { Moon } from "lucide-react";
 import { useTheme } from "./components/ui/theme-provider";
 import { Computer } from "lucide-react";
 import { cn } from "./lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "./components/ui/popover";
+import { List } from "lucide-react";
+import { Checkbox } from "./components/ui/checkbox";
+import { Input } from "./components/ui/input";
+import { Plus } from "lucide-react";
+import { Trash } from "lucide-react";
+import { Edit } from "lucide-react";
 
 const images = [
   { url: "assets/photos/1.jpg", color: "#FFFFFF" },
@@ -53,6 +64,12 @@ function App() {
   const [selectedPage, setSelectedPage] = useState("none");
   const { setTheme } = useTheme();
   const [font, setFont] = useState(localStorage.getItem("font") || "sans");
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || []
+  );
+  const [taskInput, setTaskInput] = useState("");
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 
   useEffect(() => {
     const intervalId = setInterval(() => setTime(new Date()), 1000);
@@ -144,6 +161,145 @@ function App() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <Popover>
+        <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
+          <Button variant="outline" aria-label="Settings" size="icon">
+            <List className="h-5 w-5" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className={cn(
+            "w-80 mr-4",
+            font === "serif" && "font-serif",
+            font === "monospace" && "font-mono"
+          )}
+        >
+          <div className="grid gap-4">
+            <div className="space-y-2">
+              <h1 className="text-2xl font-bold leading-none">To-do list</h1>
+              <p className="text-sm text-muted-foreground">
+                Manage your tasks here.
+              </p>
+            </div>
+            <div id="tasks">
+              {tasks.map((task, index) => (
+                <div
+                  key={task.id}
+                  className="flex items-center justify-between gap-4"
+                >
+                  <div className="flex items-center gap-3">
+                    <Checkbox
+                      checked={task.completed}
+                      onCheckedChange={(checked) => {
+                        setTasks((tasks) =>
+                          tasks.map((t) =>
+                            t.id === task.id ? { ...t, completed: checked } : t
+                          )
+                        );
+                      }}
+                    />
+                    <span
+                      className="text-sm font-medium leading-none select-none focus-within:select-all outline-none"
+                      onDoubleClick={(e) => {
+                        e.target.contentEditable = "true";
+                        e.target.focus();
+                      }}
+                      onBlur={(e) => {
+                        e.target.contentEditable = "false";
+                        setTasks((tasks) =>
+                          tasks.map((t) =>
+                            t.id === task.id
+                              ? { ...t, title: e.target.innerText }
+                              : t
+                          )
+                        );
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.target.blur();
+                        } else if (e.key === "Escape") {
+                          e.target.blur();
+                        }
+                      }}
+                    >
+                      {task.title}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="w-7 h-7"
+                      onClick={(e) => {
+                        let span =
+                          e.target.parentElement.parentElement.querySelector(
+                            "span"
+                          );
+                        span.contentEditable = "true";
+                        span.focus();
+                      }}
+                    >
+                      <Edit />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="w-7 h-7"
+                      onClick={() => {
+                        let newTasks = [...tasks];
+                        newTasks.splice(index, 1);
+                        setTasks(newTasks);
+                      }}
+                    >
+                      <Trash />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <br />
+            <div className="flex items-center justify-between gap-4">
+              <Input
+                value={taskInput}
+                placeholder="Task name"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    let taskName = taskInput;
+                    setTaskInput("");
+                    setTasks((tasks) => [
+                      ...tasks,
+                      {
+                        id: Math.floor(Math.random() * 100000000),
+                        title: taskName,
+                        completed: false,
+                      },
+                    ]);
+                  }
+                }}
+                onInput={(e) => setTaskInput(e.target.value)}
+              />
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => {
+                  let taskName = taskInput;
+                  setTaskInput("");
+                  setTasks((tasks) => [
+                    ...tasks,
+                    {
+                      id: Math.floor(Math.random() * 100000000),
+                      title: taskName,
+                      completed: false,
+                    },
+                  ]);
+                }}
+              >
+                <Plus aria-label="Add task to your list" className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
