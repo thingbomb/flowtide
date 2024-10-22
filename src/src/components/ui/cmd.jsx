@@ -9,7 +9,7 @@ import {
   CommandList,
 } from "./command";
 
-export function CommandPalette() {
+export function CommandPalette(props) {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [result, setResult] = useState({
@@ -222,6 +222,26 @@ export function CommandPalette() {
                 <span className="text-primary">{bookmark.name}</span>
               </CommandItem>
             ))}
+          </CommandGroup>
+          <CommandGroup heading="Tools">
+            <CommandItem
+              onSelect={() => {
+                props.setSelectedPage("character-counter");
+                setOpen(false);
+              }}
+              className="flex items-center"
+            >
+              <span className="text-primary">Character Counter</span>
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                props.setSelectedPage("word-counter");
+                setOpen(false);
+              }}
+              className="flex items-center"
+            >
+              <span className="text-primary">Word Counter</span>
+            </CommandItem>
           </CommandGroup>
         </CommandList>
       </CommandDialog>

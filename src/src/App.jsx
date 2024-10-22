@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { CommandPalette } from "./components/ui/cmd";
+import CharacterCounter from "./CharacterCounter";
+import WordCounter from "./WordCounter";
 
 const images = [
   { url: "assets/photos/1.jpg", color: "#FFFFFF" },
@@ -33,6 +35,7 @@ const images = [
 function App() {
   const [time, setTime] = useState(new Date());
   const [selectedImage, setSelectedImage] = useState({});
+  const [selectedPage, setSelectedPage] = useState("none");
 
   useEffect(() => {
     const intervalId = setInterval(() => setTime(new Date()), 1000);
@@ -51,13 +54,15 @@ function App() {
       style={{ backgroundImage: `url(${selectedImage.url})` }}
       id="app"
     >
-      <CommandPalette />
+      <CommandPalette setSelectedPage={setSelectedPage} />
       <h1
         className="text-7xl font-bold clock"
         style={{ color: selectedImage.color }}
       >
         {time.toLocaleTimeString(undefined, options)}
       </h1>
+      {selectedPage === "character-counter" && <CharacterCounter />}
+      {selectedPage === "word-counter" && <WordCounter />}
     </div>
   );
 }
