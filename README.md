@@ -18,7 +18,7 @@ The extension's code is located in the `src` directory.
 First, install the dependencies:
 
 ```bash
-pnpm dev
+pnpm install
 ```
 
 Then, start the development server:
