@@ -1,30 +1,37 @@
 import { useState } from "react";
 import { Textarea } from "./components/ui/textarea";
-import { cn } from "./lib/utils";
+import { Dialog, DialogContent, DialogTitle } from "./components/ui/dialog";
+import { useEffect } from "react";
 
-export default function WordCounter() {
+export default function WordCounter(props) {
   const [text, setText] = useState("");
-  const [show, setShow] = useState(true);
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    setOpen(true);
+  });
 
   return (
-    <div
-      className={cn(
-        "fixed inset-0 flex items-center justify-center flex-col bg-black/80 p-6 character-counter",
-        show ? "" : "hidden"
-      )}
-      onClick={(e) => {
-        if (e.target.classList.contains("character-counter")) {
-          setShow(false);
-        }
+    <Dialog
+      open={open}
+      onOpenChange={() => {
+        props.setSelectedPage("none");
       }}
     >
-      <Textarea
-        placeholder="Enter some text..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <br />
-      <div className="text-5xl font-bold">{text.trim().split(" ").length}</div>
-    </div>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogTitle>Word Counter</DialogTitle>
+        <div className="flex flex-col items-center justify-center">
+          <Textarea
+            placeholder="Enter some text..."
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className="w-full mb-4"
+          />
+          <div className="text-5xl font-bold">
+            {text.trim().split(" ").length}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

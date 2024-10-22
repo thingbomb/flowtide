@@ -61,8 +61,12 @@ function App() {
       >
         {time.toLocaleTimeString(undefined, options)}
       </h1>
-      {selectedPage === "character-counter" && <CharacterCounter />}
-      {selectedPage === "word-counter" && <WordCounter />}
+      {selectedPage === "character-counter" && (
+        <CharacterCounter setSelectedPage={setSelectedPage} />
+      )}
+      {selectedPage === "word-counter" && (
+        <WordCounter setSelectedPage={setSelectedPage} />
+      )}
     </div>
   );
 }
