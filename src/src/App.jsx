@@ -85,11 +85,13 @@ function App() {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center h-screen bg-white dark:bg-black text-black dark:text-white bg-cover font-sans",
+        "flex flex-col items-center justify-center h-screen bg-white dark:bg-black text-black dark:text-white bg-cover font-sans transition-background-image",
         font === "serif" && "font-serif",
         font === "monospace" && "font-mono"
       )}
-      style={{ backgroundImage: `url(${selectedImage.url})` }}
+      style={{
+        backgroundImage: `url(${selectedImage.url})`,
+      }}
       id="app"
     >
       <CommandPalette setSelectedPage={setSelectedPage} />
