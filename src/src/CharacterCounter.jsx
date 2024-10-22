@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Textarea } from "./components/ui/textarea";
-import { Dialog, DialogContent } from "./components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "./components/ui/dialog";
 import { useEffect } from "react";
 
 export default function CharacterCounter(props) {
