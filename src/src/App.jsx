@@ -10,52 +10,107 @@ import {
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
-import { SettingsIcon } from "lucide-react";
+import {
+  SettingsIcon,
+  Sun,
+  Moon,
+  Computer,
+  List,
+  Plus,
+  Trash,
+  Edit,
+} from "lucide-react";
 import { Button } from "./components/ui/button";
-import { Sun } from "lucide-react";
-import { Moon } from "lucide-react";
 import { useTheme } from "./components/ui/theme-provider";
-import { Computer } from "lucide-react";
 import { cn } from "./lib/utils";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "./components/ui/popover";
-import { List } from "lucide-react";
 import { Checkbox } from "./components/ui/checkbox";
 import { Input } from "./components/ui/input";
-import { Plus } from "lucide-react";
-import { Trash } from "lucide-react";
-import { Edit } from "lucide-react";
+
+const dbName = "flowtide";
+const dbVersion = 1;
+
+const openDB = () => {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(dbName, dbVersion);
+
+    request.onerror = (event) =>
+      reject("IndexedDB error: " + event.target.error);
+
+    request.onsuccess = (event) => resolve(event.target.result);
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains("todos")) {
+        db.createObjectStore("todos", { keyPath: "id" });
+      }
+      if (!db.objectStoreNames.contains("imageCache")) {
+        db.createObjectStore("imageCache", { keyPath: "id" });
+      }
+    };
+  });
+};
 
 const images = [
-  { url: "assets/photos/1.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/2.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/3.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/4.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/5.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/6.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/7.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/8.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/9.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/10.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/11.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/12.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/13.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/14.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/15.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/16.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/17.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/18.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/19.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/20.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/21.jpg", color: "#000000" },
-  { url: "assets/photos/22.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/23.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/24.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/25.jpg", color: "#FFFFFF" },
-  { url: "assets/photos/26.jpg", color: "#FFFFFF" },
+  "https://utfs.io/f/BtV2EpuEtuKGYYpvGmHrnFDlqxBRa3uX1TpZ2mtINW9SH8g6",
+  "https://utfs.io/f/BtV2EpuEtuKGHWPDnnvmKxbav7q9EyU21QgWFBS6NMf4iZ03",
+  "https://utfs.io/f/BtV2EpuEtuKGNrh8niP4Cqwcm3D1r7su8jWtEaKlxRf2YnyN",
+  "https://utfs.io/f/BtV2EpuEtuKGqpqqGhLD2XgfYxSezymMilAnUhLpcuRZVo75",
+  "https://utfs.io/f/BtV2EpuEtuKGEuv9Uylitm8eDflcPVTIWZhpaKgv730LYEwR",
+  "https://utfs.io/f/BtV2EpuEtuKGmvFFV8kY4cFX9DxvZUqOPtoHRLGTl1jr8hyf",
+  "https://utfs.io/f/BtV2EpuEtuKGXbFMqev7QrDFRZStGMsN46Ypkdjwc19EbKhA",
+  "https://utfs.io/f/BtV2EpuEtuKGHCRMXMvmKxbav7q9EyU21QgWFBS6NMf4iZ03",
+  "https://utfs.io/f/BtV2EpuEtuKGBcvl3M7uEtuKGaW39lwm7q0IbpdXy1ZPJk4f",
+  "https://utfs.io/f/BtV2EpuEtuKG6FG3qt5WcDpK49O7adqmIRns3XUyulvLQBTj",
+  "https://utfs.io/f/BtV2EpuEtuKGnh1RTNf434kVEXU5ie7TDaHFhA1lbGNzYcqZ",
+  "https://utfs.io/f/BtV2EpuEtuKG5bOFemQjmWB4l1fZbu9RvySPapO7ILN2HoFx",
+  "https://utfs.io/f/BtV2EpuEtuKG1o9AYYIU9r32gRiv6MWPo7zsXtDHyd1exmNq",
+  "https://utfs.io/f/BtV2EpuEtuKGVQbri1GWawFshX4d7HjkSoZRiDVt08U5OzmB",
+  "https://utfs.io/f/BtV2EpuEtuKG9wUuCe0o3RtYWQFSxhw6rzBVJMCGPfE8Z5XN",
+  "https://utfs.io/f/BtV2EpuEtuKGAuflSs9MEizApkbr0v75YD1yZohGC4fSatTU",
+  "https://utfs.io/f/BtV2EpuEtuKGR3MwjzKMAF8EP1eqwHBZlSk6XTfmJtKnh2Qd",
+  "https://utfs.io/f/BtV2EpuEtuKGXvygYJ7QrDFRZStGMsN46Ypkdjwc19EbKhAW",
+  "https://utfs.io/f/BtV2EpuEtuKGMLgV5PNITp8XolSNcsVhnrg25UZHWjE3tDPB",
+  "https://utfs.io/f/BtV2EpuEtuKGTM0oD3aiSaGoVUDIQ75ts0REKgA8NXvl4fMC",
+  "https://utfs.io/f/BtV2EpuEtuKGa0X1aCCAn0S6HjX7fsNzERhTdiD3ogyVbP8F",
+  "https://utfs.io/f/BtV2EpuEtuKGKzagh3sesda4vHQyRPXor3k5NTwW7OFtu6nE",
+  "https://utfs.io/f/BtV2EpuEtuKG84OsxuqoD1nGrOdkiHqMzuRlLa9w02yT47c5",
+  "https://utfs.io/f/BtV2EpuEtuKGTvID04aiSaGoVUDIQ75ts0REKgA8NXvl4fMC",
+  "https://utfs.io/f/BtV2EpuEtuKGq8qrPoLD2XgfYxSezymMilAnUhLpcuRZVo75",
+  "https://utfs.io/f/BtV2EpuEtuKGXEOrLN7QrDFRZStGMsN46Ypkdjwc19EbKhAW",
+  "https://utfs.io/f/BtV2EpuEtuKG0m5yrgXTlm2zFRNZPyXO4SCQk7goMjuesdaV",
+  "https://utfs.io/f/BtV2EpuEtuKGfBRHNwJGTNktrF1lXJ3hAZ90vP8HducsLfxi",
+  "https://utfs.io/f/BtV2EpuEtuKGNx6U5wP4Cqwcm3D1r7su8jWtEaKlxRf2YnyN",
+  "https://utfs.io/f/BtV2EpuEtuKG3IzkUTCbXDIUmz4eWKoG6h8pusjTySRlr9Yd",
+  "https://utfs.io/f/BtV2EpuEtuKGK41G3zJsesda4vHQyRPXor3k5NTwW7OFtu6n",
+  "https://utfs.io/f/BtV2EpuEtuKGBzrZ8EuEtuKGaW39lwm7q0IbpdXy1ZPJk4fD",
+  "https://utfs.io/f/BtV2EpuEtuKGB7BxBKuEtuKGaW39lwm7q0IbpdXy1ZPJk4fD",
+  "https://utfs.io/f/BtV2EpuEtuKGvMitjedaWI3vwnURJMdZlrtCq2kDN6ji7y4X",
+  "https://utfs.io/f/BtV2EpuEtuKG6hg8r85WcDpK49O7adqmIRns3XUyulvLQBTj",
+  "https://utfs.io/f/BtV2EpuEtuKG0bfrrcXTlm2zFRNZPyXO4SCQk7goMjuesdaV",
+  "https://utfs.io/f/BtV2EpuEtuKGnh18myA434kVEXU5ie7TDaHFhA1lbGNzYcqZ",
+  "https://utfs.io/f/BtV2EpuEtuKGGh9xEbYZkrbNnzqdU310h5Q2JYK7uT4yvjiE",
+  "https://utfs.io/f/BtV2EpuEtuKGkFHjvMfQYpuH8DScEmT5OwArIaN16Rxzqv9y",
+  "https://utfs.io/f/BtV2EpuEtuKGIY9gLeBVfO1L4TXBKMR23gdiFzDy8t0YvQGw",
+  "https://utfs.io/f/BtV2EpuEtuKGyzDe6ErzWTQDjkGBcvXwOIr70unf5bVlqRA8",
+  "https://utfs.io/f/BtV2EpuEtuKG80DFYIqoD1nGrOdkiHqMzuRlLa9w02yT47c5",
+  "https://utfs.io/f/BtV2EpuEtuKGYesyOmHrnFDlqxBRa3uX1TpZ2mtINW9SH8g6",
+  "https://utfs.io/f/BtV2EpuEtuKGm7rWTskY4cFX9DxvZUqOPtoHRLGTl1jr8hyf",
+  "https://utfs.io/f/BtV2EpuEtuKG3yjSDwfCbXDIUmz4eWKoG6h8pusjTySRlr9Y",
+  "https://utfs.io/f/BtV2EpuEtuKGH0bxV1vmKxbav7q9EyU21QgWFBS6NMf4iZ03",
+  "https://utfs.io/f/BtV2EpuEtuKG4Eh4Wb2og7W5hwHPe2sIR0mKoxAbruSJD6ZC",
+  "https://utfs.io/f/BtV2EpuEtuKGH27qqavmKxbav7q9EyU21QgWFBS6NMf4iZ03",
+  "https://utfs.io/f/BtV2EpuEtuKGop1V8Ehc5Bg6rJGzeuPC7UFTwhix1HyjoZ2L",
+  "https://utfs.io/f/BtV2EpuEtuKGPqkAwQZFKxuOiQZ1nPrDM4gmsk9hvXHUdwIG",
+  "https://utfs.io/f/BtV2EpuEtuKG3EcGzoCbXDIUmz4eWKoG6h8pusjTySRlr9Yd",
+  "https://utfs.io/f/BtV2EpuEtuKGeIW5XdxlqjTUD1EZGp2xuIhrBSHYfCvbN5FR",
+  "https://utfs.io/f/BtV2EpuEtuKGlXrMim1Qea7Fw0PuGUkd6jK52LtImzbociWT",
+  "https://utfs.io/f/BtV2EpuEtuKGJUKfl73OYeaztjMNsl8uJZGrvkgxRCW71yBA",
+  "https://utfs.io/f/BtV2EpuEtuKGAX7iBsv9MEizApkbr0v75YD1yZohGC4fSatT",
 ];
 
 function App() {
@@ -64,21 +119,102 @@ function App() {
   const [selectedPage, setSelectedPage] = useState("none");
   const { setTheme } = useTheme();
   const [font, setFont] = useState(localStorage.getItem("font") || "sans");
-  const [tasks, setTasks] = useState(
-    JSON.parse(localStorage.getItem("tasks")) || []
-  );
+  const [tasks, setTasks] = useState([]);
   const [taskInput, setTaskInput] = useState("");
-
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  const [rendered, setRendered] = useState(false);
 
   useEffect(() => {
-    const intervalId = setInterval(() => setTime(new Date()), 1000);
-    setSelectedImage(images[Math.floor(Math.random() * images.length)]);
-    return () => {
-      clearInterval(intervalId);
-      setSelectedImage({});
+    const loadTasks = async () => {
+      const db = await openDB();
+      const transaction = db.transaction(["todos"], "readonly");
+      const store = transaction.objectStore("todos");
+      const request = store.getAll();
+
+      request.onsuccess = (event) => {
+        setTasks(event.target.result);
+      };
     };
+
+    loadTasks();
   }, []);
+
+  useEffect(() => {
+    const saveTasks = async () => {
+      const db = await openDB();
+      const transaction = db.transaction(["todos"], "readwrite");
+      const store = transaction.objectStore("todos");
+
+      await store.clear();
+
+      tasks.forEach((task) => {
+        store.add(task);
+      });
+    };
+
+    saveTasks();
+  }, [tasks]);
+
+  const toDataURL = (url) => {
+    return new Promise((resolve) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        const reader = new FileReader();
+        reader.onloadend = function () {
+          resolve(reader.result);
+        };
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.open("GET", url);
+      xhr.responseType = "blob";
+      xhr.send();
+    });
+  };
+
+  const loadNewImage = async () => {
+    const newImage = images[Math.floor(Math.random() * images.length)];
+    const dataUrl = await toDataURL(newImage);
+    const now = new Date().getTime();
+
+    const db = await openDB();
+    const transaction = db.transaction(["imageCache"], "readwrite");
+    const store = transaction.objectStore("imageCache");
+
+    store.put({
+      id: "background",
+      url: dataUrl,
+      expiry: now + 1000 * 60 * 60,
+    });
+
+    setSelectedImage({ url: dataUrl });
+  };
+
+  const checkCachedImage = async () => {
+    setRendered(true);
+    const db = await openDB();
+    const transaction = db.transaction(["imageCache"], "readonly");
+    const store = transaction.objectStore("imageCache");
+    const request = store.get("background");
+
+    request.onsuccess = (event) => {
+      const cachedData = event.target.result;
+      const now = new Date().getTime();
+
+      if (
+        (cachedData && !navigator.onLine) ||
+        (cachedData && cachedData.expiry > now)
+      ) {
+        setSelectedImage({ url: cachedData.url });
+      } else if (navigator.onLine) {
+        loadNewImage();
+      }
+    };
+  };
+
+  useEffect(() => {
+    if (!rendered) {
+      checkCachedImage();
+    }
+  }, [rendered]);
 
   const options = { hour: "2-digit", minute: "2-digit", hour12: true };
 
@@ -90,14 +226,18 @@ function App() {
         font === "monospace" && "font-mono"
       )}
       style={{
-        backgroundImage: `url(${selectedImage.url})`,
+        backgroundImage: `url(${
+          selectedImage.url ||
+          "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
+        })`,
+        transition: "background-image 1s ease-in-out",
       }}
       id="app"
     >
       <CommandPalette setSelectedPage={setSelectedPage} />
       <h1
         className="text-7xl font-bold clock select-none"
-        style={{ color: selectedImage.color }}
+        style={{ color: "#FFFFFF" }}
       >
         {time.toLocaleTimeString(undefined, options)}
       </h1>
@@ -122,15 +262,30 @@ function App() {
         >
           <DropdownMenuLabel>Themes</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setTheme("dark")}>
+          <DropdownMenuItem
+            onClick={() => {
+              setTheme("dark");
+              localStorage.setItem("theme", "dark");
+            }}
+          >
             <Moon />
             <span>Dark theme</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("light")}>
+          <DropdownMenuItem
+            onClick={() => {
+              setTheme("light");
+              localStorage.setItem("theme", "light");
+            }}
+          >
             <Sun />
             <span>Light theme</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("system")}>
+          <DropdownMenuItem
+            onClick={() => {
+              setTheme("system");
+              localStorage.setItem("theme", "system");
+            }}
+          >
             <Computer />
             <span>System default</span>
           </DropdownMenuItem>
@@ -184,7 +339,7 @@ function App() {
               </p>
             </div>
             <div id="tasks">
-              {tasks.map((task, index) => (
+              {tasks.map((task) => (
                 <div
                   key={task.id}
                   className="flex items-center justify-between gap-4"
@@ -211,92 +366,59 @@ function App() {
                         setTasks((tasks) =>
                           tasks.map((t) =>
                             t.id === task.id
-                              ? { ...t, title: e.target.innerText }
+                              ? { ...t, text: e.target.innerText }
                               : t
                           )
                         );
                       }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.target.blur();
-                        } else if (e.key === "Escape") {
-                          e.target.blur();
-                        }
-                      }}
                     >
-                      {task.title}
+                      {task.text}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Button
                       variant="ghost"
-                      size="icon"
-                      className="w-7 h-7"
-                      onClick={(e) => {
-                        let span =
-                          e.target.parentElement.parentElement.querySelector(
-                            "span"
-                          );
-                        span.contentEditable = "true";
-                        span.focus();
+                      onClick={() => {
+                        setTasks((tasks) =>
+                          tasks.filter((t) => t.id !== task.id)
+                        );
                       }}
                     >
-                      <Edit />
+                      <Trash className="h-4 w-4" />
                     </Button>
                     <Button
                       variant="ghost"
-                      size="icon"
-                      className="w-7 h-7"
                       onClick={() => {
-                        let newTasks = [...tasks];
-                        newTasks.splice(index, 1);
-                        setTasks(newTasks);
+                        setTaskInput(task.text);
+                        setTasks((tasks) =>
+                          tasks.filter((t) => t.id !== task.id)
+                        );
                       }}
                     >
-                      <Trash />
+                      <Edit className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
               ))}
             </div>
-            <br />
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
               <Input
                 value={taskInput}
-                placeholder="Task name"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    let taskName = taskInput;
-                    setTaskInput("");
-                    setTasks((tasks) => [
-                      ...tasks,
-                      {
-                        id: Math.floor(Math.random() * 100000000),
-                        title: taskName,
-                        completed: false,
-                      },
-                    ]);
-                  }
-                }}
-                onInput={(e) => setTaskInput(e.target.value)}
+                onChange={(e) => setTaskInput(e.target.value)}
+                placeholder="Add a new task"
               />
               <Button
-                variant="outline"
-                size="icon"
                 onClick={() => {
-                  let taskName = taskInput;
-                  setTaskInput("");
-                  setTasks((tasks) => [
-                    ...tasks,
-                    {
-                      id: Math.floor(Math.random() * 100000000),
-                      title: taskName,
-                      completed: false,
-                    },
-                  ]);
+                  if (taskInput.trim() !== "") {
+                    setTasks((tasks) => [
+                      ...tasks,
+                      { id: Date.now(), text: taskInput, completed: false },
+                    ]);
+                    setTaskInput("");
+                  }
                 }}
               >
-                <Plus aria-label="Add task to your list" className="h-5 w-5" />
+                <Plus className="h-4 w-4" />
               </Button>
             </div>
           </div>
