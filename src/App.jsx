@@ -225,10 +225,13 @@ function App() {
   useEffect(() => {
     if (!rendered) {
       if (background === "color") {
-        console.log(background);
+        setRendered(true);
       } else {
         checkCachedImage();
       }
+      setInterval(() => {
+        setTime(new Date());
+      }, 1000);
     }
   }, [rendered]);
 
