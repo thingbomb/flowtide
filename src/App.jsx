@@ -225,10 +225,14 @@ function App() {
   useEffect(() => {
     if (!rendered) {
       if (background === "color") {
-        console.log(background);
+        setRendered(true);
       } else {
         checkCachedImage();
       }
+      const interval = setInterval(() => {
+        setTime(new Date());
+      }, 1000);
+      return () => clearInterval(interval);
     }
   }, [rendered]);
 
@@ -258,7 +262,7 @@ function App() {
     >
       <CommandPalette setSelectedPage={setSelectedPage} />
       <h1
-        className="text-7xl font-bold clock select-none"
+        className="text-7xl font-bold clock select-none text-shadow-lg"
         style={{ color: "#FFFFFF" }}
       >
         {time.toLocaleTimeString(undefined, options)}
