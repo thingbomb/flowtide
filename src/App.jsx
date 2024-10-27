@@ -261,7 +261,7 @@ function App() {
     >
       <CommandPalette setSelectedPage={setSelectedPage} />
       <h1
-        className="text-7xl font-bold clock select-none"
+        className="text-7xl font-bold clock select-none text-shadow-lg"
         style={{ color: "#FFFFFF" }}
       >
         {time.toLocaleTimeString(undefined, options)}
