@@ -11,9 +11,7 @@ Flowtide is a beautiful, smart New Tab page for your browser. Magic Search is th
 
 This project is licensed under the GPLv3 license.
 
-## Building the extension
-
-The extension's code is located in the `src` directory.
+## Developing the extension
 
 First, install the dependencies:
 
@@ -28,6 +26,23 @@ pnpm dev
 ```
 
 To test the extension in the browser, go to `chrome://extensions` and enable developer mode. Then, click on "Load unpacked" and select the `dist` directory.
+
+
+## Building from source
+
+First, install the dependencies:
+
+```bash
+pnpm install
+```
+
+Then, build the extension:
+
+```bash
+pnpm build-only
+```
+
+The extension's source code will be inside the `dist` folder.
 
 ## Contributions
 
