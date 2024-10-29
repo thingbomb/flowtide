@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Flowtide - Beautiful New Tab",
-  "version": "1.7.2",
+  "version": "1.8",
   "description": "Flowtide is a beautiful new tab page for your browser.",
   "chrome_url_overrides": {
     "newtab": "index.html"
