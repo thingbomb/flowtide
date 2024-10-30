@@ -250,6 +250,7 @@ function App() {
   const [background, setBackground] = useState(
     localStorage.getItem("background") || "wallpaper"
   );
+  const [clockFormat, setClockFormat] = useState(true);
   const [changeTime, setChangeTime] = useState(
     Number(localStorage.getItem("changeTime")) ?? 1000 * 60 * 60 * 24
   );
@@ -369,7 +370,7 @@ function App() {
     }
   }, [rendered]);
 
-  const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+  const options = { hour: "2-digit", minute: "2-digit", hour12: clockFormat };
 
   console.log(changeTime);
   return (
@@ -546,6 +547,24 @@ function App() {
             checked={changeTime == 1000 * 60 * 60 * 24}
           >
             Every day
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuLabel>Clock format</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuCheckboxItem
+            onClick={() => {
+              setClockFormat(true);
+            }}
+            checked={clockFormat}
+          >
+            12-hour
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            onClick={() => {
+              setClockFormat(false);
+            }}
+            checked={!clockFormat}
+          >
+            24-hour
           </DropdownMenuCheckboxItem>
           <DropdownMenuLabel>More</DropdownMenuLabel>
           <DropdownMenuSeparator />
