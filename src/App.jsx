@@ -321,6 +321,13 @@ function App() {
     }
   };
 
+  const removeCache = async () => {
+    const db = await openDB();
+    const transaction = db.transaction(["imageCache"], "readwrite");
+    const store = transaction.objectStore("imageCache");
+    await store.clear();
+  };
+
   const checkCachedImage = async () => {
     setRendered(true);
     const db = await openDB();
@@ -500,6 +507,8 @@ function App() {
             onClick={() => {
               setChangeTime(Infinity);
               localStorage.setItem("changeTime", Infinity);
+              removeCache();
+              loadNewImage(false);
             }}
             checked={changeTime === Infinity}
           >
@@ -509,6 +518,8 @@ function App() {
             onClick={() => {
               setChangeTime(0);
               localStorage.setItem("changeTime", 0);
+              removeCache();
+              loadNewImage(false);
             }}
             checked={changeTime === 0}
           >
@@ -518,6 +529,8 @@ function App() {
             onClick={() => {
               setChangeTime(1000 * 60 * 60);
               localStorage.setItem("changeTime", 1000 * 60 * 60);
+              removeCache();
+              loadNewImage(false);
             }}
             checked={changeTime == 1000 * 60 * 60}
           >
@@ -527,6 +540,8 @@ function App() {
             onClick={() => {
               setChangeTime(1000 * 60 * 60 * 24);
               localStorage.setItem("changeTime", 1000 * 60 * 60 * 24);
+              removeCache();
+              loadNewImage(false);
             }}
             checked={changeTime == 1000 * 60 * 60 * 24}
           >
