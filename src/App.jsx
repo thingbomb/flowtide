@@ -297,7 +297,7 @@ function App() {
     });
   };
 
-  const loadNewImage = async () => {
+  const loadNewImage = async (setBackground) => {
     const newImage = images[Math.floor(Math.random() * images.length)];
     const dataUrl = await toDataURL(newImage);
     const now = new Date().getTime();
@@ -312,7 +312,9 @@ function App() {
       expiry: now + 1000 * 60 * 60,
     });
 
-    setSelectedImage({ url: dataUrl });
+    if (setBackground) {
+      setSelectedImage({ url: dataUrl });
+    }
   };
 
   const checkCachedImage = async () => {
@@ -332,7 +334,12 @@ function App() {
       ) {
         setSelectedImage({ url: cachedData.url });
       } else if (navigator.onLine) {
-        loadNewImage();
+        if (cachedData) {
+          setSelectedImage({ url: cachedData.url });
+          loadNewImage(false);
+        } else {
+          loadNewImage(true);
+        }
       }
     };
   };
