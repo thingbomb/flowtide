@@ -5,6 +5,7 @@ import WordCounter from "./WordCounter";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuCheckboxItem,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -241,7 +242,7 @@ function App() {
   const [time, setTime] = useState(new Date());
   const [selectedImage, setSelectedImage] = useState({});
   const [selectedPage, setSelectedPage] = useState("none");
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [font, setFont] = useState(localStorage.getItem("font") || "sans");
   const [tasks, setTasks] = useState([]);
   const [taskInput, setTaskInput] = useState("");
@@ -250,7 +251,7 @@ function App() {
     localStorage.getItem("background") || "wallpaper"
   );
   const [changeTime, setChangeTime] = useState(
-    Number(localStorage.getItem("changeTime")) || 1000 * 60 * 60 * 24
+    Number(localStorage.getItem("changeTime")) ?? 1000 * 60 * 60 * 24
   );
 
   useEffect(() => {
@@ -363,6 +364,7 @@ function App() {
 
   const options = { hour: "2-digit", minute: "2-digit", hour12: true };
 
+  console.log(changeTime);
   return (
     <div
       className={cn(
@@ -413,119 +415,123 @@ function App() {
         >
           <DropdownMenuLabel>Themes</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setTheme("dark");
               localStorage.setItem("theme", "dark");
             }}
+            checked={theme === "dark"}
           >
-            <Moon />
             <span>Dark theme</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setTheme("light");
               localStorage.setItem("theme", "light");
             }}
+            checked={theme === "light"}
           >
-            <Sun />
             <span>Light theme</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setTheme("system");
               localStorage.setItem("theme", "system");
             }}
+            checked={theme === "system"}
           >
-            <Computer />
             <span>System default</span>
-          </DropdownMenuItem>
+          </DropdownMenuCheckboxItem>
           <br />
           <DropdownMenuLabel>Font</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setFont("sans");
               localStorage.setItem("font", "sans");
             }}
+            checked={font === "sans"}
           >
             Sans
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setFont("monospace");
               localStorage.setItem("font", "monospace");
             }}
+            checked={font === "monospace"}
           >
             Monospace
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setFont("serif");
               localStorage.setItem("font", "serif");
             }}
+            checked={font === "serif"}
           >
             Serif
-          </DropdownMenuItem>
+          </DropdownMenuCheckboxItem>
           <DropdownMenuLabel>Background</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setBackground("wallpaper");
               localStorage.setItem("background", "wallpaper");
               window.location.reload();
             }}
+            checked={background === "wallpaper"}
           >
             Wallpaper
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setBackground("color");
               localStorage.setItem("background", "color");
               window.location.reload();
             }}
+            checked={background === "color"}
           >
             Color Palette
-          </DropdownMenuItem>
+          </DropdownMenuCheckboxItem>
           <DropdownMenuLabel>Change photo</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setChangeTime(Infinity);
               localStorage.setItem("changeTime", Infinity);
-              window.location.reload();
             }}
+            checked={changeTime === Infinity}
           >
             Never
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setChangeTime(0);
               localStorage.setItem("changeTime", 0);
-              window.location.reload();
             }}
-            checked={background === 0}
+            checked={changeTime === 0}
           >
             As soon as possible
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setChangeTime(1000 * 60 * 60);
               localStorage.setItem("changeTime", 1000 * 60 * 60);
-              window.location.reload();
             }}
+            checked={changeTime == 1000 * 60 * 60}
           >
             Every hour
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
             onClick={() => {
               setChangeTime(1000 * 60 * 60 * 24);
               localStorage.setItem("changeTime", 1000 * 60 * 60 * 24);
-              window.location.reload();
             }}
+            checked={changeTime == 1000 * 60 * 60 * 24}
           >
             Every day
-          </DropdownMenuItem>
+          </DropdownMenuCheckboxItem>
           <DropdownMenuLabel>More</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
