@@ -500,16 +500,17 @@ function App() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              setBackground(0);
+              setChangeTime(0);
               localStorage.setItem("changeTime", 0);
               window.location.reload();
             }}
+            checked={background === 0}
           >
             As soon as possible
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              setBackground(0);
+              setChangeTime(1000 * 60 * 60);
               localStorage.setItem("changeTime", 1000 * 60 * 60);
               window.location.reload();
             }}
@@ -518,12 +519,21 @@ function App() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              setBackground(0);
+              setChangeTime(1000 * 60 * 60 * 24);
               localStorage.setItem("changeTime", 1000 * 60 * 60 * 24);
               window.location.reload();
             }}
           >
             Every day
+          </DropdownMenuItem>
+          <DropdownMenuLabel>More</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => {
+              window.open("https://tally.so/r/3NB8vj");
+            }}
+          >
+            Suggest a feature
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -535,7 +545,7 @@ function App() {
         </PopoverTrigger>
         <PopoverContent
           className={cn(
-            "w-80 mr-4",
+            "w-80 mr-4 max-h-[70vh] overflow-y-auto",
             font === "serif" && "font-serif",
             font === "monospace" && "font-mono"
           )}
