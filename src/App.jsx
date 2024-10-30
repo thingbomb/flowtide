@@ -249,6 +249,9 @@ function App() {
   const [background, setBackground] = useState(
     localStorage.getItem("background") || "wallpaper"
   );
+  const [changeTime, setChangeTime] = useState(
+    Number(localStorage.getItem("changeTime")) || 1000 * 60 * 60 * 24
+  );
 
   useEffect(() => {
     const loadTasks = async () => {
@@ -309,7 +312,7 @@ function App() {
     store.put({
       id: "background",
       url: dataUrl,
-      expiry: now + 1000 * 60 * 60,
+      expiry: now + changeTime,
     });
 
     if (setBackground) {
@@ -330,7 +333,7 @@ function App() {
 
       if (
         (cachedData && !navigator.onLine) ||
-        (cachedData && cachedData.expiry > now)
+        (cachedData && cachedData.expiry < now)
       ) {
         setSelectedImage({ url: cachedData.url });
       } else if (navigator.onLine) {
@@ -483,6 +486,44 @@ function App() {
             }}
           >
             Color Palette
+          </DropdownMenuItem>
+          <DropdownMenuLabel>Change photo</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => {
+              setChangeTime(Infinity);
+              localStorage.setItem("changeTime", Infinity);
+              window.location.reload();
+            }}
+          >
+            Never
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              setBackground(0);
+              localStorage.setItem("changeTime", 0);
+              window.location.reload();
+            }}
+          >
+            As soon as possible
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              setBackground(0);
+              localStorage.setItem("changeTime", 1000 * 60 * 60);
+              window.location.reload();
+            }}
+          >
+            Every hour
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              setBackground(0);
+              localStorage.setItem("changeTime", 1000 * 60 * 60 * 24);
+              window.location.reload();
+            }}
+          >
+            Every day
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
