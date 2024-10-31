@@ -31,6 +31,7 @@ import {
 } from "./components/ui/popover";
 import { Checkbox } from "./components/ui/checkbox";
 import { Input } from "./components/ui/input";
+import { AudioLines } from "lucide-react";
 
 const dbName = "flowtide";
 const dbVersion = 1;
@@ -579,7 +580,7 @@ function App() {
       </DropdownMenu>
       <Popover>
         <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
-          <Button variant="outline" aria-label="Settings" size="icon">
+          <Button variant="outline" aria-label="To-do list" size="icon">
             <List className="h-5 w-5" />
           </Button>
         </PopoverTrigger>
@@ -681,6 +682,27 @@ function App() {
               </Button>
             </div>
           </div>
+        </PopoverContent>
+      </Popover>
+      <Popover>
+        <PopoverTrigger asChild className="fixed top-0 left-0 z-50 m-4">
+          <Button variant="outline" aria-label="Soundscapes" size="icon">
+            <AudioLines className="h-5 w-5" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className={cn(
+            "w-[300px] h-[300px] p-0 ml-4 relative",
+            font === "serif" && "font-serif",
+            font === "monospace" && "font-mono"
+          )}
+        >
+          <iframe
+            src="https://noisefill.com/embed"
+            width="300"
+            height="300"
+            className="absolute inset-0"
+          ></iframe>
         </PopoverContent>
       </Popover>
     </div>
