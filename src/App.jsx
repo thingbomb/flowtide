@@ -257,6 +257,9 @@ function App() {
   );
   const [currentURL, setCurrentURL] = useState(null);
   const [playing, setPlaying] = useState(false);
+  const [clockSize, setClockSize] = useState(
+    localStorage.getItem("clockSize") || "medium"
+  );
   let soundscapes = [
     {
       name: "Ocean",
@@ -556,7 +559,11 @@ function App() {
       ></audio>
       <CommandPalette setSelectedPage={setSelectedPage} />
       <h1
-        className="text-7xl font-bold clock select-none text-shadow-lg"
+        className={cn("font-bold clock select-none text-shadow-lg", {
+          "text-9xl": clockSize === "large",
+          "text-7xl": clockSize === "medium",
+          "text-5xl": clockSize === "small",
+        })}
         style={{ color: "#FFFFFF" }}
       >
         {time.toLocaleTimeString(undefined, options)}
@@ -724,6 +731,32 @@ function App() {
             checked={!clockFormat}
           >
             24-hour
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuLabel>Clock size</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuCheckboxItem
+            onClick={() => {
+              setClockSize("small");
+            }}
+            checked={clockSize === "small"}
+          >
+            Small
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            onClick={() => {
+              setClockSize("medium");
+            }}
+            checked={clockSize === "medium"}
+          >
+            Medium
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            onClick={() => {
+              setClockSize("large");
+            }}
+            checked={clockSize === "large"}
+          >
+            Large
           </DropdownMenuCheckboxItem>
           <DropdownMenuLabel>More</DropdownMenuLabel>
           <DropdownMenuSeparator />
