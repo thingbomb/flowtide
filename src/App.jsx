@@ -533,7 +533,7 @@ function App() {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center h-screen bg-white dark:bg-black text-black dark:text-white bg-cover font-sans transition-background-image",
+        "flex flex-col items-center justify-center h-screen bg-white dark:bg-black text-black dark:text-white bg-cover font-sans transition-background-image background",
         font === "serif" && "font-serif",
         font === "monospace" && "font-mono"
       )}
@@ -575,8 +575,9 @@ function App() {
       )}
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="fixed bottom-0 left-0 z-50 m-4">
-          <Button variant="outline" aria-label="Settings" size="icon">
+          <Button variant="ghost" aria-label="Settings" className="select-none">
             <SettingsIcon className="h-5 w-5" />
+            Settings
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
@@ -773,8 +774,9 @@ function App() {
       </DropdownMenu>
       <Popover>
         <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
-          <Button variant="outline" aria-label="To-do list" size="icon">
+          <Button variant="ghost" aria-label="To-do list">
             <List className="h-5 w-5" />
+            To-do list
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -879,8 +881,9 @@ function App() {
       </Popover>
       <Popover>
         <PopoverTrigger asChild className="fixed top-0 left-0 z-50 m-4">
-          <Button variant="outline" aria-label="Soundscapes" size="icon">
+          <Button variant="ghost" aria-label="Soundscapes">
             <AudioLines className="h-5 w-5" />
+            Soundscapes
           </Button>
         </PopoverTrigger>
         <PopoverContent
