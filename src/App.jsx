@@ -246,6 +246,11 @@ const gradients = [
   "linear-gradient(to left, #02aab0, #00cdac)",
   "linear-gradient(to left, #ff6e7f, #bfe9ff)",
   "linear-gradient(to left, #314755, #26a0da)",
+  "linear-gradient(to right, #ec008c, #fc6767)",
+  "linear-gradient(to left, #1488cc, #2b32b2)",
+  "linear-gradient(to right, #9796f0, #fbc7d4)",
+  "linear-gradient(to left, #ffe259, #ffa751)",
+  "linear-gradient(to right, #c6ffdd, #fbd786, #f7797d)",
 ];
 
 function App() {
