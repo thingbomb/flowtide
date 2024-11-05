@@ -239,6 +239,15 @@ const colors = [
   "#ff9770",
 ];
 
+const gradients = [
+  "linear-gradient(to bottom, #12c2e9, #c471ed, #f64f59)",
+  "linear-gradient(to right, #348f50, #56b4d3)",
+  "linear-gradient(to bottom, #da22ff, #9733ee)",
+  "linear-gradient(to left, #02aab0, #00cdac)",
+  "linear-gradient(to left, #ff6e7f, #bfe9ff)",
+  "linear-gradient(to left, #314755, #26a0da)",
+];
+
 function App() {
   const [time, setTime] = useState(new Date());
   const [selectedImage, setSelectedImage] = useState({});
@@ -253,6 +262,9 @@ function App() {
   );
   const [selectedColor, setSelectedColor] = useState(
     colors[Math.floor(Math.random() * colors.length)]
+  );
+  const [gradient, setGradient] = useState(
+    gradients[Math.floor(Math.random() * gradients.length)]
   );
   const [clockFormat, setClockFormat] = useState(true);
   const [changeTime, setChangeTime] = useState(
@@ -529,7 +541,7 @@ function App() {
 
   const options = { hour: "2-digit", minute: "2-digit", hour12: clockFormat };
 
-  console.log(changeTime);
+  console.log(background);
   return (
     <div
       className={cn(
@@ -538,13 +550,21 @@ function App() {
         font === "monospace" && "font-mono"
       )}
       style={{
-        backgroundImage: `url(${
-          selectedImage.url ||
-          (background == "wallpaper"
-            ? "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
-            : "")
-        })`,
-        backgroundColor: background === "color" ? selectedColor : "#000000",
+        backgroundImage:
+          background === "wallpaper"
+            ? `url(${
+                selectedImage.url ||
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
+              })`
+            : "none",
+
+        background:
+          background === "color"
+            ? selectedColor
+            : background === "gradient"
+            ? gradient
+            : "#000000",
+
         transition: "background-image 1s ease-in-out",
       }}
       id="app"
@@ -667,6 +687,16 @@ function App() {
             checked={background === "color"}
           >
             Color Palette
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            onClick={() => {
+              setBackground("gradient");
+              localStorage.setItem("background", "gradient");
+              window.location.reload();
+            }}
+            checked={background === "gradient"}
+          >
+            Gradient
           </DropdownMenuCheckboxItem>
           <DropdownMenuLabel>Change photo</DropdownMenuLabel>
           <DropdownMenuSeparator />
