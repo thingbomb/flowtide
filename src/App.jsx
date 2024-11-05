@@ -251,6 +251,9 @@ function App() {
   const [background, setBackground] = useState(
     localStorage.getItem("background") || "wallpaper"
   );
+  const [selectedColor, setSelectedColor] = useState(
+    colors[Math.floor(Math.random() * colors.length)]
+  );
   const [clockFormat, setClockFormat] = useState(true);
   const [changeTime, setChangeTime] = useState(
     Number(localStorage.getItem("changeTime")) ?? 1000 * 60 * 60 * 24
@@ -493,12 +496,9 @@ function App() {
 
     request.onsuccess = (event) => {
       const cachedData = event.target.result;
-      const now = new Date().getTime();
+      const now = Date.now();
 
-      if (
-        (cachedData && !navigator.onLine) ||
-        (cachedData && cachedData.expiry < now)
-      ) {
+      if (cachedData && now - cachedData.expiry < 0) {
         setSelectedImage({ url: cachedData.url });
       } else if (navigator.onLine) {
         if (cachedData) {
@@ -507,6 +507,8 @@ function App() {
         } else {
           loadNewImage(true);
         }
+      } else if (cachedData) {
+        setSelectedImage({ url: cachedData.url });
       }
     };
   };
@@ -542,10 +544,7 @@ function App() {
             ? "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
             : "")
         })`,
-        backgroundColor:
-          background === "color"
-            ? colors[Math.floor(Math.random() * colors.length)]
-            : "#000000",
+        backgroundColor: background === "color" ? selectedColor : "#000000",
         transition: "background-image 1s ease-in-out",
       }}
       id="app"
@@ -737,6 +736,7 @@ function App() {
           <DropdownMenuCheckboxItem
             onClick={() => {
               setClockSize("small");
+              localStorage.setItem("clockSize", "small");
             }}
             checked={clockSize === "small"}
           >
@@ -745,6 +745,7 @@ function App() {
           <DropdownMenuCheckboxItem
             onClick={() => {
               setClockSize("medium");
+              localStorage.setItem("clockSize", "medium");
             }}
             checked={clockSize === "medium"}
           >
@@ -753,6 +754,7 @@ function App() {
           <DropdownMenuCheckboxItem
             onClick={() => {
               setClockSize("large");
+              localStorage.setItem("clockSize", "large");
             }}
             checked={clockSize === "large"}
           >
