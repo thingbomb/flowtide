@@ -20,6 +20,7 @@ import {
   Plus,
   Trash,
   Edit,
+  AudioLines,
 } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { useTheme } from "./components/ui/theme-provider";
@@ -31,7 +32,6 @@ import {
 } from "./components/ui/popover";
 import { Checkbox } from "./components/ui/checkbox";
 import { Input } from "./components/ui/input";
-import { AudioLines } from "lucide-react";
 
 const dbName = "flowtide";
 const dbVersion = 1;
@@ -57,7 +57,7 @@ const openDB = () => {
   });
 };
 
-let images = [
+const images = [
   "https://utfs.io/f/D6128dhWEyDgPyqUneHFAiRv7GzkQ3tZcUSmjrNd6VExw9Jh",
   "https://utfs.io/f/D6128dhWEyDgyooAV982sbnctFEejWoHDi1YUqJ3mKgNxXVp",
   "https://utfs.io/f/D6128dhWEyDgLzKDb4GNstaRSlyigdBT4Z1mYhMbVIJX8Apw",
@@ -280,7 +280,7 @@ function App() {
   const [clockSize, setClockSize] = useState(
     localStorage.getItem("clockSize") || "medium"
   );
-  let soundscapes = [
+  const soundscapes = [
     {
       name: "Ocean",
       emoji: "🌊",
@@ -418,7 +418,6 @@ function App() {
     const audio = document.getElementById("player");
     if (audio.src === url && playing) {
       audio.pause();
-      return;
     } else {
       audio.src = url;
       audio.volume = volume;
@@ -537,10 +536,9 @@ function App() {
       } else {
         checkCachedImage();
       }
-      const interval = setInterval(() => {
+      setInterval(() => {
         setTime(new Date());
       }, 1000);
-      return () => clearInterval(interval);
     }
   }, [rendered]);
 
@@ -580,7 +578,7 @@ function App() {
         loop
         onPause={() => setPlaying(false)}
         onPlay={() => setPlaying(true)}
-      ></audio>
+      />
       <CommandPalette setSelectedPage={setSelectedPage} />
       <h1
         className={cn("font-bold clock select-none text-shadow-lg", {
