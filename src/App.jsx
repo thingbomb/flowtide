@@ -548,7 +548,7 @@ function App() {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center h-screen bg-white dark:bg-black text-black dark:text-white bg-cover font-sans transition-background-image background",
+        "flex flex-col items-center justify-center h-screen bg-white dark:bg-black text-black dark:text-white !bg-cover font-sans transition-background-image background",
         font === "serif" && "font-serif",
         font === "monospace" && "font-mono"
       )}
@@ -561,7 +561,7 @@ function App() {
               })`
             : "none",
 
-        background:
+        backgroundColor:
           background === "color"
             ? selectedColor
             : background === "gradient"
