@@ -271,7 +271,13 @@ function App() {
   const [gradient, setGradient] = useState(
     gradients[Math.floor(Math.random() * gradients.length)]
   );
-  const [clockFormat, setClockFormat] = useState(true);
+  const [clockFormat, setClockFormat] = useState(
+    localStorage.getItem("clockFormat") === "true"
+  );
+  if (!localStorage.getItem("clockFormat")) {
+    localStorage.setItem("clockFormat", true);
+    setClockFormat(true);
+  }
   const [changeTime, setChangeTime] = useState(
     Number(localStorage.getItem("changeTime")) ?? 1000 * 60 * 60 * 24
   );
@@ -805,6 +811,7 @@ function App() {
           <DropdownMenuCheckboxItem
             onClick={() => {
               setClockFormat(true);
+              localStorage.setItem("clockFormat", "true");
             }}
             checked={clockFormat}
           >
@@ -813,6 +820,7 @@ function App() {
           <DropdownMenuCheckboxItem
             onClick={() => {
               setClockFormat(false);
+              localStorage.setItem("clockFormat", "false");
             }}
             checked={!clockFormat}
           >
