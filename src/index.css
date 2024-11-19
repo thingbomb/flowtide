@@ -70,10 +70,7 @@
   scrollbar-color: #525252 var(--background) !important;
 }
 .text-shadow-lg {
-  text-shadow: 0px 36px 89px #0000000a, 0px 23.3333px 52.1227px #00000008,
-    0px 13.8667px 28.3481px rgba(0, 0, 0, 0.024), 0px 7.2px 14.4625px #00000005,
-    0px 2.93333px 7.25185px rgba(0, 0, 0, 0.016),
-    0px 0.666667px 3.50231px #00000003;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 ::-webkit-scrollbar {

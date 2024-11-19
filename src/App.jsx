@@ -529,26 +529,23 @@ function App() {
     };
   };
 
-  useEffect(() => {
-    if (!rendered) {
-      if (background === "color") {
-        setRendered(true);
-      } else {
-        checkCachedImage();
-      }
-      setInterval(() => {
-        setTime(new Date());
-      }, 1000);
+  if (!rendered) {
+    if (background === "color") {
+      setRendered(true);
+    } else {
+      checkCachedImage();
     }
-  }, [rendered]);
+    setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+  }
 
   const options = { hour: "2-digit", minute: "2-digit", hour12: clockFormat };
 
-  console.log(background);
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center h-screen bg-white dark:bg-black text-black dark:text-white !bg-cover font-sans transition-background-image background",
+        "flex flex-col items-center justify-center h-screen bg-black !bg-cover font-sans transition-background-image background",
         font === "serif" && "font-serif",
         font === "monospace" && "font-mono"
       )}
@@ -561,14 +558,14 @@ function App() {
               })`
             : "none",
 
-        backgroundColor:
+        background:
           background === "color"
             ? selectedColor
             : background === "gradient"
             ? gradient
             : "#000000",
 
-        transition: "background-image 1s ease-in-out",
+        transition: "background-image 0.4s ease-in-out",
       }}
       id="app"
     >
@@ -598,7 +595,11 @@ function App() {
       )}
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="fixed bottom-0 left-0 z-50 m-4">
-          <Button variant="ghost" aria-label="Settings" className="select-none">
+          <Button
+            variant="ghost"
+            aria-label="Settings"
+            className="select-none text-white"
+          >
             <SettingsIcon className="h-5 w-5" />
             Settings
           </Button>
@@ -807,7 +808,11 @@ function App() {
       </DropdownMenu>
       <Popover>
         <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
-          <Button variant="ghost" aria-label="To-do list">
+          <Button
+            variant="ghost"
+            aria-label="To-do list"
+            className="text-white select-none"
+          >
             <List className="h-5 w-5" />
             To-do list
           </Button>
@@ -914,7 +919,11 @@ function App() {
       </Popover>
       <Popover>
         <PopoverTrigger asChild className="fixed top-0 left-0 z-50 m-4">
-          <Button variant="ghost" aria-label="Soundscapes">
+          <Button
+            variant="ghost"
+            aria-label="Soundscapes"
+            className="select-none text-white"
+          >
             <AudioLines className="h-5 w-5" />
             Soundscapes
           </Button>
@@ -945,7 +954,10 @@ function App() {
                   <b>{sound.name}</b>
                   <br />
                   {sound.attribution.map((attribution, index) => (
-                    <div key={index} className="text-sm text-gray-300">
+                    <div
+                      key={index}
+                      className="text-sm text-gray-500 dark:text-gray-300"
+                    >
                       {attribution}
                       <br />
                     </div>
