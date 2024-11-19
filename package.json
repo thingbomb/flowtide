@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
+    "cross-spawn": "7.0.5",
     "lucide-react": "^0.453.0",
     "mathjs": "^13.2.0",
     "postcss-nested": "^6.2.0",
