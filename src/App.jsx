@@ -275,8 +275,19 @@ function App() {
   const [changeTime, setChangeTime] = useState(
     Number(localStorage.getItem("changeTime")) ?? 1000 * 60 * 60 * 24
   );
+  const currentFont =
+    {
+      serif: "font-serif",
+      monospace: "font-mono",
+      georgia: "font-georgia",
+      sans: "font-sans",
+      "brush-script-mt": "font-brush-script-mt",
+      "times-new-roman": "font-times-new-roman",
+      verdana: "font-verdana",
+    }[font] || "";
   const [currentURL, setCurrentURL] = useState(null);
   const [playing, setPlaying] = useState(false);
+  const [showMoreFonts, setShowMoreFonts] = useState(false);
   const [clockSize, setClockSize] = useState(
     localStorage.getItem("clockSize") || "medium"
   );
@@ -545,9 +556,8 @@ function App() {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center h-screen bg-black !bg-cover font-sans transition-background-image background",
-        font === "serif" && "font-serif",
-        font === "monospace" && "font-mono"
+        "flex flex-col items-center justify-center h-screen bg-black !bg-cover transition-background-image background",
+        currentFont
       )}
       style={{
         backgroundImage:
@@ -604,13 +614,7 @@ function App() {
             Settings
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className={cn(
-            "w-56 ml-4",
-            font === "serif" && "font-serif",
-            font === "monospace" && "font-mono"
-          )}
-        >
+        <DropdownMenuContent className={cn("w-56 ml-4", currentFont)}>
           <DropdownMenuLabel>Themes</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
@@ -670,6 +674,54 @@ function App() {
           >
             Serif
           </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem
+            onClick={(e) => {
+              e.preventDefault();
+              setShowMoreFonts((prev) => !prev);
+            }}
+          >
+            {showMoreFonts ? "Show less" : "Show more"}
+          </DropdownMenuCheckboxItem>
+          {showMoreFonts && (
+            <>
+              <DropdownMenuCheckboxItem
+                onClick={() => {
+                  setFont("times-new-roman");
+                  localStorage.setItem("font", "times-new-roman");
+                }}
+                checked={font === "times-new-roman"}
+              >
+                Times New Roman
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                onClick={() => {
+                  setFont("verdana");
+                  localStorage.setItem("font", "verdana");
+                }}
+                checked={font === "verdana"}
+              >
+                Verdana
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                onClick={() => {
+                  setFont("georgia");
+                  localStorage.setItem("font", "georgia");
+                }}
+                checked={font === "georgia"}
+              >
+                Georgia
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                onClick={() => {
+                  setFont("brush-script-mt");
+                  localStorage.setItem("font", "brush-script-mt");
+                }}
+                checked={font === "brush-script-mt"}
+              >
+                Brush Script MT
+              </DropdownMenuCheckboxItem>
+            </>
+          )}
           <DropdownMenuLabel>Background</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
@@ -818,11 +870,7 @@ function App() {
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className={cn(
-            "w-80 mr-4 max-h-[70vh] overflow-y-auto",
-            font === "serif" && "font-serif",
-            font === "monospace" && "font-mono"
-          )}
+          className={cn("w-80 mr-4 max-h-[70vh] overflow-y-auto", currentFont)}
         >
           <div className="grid gap-4">
             <div className="space-y-2">
@@ -931,8 +979,7 @@ function App() {
         <PopoverContent
           className={cn(
             "w-[300px] h-[300px] ml-4 relative overflow-y-auto scrollbar",
-            font === "serif" && "font-serif",
-            font === "monospace" && "font-mono"
+            currentFont
           )}
         >
           <div>
