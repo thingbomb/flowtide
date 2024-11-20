@@ -60,7 +60,7 @@
     "message": "لوحة الألوان"
   },
   "font": {
-    "message": "Font"
+    "message": "الخط"
   },
   "wallpaper": {
     "message": "الخلفية"
@@ -75,7 +75,7 @@
     "message": "فردانا"
   },
   "brush_script_mt": {
-    "message": "فرشاة سكريبت MT"
+    "message": "Brush Script MT"
   },
   "times_new_roman": {
     "message": "أوقات رومانية جديدة"
@@ -87,13 +87,13 @@
     "message": "إظهار أقل"
   },
   "serif": {
-    "message": "سيرفر"
+    "message": "Serif"
   },
   "monospace": {
-    "message": "فضاء أحادي"
+    "message": "Monospace"
   },
   "sans": {
-    "message": "سانس"
+    "message": "Sans"
   },
   "themes": {
     "message": "السمات"
@@ -111,6 +111,6 @@
     "message": "المزيد"
   },
   "from_noisefill": {
-    "message": "من نوزيفيل"
+    "message": "من Noisefill"
   }
 }
