@@ -1,116 +1,116 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "Marée Flowale"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Scènes sonores"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Réglages"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Suggérer une fonctionnalité"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Mode de lumière"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Mode sombre"
   },
   "system": {
-    "message": "System default"
+    "message": "Par défaut du système"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Liste à faire"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Gérez vos tâches ici."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Ajouter une nouvelle tâche"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Taille de l'horloge"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 heures"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24 heures sur 24"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Format horloge"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Tous les jours"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Toutes les heures"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Dès que possible"
   },
   "never": {
-    "message": "Never"
+    "message": "Jamais"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Dégradé"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Palette de couleurs"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Fond d'écran"
   },
   "background": {
-    "message": "Background"
+    "message": "Arrière-plan"
   },
   "georgia": {
-    "message": "Georgia"
+    "message": "Géorgie"
   },
   "verdana": {
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "Brosse Script MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "Nouvelles fois nouveau romain"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Afficher plus"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Afficher moins"
   },
   "serif": {
     "message": "Serif"
   },
   "monospace": {
-    "message": "Monospace"
+    "message": "Monoespace"
   },
   "sans": {
-    "message": "Sans"
+    "message": "Sans fil"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Thèmes"
   },
   "small": {
-    "message": "Small"
+    "message": "Petit"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Moyenne"
   },
   "large": {
-    "message": "Large"
+    "message": "Gros"
   },
   "more": {
-    "message": "More"
+    "message": "En savoir plus"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Depuis Noisefill"
   }
 }
