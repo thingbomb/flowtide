@@ -3,114 +3,114 @@
     "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "音效"
   },
   "settings": {
-    "message": "Settings"
+    "message": "设置"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "建议一个功能"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "亮色模式"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "暗色模式"
   },
   "system": {
-    "message": "System default"
+    "message": "系统默认"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "待办事项列表"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "在此管理您的任务。"
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "添加新任务"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "时钟大小"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 小时"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24小时内"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "时钟格式"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "每天一次"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "每小时"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "尽快完成"
   },
   "never": {
-    "message": "Never"
+    "message": "从不使用"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "渐变"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "色板"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "壁纸"
   },
   "background": {
-    "message": "Background"
+    "message": "二. 背景"
   },
   "georgia": {
-    "message": "Georgia"
+    "message": "格鲁吉亚"
   },
   "verdana": {
-    "message": "Verdana"
+    "message": "韦尔达纳"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "笔刷脚本 MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "时钟新罗马语"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "显示更多"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "显示更少的"
   },
   "serif": {
-    "message": "Serif"
+    "message": "序列号"
   },
   "monospace": {
-    "message": "Monospace"
+    "message": "等宽度"
   },
   "sans": {
-    "message": "Sans"
+    "message": "桑斯"
   },
   "themes": {
-    "message": "Themes"
+    "message": "主题"
   },
   "small": {
-    "message": "Small"
+    "message": "小的"
   },
   "medium": {
-    "message": "Medium"
+    "message": "中"
   },
   "large": {
-    "message": "Large"
+    "message": "大的"
   },
   "more": {
-    "message": "More"
+    "message": "更多"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "来自噪音填充"
   }
 }
