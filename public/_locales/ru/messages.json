@@ -1,116 +1,116 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "Цветение"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Звуковые экраны"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Настройки"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Предложить функцию"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Светлый режим"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Темный режим"
   },
   "system": {
-    "message": "System default"
+    "message": "По умолчанию"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Список дел"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Управляйте своими задачами здесь."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Добавить новую задачу"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Размер часов"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 часов"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24 часа"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Формат часов"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Каждый день"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Каждый час"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Как можно скорее"
   },
   "never": {
-    "message": "Never"
+    "message": "Никогда"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Градиент"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Цветовая палитра"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Обои"
   },
   "background": {
-    "message": "Background"
+    "message": "Справочная информация"
   },
   "georgia": {
-    "message": "Georgia"
+    "message": "Грузия"
   },
   "verdana": {
-    "message": "Verdana"
+    "message": "Вердана"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "Скрипт кисти MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "Времена Нового Романа"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Показать еще"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Меньше"
   },
   "serif": {
-    "message": "Serif"
+    "message": "Сериф"
   },
   "monospace": {
-    "message": "Monospace"
+    "message": "Моноширинный"
   },
   "sans": {
-    "message": "Sans"
+    "message": "Санс"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Темы"
   },
   "small": {
-    "message": "Small"
+    "message": "Маленький"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Средний"
   },
   "large": {
-    "message": "Large"
+    "message": "Большой"
   },
   "more": {
-    "message": "More"
+    "message": "Ещё"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Из Noisefill"
   }
 }
