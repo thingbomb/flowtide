@@ -1,116 +1,116 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "Fletidă"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Sunete"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Setări"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Sugerează o funcție"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Mod lumină"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Mod întunecat"
   },
   "system": {
-    "message": "System default"
+    "message": "Implicit sistem"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Listă de sarcini"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Gestionează-ți sarcinile aici."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Adaugă o nouă sarcină"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Dimensiune ceas"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 ore"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24 ore"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Format ceas"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "În fiecare zi"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "În fiecare oră"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Cât mai curând posibil"
   },
   "never": {
-    "message": "Never"
+    "message": "Niciodată"
   },
   "gradient": {
     "message": "Gradient"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Paletă de culori"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Fundal"
   },
   "background": {
-    "message": "Background"
+    "message": "Context"
   },
   "georgia": {
     "message": "Georgia"
   },
   "verdana": {
-    "message": "Verdana"
+    "message": "Verdina"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "Pariază scriptul MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "Vreme nouă romană"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Arată mai mult"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Arată mai puțin"
   },
   "serif": {
     "message": "Serif"
   },
   "monospace": {
-    "message": "Monospace"
+    "message": "Monospațiu"
   },
   "sans": {
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Teme"
   },
   "small": {
-    "message": "Small"
+    "message": "Mică"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Medie"
   },
   "large": {
-    "message": "Large"
+    "message": "Mare"
   },
   "more": {
-    "message": "More"
+    "message": "Mai"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "De la zgomot"
   }
 }
