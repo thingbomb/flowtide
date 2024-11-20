@@ -69,13 +69,13 @@
     "message": "Pozadí"
   },
   "georgia": {
-    "message": "Gruzie"
+    "message": "Georgia"
   },
   "verdana": {
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Koupit skript MT"
+    "message": "Brush Script MT"
   },
   "times_new_roman": {
     "message": "Times New Roman"
@@ -93,7 +93,7 @@
     "message": "Monospace"
   },
   "sans": {
-    "message": "Sany"
+    "message": "Sans"
   },
   "themes": {
     "message": "Motivy"
