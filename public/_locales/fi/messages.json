@@ -1,72 +1,72 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "Flowtidi"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Äänimaisemat"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Asetukset"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Ehdota ominaisuutta"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Vaalea tila"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Tumma tila"
   },
   "system": {
-    "message": "System default"
+    "message": "Järjestelmän oletus"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Tehtäväluettelo"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Hallitse tehtäviäsi täällä."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Lisää uusi tehtävä"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Kellon koko"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12-tuntinen"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24-tuntinen"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Kellon muoto"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Joka päivä"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Joka tunti"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Niin pian kuin mahdollista"
   },
   "never": {
-    "message": "Never"
+    "message": "Ei Koskaan"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Gradientti"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Väripaletti"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Taustakuva"
   },
   "background": {
-    "message": "Background"
+    "message": "Tausta"
   },
   "georgia": {
     "message": "Georgia"
@@ -78,13 +78,13 @@
     "message": "Brush Script MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "Ajat Uusi Roomalainen"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Näytä lisää"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Näytä vähemmän"
   },
   "serif": {
     "message": "Serif"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Teemat"
   },
   "small": {
-    "message": "Small"
+    "message": "Pieni"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Keskitaso"
   },
   "large": {
-    "message": "Large"
+    "message": "Suuri"
   },
   "more": {
-    "message": "More"
+    "message": "Lisää"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Melun Täydennyksestä"
   }
 }
