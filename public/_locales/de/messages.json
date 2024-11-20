@@ -3,70 +3,70 @@
     "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Klangwelten"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Einstellungen"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Feature vorschlagen"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Lichtmodus"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Dunkler Modus"
   },
   "system": {
-    "message": "System default"
+    "message": "Systemstandard"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "To-do-Liste"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Verwalten Sie Ihre Aufgaben hier."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Neue Aufgabe hinzufügen"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Größe der Uhr"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 Stunden"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24 Stunden"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Uhr-Format"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Jeden Tag"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Stündlich"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "So schnell wie möglich"
   },
   "never": {
-    "message": "Never"
+    "message": "Nie"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Farbverlauf"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Farbpalette"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Hintergrundbild"
   },
   "background": {
-    "message": "Background"
+    "message": "Hintergrund"
   },
   "georgia": {
     "message": "Georgia"
@@ -81,10 +81,10 @@
     "message": "Times New Roman"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Mehr anzeigen"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Weniger anzeigen"
   },
   "serif": {
     "message": "Serif"
@@ -99,18 +99,18 @@
     "message": "Themes"
   },
   "small": {
-    "message": "Small"
+    "message": "Klein"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Mittel"
   },
   "large": {
-    "message": "Large"
+    "message": "Groß"
   },
   "more": {
-    "message": "More"
+    "message": "Mehr"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Von Noisefill"
   }
 }
