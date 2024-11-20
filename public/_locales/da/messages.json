@@ -1,90 +1,90 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "Flowtid"
   },
   "soundscapes": {
     "message": "Soundscapes"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Indstillinger"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Foreslå en funktion"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Lys tilstand"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Mørk tilstand"
   },
   "system": {
-    "message": "System default"
+    "message": "System standard"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Gøremålsliste"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Håndtér dine opgaver her."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Tilføj en ny opgave"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Ur størrelse"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12-timers"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24-timers"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Ur format"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Hver dag"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Hver time"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Så hurtigt som muligt"
   },
   "never": {
-    "message": "Never"
+    "message": "Aldrig"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Overgang"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Farve Palet"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Baggrund"
   },
   "background": {
-    "message": "Background"
+    "message": "Baggrund"
   },
   "georgia": {
-    "message": "Georgia"
+    "message": "Georgien"
   },
   "verdana": {
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "Børste Script MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "Tider Ny Romersk"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Vis mere"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Vis mindre"
   },
   "serif": {
     "message": "Serif"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Temaer"
   },
   "small": {
-    "message": "Small"
+    "message": "Lille"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Mellem"
   },
   "large": {
-    "message": "Large"
+    "message": "Stor"
   },
   "more": {
-    "message": "More"
+    "message": "Mere"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Fra Noisefill"
   }
 }
