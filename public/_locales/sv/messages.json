@@ -3,91 +3,91 @@
     "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Ljudlandskap"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Inställningar"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Föreslå en funktion"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Ljust läge"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Mörkt läge"
   },
   "system": {
-    "message": "System default"
+    "message": "Systemets standard"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "göra-lista"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Hantera dina uppgifter här."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Lägg till en ny uppgift"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Klocka storlek"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 timmar"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24-timmars"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Klockformat"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Varje dag"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Varje timme"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Så snart som möjligt"
   },
   "never": {
-    "message": "Never"
+    "message": "Aldrig"
   },
   "gradient": {
     "message": "Gradient"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Färgpalett"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Bakgrund"
   },
   "background": {
-    "message": "Background"
+    "message": "Bakgrund"
   },
   "georgia": {
-    "message": "Georgia"
+    "message": "Georgien"
   },
   "verdana": {
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "Borsta skript MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "Gånger ny romersk"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Visa mer"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Visa mindre"
   },
   "serif": {
-    "message": "Serif"
+    "message": "Serie"
   },
   "monospace": {
     "message": "Monospace"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Teman"
   },
   "small": {
-    "message": "Small"
+    "message": "Liten"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Medel"
   },
   "large": {
-    "message": "Large"
+    "message": "Stor"
   },
   "more": {
-    "message": "More"
+    "message": "Mer"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Från Noisefill"
   }
 }
