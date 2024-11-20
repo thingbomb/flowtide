@@ -9,7 +9,7 @@
     "message": "Settings"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Sugerir una función"
   },
   "light_mode": {
     "message": "Light mode"
@@ -21,7 +21,7 @@
     "message": "System default"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Lista de tareas pendientes"
   },
   "todos_description": {
     "message": "Manage your tasks here."
@@ -111,6 +111,6 @@
     "message": "More"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Desde Noisefill"
   }
 }
