@@ -18,5 +18,6 @@
     "gecko": {
       "id": "{a8dbee0a-6f49-4d7e-9d47-e6ed2c3d9b4f}"
     }
-  }
+  },
+  "default_locale": "en"
 }

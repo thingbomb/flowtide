@@ -613,15 +613,17 @@ function App() {
         <DropdownMenuTrigger asChild className="fixed bottom-0 left-0 z-50 m-4">
           <Button
             variant="ghost"
-            aria-label="Settings"
+            aria-label={chrome.i18n.getMessage("settings")}
             className="select-none text-white"
           >
             <SettingsIcon className="h-5 w-5" />
-            Settings
+            {chrome.i18n.getMessage("settings")}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className={cn("w-56 ml-4", currentFont)}>
-          <DropdownMenuLabel>Themes</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {chrome.i18n.getMessage("themes")}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -630,7 +632,7 @@ function App() {
             }}
             checked={theme === "dark"}
           >
-            <span>Dark theme</span>
+            <span>{chrome.i18n.getMessage("dark_mode")}</span>
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -639,7 +641,7 @@ function App() {
             }}
             checked={theme === "light"}
           >
-            <span>Light theme</span>
+            <span>{chrome.i18n.getMessage("light_mode")}</span>
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -648,10 +650,12 @@ function App() {
             }}
             checked={theme === "system"}
           >
-            <span>System default</span>
+            <span>{chrome.i18n.getMessage("system")}</span>
           </DropdownMenuCheckboxItem>
           <br />
-          <DropdownMenuLabel>Font</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {chrome.i18n.getMessage("font")}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -660,7 +664,7 @@ function App() {
             }}
             checked={font === "sans"}
           >
-            Sans
+            {chrome.i18n.getMessage("sans")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -669,7 +673,7 @@ function App() {
             }}
             checked={font === "monospace"}
           >
-            Monospace
+            {chrome.i18n.getMessage("monospace")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -678,7 +682,7 @@ function App() {
             }}
             checked={font === "serif"}
           >
-            Serif
+            {chrome.i18n.getMessage("serif")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={(e) => {
@@ -686,7 +690,9 @@ function App() {
               setShowMoreFonts((prev) => !prev);
             }}
           >
-            {showMoreFonts ? "Show less" : "Show more"}
+            {showMoreFonts
+              ? chrome.i18n.getMessage("show_less")
+              : chrome.i18n.getMessage("show_more")}
           </DropdownMenuCheckboxItem>
           {showMoreFonts && (
             <>
@@ -697,7 +703,7 @@ function App() {
                 }}
                 checked={font === "times-new-roman"}
               >
-                Times New Roman
+                {chrome.i18n.getMessage("times_new_roman")}
               </DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem
                 onClick={() => {
@@ -706,7 +712,7 @@ function App() {
                 }}
                 checked={font === "verdana"}
               >
-                Verdana
+                {chrome.i18n.getMessage("verdana")}
               </DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem
                 onClick={() => {
@@ -715,7 +721,7 @@ function App() {
                 }}
                 checked={font === "georgia"}
               >
-                Georgia
+                {chrome.i18n.getMessage("georgia")}
               </DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem
                 onClick={() => {
@@ -724,11 +730,13 @@ function App() {
                 }}
                 checked={font === "brush-script-mt"}
               >
-                Brush Script MT
+                {chrome.i18n.getMessage("brush_script_mt")}
               </DropdownMenuCheckboxItem>
             </>
           )}
-          <DropdownMenuLabel>Background</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {chrome.i18n.getMessage("background")}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -738,7 +746,7 @@ function App() {
             }}
             checked={background === "wallpaper"}
           >
-            Wallpaper
+            {chrome.i18n.getMessage("wallpaper")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -748,7 +756,7 @@ function App() {
             }}
             checked={background === "color"}
           >
-            Color Palette
+            {chrome.i18n.getMessage("color_palette")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -758,7 +766,7 @@ function App() {
             }}
             checked={background === "gradient"}
           >
-            Gradient
+            {chrome.i18n.getMessage("gradient")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuLabel>Change photo</DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -771,7 +779,7 @@ function App() {
             }}
             checked={changeTime === Infinity}
           >
-            Never
+            {chrome.i18n.getMessage("never")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -782,7 +790,7 @@ function App() {
             }}
             checked={changeTime === 0}
           >
-            As soon as possible
+            {chrome.i18n.getMessage("as_soon_as_possible")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -793,7 +801,7 @@ function App() {
             }}
             checked={changeTime == 1000 * 60 * 60}
           >
-            Every hour
+            {chrome.i18n.getMessage("every_hour")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -804,9 +812,11 @@ function App() {
             }}
             checked={changeTime == 1000 * 60 * 60 * 24}
           >
-            Every day
+            {chrome.i18n.getMessage("every_day")}
           </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>Clock format</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {chrome.i18n.getMessage("clock_format")}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -815,7 +825,7 @@ function App() {
             }}
             checked={clockFormat}
           >
-            12-hour
+            {chrome.i18n.getMessage("12_hour")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -824,9 +834,11 @@ function App() {
             }}
             checked={!clockFormat}
           >
-            24-hour
+            {chrome.i18n.getMessage("24_hour")}
           </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>Clock size</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {chrome.i18n.getMessage("clock_size")}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -835,7 +847,7 @@ function App() {
             }}
             checked={clockSize === "small"}
           >
-            Small
+            {chrome.i18n.getMessage("small")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -844,7 +856,7 @@ function App() {
             }}
             checked={clockSize === "medium"}
           >
-            Medium
+            {chrome.i18n.getMessage("medium")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             onClick={() => {
@@ -853,16 +865,18 @@ function App() {
             }}
             checked={clockSize === "large"}
           >
-            Large
+            {chrome.i18n.getMessage("large")}
           </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>More</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {chrome.i18n.getMessage("more")}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
               window.open("https://tally.so/r/3NB8vj");
             }}
           >
-            Suggest a feature
+            {chrome.i18n.getMessage("suggest_feature")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -874,7 +888,7 @@ function App() {
             className="text-white select-none"
           >
             <List className="h-5 w-5" />
-            To-do list
+            {chrome.i18n.getMessage("todos")}
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -882,9 +896,11 @@ function App() {
         >
           <div className="grid gap-4">
             <div className="space-y-2">
-              <h1 className="text-2xl font-bold leading-none">To-do list</h1>
+              <h1 className="text-2xl font-bold leading-none">
+                {chrome.i18n.getMessage("todos")}
+              </h1>
               <p className="text-sm text-muted-foreground">
-                Manage your tasks here.
+                {chrome.i18n.getMessage("todos_description")}
               </p>
             </div>
             <div id="tasks">
@@ -954,7 +970,7 @@ function App() {
               <Input
                 value={taskInput}
                 onChange={(e) => setTaskInput(e.target.value)}
-                placeholder="Add a new task"
+                placeholder={chrome.i18n.getMessage("add_todo")}
               />
               <Button
                 onClick={() => {
@@ -977,11 +993,11 @@ function App() {
         <PopoverTrigger asChild className="fixed top-0 left-0 z-50 m-4">
           <Button
             variant="ghost"
-            aria-label="Soundscapes"
+            aria-label={chrome.i18n.getMessage("soundscapes")}
             className="select-none text-white"
           >
             <AudioLines className="h-5 w-5" />
-            Soundscapes
+            {chrome.i18n.getMessage("soundscapes")}
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -1021,7 +1037,9 @@ function App() {
               ))}
             </ul>
             <br />
-            <a href="https://noisefill.com/">From Noisefill</a>
+            <a href="https://noisefill.com/">
+              {chrome.i18n.getMessage("from_noisefill")}
+            </a>
           </div>
         </PopoverContent>
       </Popover>
