@@ -1,0 +1,116 @@
+{
+  "title": {
+    "message": "Flowtide"
+  },
+  "soundscapes": {
+    "message": "Sons de capes"
+  },
+  "settings": {
+    "message": "Confirgurações"
+  },
+  "suggest_feature": {
+    "message": "Sugerir uma funcionalidade"
+  },
+  "light_mode": {
+    "message": "Modo claro"
+  },
+  "dark_mode": {
+    "message": "Modo noturno"
+  },
+  "system": {
+    "message": "Padrão do sistema"
+  },
+  "todos": {
+    "message": "Lista de tarefas"
+  },
+  "todos_description": {
+    "message": "Gerencie suas tarefas aqui."
+  },
+  "add_todo": {
+    "message": "Adicionar uma nova tarefa"
+  },
+  "clock_size": {
+    "message": "Tamanho do relógio"
+  },
+  "12_hour": {
+    "message": "12-hora"
+  },
+  "24_hour": {
+    "message": "24 horas"
+  },
+  "clock_format": {
+    "message": "Formato do relógio"
+  },
+  "every_day": {
+    "message": "Todos os dias"
+  },
+  "every_hour": {
+    "message": "Toda hora"
+  },
+  "as_soon_as_possible": {
+    "message": "O mais rápido possível"
+  },
+  "never": {
+    "message": "nunca"
+  },
+  "gradient": {
+    "message": "Degradê"
+  },
+  "color_palette": {
+    "message": "Paleta de cores"
+  },
+  "font": {
+    "message": "Font"
+  },
+  "wallpaper": {
+    "message": "Plano de fundo"
+  },
+  "background": {
+    "message": "Fundo"
+  },
+  "georgia": {
+    "message": "Geórgia"
+  },
+  "verdana": {
+    "message": "Verdana"
+  },
+  "brush_script_mt": {
+    "message": "Script de Pincel MT"
+  },
+  "times_new_roman": {
+    "message": "Tempos Novos Romanos"
+  },
+  "show_more": {
+    "message": "Mostre mais"
+  },
+  "show_less": {
+    "message": "Mostre menos"
+  },
+  "serif": {
+    "message": "Serif"
+  },
+  "monospace": {
+    "message": "Monosespaçada"
+  },
+  "sans": {
+    "message": "sans"
+  },
+  "themes": {
+    "message": "Temas"
+  },
+  "small": {
+    "message": "Pequeno"
+  },
+  "medium": {
+    "message": "Média"
+  },
+  "large": {
+    "message": "grande"
+  },
+  "more": {
+    "message": "MAIS"
+  },
+  "from_noisefill": {
+    "message": "Do Ruisefill"
+  }
+}
