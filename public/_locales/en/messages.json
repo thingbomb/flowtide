@@ -1,5 +1,23 @@
 {
   "title": {
     "message": "Flowtide"
+  },
+  "soundscapes": {
+    "message": "Soundscapes"
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "suggest_feature": {
+    "message": "Suggest a feature"
+  },
+  "light_mode": {
+    "message": "Light mode"
+  },
+  "dark_mode": {
+    "message": "Dark mode"
+  },
+  "system": {
+    "message": "System default"
   }
 }
