@@ -3,21 +3,114 @@
     "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Paisajes sonoros"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Ajustes"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Sugerir una función"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Modo luz"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Modo oscuro"
   },
   "system": {
-    "message": "System default"
+    "message": "Sistema por defecto"
+  },
+  "todos": {
+    "message": "Lista de tareas pendientes"
+  },
+  "todos_description": {
+    "message": "Gestione aquí sus tareas."
+  },
+  "add_todo": {
+    "message": "Añade una nueva tarea"
+  },
+  "clock_size": {
+    "message": "Tamaño del reloj"
+  },
+  "12_hour": {
+    "message": "12 horas"
+  },
+  "24_hour": {
+    "message": "24 horas"
+  },
+  "clock_format": {
+    "message": "Formato del reloj"
+  },
+  "every_day": {
+    "message": "Todos los días"
+  },
+  "every_hour": {
+    "message": "Cada hora"
+  },
+  "as_soon_as_possible": {
+    "message": "Lo antes posible"
+  },
+  "never": {
+    "message": "Nunca"
+  },
+  "gradient": {
+    "message": "Gradiente"
+  },
+  "color_palette": {
+    "message": "Paleta de colores"
+  },
+  "font": {
+    "message": "Fuente"
+  },
+  "wallpaper": {
+    "message": "Papel pintado"
+  },
+  "background": {
+    "message": "Fondo"
+  },
+  "georgia": {
+    "message": "Georgia"
+  },
+  "verdana": {
+    "message": "Verdana"
+  },
+  "brush_script_mt": {
+    "message": "Brush Script MT"
+  },
+  "times_new_roman": {
+    "message": "Times New Roman"
+  },
+  "show_more": {
+    "message": "Ver más"
+  },
+  "show_less": {
+    "message": "Mostrar menos"
+  },
+  "serif": {
+    "message": "Serif"
+  },
+  "monospace": {
+    "message": "Monospace"
+  },
+  "sans": {
+    "message": "Sans"
+  },
+  "themes": {
+    "message": "Temas"
+  },
+  "small": {
+    "message": "Pequeño"
+  },
+  "medium": {
+    "message": "Medio"
+  },
+  "large": {
+    "message": "Grande"
+  },
+  "more": {
+    "message": "Más"
+  },
+  "from_noisefill": {
+    "message": "Desde Noisefill"
   }
 }
