@@ -1,72 +1,72 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "Blomst tid"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Lydlandskap"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Innstillinger"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Foreslå en funksjon"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Lys modus"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Mørkt modus"
   },
   "system": {
-    "message": "System default"
+    "message": "System standard"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Liste over gjøremål"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Administrer oppgavene dine her."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Legg til ny oppgave"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Klokke størrelse"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12-timers"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24-timers"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Klokke format"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Hver dag"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Hver time"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Så snart som mulig"
   },
   "never": {
-    "message": "Never"
+    "message": "Aldri"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Gradert"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Farge Palett"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Bakgrunnsbilde"
   },
   "background": {
-    "message": "Background"
+    "message": "Bakgrunn"
   },
   "georgia": {
     "message": "Georgia"
@@ -78,16 +78,16 @@
     "message": "Brush Script MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "Timer Nye Romere"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Vis mer"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Vis mindre"
   },
   "serif": {
-    "message": "Serif"
+    "message": "Serie"
   },
   "monospace": {
     "message": "Monospace"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Temaer"
   },
   "small": {
-    "message": "Small"
+    "message": "Liten"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Middels"
   },
   "large": {
-    "message": "Large"
+    "message": "Stor"
   },
   "more": {
-    "message": "More"
+    "message": "Mer"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Fra Noisefill"
   }
 }
