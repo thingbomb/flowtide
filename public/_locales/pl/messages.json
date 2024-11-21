@@ -1,116 +1,116 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "Flowtyd"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Dźwięki"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Ustawienia"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Zaproponuj funkcję"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Tryb światła"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Tryb ciemny"
   },
   "system": {
-    "message": "System default"
+    "message": "Domyślny system"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Lista zadań"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Zarządzaj zadaniami tutaj."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Dodaj nowe zadanie"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Rozmiar zegara"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 godzin"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24 godziny"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Format zegara"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Codziennie"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Co godzinę"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Jak najszybciej"
   },
   "never": {
-    "message": "Never"
+    "message": "Nigdy"
   },
   "gradient": {
     "message": "Gradient"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Paleta kolorów"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Tapeta"
   },
   "background": {
-    "message": "Background"
+    "message": "Kontekst"
   },
   "georgia": {
-    "message": "Georgia"
+    "message": "Gruzja"
   },
   "verdana": {
-    "message": "Verdana"
+    "message": "crwdns74646:0crwdne74646:0"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "Pieniądze Skrypt MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "Czasy Nowy Rzymian"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Pokaż więcej"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Pokaż mniej"
   },
   "serif": {
     "message": "Serif"
   },
   "monospace": {
-    "message": "Monospace"
+    "message": "Pieśń"
   },
   "sans": {
-    "message": "Sans"
+    "message": "Sansy"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Motywy"
   },
   "small": {
-    "message": "Small"
+    "message": "Mały"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Średni"
   },
   "large": {
-    "message": "Large"
+    "message": "Duży"
   },
   "more": {
-    "message": "More"
+    "message": "Więcej"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Hałas"
   }
 }

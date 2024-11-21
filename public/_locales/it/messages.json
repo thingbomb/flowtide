@@ -3,70 +3,70 @@
     "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Suonerie"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Impostazioni"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Suggerisci una funzione"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Modalità luce"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Modalità scura"
   },
   "system": {
-    "message": "System default"
+    "message": "Predefinito di sistema"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Elenco cose da fare"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Gestisci le tue attività qui."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Aggiungi una nuova attività"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Dimensione orologio"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 Ore"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24 ore"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Formato orologio"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Ogni giorno"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Ogni ora"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Il più presto possibile"
   },
   "never": {
-    "message": "Never"
+    "message": "Mai"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Gradiente"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Tavolozza Colore"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Sfondo"
   },
   "background": {
-    "message": "Background"
+    "message": "Sfondo"
   },
   "georgia": {
     "message": "Georgia"
@@ -75,16 +75,16 @@
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "Pennello Script MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "Volte Nuovo Romano"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Mostra di più"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Mostra meno"
   },
   "serif": {
     "message": "Serif"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Temi"
   },
   "small": {
-    "message": "Small"
+    "message": "Piccolo"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Medio"
   },
   "large": {
-    "message": "Large"
+    "message": "Grande"
   },
   "more": {
-    "message": "More"
+    "message": "Altro"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Da Noisefill"
   }
 }

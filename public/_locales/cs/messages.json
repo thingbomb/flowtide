@@ -1,72 +1,72 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "Průtoková vlna"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Zvukové vysavače"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Nastavení"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Navrhnout funkci"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Světelný režim"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Tmavý režim"
   },
   "system": {
-    "message": "System default"
+    "message": "Výchozí nastavení systému"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Seznam úkolů"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Spravujte své úkoly zde."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Přidat nový úkol"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Velikost hodin"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12-hodinový"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24 hodin"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Formát hodin"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Každý den"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Každou hodinu"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Co nejdříve"
   },
   "never": {
-    "message": "Never"
+    "message": "Nikdy"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Sklon"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Paleta barev"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Tapeta"
   },
   "background": {
-    "message": "Background"
+    "message": "Pozadí"
   },
   "georgia": {
     "message": "Georgia"
@@ -81,10 +81,10 @@
     "message": "Times New Roman"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Zobrazit více"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Zobrazit méně"
   },
   "serif": {
     "message": "Serif"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Motivy"
   },
   "small": {
-    "message": "Small"
+    "message": "Malá"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Střední"
   },
   "large": {
-    "message": "Large"
+    "message": "Velký"
   },
   "more": {
-    "message": "More"
+    "message": "Více"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Z hlučnosti"
   }
 }

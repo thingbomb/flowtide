@@ -3,114 +3,114 @@
     "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Ηχογραφίες"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Ρυθμίσεις"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Προτείνετε ένα χαρακτηριστικό"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Λειτουργία φωτός"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Σκοτεινή λειτουργία"
   },
   "system": {
-    "message": "System default"
+    "message": "Προεπιλογή συστήματος"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Λίστα προς υλοποίηση"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Διαχειριστείτε τις εργασίες σας εδώ."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Προσθήκη νέας εργασίας"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Μέγεθος ρολογιού"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 ώρες"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24-ωρη"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Μορφή ρολογιού"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Κάθε μέρα"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Κάθε ώρα"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Το συντομότερο δυνατό"
   },
   "never": {
-    "message": "Never"
+    "message": "Ποτέ"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Διαβάθμιση"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Παλέτα Χρωμάτων"
   },
   "font": {
-    "message": "Font"
+    "message": "Γραμματοσειρά"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Φόντο"
   },
   "background": {
-    "message": "Background"
+    "message": "Φόντο"
   },
   "georgia": {
-    "message": "Georgia"
+    "message": "Γεωργία"
   },
   "verdana": {
-    "message": "Verdana"
+    "message": "Βερντάνα"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "Σενάριο Πινέλου MT"
   },
   "times_new_roman": {
     "message": "Times New Roman"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Εμφάνιση περισσότερων"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Εμφάνιση λιγότερων"
   },
   "serif": {
     "message": "Serif"
   },
   "monospace": {
-    "message": "Monospace"
+    "message": "Μονοδιαστημική"
   },
   "sans": {
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Θέματα"
   },
   "small": {
-    "message": "Small"
+    "message": "Μικρό"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Μεσαίο"
   },
   "large": {
-    "message": "Large"
+    "message": "Μεγάλο"
   },
   "more": {
-    "message": "More"
+    "message": "Περισσότερα"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Από Noisefill"
   }
 }

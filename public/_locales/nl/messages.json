@@ -3,70 +3,70 @@
     "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Geluidscapes"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Instellingen"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Stel een functie voor"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Lichte modus"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Donkere modus"
   },
   "system": {
-    "message": "System default"
+    "message": "Standaard systeeminstelling"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "To-dolijst"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Beheer van uw taken."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Een nieuwe taak toevoegen"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Grootte klok"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12-uur"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24-uur"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Klok formaat"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Elke dag"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Elk uur"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Zo snel mogelijk"
   },
   "never": {
-    "message": "Never"
+    "message": "Nooit"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Kleurovergang"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Kleur Palet"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Achtergrond"
   },
   "background": {
-    "message": "Background"
+    "message": "Achtergrond"
   },
   "georgia": {
     "message": "Georgia"
@@ -81,10 +81,10 @@
     "message": "Times New Roman"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Toon meer"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Minder weergeven"
   },
   "serif": {
     "message": "Serif"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Thema’s"
   },
   "small": {
-    "message": "Small"
+    "message": "Klein"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Middelgroot"
   },
   "large": {
-    "message": "Large"
+    "message": "Groot"
   },
   "more": {
-    "message": "More"
+    "message": "Meer"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Van Noisefill"
   }
 }

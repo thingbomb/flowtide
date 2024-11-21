@@ -1,90 +1,90 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "<unk>"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "サウンドスケープ"
   },
   "settings": {
-    "message": "Settings"
+    "message": "設定"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "機能を提案する"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "ライトモード"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "ダークモード"
   },
   "system": {
-    "message": "System default"
+    "message": "システムのデフォルト"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "To-do リスト"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "ここでタスクを管理します。"
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "新しいタスクを追加"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "時計のサイズ"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 時間"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24 時間"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "時計の形式"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "毎日"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "1時間ごと"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "できるだけ早く。"
   },
   "never": {
-    "message": "Never"
+    "message": "一切なし"
   },
   "gradient": {
     "message": "Gradient"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "カラーパレット"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "壁紙"
   },
   "background": {
-    "message": "Background"
+    "message": "背景"
   },
   "georgia": {
-    "message": "Georgia"
+    "message": "ジョージア州"
   },
   "verdana": {
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Brush Script MT"
+    "message": "ブラシスクリプト MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "タイムズ・ニュー・ローマン"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "詳細を表示"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "表示を減らす"
   },
   "serif": {
     "message": "Serif"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "テーマ"
   },
   "small": {
-    "message": "Small"
+    "message": "小"
   },
   "medium": {
-    "message": "Medium"
+    "message": "ミディアム"
   },
   "large": {
-    "message": "Large"
+    "message": "大"
   },
   "more": {
-    "message": "More"
+    "message": "もっと見る"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "ノイズフィルから"
   }
 }

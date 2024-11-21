@@ -1,90 +1,90 @@
 {
   "title": {
-    "message": "Flowtide"
+    "message": "زهرة"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "المناظير الصوتية"
   },
   "settings": {
-    "message": "Settings"
+    "message": "الإعدادات"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "اقترح ميزة"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "وضع الضوء"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "الوضع المظلم"
   },
   "system": {
-    "message": "System default"
+    "message": "النظام الافتراضي"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "قائمة المهام"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "إدارة المهام الخاصة بك هنا."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "إضافة مهمة جديدة"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "حجم الساعة"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12 ساعة"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24 ساعة"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "تنسيق الساعة"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "كل يوم"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "كل ساعة"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "في أقرب وقت ممكن"
   },
   "never": {
-    "message": "Never"
+    "message": "لا"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "متدرج"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "لوحة الألوان"
   },
   "font": {
-    "message": "Font"
+    "message": "الخط"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "الخلفية"
   },
   "background": {
-    "message": "Background"
+    "message": "الخلفية"
   },
   "georgia": {
-    "message": "Georgia"
+    "message": "جورجيا"
   },
   "verdana": {
-    "message": "Verdana"
+    "message": "فردانا"
   },
   "brush_script_mt": {
     "message": "Brush Script MT"
   },
   "times_new_roman": {
-    "message": "Times New Roman"
+    "message": "أوقات رومانية جديدة"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "إظهار المزيد"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "إظهار أقل"
   },
   "serif": {
     "message": "Serif"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "السمات"
   },
   "small": {
-    "message": "Small"
+    "message": "صغير"
   },
   "medium": {
-    "message": "Medium"
+    "message": "متوسط"
   },
   "large": {
-    "message": "Large"
+    "message": "كبير"
   },
   "more": {
-    "message": "More"
+    "message": "المزيد"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "من Noisefill"
   }
 }

@@ -3,70 +3,70 @@
     "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Lydlandskaber"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Indstillinger"
   },
   "suggest_feature": {
-    "message": "Suggest a feature"
+    "message": "Foreslå en funktion"
   },
   "light_mode": {
-    "message": "Light mode"
+    "message": "Lyst tema"
   },
   "dark_mode": {
-    "message": "Dark mode"
+    "message": "Mørkt tema"
   },
   "system": {
-    "message": "System default"
+    "message": "Systemstandard"
   },
   "todos": {
-    "message": "To-do list"
+    "message": "Opgaveliste"
   },
   "todos_description": {
-    "message": "Manage your tasks here."
+    "message": "Administrer dine opgaver her."
   },
   "add_todo": {
-    "message": "Add a new task"
+    "message": "Tilføj en ny opgave"
   },
   "clock_size": {
-    "message": "Clock size"
+    "message": "Urstørrelse"
   },
   "12_hour": {
-    "message": "12-hour"
+    "message": "12-timers"
   },
   "24_hour": {
-    "message": "24-hour"
+    "message": "24-timers"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Urets format"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Hver dag"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Hver time"
   },
   "as_soon_as_possible": {
-    "message": "As soon as possible"
+    "message": "Så hurtigt som muligt"
   },
   "never": {
-    "message": "Never"
+    "message": "Aldrig"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Farvegradient"
   },
   "color_palette": {
-    "message": "Color Palette"
+    "message": "Farvepalet"
   },
   "font": {
-    "message": "Font"
+    "message": "Skrifttype"
   },
   "wallpaper": {
-    "message": "Wallpaper"
+    "message": "Baggrundsbillede"
   },
   "background": {
-    "message": "Background"
+    "message": "Baggrund"
   },
   "georgia": {
     "message": "Georgia"
@@ -81,10 +81,10 @@
     "message": "Times New Roman"
   },
   "show_more": {
-    "message": "Show more"
+    "message": "Vis mere"
   },
   "show_less": {
-    "message": "Show less"
+    "message": "Vis mindre"
   },
   "serif": {
     "message": "Serif"
@@ -96,21 +96,21 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Themes"
+    "message": "Temaer"
   },
   "small": {
-    "message": "Small"
+    "message": "Lille"
   },
   "medium": {
-    "message": "Medium"
+    "message": "Mellem"
   },
   "large": {
-    "message": "Large"
+    "message": "Stor"
   },
   "more": {
-    "message": "More"
+    "message": "Mere"
   },
   "from_noisefill": {
-    "message": "From Noisefill"
+    "message": "Fra Noisefill"
   }
 }
