@@ -1,6 +1,6 @@
 {
   "title": {
-    "message": "Flowtidi"
+    "message": "Flowtide"
   },
   "soundscapes": {
     "message": "Äänimaisemat"
@@ -60,7 +60,7 @@
     "message": "Väripaletti"
   },
   "font": {
-    "message": "Font"
+    "message": "Fontti"
   },
   "wallpaper": {
     "message": "Taustakuva"
@@ -78,7 +78,7 @@
     "message": "Brush Script MT"
   },
   "times_new_roman": {
-    "message": "Ajat Uusi Roomalainen"
+    "message": "Times New Roman"
   },
   "show_more": {
     "message": "Näytä lisää"
@@ -111,6 +111,6 @@
     "message": "Lisää"
   },
   "from_noisefill": {
-    "message": "Melun Täydennyksestä"
+    "message": "Noisefilliltä"
   }
 }
