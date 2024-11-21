@@ -21,7 +21,7 @@
     "message": "Standaard systeeminstelling"
   },
   "todos": {
-    "message": "To-do lijst"
+    "message": "To-dolijst"
   },
   "todos_description": {
     "message": "Beheer van uw taken."
@@ -36,7 +36,7 @@
     "message": "12-uur"
   },
   "24_hour": {
-    "message": "24-uurs"
+    "message": "24-uur"
   },
   "clock_format": {
     "message": "Klok formaat"
@@ -69,16 +69,16 @@
     "message": "Achtergrond"
   },
   "georgia": {
-    "message": "Georgië"
+    "message": "Georgia"
   },
   "verdana": {
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Poft Script MT"
+    "message": "Brush Script MT"
   },
   "times_new_roman": {
-    "message": "Tijdelijk Romeins"
+    "message": "Times New Roman"
   },
   "show_more": {
     "message": "Toon meer"
@@ -93,7 +93,7 @@
     "message": "Monospace"
   },
   "sans": {
-    "message": "Zant"
+    "message": "Sans"
   },
   "themes": {
     "message": "Thema’s"
@@ -105,7 +105,7 @@
     "message": "Middelgroot"
   },
   "large": {
-    "message": "groot"
+    "message": "Groot"
   },
   "more": {
     "message": "Meer"
