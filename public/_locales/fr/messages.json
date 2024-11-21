@@ -1,6 +1,6 @@
 {
   "title": {
-    "message": "Marée Flowale"
+    "message": "Flowtide"
   },
   "soundscapes": {
     "message": "Scènes sonores"
@@ -36,7 +36,7 @@
     "message": "12 heures"
   },
   "24_hour": {
-    "message": "24 heures sur 24"
+    "message": "24 heures"
   },
   "clock_format": {
     "message": "Format horloge"
@@ -69,16 +69,16 @@
     "message": "Arrière-plan"
   },
   "georgia": {
-    "message": "Géorgie"
+    "message": "Georgia"
   },
   "verdana": {
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Brosse Script MT"
+    "message": "Brush Script MT"
   },
   "times_new_roman": {
-    "message": "Nouvelles fois nouveau romain"
+    "message": "Times New Roman"
   },
   "show_more": {
     "message": "Afficher plus"
@@ -90,10 +90,10 @@
     "message": "Serif"
   },
   "monospace": {
-    "message": "Monoespace"
+    "message": "Monospace"
   },
   "sans": {
-    "message": "Sans fil"
+    "message": "Sans"
   },
   "themes": {
     "message": "Thèmes"
