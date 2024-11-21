@@ -1,9 +1,9 @@
 {
   "title": {
-    "message": "Flowtid"
+    "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Soundscapes"
+    "message": "Lydlandskaber"
   },
   "settings": {
     "message": "Indstillinger"
@@ -12,25 +12,25 @@
     "message": "Foreslå en funktion"
   },
   "light_mode": {
-    "message": "Lys tilstand"
+    "message": "Lyst tema"
   },
   "dark_mode": {
-    "message": "Mørk tilstand"
+    "message": "Mørkt tema"
   },
   "system": {
-    "message": "System standard"
+    "message": "Systemstandard"
   },
   "todos": {
-    "message": "Gøremålsliste"
+    "message": "Opgaveliste"
   },
   "todos_description": {
-    "message": "Håndtér dine opgaver her."
+    "message": "Administrer dine opgaver her."
   },
   "add_todo": {
     "message": "Tilføj en ny opgave"
   },
   "clock_size": {
-    "message": "Ur størrelse"
+    "message": "Urstørrelse"
   },
   "12_hour": {
     "message": "12-timers"
@@ -39,7 +39,7 @@
     "message": "24-timers"
   },
   "clock_format": {
-    "message": "Ur format"
+    "message": "Urets format"
   },
   "every_day": {
     "message": "Hver dag"
@@ -54,31 +54,31 @@
     "message": "Aldrig"
   },
   "gradient": {
-    "message": "Overgang"
+    "message": "Farvegradient"
   },
   "color_palette": {
-    "message": "Farve Palet"
+    "message": "Farvepalet"
   },
   "font": {
-    "message": "Font"
+    "message": "Skrifttype"
   },
   "wallpaper": {
-    "message": "Baggrund"
+    "message": "Baggrundsbillede"
   },
   "background": {
     "message": "Baggrund"
   },
   "georgia": {
-    "message": "Georgien"
+    "message": "Georgia"
   },
   "verdana": {
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Børste Script MT"
+    "message": "Brush Script MT"
   },
   "times_new_roman": {
-    "message": "Tider Ny Romersk"
+    "message": "Times New Roman"
   },
   "show_more": {
     "message": "Vis mere"
