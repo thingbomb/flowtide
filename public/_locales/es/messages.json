@@ -114,129 +114,129 @@
     "message": "Desde Noisefill"
   },
   "word_counter": {
-    "message": "Word Counter"
+    "message": "Contador de palabras"
   },
   "character_counter": {
-    "message": "Character Counter"
+    "message": "Contador de caracteres"
   },
   "enter_text": {
-    "message": "Enter some text..."
+    "message": "Escriba algún texto..."
   },
   "type_command": {
-    "message": "Type a command or calculate..."
+    "message": "Escriba un comando o calcule..."
   },
   "no_results": {
-    "message": "No results found."
+    "message": "No se han encontrado resultados."
   },
   "actions": {
-    "message": "Actions"
+    "message": "Acciones"
   },
   "bookmarks": {
-    "message": "Bookmarks"
+    "message": "Marcadores"
   },
   "bookmark_folders": {
-    "message": "Bookmark Folders"
+    "message": "Carpetas de marcadores"
   },
   "tools": {
-    "message": "Tools"
+    "message": "Herramientas"
   },
   "tabs": {
     "message": "Tabs"
   },
   "remove_all_tabs": {
-    "message": "Remove all tabs"
+    "message": "Eliminar todas las pestañas"
   },
   "remove_tabs_confirm": {
-    "message": "Are you sure you want to remove all tabs? Make sure you have saved your work."
+    "message": "¿Está seguro que desea eliminar todas las pestañas? Asegúrese de que ha guardado su trabajo."
   },
   "opened": {
-    "message": "Opened"
+    "message": "Abierto"
   },
   "copied_to_clipboard": {
-    "message": "Copied to clipboard"
+    "message": "Copiado al portapapeles"
   },
   "create_google_document": {
-    "message": "Create Google Document"
+    "message": "Crear documento de Google"
   },
   "create_word_document": {
-    "message": "Create Word Document"
+    "message": "Crear documento Word"
   },
   "create_notion_page": {
-    "message": "Create Notion Page"
+    "message": "Crear página de noción"
   },
   "create_google_sheet": {
-    "message": "Create Google Sheet"
+    "message": "Crear Hoja de Google"
   },
   "compose_gmail_message": {
-    "message": "Compose Gmail Message"
+    "message": "Redactar mensaje de Gmail"
   },
   "create_google_slide": {
-    "message": "Create Google Slide"
+    "message": "Crear Google Slide"
   },
   "create_google_calendar_event": {
-    "message": "Create Google Calendar Event"
+    "message": "Crear Evento del calendario de Google"
   },
   "create_excel_workbook": {
-    "message": "Create Excel Workbook"
+    "message": "Crear libro de trabajo de Excel"
   },
   "create_powerpoint_presentation": {
-    "message": "Create PowerPoint Presentation"
+    "message": "Crear presentación de PowerPoint"
   },
   "create_paper_document": {
-    "message": "Create Paper Document"
+    "message": "Crear documento en papel"
   },
   "create_todoist_task": {
-    "message": "Create Todoist Task"
+    "message": "Crear tarea Todoist"
   },
   "create_github_repository": {
-    "message": "Create GitHub Repository"
+    "message": "Crear repositorio GitHub"
   },
   "create_github_gist": {
-    "message": "Create GitHub Gist"
+    "message": "Crear Gist de GitHub"
   },
   "create_figma_file": {
-    "message": "Create Figma File"
+    "message": "Crear archivo Figma"
   },
   "create_zoom_meeting": {
-    "message": "Create Zoom Meeting"
+    "message": "Crear Reunión Zoom"
   },
   "create_bitly_link": {
-    "message": "Create Bitly Link"
+    "message": "Crear Enlace Bitly"
   },
   "create_canva_design": {
-    "message": "Create Canva Design"
+    "message": "Crear Diseño de Canva"
   },
   "ocean": {
-    "message": "Ocean"
+    "message": "Océano"
   },
   "forest": {
-    "message": "Forest"
+    "message": "Bosque"
   },
   "rain": {
-    "message": "Rain"
+    "message": "Lluvia"
   },
   "river": {
-    "message": "River"
+    "message": "Río"
   },
   "wind": {
-    "message": "Wind"
+    "message": "Viento"
   },
   "fire": {
-    "message": "Fire"
+    "message": "Fuego"
   },
   "desert": {
-    "message": "Desert"
+    "message": "Desierto"
   },
   "arctic": {
-    "message": "Arctic"
+    "message": "Ártico"
   },
   "kettle": {
-    "message": "Kettle"
+    "message": "Hervidor"
   },
   "crickets": {
-    "message": "Crickets"
+    "message": "Gritos"
   },
   "underwater": {
-    "message": "Underwater"
+    "message": "Bajo el agua"
   }
 }
