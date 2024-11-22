@@ -12,22 +12,22 @@
     "message": "Sugerir una función"
   },
   "light_mode": {
-    "message": "Modo luz"
+    "message": "Modo claro"
   },
   "dark_mode": {
     "message": "Modo oscuro"
   },
   "system": {
-    "message": "Sistema por defecto"
+    "message": "Predeterminado del sistema"
   },
   "todos": {
-    "message": "Lista de tareas pendientes"
+    "message": "Lista de tareas"
   },
   "todos_description": {
-    "message": "Gestione aquí sus tareas."
+    "message": "Administra tus tareas aquí."
   },
   "add_todo": {
-    "message": "Añade una nueva tarea"
+    "message": "Agregar nueva tarea"
   },
   "clock_size": {
     "message": "Tamaño del reloj"
@@ -42,7 +42,7 @@
     "message": "Formato del reloj"
   },
   "every_day": {
-    "message": "Todos los días"
+    "message": "Cada día"
   },
   "every_hour": {
     "message": "Cada hora"
@@ -54,7 +54,7 @@
     "message": "Nunca"
   },
   "gradient": {
-    "message": "Gradiente"
+    "message": "Degradado"
   },
   "color_palette": {
     "message": "Paleta de colores"
@@ -63,7 +63,7 @@
     "message": "Fuente"
   },
   "wallpaper": {
-    "message": "Papel pintado"
+    "message": "Fondo de pantalla"
   },
   "background": {
     "message": "Fondo"
@@ -81,7 +81,7 @@
     "message": "Times New Roman"
   },
   "show_more": {
-    "message": "Ver más"
+    "message": "Mostrar más"
   },
   "show_less": {
     "message": "Mostrar menos"
@@ -102,7 +102,7 @@
     "message": "Pequeño"
   },
   "medium": {
-    "message": "Medio"
+    "message": "Mediano"
   },
   "large": {
     "message": "Grande"

@@ -21,71 +21,71 @@ export function CommandPalette(props) {
 
   const initialActions = [
     {
-      name: "Create Google Document",
+      name: chrome.i18n.getMessage("create_google_document"),
       url: "https://docs.new",
     },
     {
-      name: "Create Word Document",
+      name: chrome.i18n.getMessage("create_word_document"),
       url: "https://word.new",
     },
     {
-      name: "Create Notion Page",
+      name: chrome.i18n.getMessage("create_notion_page"),
       url: "https://notion.new",
     },
     {
-      name: "Create Google Sheet",
+      name: chrome.i18n.getMessage("create_google_sheet"),
       url: "https://sheets.new",
     },
     {
-      name: "Compose Gmail Message",
+      name: chrome.i18n.getMessage("compose_gmail_message"),
       url: "https://mail.google.com/mail/u/0/#inbox?compose=new",
     },
     {
-      name: "Create Google Slide",
+      name: chrome.i18n.getMessage("create_google_slide"),
       url: "https://slides.new",
     },
     {
-      name: "Create Google Calendar Event",
+      name: chrome.i18n.getMessage("create_google_calendar_event"),
       url: "https://cal.new",
     },
     {
-      name: "Create Excel Workbook",
+      name: chrome.i18n.getMessage("create_excel_workbook"),
       url: "https://excel.new",
     },
     {
-      name: "Create PowerPoint Presentation",
+      name: chrome.i18n.getMessage("create_powerpoint_presentation"),
       url: "https://powerpoint.new",
     },
     {
-      name: "Create Paper Document",
+      name: chrome.i18n.getMessage("create_paper_document"),
       url: "https://paper.dropbox.com/new",
     },
     {
-      name: "Create Todoist Task",
+      name: chrome.i18n.getMessage("create_todoist_task"),
       url: "https://todoist.new",
     },
     {
-      name: "Create GitHub Repository",
+      name: chrome.i18n.getMessage("create_github_repository"),
       url: "https://github.com/new",
     },
     {
-      name: "Create GitHub Gist",
+      name: chrome.i18n.getMessage("create_github_gist"),
       url: "https://gist.github.com/new",
     },
     {
-      name: "Create Figma File",
+      name: chrome.i18n.getMessage("create_figma_file"),
       url: "https://www.figma.com/file/new",
     },
     {
-      name: "Create Zoom Meeting",
+      name: chrome.i18n.getMessage("create_zoom_meeting"),
       url: "https://zoom.us/start/videomeeting",
     },
     {
-      name: "Create Bitly Link",
+      name: chrome.i18n.getMessage("create_bitly_link"),
       url: "https://bitly.new",
     },
     {
-      name: "Create Canva Design",
+      name: chrome.i18n.getMessage("create_canva_design"),
       url: "https://canva.new",
     },
   ];
@@ -159,7 +159,7 @@ export function CommandPalette(props) {
         !folder.children[i].url.startsWith("javascript")
       ) {
         window.open(folder.children[i].url);
-        toast("Opened " + folder.children[i].title);
+        toast(chrome.i18n.getMessage("opened") + " " + folder.children[i].title);
       }
     }
   };
@@ -221,7 +221,7 @@ export function CommandPalette(props) {
     <>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput
-          placeholder="Type a command or calculate..."
+          placeholder={chrome.i18n.getMessage("type_command")}
           value={inputValue}
           onValueChange={(value) => handleMathInput(value)}
         />
@@ -232,7 +232,7 @@ export function CommandPalette(props) {
               onClick={() => {
                 const copiedResult = result.result;
                 setResult({
-                  result: "Copied to clipboard",
+                  result: chrome.i18n.getMessage("copied_to_clipboard"),
                   copied: true,
                   expression: result.expression,
                 });
@@ -250,9 +250,9 @@ export function CommandPalette(props) {
             </div>
           )}
           <CommandEmpty className="hidden" aria-hidden="false">
-            {result.result == null ? "No results found." : ""}
+            {result.result == null ? chrome.i18n.getMessage("no_results") : ""}
           </CommandEmpty>
-          <CommandGroup heading="Actions">
+          <CommandGroup heading={chrome.i18n.getMessage("actions")}>
             {actions.map((action, index) => (
               <CommandItem
                 key={index}
@@ -263,7 +263,7 @@ export function CommandPalette(props) {
               </CommandItem>
             ))}
           </CommandGroup>
-          <CommandGroup heading="Bookmarks">
+          <CommandGroup heading={chrome.i18n.getMessage("bookmarks")}>
             {bookmarks.map((bookmark) => (
               <CommandItem
                 key={bookmark.name}
@@ -274,7 +274,7 @@ export function CommandPalette(props) {
               </CommandItem>
             ))}
           </CommandGroup>
-          <CommandGroup heading="Bookmark Folders">
+          <CommandGroup heading={chrome.i18n.getMessage("bookmark_folders")}>
             {bookmarkFolders.map((folder) => (
               <CommandItem
                 key={folder.name}
@@ -286,7 +286,7 @@ export function CommandPalette(props) {
             ))}
           </CommandGroup>
 
-          <CommandGroup heading="Tools">
+          <CommandGroup heading={chrome.i18n.getMessage("tools")}>
             <CommandItem
               onSelect={() => {
                 props.setSelectedPage("character-counter");
@@ -294,7 +294,7 @@ export function CommandPalette(props) {
               }}
               className="flex items-center"
             >
-              <span className="text-primary">Character Counter</span>
+              <span className="text-primary">{chrome.i18n.getMessage("character_counter")}</span>
             </CommandItem>
             <CommandItem
               onSelect={() => {
@@ -303,17 +303,17 @@ export function CommandPalette(props) {
               }}
               className="flex items-center"
             >
-              <span className="text-primary">Word Counter</span>
+              <span className="text-primary">{chrome.i18n.getMessage("word_counter")}</span>
             </CommandItem>
           </CommandGroup>
 
-          <CommandGroup heading="Tabs">
+          <CommandGroup heading={chrome.i18n.getMessage("tabs")}>
             <CommandItem
               onSelect={() => {
                 setOpen(false);
                 if (
                   confirm(
-                    "Are you sure you want to remove all tabs? Make sure you have saved your work."
+                    chrome.i18n.getMessage("remove_tabs_confirm")
                   )
                 ) {
                   deleteAllTabs();
@@ -321,7 +321,7 @@ export function CommandPalette(props) {
               }}
               className="flex items-center"
             >
-              <span className="text-primary">Remove all tabs</span>
+              <span className="text-primary">{chrome.i18n.getMessage("remove_all_tabs")}</span>
             </CommandItem>
           </CommandGroup>
         </CommandList>

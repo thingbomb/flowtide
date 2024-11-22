@@ -112,5 +112,131 @@
   },
   "from_noisefill": {
     "message": "From Noisefill"
+  },
+  "word_counter": {
+    "message": "Word Counter"
+  },
+  "character_counter": {
+    "message": "Character Counter"
+  },
+  "enter_text": {
+    "message": "Enter some text..."
+  },
+  "type_command": {
+    "message": "Type a command or calculate..."
+  },
+  "no_results": {
+    "message": "No results found."
+  },
+  "actions": {
+    "message": "Actions"
+  },
+  "bookmarks": {
+    "message": "Bookmarks"
+  },
+  "bookmark_folders": {
+    "message": "Bookmark Folders"
+  },
+  "tools": {
+    "message": "Tools"
+  },
+  "tabs": {
+    "message": "Tabs"
+  },
+  "remove_all_tabs": {
+    "message": "Remove all tabs"
+  },
+  "remove_tabs_confirm": {
+    "message": "Are you sure you want to remove all tabs? Make sure you have saved your work."
+  },
+  "opened": {
+    "message": "Opened"
+  },
+  "copied_to_clipboard": {
+    "message": "Copied to clipboard"
+  },
+  "create_google_document": {
+    "message": "Create Google Document"
+  },
+  "create_word_document": {
+    "message": "Create Word Document"
+  },
+  "create_notion_page": {
+    "message": "Create Notion Page"
+  },
+  "create_google_sheet": {
+    "message": "Create Google Sheet"
+  },
+  "compose_gmail_message": {
+    "message": "Compose Gmail Message"
+  },
+  "create_google_slide": {
+    "message": "Create Google Slide"
+  },
+  "create_google_calendar_event": {
+    "message": "Create Google Calendar Event"
+  },
+  "create_excel_workbook": {
+    "message": "Create Excel Workbook"
+  },
+  "create_powerpoint_presentation": {
+    "message": "Create PowerPoint Presentation"
+  },
+  "create_paper_document": {
+    "message": "Create Paper Document"
+  },
+  "create_todoist_task": {
+    "message": "Create Todoist Task"
+  },
+  "create_github_repository": {
+    "message": "Create GitHub Repository"
+  },
+  "create_github_gist": {
+    "message": "Create GitHub Gist"
+  },
+  "create_figma_file": {
+    "message": "Create Figma File"
+  },
+  "create_zoom_meeting": {
+    "message": "Create Zoom Meeting"
+  },
+  "create_bitly_link": {
+    "message": "Create Bitly Link"
+  },
+  "create_canva_design": {
+    "message": "Create Canva Design"
+  },
+  "ocean": {
+    "message": "Ocean"
+  },
+  "forest": {
+    "message": "Forest"
+  },
+  "rain": {
+    "message": "Rain"
+  },
+  "river": {
+    "message": "River"
+  },
+  "wind": {
+    "message": "Wind"
+  },
+  "fire": {
+    "message": "Fire"
+  },
+  "desert": {
+    "message": "Desert"
+  },
+  "arctic": {
+    "message": "Arctic"
+  },
+  "kettle": {
+    "message": "Kettle"
+  },
+  "crickets": {
+    "message": "Crickets"
+  },
+  "underwater": {
+    "message": "Underwater"
   }
 }

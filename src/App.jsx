@@ -110,7 +110,7 @@ const images = [
   "https://utfs.io/f/D6128dhWEyDgqU31obywZVRpKX0k1mJ7SsTnjir5AQaEdhgv",
   "https://utfs.io/f/D6128dhWEyDgiJIKRVt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F",
   "https://utfs.io/f/D6128dhWEyDgIJFg4p0lbi23Qp80SgzZNnUdGJxath5BoYk9",
-  "https://utfs.io/f/D6128dhWEyDgTmGMBBb2QH4PsORfG0jVebz8vgmlhxCXJqTy",
+  "https://utfs.io/f/D6128dhWEyDgTmGMBBb2QH4PsORfG0jVebz8vgmlhxCXJqTy",  
   "https://utfs.io/f/D6128dhWEyDgcKsSvqHJVK5ha7AgB43xbjIlyeo69GNS8QMp",
   "https://utfs.io/f/D6128dhWEyDgAwfiUqNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd",
   "https://utfs.io/f/D6128dhWEyDgtNb9J4U7Yk2j70f6F4z9pJo8DOqidQIBAyZe",
@@ -299,7 +299,7 @@ function App() {
   );
   const soundscapes = [
     {
-      name: "Ocean",
+      name: chrome.i18n.getMessage("ocean"),
       emoji: "🌊",
       url: "https://utfs.io/f/VU8He2t54NdYu8EVsK5tgWb3e9PanFUMzSxQm0HhV1XofujB",
       volume: 1,
@@ -311,7 +311,7 @@ function App() {
       index: 0,
     },
     {
-      name: "Forest",
+      name: chrome.i18n.getMessage("forest"),
       emoji: "🌴",
       url: "https://utfs.io/f/VU8He2t54NdYuNACgha5tgWb3e9PanFUMzSxQm0HhV1Xofuj",
       volume: 1,
@@ -323,7 +323,7 @@ function App() {
       index: 1,
     },
     {
-      name: "Rain",
+      name: chrome.i18n.getMessage("rain"),
       emoji: "💦",
       url: "https://utfs.io/f/VU8He2t54NdY9vI0WdS2OVPpzlUIsm50S3eRo4JLb68vxBYA",
       volume: 1,
@@ -335,7 +335,7 @@ function App() {
       index: 2,
     },
     {
-      name: "River",
+      name: chrome.i18n.getMessage("river"),
       emoji: "🪨",
       url: "https://utfs.io/f/VU8He2t54NdYd9CJeYhMOCr41owzn9sPYh5cNKJQFBEtaWu0",
       volume: 0.8,
@@ -347,7 +347,7 @@ function App() {
       index: 3,
     },
     {
-      name: "Wind",
+      name: chrome.i18n.getMessage("wind"),
       emoji: "💨",
       url: "https://utfs.io/f/VU8He2t54NdYhES01SIQ6Taob8Wf0SXDOuUA1VKkE9IHx4qd",
       volume: 1,
@@ -359,7 +359,7 @@ function App() {
       index: 4,
     },
     {
-      name: "Fire",
+      name: chrome.i18n.getMessage("fire"),
       emoji: "🔥",
       url: "https://utfs.io/f/VU8He2t54NdYGNe8h39BnItq9LXQlVPu4jNzU1xdaYCM0pF8",
       volume: 1,
@@ -371,7 +371,7 @@ function App() {
       index: 5,
     },
     {
-      name: "Desert",
+      name: chrome.i18n.getMessage("desert"),
       emoji: "🌵",
       url: "https://utfs.io/f/VU8He2t54NdYHpvbBvYhmu5O2LJfYdtvzgw0s3nbQXlkZDFS",
       volume: 1,
@@ -383,7 +383,7 @@ function App() {
       index: 6,
     },
     {
-      name: "Arctic",
+      name: chrome.i18n.getMessage("arctic"),
       emoji: "❄️",
       url: "https://utfs.io/f/VU8He2t54NdY6fCCfMVNjR9Nmtg7h50VGWKc8AQoryMUblvI",
       volume: 0.6,
@@ -395,7 +395,7 @@ function App() {
       index: 7,
     },
     {
-      name: "Kettle",
+      name: chrome.i18n.getMessage("kettle"),
       emoji: "☕️",
       url: "https://utfs.io/f/VU8He2t54NdY59NfzQ6fcCLQl6pk53zFgINtnv9PqHDjbRJy",
       volume: 1,
@@ -407,7 +407,7 @@ function App() {
       index: 8,
     },
     {
-      name: "Crickets",
+      name: chrome.i18n.getMessage("crickets"),
       emoji: "🦗",
       url: "https://utfs.io/f/VU8He2t54NdYOGnYUk45tUV7W1K4ESdzvZfN8Pr2yCwGuTiB",
       volume: 0.2,
@@ -419,7 +419,7 @@ function App() {
       index: 9,
     },
     {
-      name: "Underwater",
+      name: chrome.i18n.getMessage("underwater"),
       emoji: "🐠",
       url: "https://utfs.io/f/VU8He2t54NdYrTIK1A7PtLG5Y82xDew0Ncpqo6IhCjBQRZOn",
       volume: 0.6,
@@ -546,6 +546,8 @@ function App() {
     };
   };
 
+  useEffect(() => {
+
   if (!rendered) {
     if (background === "color") {
       setRendered(true);
@@ -556,6 +558,8 @@ function App() {
       setTime(new Date());
     }, 1000);
   }
+
+  }, [rendered]);
 
   const options = { hour: "2-digit", minute: "2-digit", hour12: clockFormat };
 
@@ -570,13 +574,12 @@ function App() {
           background === "wallpaper"
             ? `url(${
                 selectedImage.url ||
-                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
               })`
-            : "none",
-        backgroundImage: background === "gradient" ? gradient : "none",
+            : (background == "gradient" ? gradient : "none"),
         backgroundColor: background === "color" ? selectedColor : "#000000",
 
-        transition: "background-image 0.4s ease-in-out",
+        transition: "background-image 0.2s ease-in-out",
       }}
       id="app"
     >
@@ -887,7 +890,7 @@ function App() {
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className={cn("w-80 mr-4 max-h-[70vh] overflow-y-auto", currentFont)}
+          className={cn("w-80 mr-4 max-h-[70vh] overflow-y-auto scrollbar", currentFont)}
         >
           <div className="grid gap-4">
             <div className="space-y-2">
