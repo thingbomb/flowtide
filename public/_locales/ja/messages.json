@@ -1,6 +1,6 @@
 {
   "title": {
-    "message": "<unk>"
+    "message": "Flowtide"
   },
   "soundscapes": {
     "message": "サウンドスケープ"
@@ -69,16 +69,16 @@
     "message": "背景"
   },
   "georgia": {
-    "message": "ジョージア州"
+    "message": "Georgia"
   },
   "verdana": {
     "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "ブラシスクリプト MT"
+    "message": "Brush Script MT"
   },
   "times_new_roman": {
-    "message": "タイムズ・ニュー・ローマン"
+    "message": "Times New Roman"
   },
   "show_more": {
     "message": "詳細を表示"
@@ -111,6 +111,6 @@
     "message": "もっと見る"
   },
   "from_noisefill": {
-    "message": "ノイズフィルから"
+    "message": "「ノイズフィルから」"
   }
 }

@@ -1,9 +1,9 @@
 {
   "title": {
-    "message": "Blomst tid"
+    "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Lydlandskap"
+    "message": "Lydlandskaper"
   },
   "settings": {
     "message": "Innstillinger"
@@ -78,7 +78,7 @@
     "message": "Brush Script MT"
   },
   "times_new_roman": {
-    "message": "Timer Nye Romere"
+    "message": "Times New Roman"
   },
   "show_more": {
     "message": "Vis mer"
@@ -87,7 +87,7 @@
     "message": "Vis mindre"
   },
   "serif": {
-    "message": "Serie"
+    "message": "Serif"
   },
   "monospace": {
     "message": "Monospace"
