@@ -18,10 +18,10 @@ export default function WordCounter (props) {
       }}
     >
       <DialogContent className='sm:max-w-[425px]'>
-        <DialogTitle>Word Counter</DialogTitle>
+        <DialogTitle>{chrome.i18n.getMessage("word_counter")}</DialogTitle>
         <div className='flex flex-col items-center justify-center'>
           <Textarea
-            placeholder='Enter some text...'
+            placeholder={chrome.i18n.getMessage("enter_text")}
             value={text}
             onChange={(e) => setText(e.target.value)}
             className='w-full mb-4'

@@ -12,22 +12,22 @@
     "message": "Sugerir una función"
   },
   "light_mode": {
-    "message": "Modo luz"
+    "message": "Modo claro"
   },
   "dark_mode": {
     "message": "Modo oscuro"
   },
   "system": {
-    "message": "Sistema por defecto"
+    "message": "Predeterminado del sistema"
   },
   "todos": {
-    "message": "Lista de tareas pendientes"
+    "message": "Lista de tareas"
   },
   "todos_description": {
-    "message": "Gestione aquí sus tareas."
+    "message": "Administra tus tareas aquí."
   },
   "add_todo": {
-    "message": "Añade una nueva tarea"
+    "message": "Agregar nueva tarea"
   },
   "clock_size": {
     "message": "Tamaño del reloj"
@@ -42,7 +42,7 @@
     "message": "Formato del reloj"
   },
   "every_day": {
-    "message": "Todos los días"
+    "message": "Cada día"
   },
   "every_hour": {
     "message": "Cada hora"
@@ -54,7 +54,7 @@
     "message": "Nunca"
   },
   "gradient": {
-    "message": "Gradiente"
+    "message": "Degradado"
   },
   "color_palette": {
     "message": "Paleta de colores"
@@ -63,7 +63,7 @@
     "message": "Fuente"
   },
   "wallpaper": {
-    "message": "Papel pintado"
+    "message": "Fondo de pantalla"
   },
   "background": {
     "message": "Fondo"
@@ -81,7 +81,7 @@
     "message": "Times New Roman"
   },
   "show_more": {
-    "message": "Ver más"
+    "message": "Mostrar más"
   },
   "show_less": {
     "message": "Mostrar menos"
@@ -102,7 +102,7 @@
     "message": "Pequeño"
   },
   "medium": {
-    "message": "Medio"
+    "message": "Mediano"
   },
   "large": {
     "message": "Grande"
@@ -111,6 +111,132 @@
     "message": "Más"
   },
   "from_noisefill": {
-    "message": "Desde Noisefill"
+    "message": "De Noisefill"
+  },
+  "word_counter": {
+    "message": "Contador de palabras"
+  },
+  "character_counter": {
+    "message": "Contador de caracteres"
+  },
+  "enter_text": {
+    "message": "Ingresa algún texto..."
+  },
+  "type_command": {
+    "message": "Escribe un comando o calcula..."
+  },
+  "no_results": {
+    "message": "No se encontraron resultados."
+  },
+  "actions": {
+    "message": "Acciones"
+  },
+  "bookmarks": {
+    "message": "Marcadores"
+  },
+  "bookmark_folders": {
+    "message": "Carpetas de marcadores"
+  },
+  "tools": {
+    "message": "Herramientas"
+  },
+  "tabs": {
+    "message": "Pestañas"
+  },
+  "remove_all_tabs": {
+    "message": "Eliminar todas las pestañas"
+  },
+  "remove_tabs_confirm": {
+    "message": "¿Estás seguro de que deseas eliminar todas las pestañas? Asegúrate de haber guardado tu trabajo."
+  },
+  "opened": {
+    "message": "Abierto"
+  },
+  "copied_to_clipboard": {
+    "message": "Copiado al portapapeles"
+  },
+  "create_google_document": {
+    "message": "Crear documento de Google"
+  },
+  "create_word_document": {
+    "message": "Crear documento de Word"
+  },
+  "create_notion_page": {
+    "message": "Crear página de Notion"
+  },
+  "create_google_sheet": {
+    "message": "Crear hoja de cálculo de Google"
+  },
+  "compose_gmail_message": {
+    "message": "Redactar mensaje de Gmail"
+  },
+  "create_google_slide": {
+    "message": "Crear presentación de Google"
+  },
+  "create_google_calendar_event": {
+    "message": "Crear evento de Google Calendar"
+  },
+  "create_excel_workbook": {
+    "message": "Crear libro de Excel"
+  },
+  "create_powerpoint_presentation": {
+    "message": "Crear presentación de PowerPoint"
+  },
+  "create_paper_document": {
+    "message": "Crear documento de Paper"
+  },
+  "create_todoist_task": {
+    "message": "Crear tarea de Todoist"
+  },
+  "create_github_repository": {
+    "message": "Crear repositorio de GitHub"
+  },
+  "create_github_gist": {
+    "message": "Crear Gist de GitHub"
+  },
+  "create_figma_file": {
+    "message": "Crear archivo de Figma"
+  },
+  "create_zoom_meeting": {
+    "message": "Crear reunión de Zoom"
+  },
+  "create_bitly_link": {
+    "message": "Crear enlace de Bitly"
+  },
+  "create_canva_design": {
+    "message": "Crear diseño de Canva"
+  },
+  "ocean": {
+    "message": "Océano"
+  },
+  "forest": {
+    "message": "Bosque"
+  },
+  "rain": {
+    "message": "Lluvia"
+  },
+  "river": {
+    "message": "Río"
+  },
+  "wind": {
+    "message": "Viento"
+  },
+  "fire": {
+    "message": "Fuego"
+  },
+  "desert": {
+    "message": "Desierto"
+  },
+  "arctic": {
+    "message": "Ártico"
+  },
+  "kettle": {
+    "message": "Tetera"
+  },
+  "crickets": {
+    "message": "Grillos"
+  },
+  "underwater": {
+    "message": "Bajo el agua"
   }
 }
