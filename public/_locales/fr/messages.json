@@ -114,129 +114,129 @@
     "message": "Depuis Noisefill"
   },
   "word_counter": {
-    "message": "Word Counter"
+    "message": "Compteur de mots"
   },
   "character_counter": {
-    "message": "Character Counter"
+    "message": "Compteur de caractères"
   },
   "enter_text": {
-    "message": "Enter some text..."
+    "message": "Entrez du texte..."
   },
   "type_command": {
-    "message": "Type a command or calculate..."
+    "message": "Tapez une commande ou calculez..."
   },
   "no_results": {
-    "message": "No results found."
+    "message": "Aucun résultat trouvé."
   },
   "actions": {
     "message": "Actions"
   },
   "bookmarks": {
-    "message": "Bookmarks"
+    "message": "Signets"
   },
   "bookmark_folders": {
-    "message": "Bookmark Folders"
+    "message": "Dossiers de marque-pages"
   },
   "tools": {
-    "message": "Tools"
+    "message": "Outils"
   },
   "tabs": {
     "message": "Tabs"
   },
   "remove_all_tabs": {
-    "message": "Remove all tabs"
+    "message": "Supprimer tous les onglets"
   },
   "remove_tabs_confirm": {
-    "message": "Are you sure you want to remove all tabs? Make sure you have saved your work."
+    "message": "Êtes-vous sûr de vouloir supprimer tous les onglets ? Assurez-vous d'avoir sauvegardé votre travail."
   },
   "opened": {
-    "message": "Opened"
+    "message": "Ouvert"
   },
   "copied_to_clipboard": {
-    "message": "Copied to clipboard"
+    "message": "Copié dans le presse-papiers"
   },
   "create_google_document": {
-    "message": "Create Google Document"
+    "message": "Créer un document Google"
   },
   "create_word_document": {
-    "message": "Create Word Document"
+    "message": "Créer un document Word"
   },
   "create_notion_page": {
-    "message": "Create Notion Page"
+    "message": "Créer une page de Notion"
   },
   "create_google_sheet": {
-    "message": "Create Google Sheet"
+    "message": "Créer Google Sheet"
   },
   "compose_gmail_message": {
-    "message": "Compose Gmail Message"
+    "message": "Écrire un message Gmail"
   },
   "create_google_slide": {
-    "message": "Create Google Slide"
+    "message": "Créer un slide Google"
   },
   "create_google_calendar_event": {
-    "message": "Create Google Calendar Event"
+    "message": "Créer un événement Google Agenda"
   },
   "create_excel_workbook": {
-    "message": "Create Excel Workbook"
+    "message": "Créer un classeur Excel"
   },
   "create_powerpoint_presentation": {
-    "message": "Create PowerPoint Presentation"
+    "message": "Créer une présentation PowerPoint"
   },
   "create_paper_document": {
-    "message": "Create Paper Document"
+    "message": "Créer un document papier"
   },
   "create_todoist_task": {
-    "message": "Create Todoist Task"
+    "message": "Créer une tâche Todoist"
   },
   "create_github_repository": {
-    "message": "Create GitHub Repository"
+    "message": "Créer un dépôt GitHub"
   },
   "create_github_gist": {
-    "message": "Create GitHub Gist"
+    "message": "Créer une Gist GitHub"
   },
   "create_figma_file": {
-    "message": "Create Figma File"
+    "message": "Créer un fichier Figma"
   },
   "create_zoom_meeting": {
-    "message": "Create Zoom Meeting"
+    "message": "Créer une réunion Zoom"
   },
   "create_bitly_link": {
-    "message": "Create Bitly Link"
+    "message": "Créer un lien Bitly"
   },
   "create_canva_design": {
-    "message": "Create Canva Design"
+    "message": "Créer un design Canva"
   },
   "ocean": {
-    "message": "Ocean"
+    "message": "Océan"
   },
   "forest": {
-    "message": "Forest"
+    "message": "Forêt"
   },
   "rain": {
-    "message": "Rain"
+    "message": "Pluie"
   },
   "river": {
-    "message": "River"
+    "message": "Rivière"
   },
   "wind": {
-    "message": "Wind"
+    "message": "Vent"
   },
   "fire": {
-    "message": "Fire"
+    "message": "Feu"
   },
   "desert": {
-    "message": "Desert"
+    "message": "Désert"
   },
   "arctic": {
-    "message": "Arctic"
+    "message": "Arctique"
   },
   "kettle": {
-    "message": "Kettle"
+    "message": "Bouilloire"
   },
   "crickets": {
     "message": "Crickets"
   },
   "underwater": {
-    "message": "Underwater"
+    "message": "Sous-marin"
   }
 }
