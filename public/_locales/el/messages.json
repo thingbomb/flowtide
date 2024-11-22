@@ -69,13 +69,13 @@
     "message": "Φόντο"
   },
   "georgia": {
-    "message": "Γεωργία"
+    "message": "Georgia"
   },
   "verdana": {
-    "message": "Βερντάνα"
+    "message": "Verdana"
   },
   "brush_script_mt": {
-    "message": "Σενάριο Πινέλου MT"
+    "message": "Brush Script MT"
   },
   "times_new_roman": {
     "message": "Times New Roman"
@@ -90,7 +90,7 @@
     "message": "Serif"
   },
   "monospace": {
-    "message": "Μονοδιαστημική"
+    "message": "Monospace"
   },
   "sans": {
     "message": "Sans"
