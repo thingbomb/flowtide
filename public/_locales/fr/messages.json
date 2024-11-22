@@ -112,5 +112,131 @@
   },
   "from_noisefill": {
     "message": "Depuis Noisefill"
+  },
+  "word_counter": {
+    "message": "Compteur de mots"
+  },
+  "character_counter": {
+    "message": "Compteur de caractères"
+  },
+  "enter_text": {
+    "message": "Entrez du texte..."
+  },
+  "type_command": {
+    "message": "Tapez une commande ou calculez..."
+  },
+  "no_results": {
+    "message": "Aucun résultat trouvé."
+  },
+  "actions": {
+    "message": "Actions"
+  },
+  "bookmarks": {
+    "message": "Signets"
+  },
+  "bookmark_folders": {
+    "message": "Dossiers de marque-pages"
+  },
+  "tools": {
+    "message": "Outils"
+  },
+  "tabs": {
+    "message": "Tabs"
+  },
+  "remove_all_tabs": {
+    "message": "Supprimer tous les onglets"
+  },
+  "remove_tabs_confirm": {
+    "message": "Êtes-vous sûr de vouloir supprimer tous les onglets ? Assurez-vous d'avoir sauvegardé votre travail."
+  },
+  "opened": {
+    "message": "Ouvert"
+  },
+  "copied_to_clipboard": {
+    "message": "Copié dans le presse-papiers"
+  },
+  "create_google_document": {
+    "message": "Créer un document Google"
+  },
+  "create_word_document": {
+    "message": "Créer un document Word"
+  },
+  "create_notion_page": {
+    "message": "Créer une page de Notion"
+  },
+  "create_google_sheet": {
+    "message": "Créer Google Sheet"
+  },
+  "compose_gmail_message": {
+    "message": "Écrire un message Gmail"
+  },
+  "create_google_slide": {
+    "message": "Créer un slide Google"
+  },
+  "create_google_calendar_event": {
+    "message": "Créer un événement Google Agenda"
+  },
+  "create_excel_workbook": {
+    "message": "Créer un classeur Excel"
+  },
+  "create_powerpoint_presentation": {
+    "message": "Créer une présentation PowerPoint"
+  },
+  "create_paper_document": {
+    "message": "Créer un document papier"
+  },
+  "create_todoist_task": {
+    "message": "Créer une tâche Todoist"
+  },
+  "create_github_repository": {
+    "message": "Créer un dépôt GitHub"
+  },
+  "create_github_gist": {
+    "message": "Créer une Gist GitHub"
+  },
+  "create_figma_file": {
+    "message": "Créer un fichier Figma"
+  },
+  "create_zoom_meeting": {
+    "message": "Créer une réunion Zoom"
+  },
+  "create_bitly_link": {
+    "message": "Créer un lien Bitly"
+  },
+  "create_canva_design": {
+    "message": "Créer un design Canva"
+  },
+  "ocean": {
+    "message": "Océan"
+  },
+  "forest": {
+    "message": "Forêt"
+  },
+  "rain": {
+    "message": "Pluie"
+  },
+  "river": {
+    "message": "Rivière"
+  },
+  "wind": {
+    "message": "Vent"
+  },
+  "fire": {
+    "message": "Feu"
+  },
+  "desert": {
+    "message": "Désert"
+  },
+  "arctic": {
+    "message": "Arctique"
+  },
+  "kettle": {
+    "message": "Bouilloire"
+  },
+  "crickets": {
+    "message": "Crickets"
+  },
+  "underwater": {
+    "message": "Sous-marin"
   }
 }

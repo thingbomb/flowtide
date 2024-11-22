@@ -111,7 +111,7 @@
     "message": "Más"
   },
   "from_noisefill": {
-    "message": "De Noisefill"
+    "message": "Desde Noisefill"
   },
   "word_counter": {
     "message": "Contador de palabras"
@@ -120,13 +120,13 @@
     "message": "Contador de caracteres"
   },
   "enter_text": {
-    "message": "Ingresa algún texto..."
+    "message": "Escriba algún texto..."
   },
   "type_command": {
-    "message": "Escribe un comando o calcula..."
+    "message": "Escriba un comando o calcule..."
   },
   "no_results": {
-    "message": "No se encontraron resultados."
+    "message": "No se han encontrado resultados."
   },
   "actions": {
     "message": "Acciones"
@@ -141,13 +141,13 @@
     "message": "Herramientas"
   },
   "tabs": {
-    "message": "Pestañas"
+    "message": "Tabs"
   },
   "remove_all_tabs": {
     "message": "Eliminar todas las pestañas"
   },
   "remove_tabs_confirm": {
-    "message": "¿Estás seguro de que deseas eliminar todas las pestañas? Asegúrate de haber guardado tu trabajo."
+    "message": "¿Está seguro que desea eliminar todas las pestañas? Asegúrese de que ha guardado su trabajo."
   },
   "opened": {
     "message": "Abierto"
@@ -159,52 +159,52 @@
     "message": "Crear documento de Google"
   },
   "create_word_document": {
-    "message": "Crear documento de Word"
+    "message": "Crear documento Word"
   },
   "create_notion_page": {
-    "message": "Crear página de Notion"
+    "message": "Crear página de noción"
   },
   "create_google_sheet": {
-    "message": "Crear hoja de cálculo de Google"
+    "message": "Crear Hoja de Google"
   },
   "compose_gmail_message": {
     "message": "Redactar mensaje de Gmail"
   },
   "create_google_slide": {
-    "message": "Crear presentación de Google"
+    "message": "Crear Google Slide"
   },
   "create_google_calendar_event": {
-    "message": "Crear evento de Google Calendar"
+    "message": "Crear Evento del calendario de Google"
   },
   "create_excel_workbook": {
-    "message": "Crear libro de Excel"
+    "message": "Crear libro de trabajo de Excel"
   },
   "create_powerpoint_presentation": {
     "message": "Crear presentación de PowerPoint"
   },
   "create_paper_document": {
-    "message": "Crear documento de Paper"
+    "message": "Crear documento en papel"
   },
   "create_todoist_task": {
-    "message": "Crear tarea de Todoist"
+    "message": "Crear tarea Todoist"
   },
   "create_github_repository": {
-    "message": "Crear repositorio de GitHub"
+    "message": "Crear repositorio GitHub"
   },
   "create_github_gist": {
     "message": "Crear Gist de GitHub"
   },
   "create_figma_file": {
-    "message": "Crear archivo de Figma"
+    "message": "Crear archivo Figma"
   },
   "create_zoom_meeting": {
-    "message": "Crear reunión de Zoom"
+    "message": "Crear Reunión Zoom"
   },
   "create_bitly_link": {
-    "message": "Crear enlace de Bitly"
+    "message": "Crear Enlace Bitly"
   },
   "create_canva_design": {
-    "message": "Crear diseño de Canva"
+    "message": "Crear Diseño de Canva"
   },
   "ocean": {
     "message": "Océano"
@@ -231,10 +231,10 @@
     "message": "Ártico"
   },
   "kettle": {
-    "message": "Tetera"
+    "message": "Hervidor"
   },
   "crickets": {
-    "message": "Grillos"
+    "message": "Gritos"
   },
   "underwater": {
     "message": "Bajo el agua"
