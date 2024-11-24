@@ -139,7 +139,7 @@ const images = [
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgiJIKRVt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgIJFg4p0lbi23Qp80SgzZNnUdGJxath5BoYk9&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgTmGMBBb2QH4PsORfG0jVebz8vgmlhxCXJqTy&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgcKsSvqHJVK5ha7AgB43xbjIlyeo69GNS8QMp&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgCksSvqHJVK5ha7AgB43xbjIlyeo69GNS8QMp&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgAwfiUqNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgtNb9J4U7Yk2j70f6F4z9pJo8DOqidQIBAyZe&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgUeWY8K5wM8WVtQaUSJGIPou6nmXpxK1RdvLr&w=828&q=85",
@@ -252,11 +252,12 @@ function App() {
     localStorage.getItem("background") || "wallpaper"
   );
   const [widgetPreferences, setWidgetPreferences] = useState(
-    localStorage.getItem("widgetPreferences") || {
+    JSON.parse(localStorage.getItem("widgetPreferences")) || {
       mantras: "true",
       clock: "false",
       soundscapes: "false",
       todos: "false",
+      bookmarks: "false",
     }
   );
   const [onboardingComplete, setOnboardingComplete] = useState(
@@ -283,6 +284,7 @@ function App() {
     const saved = localStorage.getItem("showCompleted");
     return saved ? JSON.parse(saved) : false;
   });
+  const [bookmarks, setBookmarks] = useState([]);
   const currentFont =
     {
       serif: "font-serif",
@@ -561,6 +563,27 @@ function App() {
     }
   }, [rendered]);
 
+  useEffect(() => {
+    if (widgetPreferences?.bookmarks === "true") {
+      chrome.bookmarks.getTree((bookmarkTreeNodes) => {
+        const flattenBookmarks = (nodes) => {
+          let bookmarks = [];
+          for (const node of nodes) {
+            if (node.url) {
+              bookmarks.push({ name: node.title, url: node.url });
+            }
+            if (node.children) {
+              bookmarks = bookmarks.concat(flattenBookmarks(node.children));
+            }
+          }
+          return bookmarks;
+        };
+        const allBookmarks = flattenBookmarks(bookmarkTreeNodes);
+        setBookmarks(allBookmarks);
+      });
+    }
+  }, [widgetPreferences?.bookmarks]);
+
   const options = { hour: "2-digit", minute: "2-digit", hour12: clockFormat };
 
   const firstUncompletedTask = tasks.find((task) => !task.completed);
@@ -577,7 +600,7 @@ function App() {
           background === "wallpaper"
             ? `url(${
                 selectedImage.url ||
-                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
               })`
             : background == "gradient"
             ? gradient
@@ -634,6 +657,21 @@ function App() {
             <label htmlFor="clock_checkbox">{firstUncompletedTask?.text}</label>
           </div>
         )}
+      {widgetPreferences?.bookmarks === "true" && (
+        <div className="mt-4 grid grid-cols-3 gap-4 max-w-4xl">
+          {bookmarks.map((bookmark, index) => (
+            <div
+              key={index}
+              onClick={() => window.open(bookmark.url, "_blank")}
+              className="p-4 rounded-lg bg-black/20 backdrop-blur-sm hover:bg-black/30 cursor-pointer transition-colors text-white text-center"
+            >
+              <div className="text-sm font-medium truncate">
+                {bookmark.name}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       {selectedPage === "character-counter" && (
         <CharacterCounter setSelectedPage={setSelectedPage} />
       )}
@@ -672,7 +710,10 @@ function App() {
                       });
                       localStorage.setItem(
                         "widgetPreferences",
-                        JSON.stringify(widgetPreferences)
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          clock: checked.toString(),
+                        })
                       );
                     }}
                   />
@@ -695,7 +736,10 @@ function App() {
                       });
                       localStorage.setItem(
                         "widgetPreferences",
-                        JSON.stringify(widgetPreferences)
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          soundscapes: checked.toString(),
+                        })
                       );
                     }}
                   />
@@ -718,7 +762,10 @@ function App() {
                       });
                       localStorage.setItem(
                         "widgetPreferences",
-                        JSON.stringify(widgetPreferences)
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          todos: checked.toString(),
+                        })
                       );
                     }}
                   />
@@ -741,7 +788,10 @@ function App() {
                       });
                       localStorage.setItem(
                         "widgetPreferences",
-                        JSON.stringify(widgetPreferences)
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          mantras: checked.toString(),
+                        })
                       );
                     }}
                   />
@@ -751,6 +801,32 @@ function App() {
                     "
                   >
                     {chrome.i18n.getMessage("mantras")}
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="bookmarks-checkbox"
+                    checked={widgetPreferences?.bookmarks === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        bookmarks: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          bookmarks: checked.toString(),
+                        })
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="bookmarks-checkbox"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("bookmarks")}
                   </label>
                 </div>
               </div>
@@ -1328,6 +1404,59 @@ function App() {
               <a href="https://noisefill.com/">
                 {chrome.i18n.getMessage("from_noisefill")}
               </a>
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
+      {widgetPreferences?.bookmarks == "true" && (
+        <Popover>
+          <PopoverTrigger asChild className="fixed top-0 right-0 z-50 m-4">
+            <Button
+              variant="ghost"
+              aria-label={chrome.i18n.getMessage("bookmarks")}
+              className="select-none text-white"
+            >
+              <Computer className="h-5 w-5" />
+              {chrome.i18n.getMessage("bookmarks")}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className={cn(
+              "w-[300px] h-[300px] mr-4 relative overflow-y-auto scrollbar",
+              currentFont
+            )}
+          >
+            <div>
+              <ul className="flex flex-col gap-2">
+                {bookmarks.map((bookmark, index) => (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      window.open(bookmark.url, "_blank");
+                    }}
+                    className="select-none cursor-pointer"
+                  >
+                    <b>{bookmark.name}</b>
+                    <br />
+                    <span className="text-sm text-gray-500 dark:text-gray-300 break-all">
+                      {bookmark.url}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <br />
+              <button
+                className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
+                onClick={() => {
+                  const name = prompt(chrome.i18n.getMessage("enter_name"));
+                  const url = prompt(chrome.i18n.getMessage("enter_url"));
+                  if (name && url) {
+                    setBookmarks((bookmarks) => [...bookmarks, { name, url }]);
+                  }
+                }}
+              >
+                <span>{chrome.i18n.getMessage("add_bookmark")}</span>
+              </button>
             </div>
           </PopoverContent>
         </Popover>
