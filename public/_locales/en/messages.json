@@ -241,5 +241,8 @@
   },
   "change_time": {
     "message": "Change time"
+  },
+  "show_completed": {
+    "message": "Show completed"
   }
 }

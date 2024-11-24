@@ -232,6 +232,9 @@ function App() {
   const [background, setBackground] = useState(
     localStorage.getItem("background") || "wallpaper"
   );
+  const [onboardingComplete, setOnboardingComplete] = useState(
+    localStorage.getItem("onboardingComplete") || false
+  );
   const [selectedColor, setSelectedColor] = useState(
     colors[Math.floor(Math.random() * colors.length)]
   );
@@ -1131,7 +1134,7 @@ function App() {
                 htmlFor="show-completed"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Show completed
+                {chrome.i18n.getMessage("show_completed")}
               </label>
             </div>
           </div>
