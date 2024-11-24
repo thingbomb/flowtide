@@ -238,13 +238,14 @@ function App() {
   const [gradient, setGradient] = useState(
     gradients[Math.floor(Math.random() * gradients.length)]
   );
-  const [clockFormat, setClockFormat] = useState(
-    localStorage.getItem("clockFormat") === "true"
-  );
-  if (!localStorage.getItem("clockFormat")) {
-    localStorage.setItem("clockFormat", true);
-    setClockFormat(true);
-  }
+  const [clockFormat, setClockFormat] = useState(() => {
+    const format = localStorage.getItem("clockFormat");
+    if (!format) {
+      localStorage.setItem("clockFormat", true);
+      return true;
+    }
+    return format === "true";
+  });
   const [changeTime, setChangeTime] = useState(
     Number(localStorage.getItem("changeTime")) ?? 1000 * 60 * 60 * 24
   );
