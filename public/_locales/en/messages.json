@@ -238,5 +238,8 @@
   },
   "underwater": {
     "message": "Underwater"
+  },
+  "change_time": {
+    "message": "Change time"
   }
 }

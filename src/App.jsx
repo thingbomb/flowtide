@@ -32,6 +32,15 @@ import {
 } from "./components/ui/popover";
 import { Checkbox } from "./components/ui/checkbox";
 import { Input } from "./components/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./components/ui/sheet";
+import { Check } from "lucide-react";
 
 const dbName = "flowtide";
 const dbVersion = 1;
@@ -148,7 +157,7 @@ const images = [
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg4WqtWZM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgi15T1ot6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgW3K0VFYlqogbO3dBTsVQXGnieNvtfrkFAD6m&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgF8H5kJEqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0b&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgF8H5kJEqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0bN&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgbKtPnPx81ygt4ZMWafIGx7D5hXKuievPCw2j&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgCdqG7ufbyhE3LuGsRM1Q9oZP0elv4nkDgpiV&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgvPpz4v1pj2S0Q8hV1swqFYn5G6r7uBtaxJRb&w=828&q=85",
@@ -164,48 +173,6 @@ const images = [
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg9kRrVXa8RVfu1gx4OIi5P0XzENoc6UevLsTH&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgsRh7JoOpbzeJNEyfZxSXg9nk4lVGrw3Lc2vR&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgf9StBe3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgoy2oawiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgDGdP5NhWEyDguin6VpMtwF7PGLzbfvBJah1e&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgfbYNAC3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgSfppqlnj38Q4IFcMKp2Ty07imVZ5DzWkJj9R&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgFZtwDUqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0bN&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgnvzPPyvXzHwgo4CriD32JdTa19yM8ZLNcqUK&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgDlFXCdjhWEyDguin6VpMtwF7PGLzbfvBJah1&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgX1ZM5flrohSmd1bgqzcURawVyYNpnTI6ZHF7&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgTU68NQb2QH4PsORfG0jVebz8vgmlhxCXJqTy&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgyJek2382sbnctFEejWoHDi1YUqJ3mKgNxXVp&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgLgnobwGNstaRSlyigdBT4Z1mYhMbVIJX8Apw&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg8VoytxWZkzE6wj21eODm3Rc9T80Up5lBgMFW&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgO0oANfuBovmrawFceg0UJ1y5Z2AYiuxQkdft&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgdMfTsPUwXK86uSIDEUgqpYfM9eGxV0WbCZtm&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgX6WmxerohSmd1bgqzcURawVyYNpnTI6ZHF7Q&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgrZxklVbvENtxud2o9LcAq8nvS7MUlfZIsJP3&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgrhWfapvENtxud2o9LcAq8nvS7MUlfZIsJP3k&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgrZo5i2lvENtxud2o9LcAq8nvS7MUlfZIsJP3&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg3h79WYsT4wRBpgx589YjAqGOEbI6cHUrvzyi&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgA5UQPP9Nj6EKR2Bcz3sxD4SqVIW5pPCah8eF&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgZGatISIkzZ4aTb98m0VCO1weSjMrouvUcHyf&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgf9PnwQ3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgPymeM0wFAiRv7GzkQ3tZcUSmjrNd6VExw9Jh&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgiAzGa9rt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgcV74h1HJVK5ha7AgB43xbjIlyeo69GNS8QMp&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgnf7kKKXzHwgo4CriD32JdTa19yM8ZLNcqUKp&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgbhFEmcx81ygt4ZMWafIGx7D5hXKuievPCw2j&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgtQMTCT7Yk2j70f6F4z9pJo8DOqidQIBAyZea&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgcKM9J3HJVK5ha7AgB43xbjIlyeo69GNS8QMp&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgdYYjI4wXK86uSIDEUgqpYfM9eGxV0WbCZtmv&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgMizHNHSWeD3fHMoznm16ktdqXB5P2FAvcQYr&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg9Q11cra8RVfu1gx4OIi5P0XzENoc6UevLsTH&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgc2pLX2HJVK5ha7AgB43xbjIlyeo69GNS8QMp&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgX7B2egrohSmd1bgqzcURawVyYNpnTI6ZHF7Q&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgMCom0DSWeD3fHMoznm16ktdqXB5P2FAvcQYr&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgfOu6yit3F3lNqIcvyjnSp4QJ8wLAbu6HVXko&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgj38qusNCauIRlyF5cXsTSoUEtBnD6whdYNjr&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgAPsh32Nj6EKR2Bcz3sxD4SqVIW5pPCah8eFd&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgY3kOKQBhrxmiLdCbNpEqOP2MwcaY3ujAz9S8&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgDUXx8IhWEyDguin6VpMtwF7PGLzbfvBJah1e&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgtfJXKX7Yk2j70f6F4z9pJo8DOqidQIBAyZea&w=828&q=85",
-  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDguIyIIynDuFQ2svylY84Sn1mfp3dRxNrObqWU&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgoIzrOBiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgtLllhn7Yk2j70f6F4z9pJo8DOqidQIBAyZea&w=828&q=85",
   "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgXJKPG7rohSmd1bgqzcURawVyYNpnTI6ZHF7Q&w=828&q=85",
@@ -331,7 +298,7 @@ function App() {
         "Rain.wav by idomusics -- https://freesound.org/s/518863/ -- License: Creative Commons 0",
       ],
       image:
-        "https://utfs.io/f/VU8He2t54NdYObTBgr45tUV7W1K4ESdzvZfN8Pr2yCwGuTiB",
+        "https://utfs.io/f/VU8He2t54NdYOYYMxdZ45tUV7W1K4ESdzvZfN8Pr2yCwGuTiB",
       index: 2,
     },
     {
@@ -573,7 +540,7 @@ function App() {
           background === "wallpaper"
             ? `url(${
                 selectedImage.url ||
-                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
               })`
             : background == "gradient"
             ? gradient
@@ -609,277 +576,404 @@ function App() {
       {selectedPage === "word-counter" && (
         <WordCounter setSelectedPage={setSelectedPage} />
       )}
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild className="fixed bottom-0 left-0 z-50 m-4">
+      <Sheet>
+        <SheetTrigger asChild>
           <Button
             variant="ghost"
             aria-label={chrome.i18n.getMessage("settings")}
-            className="select-none text-white"
+            className="text-white select-none absolute bottom-0 left-0 m-4"
           >
             <SettingsIcon className="h-5 w-5" />
             {chrome.i18n.getMessage("settings")}
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className={cn("w-56 ml-4", currentFont)}>
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("themes")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setTheme("dark");
-              localStorage.setItem("theme", "dark");
-            }}
-            checked={theme === "dark"}
-          >
-            <span>{chrome.i18n.getMessage("dark_mode")}</span>
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setTheme("light");
-              localStorage.setItem("theme", "light");
-            }}
-            checked={theme === "light"}
-          >
-            <span>{chrome.i18n.getMessage("light_mode")}</span>
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setTheme("system");
-              localStorage.setItem("theme", "system");
-            }}
-            checked={theme === "system"}
-          >
-            <span>{chrome.i18n.getMessage("system")}</span>
-          </DropdownMenuCheckboxItem>
-          <br />
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("font")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setFont("sans");
-              localStorage.setItem("font", "sans");
-            }}
-            checked={font === "sans"}
-          >
-            {chrome.i18n.getMessage("sans")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setFont("monospace");
-              localStorage.setItem("font", "monospace");
-            }}
-            checked={font === "monospace"}
-          >
-            {chrome.i18n.getMessage("monospace")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setFont("serif");
-              localStorage.setItem("font", "serif");
-            }}
-            checked={font === "serif"}
-          >
-            {chrome.i18n.getMessage("serif")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={(e) => {
-              e.preventDefault();
-              setShowMoreFonts((prev) => !prev);
-            }}
-          >
-            {showMoreFonts
-              ? chrome.i18n.getMessage("show_less")
-              : chrome.i18n.getMessage("show_more")}
-          </DropdownMenuCheckboxItem>
-          {showMoreFonts && (
-            <>
-              <DropdownMenuCheckboxItem
-                onClick={() => {
-                  setFont("times-new-roman");
-                  localStorage.setItem("font", "times-new-roman");
-                }}
-                checked={font === "times-new-roman"}
-              >
-                {chrome.i18n.getMessage("times_new_roman")}
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                onClick={() => {
-                  setFont("verdana");
-                  localStorage.setItem("font", "verdana");
-                }}
-                checked={font === "verdana"}
-              >
-                {chrome.i18n.getMessage("verdana")}
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                onClick={() => {
-                  setFont("georgia");
-                  localStorage.setItem("font", "georgia");
-                }}
-                checked={font === "georgia"}
-              >
-                {chrome.i18n.getMessage("georgia")}
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                onClick={() => {
-                  setFont("brush-script-mt");
-                  localStorage.setItem("font", "brush-script-mt");
-                }}
-                checked={font === "brush-script-mt"}
-              >
-                {chrome.i18n.getMessage("brush_script_mt")}
-              </DropdownMenuCheckboxItem>
-            </>
-          )}
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("background")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setBackground("wallpaper");
-              localStorage.setItem("background", "wallpaper");
-              window.location.reload();
-            }}
-            checked={background === "wallpaper"}
-          >
-            {chrome.i18n.getMessage("wallpaper")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setBackground("color");
-              localStorage.setItem("background", "color");
-              window.location.reload();
-            }}
-            checked={background === "color"}
-          >
-            {chrome.i18n.getMessage("color_palette")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setBackground("gradient");
-              localStorage.setItem("background", "gradient");
-              window.location.reload();
-            }}
-            checked={background === "gradient"}
-          >
-            {chrome.i18n.getMessage("gradient")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>Change photo</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setChangeTime(Infinity);
-              localStorage.setItem("changeTime", Infinity);
-              removeCache();
-              loadNewImage(false);
-            }}
-            checked={changeTime === Infinity}
-          >
-            {chrome.i18n.getMessage("never")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setChangeTime(0);
-              localStorage.setItem("changeTime", 0);
-              removeCache();
-              loadNewImage(false);
-            }}
-            checked={changeTime === 0}
-          >
-            {chrome.i18n.getMessage("as_soon_as_possible")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setChangeTime(1000 * 60 * 60);
-              localStorage.setItem("changeTime", 1000 * 60 * 60);
-              removeCache();
-              loadNewImage(false);
-            }}
-            checked={changeTime == 1000 * 60 * 60}
-          >
-            {chrome.i18n.getMessage("every_hour")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setChangeTime(1000 * 60 * 60 * 24);
-              localStorage.setItem("changeTime", 1000 * 60 * 60 * 24);
-              removeCache();
-              loadNewImage(false);
-            }}
-            checked={changeTime == 1000 * 60 * 60 * 24}
-          >
-            {chrome.i18n.getMessage("every_day")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("clock_format")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockFormat(true);
-              localStorage.setItem("clockFormat", "true");
-            }}
-            checked={clockFormat}
-          >
-            {chrome.i18n.getMessage("12_hour")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockFormat(false);
-              localStorage.setItem("clockFormat", "false");
-            }}
-            checked={!clockFormat}
-          >
-            {chrome.i18n.getMessage("24_hour")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("clock_size")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockSize("small");
-              localStorage.setItem("clockSize", "small");
-            }}
-            checked={clockSize === "small"}
-          >
-            {chrome.i18n.getMessage("small")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockSize("medium");
-              localStorage.setItem("clockSize", "medium");
-            }}
-            checked={clockSize === "medium"}
-          >
-            {chrome.i18n.getMessage("medium")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockSize("large");
-              localStorage.setItem("clockSize", "large");
-            }}
-            checked={clockSize === "large"}
-          >
-            {chrome.i18n.getMessage("large")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("more")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              window.open("https://tally.so/r/3NB8vj");
-            }}
-          >
-            {chrome.i18n.getMessage("suggest_feature")}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </SheetTrigger>
+        <SheetContent className="overflow-y-auto" side="left">
+          <SheetHeader>
+            <SheetTitle>{chrome.i18n.getMessage("settings")}</SheetTitle>
+          </SheetHeader>
+          <div className="grid gap-4 py-4">
+            <div className="space-y-4">
+              <h4 className="font-medium">{chrome.i18n.getMessage("theme")}</h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    theme === "dark" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setTheme("dark");
+                    localStorage.setItem("theme", "dark");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("dark_mode")}</span>
+                  {theme === "dark" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    theme === "light" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setTheme("light");
+                    localStorage.setItem("theme", "light");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("light_mode")}</span>
+                  {theme === "light" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    theme === "system" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setTheme("system");
+                    localStorage.setItem("theme", "system");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("system")}</span>
+                  {theme === "system" && <Check className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">{chrome.i18n.getMessage("font")}</h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    font === "sans" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setFont("sans");
+                    localStorage.setItem("font", "sans");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("sans")}</span>
+                  {font === "sans" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    font === "monospace" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setFont("monospace");
+                    localStorage.setItem("font", "monospace");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("monospace")}</span>
+                  {font === "monospace" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    font === "serif" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setFont("serif");
+                    localStorage.setItem("font", "serif");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("serif")}</span>
+                  {font === "serif" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowMoreFonts((prev) => !prev);
+                  }}
+                >
+                  <span>
+                    {showMoreFonts
+                      ? chrome.i18n.getMessage("show_less")
+                      : chrome.i18n.getMessage("show_more")}
+                  </span>
+                </button>
+                {showMoreFonts && (
+                  <div className="space-y-2">
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-md px-3 py-2",
+                        font === "times-new-roman" && "bg-accent"
+                      )}
+                      onClick={() => {
+                        setFont("times-new-roman");
+                        localStorage.setItem("font", "times-new-roman");
+                      }}
+                    >
+                      <span>{chrome.i18n.getMessage("times_new_roman")}</span>
+                      {font === "times-new-roman" && (
+                        <Check className="h-4 w-4" />
+                      )}
+                    </button>
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-md px-3 py-2",
+                        font === "verdana" && "bg-accent"
+                      )}
+                      onClick={() => {
+                        setFont("verdana");
+                        localStorage.setItem("font", "verdana");
+                      }}
+                    >
+                      <span>{chrome.i18n.getMessage("verdana")}</span>
+                      {font === "verdana" && <Check className="h-4 w-4" />}
+                    </button>
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-md px-3 py-2",
+                        font === "georgia" && "bg-accent"
+                      )}
+                      onClick={() => {
+                        setFont("georgia");
+                        localStorage.setItem("font", "georgia");
+                      }}
+                    >
+                      <span>{chrome.i18n.getMessage("georgia")}</span>
+                      {font === "georgia" && <Check className="h-4 w-4" />}
+                    </button>
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-md px-3 py-2",
+                        font === "brush-script-mt" && "bg-accent"
+                      )}
+                      onClick={() => {
+                        setFont("brush-script-mt");
+                        localStorage.setItem("font", "brush-script-mt");
+                      }}
+                    >
+                      <span>{chrome.i18n.getMessage("brush_script_mt")}</span>
+                      {font === "brush-script-mt" && (
+                        <Check className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("background")}
+              </h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    background === "wallpaper" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setBackground("wallpaper");
+                    localStorage.setItem("background", "wallpaper");
+                    window.location.reload();
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("wallpaper")}</span>
+                  {background === "wallpaper" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    background === "color" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setBackground("color");
+                    localStorage.setItem("background", "color");
+                    window.location.reload();
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("color_palette")}</span>
+                  {background === "color" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    background === "gradient" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setBackground("gradient");
+                    localStorage.setItem("background", "gradient");
+                    window.location.reload();
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("gradient")}</span>
+                  {background === "gradient" && <Check className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("change_time")}
+              </h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    changeTime === Infinity && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setChangeTime(Infinity);
+                    localStorage.setItem("changeTime", Infinity);
+                    removeCache();
+                    loadNewImage(false);
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("never")}</span>
+                  {changeTime === Infinity && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    changeTime === 0 && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setChangeTime(0);
+                    localStorage.setItem("changeTime", 0);
+                    removeCache();
+                    loadNewImage(false);
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("as_soon_as_possible")}</span>
+                  {changeTime === 0 && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    changeTime === 1000 * 60 * 60 && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setChangeTime(1000 * 60 * 60);
+                    localStorage.setItem("changeTime", 1000 * 60 * 60);
+                    removeCache();
+                    loadNewImage(false);
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("every_hour")}</span>
+                  {changeTime === 1000 * 60 * 60 && (
+                    <Check className="h-4 w-4" />
+                  )}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    changeTime === 1000 * 60 * 60 * 24 && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setChangeTime(1000 * 60 * 60 * 24);
+                    localStorage.setItem("changeTime", 1000 * 60 * 60 * 24);
+                    removeCache();
+                    loadNewImage(false);
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("every_day")}</span>
+                  {changeTime === 1000 * 60 * 60 * 24 && (
+                    <Check className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("clock_format")}
+              </h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    clockFormat && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockFormat(true);
+                    localStorage.setItem("clockFormat", "true");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("12_hour")}</span>
+                  {clockFormat && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    !clockFormat && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockFormat(false);
+                    localStorage.setItem("clockFormat", "false");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("24_hour")}</span>
+                  {!clockFormat && <Check className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("clock_size")}
+              </h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    clockSize === "small" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockSize("small");
+                    localStorage.setItem("clockSize", "small");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("small")}</span>
+                  {clockSize === "small" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    clockSize === "medium" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockSize("medium");
+                    localStorage.setItem("clockSize", "medium");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("medium")}</span>
+                  {clockSize === "medium" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    clockSize === "large" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockSize("large");
+                    localStorage.setItem("clockSize", "large");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("large")}</span>
+                  {clockSize === "large" && <Check className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">{chrome.i18n.getMessage("more")}</h4>
+              <div className="space-y-2">
+                <button
+                  className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
+                  onClick={() => {
+                    window.open("https://tally.so/r/3NB8vj");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("suggest_feature")}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
       <Popover>
         <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
           <Button
