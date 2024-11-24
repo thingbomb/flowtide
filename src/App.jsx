@@ -248,6 +248,10 @@ function App() {
   const [changeTime, setChangeTime] = useState(
     Number(localStorage.getItem("changeTime")) ?? 1000 * 60 * 60 * 24
   );
+  const [showCompleted, setShowCompleted] = useState(() => {
+    const saved = localStorage.getItem("showCompleted");
+    return saved ? JSON.parse(saved) : false;
+  });
   const currentFont =
     {
       serif: "font-serif",
@@ -542,7 +546,7 @@ function App() {
           background === "wallpaper"
             ? `url(${
                 selectedImage.url ||
-                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
               })`
             : background == "gradient"
             ? gradient
@@ -1024,67 +1028,71 @@ function App() {
               </p>
             </div>
             <div id="tasks">
-              {tasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex items-center justify-between gap-4"
-                >
-                  <div className="flex items-center gap-3">
-                    <Checkbox
-                      checked={task.completed}
-                      onCheckedChange={(checked) => {
-                        setTasks((tasks) =>
-                          tasks.map((t) =>
-                            t.id === task.id ? { ...t, completed: checked } : t
-                          )
-                        );
-                      }}
-                    />
-                    <span
-                      className="text-sm font-medium leading-none select-none focus-within:select-all outline-none"
-                      onDoubleClick={(e) => {
-                        e.target.contentEditable = "true";
-                        e.target.focus();
-                      }}
-                      onBlur={(e) => {
-                        e.target.contentEditable = "false";
-                        setTasks((tasks) =>
-                          tasks.map((t) =>
-                            t.id === task.id
-                              ? { ...t, text: e.target.innerText }
-                              : t
-                          )
-                        );
-                      }}
-                    >
-                      {task.text}
-                    </span>
+              {tasks
+                .filter((task) => showCompleted || !task.completed)
+                .map((task) => (
+                  <div
+                    key={task.id}
+                    className="flex items-center justify-between gap-4"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        checked={task.completed}
+                        onCheckedChange={(checked) => {
+                          setTasks((tasks) =>
+                            tasks.map((t) =>
+                              t.id === task.id
+                                ? { ...t, completed: checked }
+                                : t
+                            )
+                          );
+                        }}
+                      />
+                      <span
+                        className="text-sm font-medium leading-none select-none focus-within:select-all outline-none"
+                        onDoubleClick={(e) => {
+                          e.target.contentEditable = "true";
+                          e.target.focus();
+                        }}
+                        onBlur={(e) => {
+                          e.target.contentEditable = "false";
+                          setTasks((tasks) =>
+                            tasks.map((t) =>
+                              t.id === task.id
+                                ? { ...t, text: e.target.innerText }
+                                : t
+                            )
+                          );
+                        }}
+                      >
+                        {task.text}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          setTasks((tasks) =>
+                            tasks.filter((t) => t.id !== task.id)
+                          );
+                        }}
+                      >
+                        <Trash className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          setTaskInput(task.text);
+                          setTasks((tasks) =>
+                            tasks.filter((t) => t.id !== task.id)
+                          );
+                        }}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setTasks((tasks) =>
-                          tasks.filter((t) => t.id !== task.id)
-                        );
-                      }}
-                    >
-                      <Trash className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setTaskInput(task.text);
-                        setTasks((tasks) =>
-                          tasks.filter((t) => t.id !== task.id)
-                        );
-                      }}
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
             <div className="flex items-center gap-2">
               <Input
@@ -1105,6 +1113,25 @@ function App() {
               >
                 <Plus className="h-4 w-4" />
               </Button>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="show-completed"
+                checked={showCompleted}
+                onCheckedChange={(checked) => {
+                  setShowCompleted(checked);
+                  localStorage.setItem(
+                    "showCompleted",
+                    JSON.stringify(checked)
+                  );
+                }}
+              />
+              <label
+                htmlFor="show-completed"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Show completed
+              </label>
             </div>
           </div>
         </PopoverContent>
