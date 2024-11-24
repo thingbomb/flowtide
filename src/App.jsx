@@ -44,6 +44,25 @@ import { Check } from "lucide-react";
 
 const dbName = "flowtide";
 const dbVersion = 1;
+const mantras = [
+  "mantra_1",
+  "mantra_2",
+  "mantra_3",
+  "mantra_4",
+  "mantra_5",
+  "mantra_6",
+  "mantra_7",
+  "mantra_8",
+  "mantra_9",
+  "mantra_10",
+  "mantra_11",
+  "mantra_12",
+  "mantra_13",
+  "mantra_14",
+  "mantra_15",
+];
+
+const randomMantra = mantras[Math.floor(Math.random() * mantras.length)];
 
 const openDB = () => {
   return new Promise((resolve, reject) => {
@@ -231,6 +250,14 @@ function App() {
   const [rendered, setRendered] = useState(false);
   const [background, setBackground] = useState(
     localStorage.getItem("background") || "wallpaper"
+  );
+  const [widgetPreferences, setWidgetPreferences] = useState(
+    localStorage.getItem("widgetPreferences") || {
+      mantras: "true",
+      clock: "false",
+      soundscapes: "false",
+      todos: "false",
+    }
   );
   const [onboardingComplete, setOnboardingComplete] = useState(
     localStorage.getItem("onboardingComplete") || false
@@ -578,29 +605,35 @@ function App() {
         })}
         style={{ color: "#FFFFFF" }}
       >
-        {time.toLocaleTimeString(undefined, options)}
+        {widgetPreferences?.clock === "true" &&
+          time.toLocaleTimeString(undefined, options)}
       </h1>
-      {tasks.some((task) => !task.completed) && (
-        <div
-          id="checkbox-container"
-          className="flex items-center gap-2 text-xl mt-3"
-        >
-          <Checkbox
-            id="clock_checkbox"
-            onCheckedChange={(checked) => {
-              setTasks((tasks) =>
-                tasks.map((t) =>
-                  t.id === firstUncompletedTask.id
-                    ? { ...t, completed: checked }
-                    : t
-                )
-              );
-            }}
-            checked={false}
-          />
-          <label htmlFor="clock_checkbox">{firstUncompletedTask?.text}</label>
-        </div>
-      )}
+      <h3 className="text-2xl mt-3 text-shadow-lg">
+        {widgetPreferences?.mantras === "true" &&
+          chrome.i18n.getMessage(randomMantra)}
+      </h3>
+      {widgetPreferences?.todos === "true" &&
+        tasks.some((task) => !task.completed) && (
+          <div
+            id="checkbox-container"
+            className="flex items-center gap-2 text-xl mt-3"
+          >
+            <Checkbox
+              id="clock_checkbox"
+              onCheckedChange={(checked) => {
+                setTasks((tasks) =>
+                  tasks.map((t) =>
+                    t.id === firstUncompletedTask.id
+                      ? { ...t, completed: checked }
+                      : t
+                  )
+                );
+              }}
+              checked={false}
+            />
+            <label htmlFor="clock_checkbox">{firstUncompletedTask?.text}</label>
+          </div>
+        )}
       {selectedPage === "character-counter" && (
         <CharacterCounter setSelectedPage={setSelectedPage} />
       )}
@@ -624,7 +657,108 @@ function App() {
           </SheetHeader>
           <div className="grid gap-4 py-4">
             <div className="space-y-4">
-              <h4 className="font-medium">{chrome.i18n.getMessage("theme")}</h4>
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("features")}
+              </h4>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="clock"
+                    checked={widgetPreferences?.clock === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        clock: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify(widgetPreferences)
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="clock"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("clock")}
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="soundscapes-checkbox"
+                    checked={widgetPreferences?.soundscapes === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        soundscapes: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify(widgetPreferences)
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="soundscapes-checkbox"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("soundscapes")}
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="todos-check"
+                    checked={widgetPreferences?.todos === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        todos: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify(widgetPreferences)
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="todos-check"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("todos")}
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="mantras-checkbox"
+                    checked={widgetPreferences?.mantras === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        mantras: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify(widgetPreferences)
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="mantras-checkbox"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("mantras")}
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("themes")}
+              </h4>
               <div className="space-y-2">
                 <button
                   className={cn(
@@ -1005,195 +1139,199 @@ function App() {
           </div>
         </SheetContent>
       </Sheet>
-      <Popover>
-        <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
-          <Button
-            variant="ghost"
-            aria-label="To-do list"
-            className="text-white select-none"
+      {widgetPreferences?.todos == "true" && (
+        <Popover>
+          <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
+            <Button
+              variant="ghost"
+              aria-label="To-do list"
+              className="text-white select-none"
+            >
+              <List className="h-5 w-5" />
+              {chrome.i18n.getMessage("todos")}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className={cn(
+              "w-80 mr-4 max-h-[70vh] overflow-y-auto scrollbar",
+              currentFont
+            )}
           >
-            <List className="h-5 w-5" />
-            {chrome.i18n.getMessage("todos")}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className={cn(
-            "w-80 mr-4 max-h-[70vh] overflow-y-auto scrollbar",
-            currentFont
-          )}
-        >
-          <div className="grid gap-4">
-            <div className="space-y-2">
-              <h1 className="text-2xl font-bold leading-none">
-                {chrome.i18n.getMessage("todos")}
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                {chrome.i18n.getMessage("todos_description")}
-              </p>
-            </div>
-            <div id="tasks">
-              {tasks
-                .filter((task) => showCompleted || !task.completed)
-                .map((task) => (
-                  <div
-                    key={task.id}
-                    className="flex items-center justify-between gap-4"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Checkbox
-                        checked={task.completed}
-                        onCheckedChange={(checked) => {
-                          setTasks((tasks) =>
-                            tasks.map((t) =>
-                              t.id === task.id
-                                ? { ...t, completed: checked }
-                                : t
-                            )
-                          );
-                        }}
-                      />
-                      <span
-                        className="text-sm font-medium leading-none select-none focus-within:select-all outline-none"
-                        onDoubleClick={(e) => {
-                          e.target.contentEditable = "true";
-                          e.target.focus();
-                        }}
-                        onBlur={(e) => {
-                          e.target.contentEditable = "false";
-                          setTasks((tasks) =>
-                            tasks.map((t) =>
-                              t.id === task.id
-                                ? { ...t, text: e.target.innerText }
-                                : t
-                            )
-                          );
-                        }}
-                      >
-                        {task.text}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="ghost"
-                        onClick={() => {
-                          setTasks((tasks) =>
-                            tasks.filter((t) => t.id !== task.id)
-                          );
-                        }}
-                      >
-                        <Trash className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        onClick={() => {
-                          setTaskInput(task.text);
-                          setTasks((tasks) =>
-                            tasks.filter((t) => t.id !== task.id)
-                          );
-                        }}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-            </div>
-            <div className="flex items-center gap-2">
-              <Input
-                value={taskInput}
-                onChange={(e) => setTaskInput(e.target.value)}
-                placeholder={chrome.i18n.getMessage("add_todo")}
-              />
-              <Button
-                onClick={() => {
-                  if (taskInput.trim() !== "") {
-                    setTasks((tasks) => [
-                      ...tasks,
-                      { id: Date.now(), text: taskInput, completed: false },
-                    ]);
-                    setTaskInput("");
-                  }
-                }}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="show-completed"
-                checked={showCompleted}
-                onCheckedChange={(checked) => {
-                  setShowCompleted(checked);
-                  localStorage.setItem(
-                    "showCompleted",
-                    JSON.stringify(checked)
-                  );
-                }}
-              />
-              <label
-                htmlFor="show-completed"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {chrome.i18n.getMessage("show_completed")}
-              </label>
-            </div>
-          </div>
-        </PopoverContent>
-      </Popover>
-      <Popover>
-        <PopoverTrigger asChild className="fixed top-0 left-0 z-50 m-4">
-          <Button
-            variant="ghost"
-            aria-label={chrome.i18n.getMessage("soundscapes")}
-            className="select-none text-white"
-          >
-            <AudioLines className="h-5 w-5" />
-            {chrome.i18n.getMessage("soundscapes")}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className={cn(
-            "w-[300px] h-[300px] ml-4 relative overflow-y-auto scrollbar",
-            currentFont
-          )}
-        >
-          <div>
-            <ul className="flex flex-col gap-2">
-              {soundscapes.map((sound, index) => (
-                <li
-                  key={index}
-                  onClick={() =>
-                    playSound(
-                      sound.url,
-                      sound.volume,
-                      sound.name,
-                      sound.image,
-                      sound.index
-                    )
-                  }
-                  className="select-none cursor-pointer"
-                >
-                  <b>{sound.name}</b>
-                  <br />
-                  {sound.attribution.map((attribution, index) => (
+            <div className="grid gap-4">
+              <div className="space-y-2">
+                <h1 className="text-2xl font-bold leading-none">
+                  {chrome.i18n.getMessage("todos")}
+                </h1>
+                <p className="text-sm text-muted-foreground">
+                  {chrome.i18n.getMessage("todos_description")}
+                </p>
+              </div>
+              <div id="tasks">
+                {tasks
+                  .filter((task) => showCompleted || !task.completed)
+                  .map((task) => (
                     <div
-                      key={index}
-                      className="text-sm text-gray-500 dark:text-gray-300"
+                      key={task.id}
+                      className="flex items-center justify-between gap-4"
                     >
-                      {attribution}
-                      <br />
+                      <div className="flex items-center gap-3">
+                        <Checkbox
+                          checked={task.completed}
+                          onCheckedChange={(checked) => {
+                            setTasks((tasks) =>
+                              tasks.map((t) =>
+                                t.id === task.id
+                                  ? { ...t, completed: checked }
+                                  : t
+                              )
+                            );
+                          }}
+                        />
+                        <span
+                          className="text-sm font-medium leading-none select-none focus-within:select-all outline-none"
+                          onDoubleClick={(e) => {
+                            e.target.contentEditable = "true";
+                            e.target.focus();
+                          }}
+                          onBlur={(e) => {
+                            e.target.contentEditable = "false";
+                            setTasks((tasks) =>
+                              tasks.map((t) =>
+                                t.id === task.id
+                                  ? { ...t, text: e.target.innerText }
+                                  : t
+                              )
+                            );
+                          }}
+                        >
+                          {task.text}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          onClick={() => {
+                            setTasks((tasks) =>
+                              tasks.filter((t) => t.id !== task.id)
+                            );
+                          }}
+                        >
+                          <Trash className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          onClick={() => {
+                            setTaskInput(task.text);
+                            setTasks((tasks) =>
+                              tasks.filter((t) => t.id !== task.id)
+                            );
+                          }}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
                   ))}
-                </li>
-              ))}
-            </ul>
-            <br />
-            <a href="https://noisefill.com/">
-              {chrome.i18n.getMessage("from_noisefill")}
-            </a>
-          </div>
-        </PopoverContent>
-      </Popover>
+              </div>
+              <div className="flex items-center gap-2">
+                <Input
+                  value={taskInput}
+                  onChange={(e) => setTaskInput(e.target.value)}
+                  placeholder={chrome.i18n.getMessage("add_todo")}
+                />
+                <Button
+                  onClick={() => {
+                    if (taskInput.trim() !== "") {
+                      setTasks((tasks) => [
+                        ...tasks,
+                        { id: Date.now(), text: taskInput, completed: false },
+                      ]);
+                      setTaskInput("");
+                    }
+                  }}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="show-completed"
+                  checked={showCompleted}
+                  onCheckedChange={(checked) => {
+                    setShowCompleted(checked);
+                    localStorage.setItem(
+                      "showCompleted",
+                      JSON.stringify(checked)
+                    );
+                  }}
+                />
+                <label
+                  htmlFor="show-completed"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {chrome.i18n.getMessage("show_completed")}
+                </label>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
+      {widgetPreferences?.soundscapes == "true" && (
+        <Popover>
+          <PopoverTrigger asChild className="fixed top-0 left-0 z-50 m-4">
+            <Button
+              variant="ghost"
+              aria-label={chrome.i18n.getMessage("soundscapes")}
+              className="select-none text-white"
+            >
+              <AudioLines className="h-5 w-5" />
+              {chrome.i18n.getMessage("soundscapes")}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className={cn(
+              "w-[300px] h-[300px] ml-4 relative overflow-y-auto scrollbar",
+              currentFont
+            )}
+          >
+            <div>
+              <ul className="flex flex-col gap-2">
+                {soundscapes.map((sound, index) => (
+                  <li
+                    key={index}
+                    onClick={() =>
+                      playSound(
+                        sound.url,
+                        sound.volume,
+                        sound.name,
+                        sound.image,
+                        sound.index
+                      )
+                    }
+                    className="select-none cursor-pointer"
+                  >
+                    <b>{sound.name}</b>
+                    <br />
+                    {sound.attribution.map((attribution, index) => (
+                      <div
+                        key={index}
+                        className="text-sm text-gray-500 dark:text-gray-300"
+                      >
+                        {attribution}
+                        <br />
+                      </div>
+                    ))}
+                  </li>
+                ))}
+              </ul>
+              <br />
+              <a href="https://noisefill.com/">
+                {chrome.i18n.getMessage("from_noisefill")}
+              </a>
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
     </div>
   );
 }

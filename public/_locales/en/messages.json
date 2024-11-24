@@ -244,5 +244,29 @@
   },
   "show_completed": {
     "message": "Show completed"
+  },
+  "mantra_1": { "message": "Every day is a chance to grow." },
+  "mantra_2": { "message": "Progress, not perfection." },
+  "mantra_3": { "message": "Small steps lead to big changes." },
+  "mantra_4": { "message": "Setbacks are setups for comebacks." },
+  "mantra_5": { "message": "You are stronger than you think." },
+  "mantra_6": { "message": "Challenges build your strength." },
+  "mantra_7": { "message": "Good things are coming your way." },
+  "mantra_8": { "message": "See the good in every situation." },
+  "mantra_9": { "message": "A hopeful heart sees endless possibilities." },
+  "mantra_10": { "message": "Be here, in this moment." },
+  "mantra_11": { "message": "Each breath is a fresh start." },
+  "mantra_12": { "message": "The now is all we truly have." },
+  "mantra_13": { "message": "Dream big, start small." },
+  "mantra_14": { "message": "Focus on what you can control." },
+  "mantra_15": { "message": "Greatness begins with the first step." },
+  "features": {
+    "message": "Features"
+  },
+  "clock": {
+    "message": "Clock"
+  },
+  "mantras": {
+    "message": "Mantras"
   }
 }
