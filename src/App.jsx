@@ -528,6 +528,8 @@ function App() {
 
   const options = { hour: "2-digit", minute: "2-digit", hour12: clockFormat };
 
+  const firstUncompletedTask = tasks.find((task) => !task.completed);
+
   return (
     <div
       className={cn(
@@ -570,6 +572,27 @@ function App() {
       >
         {time.toLocaleTimeString(undefined, options)}
       </h1>
+      {tasks.some((task) => !task.completed) && (
+        <div
+          id="checkbox-container"
+          className="flex items-center gap-2 text-xl mt-3"
+        >
+          <Checkbox
+            id="clock_checkbox"
+            onCheckedChange={(checked) => {
+              setTasks((tasks) =>
+                tasks.map((t) =>
+                  t.id === firstUncompletedTask.id
+                    ? { ...t, completed: checked }
+                    : t
+                )
+              );
+            }}
+            checked={false}
+          />
+          <label htmlFor="clock_checkbox">{firstUncompletedTask?.text}</label>
+        </div>
+      )}
       {selectedPage === "character-counter" && (
         <CharacterCounter setSelectedPage={setSelectedPage} />
       )}
