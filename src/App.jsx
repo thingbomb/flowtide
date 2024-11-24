@@ -32,9 +32,37 @@ import {
 } from "./components/ui/popover";
 import { Checkbox } from "./components/ui/checkbox";
 import { Input } from "./components/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./components/ui/sheet";
+import { Check } from "lucide-react";
 
 const dbName = "flowtide";
 const dbVersion = 1;
+const mantras = [
+  "mantra_1",
+  "mantra_2",
+  "mantra_3",
+  "mantra_4",
+  "mantra_5",
+  "mantra_6",
+  "mantra_7",
+  "mantra_8",
+  "mantra_9",
+  "mantra_10",
+  "mantra_11",
+  "mantra_12",
+  "mantra_13",
+  "mantra_14",
+  "mantra_15",
+];
+
+const randomMantra = mantras[Math.floor(Math.random() * mantras.length)];
 
 const openDB = () => {
   return new Promise((resolve, reject) => {
@@ -58,176 +86,134 @@ const openDB = () => {
 };
 
 const images = [
-  "https://utfs.io/f/D6128dhWEyDgPyqUneHFAiRv7GzkQ3tZcUSmjrNd6VExw9Jh",
-  "https://utfs.io/f/D6128dhWEyDgyooAV982sbnctFEejWoHDi1YUqJ3mKgNxXVp",
-  "https://utfs.io/f/D6128dhWEyDgLzKDb4GNstaRSlyigdBT4Z1mYhMbVIJX8Apw",
-  "https://utfs.io/f/D6128dhWEyDgof6TNeiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk",
-  "https://utfs.io/f/D6128dhWEyDglUh7KeRF1iZYzrSR6Pvy4X03ebokADH9J87V",
-  "https://utfs.io/f/D6128dhWEyDgGcWHOCo6rIVCyNMgwjls0UZp5JzqKLmv38AT",
-  "https://utfs.io/f/D6128dhWEyDgFPCtMkqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0bN",
-  "https://utfs.io/f/D6128dhWEyDgr4f66KvENtxud2o9LcAq8nvS7MUlfZIsJP3k",
-  "https://utfs.io/f/D6128dhWEyDgN629iFU0LT4M6Up89rolmxAfVd3eFuZvQyEC",
-  "https://utfs.io/f/D6128dhWEyDghREhMXVIjgvYrUfRZTCctk7S1q5NpaJsDXQ8",
-  "https://utfs.io/f/D6128dhWEyDgX4hHi4rohSmd1bgqzcURawVyYNpnTI6ZHF7Q",
-  "https://utfs.io/f/D6128dhWEyDgCsIdnHXfbyhE3LuGsRM1Q9oZP0elv4nkDgpi",
-  "https://utfs.io/f/D6128dhWEyDgmveMLLcxTzpRywahCdem1LBcVs457lOI0XDq",
-  "https://utfs.io/f/D6128dhWEyDgvHWNnw1pj2S0Q8hV1swqFYn5G6r7uBtaxJRb",
-  "https://utfs.io/f/D6128dhWEyDgnvUEjTvXzHwgo4CriD32JdTa19yM8ZLNcqUK",
-  "https://utfs.io/f/D6128dhWEyDg9CLctpa8RVfu1gx4OIi5P0XzENoc6UevLsTH",
-  "https://utfs.io/f/D6128dhWEyDguIRyfpzDuFQ2svylY84Sn1mfp3dRxNrObqWU",
-  "https://utfs.io/f/D6128dhWEyDgp4c8bhPYJKBSEwmnPxvIlTCQoi9cVF47afXM",
-  "https://utfs.io/f/D6128dhWEyDgUuCCE5wM8WVtQaUSJGIPou6nmXpxK1RdvLrN",
-  "https://utfs.io/f/D6128dhWEyDgUBAlno5wM8WVtQaUSJGIPou6nmXpxK1RdvLr",
-  "https://utfs.io/f/D6128dhWEyDgjByDHSCauIRlyF5cXsTSoUEtBnD6whdYNjrK",
-  "https://utfs.io/f/D6128dhWEyDguR4J5zDuFQ2svylY84Sn1mfp3dRxNrObqWUV",
-  "https://utfs.io/f/D6128dhWEyDgxmWnqr9bZSe2sDFlvPu57CYfAQUtchqJz8wg",
-  "https://utfs.io/f/D6128dhWEyDgOhYKF5YuBovmrawFceg0UJ1y5Z2AYiuxQkdf",
-  "https://utfs.io/f/D6128dhWEyDgdjM61QwXK86uSIDEUgqpYfM9eGxV0WbCZtmv",
-  "https://utfs.io/f/D6128dhWEyDg7UVSwI0AL9tjnN24fbmHDy7Ok1VJoYr6ZScP",
-  "https://utfs.io/f/D6128dhWEyDgLBchCTGNstaRSlyigdBT4Z1mYhMbVIJX8Apw",
-  "https://utfs.io/f/D6128dhWEyDgHe1mO6nuTewkdl6BVM5rAtpxPGIFa4fH0UWD",
-  "https://utfs.io/f/D6128dhWEyDgHMYQqWnuTewkdl6BVM5rAtpxPGIFa4fH0UWD",
-  "https://utfs.io/f/D6128dhWEyDgXz1wzRrohSmd1bgqzcURawVyYNpnTI6ZHF7Q",
-  "https://utfs.io/f/D6128dhWEyDg4jfLbJKM8Zrop2kIEY9Dn5ePbcMLCitqmsuV",
-  "https://utfs.io/f/D6128dhWEyDgJEAvt6pp9ykNzg6MU5WLjo4rXmA1COws0EPS",
-  "https://utfs.io/f/D6128dhWEyDgR1XUt8J5JOc7ksyxnNmUHawrWGVS6DzThpLB",
-  "https://utfs.io/f/D6128dhWEyDgyYBlEcr82sbnctFEejWoHDi1YUqJ3mKgNxXV",
-  "https://utfs.io/f/D6128dhWEyDgW2f3vfYlqogbO3dBTsVQXGnieNvtfrkFAD6m",
-  "https://utfs.io/f/D6128dhWEyDgdMS3uD6wXK86uSIDEUgqpYfM9eGxV0WbCZtm",
-  "https://utfs.io/f/D6128dhWEyDgCeNaWvfbyhE3LuGsRM1Q9oZP0elv4nkDgpiV",
-  "https://utfs.io/f/D6128dhWEyDgNJQ2BRU0LT4M6Up89rolmxAfVd3eFuZvQyEC",
-  "https://utfs.io/f/D6128dhWEyDgYIy5HwBhrxmiLdCbNpEqOP2MwcaY3ujAz9S8",
-  "https://utfs.io/f/D6128dhWEyDgiykp0kt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F",
-  "https://utfs.io/f/D6128dhWEyDgtr29Q27Yk2j70f6F4z9pJo8DOqidQIBAyZea",
-  "https://utfs.io/f/D6128dhWEyDg3buUXmsT4wRBpgx589YjAqGOEbI6cHUrvzyi",
-  "https://utfs.io/f/D6128dhWEyDgiAbg1Y1t6Tzhmn9MAvpPjCxDwJIrH8RlV4L0",
-  "https://utfs.io/f/D6128dhWEyDgHTUMEcnuTewkdl6BVM5rAtpxPGIFa4fH0UWD",
-  "https://utfs.io/f/D6128dhWEyDgIiP4LPlbi23Qp80SgzZNnUdGJxath5BoYk9s",
-  "https://utfs.io/f/D6128dhWEyDga9Doxdg3nHosRfpbYkCS2MhVPw6QZWr1yXdI",
-  "https://utfs.io/f/D6128dhWEyDgZvGNWRkzZ4aTb98m0VCO1weSjMrouvUcHyf3",
-  "https://utfs.io/f/D6128dhWEyDg10fj1dZahJ6ZRXyzMStWkYcVxNCdKfUq4e7D",
-  "https://utfs.io/f/D6128dhWEyDgZM5649kzZ4aTb98m0VCO1weSjMrouvUcHyf3",
-  "https://utfs.io/f/D6128dhWEyDgqU31obywZVRpKX0k1mJ7SsTnjir5AQaEdhgv",
-  "https://utfs.io/f/D6128dhWEyDgiJIKRVt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F",
-  "https://utfs.io/f/D6128dhWEyDgIJFg4p0lbi23Qp80SgzZNnUdGJxath5BoYk9",
-  "https://utfs.io/f/D6128dhWEyDgTmGMBBb2QH4PsORfG0jVebz8vgmlhxCXJqTy",  
-  "https://utfs.io/f/D6128dhWEyDgcKsSvqHJVK5ha7AgB43xbjIlyeo69GNS8QMp",
-  "https://utfs.io/f/D6128dhWEyDgAwfiUqNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd",
-  "https://utfs.io/f/D6128dhWEyDgtNb9J4U7Yk2j70f6F4z9pJo8DOqidQIBAyZe",
-  "https://utfs.io/f/D6128dhWEyDgUeWY8K5wM8WVtQaUSJGIPou6nmXpxK1RdvLr",
-  "https://utfs.io/f/D6128dhWEyDgaeaGaOg3nHosRfpbYkCS2MhVPw6QZWr1yXdI",
-  "https://utfs.io/f/D6128dhWEyDgSyUIQJj38Q4IFcMKp2Ty07imVZ5DzWkJj9RA",
-  "https://utfs.io/f/D6128dhWEyDg7I2uo5AL9tjnN24fbmHDy7Ok1VJoYr6ZScPK",
-  "https://utfs.io/f/D6128dhWEyDgJhAuVxpp9ykNzg6MU5WLjo4rXmA1COws0EPS",
-  "https://utfs.io/f/D6128dhWEyDgLgdkZPGNstaRSlyigdBT4Z1mYhMbVIJX8Apw",
-  "https://utfs.io/f/D6128dhWEyDgGunV0To6rIVCyNMgwjls0UZp5JzqKLmv38AT",
-  "https://utfs.io/f/D6128dhWEyDgduiX8IwXK86uSIDEUgqpYfM9eGxV0WbCZtmv",
-  "https://utfs.io/f/D6128dhWEyDgrZLhZjWvENtxud2o9LcAq8nvS7MUlfZIsJP3",
-  "https://utfs.io/f/D6128dhWEyDgNz0GfY1U0LT4M6Up89rolmxAfVd3eFuZvQyE",
-  "https://utfs.io/f/D6128dhWEyDgfR6kNY3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox",
-  "https://utfs.io/f/D6128dhWEyDgGTdGzao6rIVCyNMgwjls0UZp5JzqKLmv38AT",
-  "https://utfs.io/f/D6128dhWEyDghgDUgIjgvYrUfRZTCctk7S1q5NpaJsDXQ8GI",
-  "https://utfs.io/f/D6128dhWEyDgfRO4Ji3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox",
-  "https://utfs.io/f/D6128dhWEyDgcXPQC4HJVK5ha7AgB43xbjIlyeo69GNS8QMp",
-  "https://utfs.io/f/D6128dhWEyDgyqi5Sp82sbnctFEejWoHDi1YUqJ3mKgNxXVp",
-  "https://utfs.io/f/D6128dhWEyDgJE8Q1Zpp9ykNzg6MU5WLjo4rXmA1COws0EPS",
-  "https://utfs.io/f/D6128dhWEyDgqL9sL3ywZVRpKX0k1mJ7SsTnjir5AQaEdhgv",
-  "https://utfs.io/f/D6128dhWEyDgTlw9fb2QH4PsORfG0jVebz8vgmlhxCXJqTyE",
-  "https://utfs.io/f/D6128dhWEyDgOGFmMvuBovmrawFceg0UJ1y5Z2AYiuxQkdft",
-  "https://utfs.io/f/D6128dhWEyDgAbmV4aNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd",
-  "https://utfs.io/f/D6128dhWEyDgiU9Z8rt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F",
-  "https://utfs.io/f/D6128dhWEyDg1KqHFmZahJ6ZRXyzMStWkYcVxNCdKfUq4e7D",
-  "https://utfs.io/f/D6128dhWEyDgLd5US0GNstaRSlyigdBT4Z1mYhMbVIJX8Apw",
-  "https://utfs.io/f/D6128dhWEyDgokYVhJiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk",
-  "https://utfs.io/f/D6128dhWEyDgLiT6ZoQGNstaRSlyigdBT4Z1mYhMbVIJX8Ap",
-  "https://utfs.io/f/D6128dhWEyDg5YelLbzMZsyzNmTrg6fCY4onbJdOX81GV9Lu",
-  "https://utfs.io/f/D6128dhWEyDgX0NXLWrohSmd1bgqzcURawVyYNpnTI6ZHF7Q",
-  "https://utfs.io/f/D6128dhWEyDghNlUAfIjgvYrUfRZTCctk7S1q5NpaJsDXQ8G",
-  "https://utfs.io/f/D6128dhWEyDglO4aHJRF1iZYzrSR6Pvy4X03ebokADH9J87V",
-  "https://utfs.io/f/D6128dhWEyDgAMDQyDNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd",
-  "https://utfs.io/f/D6128dhWEyDg4WqtWZM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj",
-  "https://utfs.io/f/D6128dhWEyDgi15T1ot6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F",
-  "https://utfs.io/f/D6128dhWEyDgW3K0VFYlqogbO3dBTsVQXGnieNvtfrkFAD6m",
-  "https://utfs.io/f/D6128dhWEyDgF8H5kJEqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0b",
-  "https://utfs.io/f/D6128dhWEyDgbKtPnPx81ygt4ZMWafIGx7D5hXKuievPCw2j",
-  "https://utfs.io/f/D6128dhWEyDgCdqG7ufbyhE3LuGsRM1Q9oZP0elv4nkDgpiV",
-  "https://utfs.io/f/D6128dhWEyDgvPpz4v1pj2S0Q8hV1swqFYn5G6r7uBtaxJRb",
-  "https://utfs.io/f/D6128dhWEyDgoc1HEGiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk",
-  "https://utfs.io/f/D6128dhWEyDgjQa0hcCauIRlyF5cXsTSoUEtBnD6whdYNjrK",
-  "https://utfs.io/f/D6128dhWEyDgXxdINyrohSmd1bgqzcURawVyYNpnTI6ZHF7Q",
-  "https://utfs.io/f/D6128dhWEyDgrZ3ipdvENtxud2o9LcAq8nvS7MUlfZIsJP3k",
-  "https://utfs.io/f/D6128dhWEyDg4QTWxzM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj",
-  "https://utfs.io/f/D6128dhWEyDg4nEAlWM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj",
-  "https://utfs.io/f/D6128dhWEyDgDMRnGJhWEyDguin6VpMtwF7PGLzbfvBJah1e",
-  "https://utfs.io/f/D6128dhWEyDgk1UrjiLBfrMVAaOGYjgl6D5bqzN8w0TWIURH",
-  "https://utfs.io/f/D6128dhWEyDgj5t18cCauIRlyF5cXsTSoUEtBnD6whdYNjrK",
-  "https://utfs.io/f/D6128dhWEyDg9kRrVXa8RVfu1gx4OIi5P0XzENoc6UevLsTH",
-  "https://utfs.io/f/D6128dhWEyDgsRh7JoOpbzeJNEyfZxSXg9nk4lVGrw3Lc2vR",
-  "https://utfs.io/f/D6128dhWEyDgf9StBe3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox",
-  "https://utfs.io/f/D6128dhWEyDgoy2oawiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk",
-  "https://utfs.io/f/D6128dhWEyDgDGdP5NhWEyDguin6VpMtwF7PGLzbfvBJah1e",
-  "https://utfs.io/f/D6128dhWEyDgfbYNAC3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox",
-  "https://utfs.io/f/D6128dhWEyDgSfppqlnj38Q4IFcMKp2Ty07imVZ5DzWkJj9R",
-  "https://utfs.io/f/D6128dhWEyDgFZtwDUqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0bN",
-  "https://utfs.io/f/D6128dhWEyDgnvzPPyvXzHwgo4CriD32JdTa19yM8ZLNcqUK",
-  "https://utfs.io/f/D6128dhWEyDgDlFXCdjhWEyDguin6VpMtwF7PGLzbfvBJah1",
-  "https://utfs.io/f/D6128dhWEyDgX1ZM5flrohSmd1bgqzcURawVyYNpnTI6ZHF7",
-  "https://utfs.io/f/D6128dhWEyDgTU68NQb2QH4PsORfG0jVebz8vgmlhxCXJqTy",
-  "https://utfs.io/f/D6128dhWEyDgyJek2382sbnctFEejWoHDi1YUqJ3mKgNxXVp",
-  "https://utfs.io/f/D6128dhWEyDgLgnobwGNstaRSlyigdBT4Z1mYhMbVIJX8Apw",
-  "https://utfs.io/f/D6128dhWEyDg8VoytxWZkzE6wj21eODm3Rc9T80Up5lBgMFW",
-  "https://utfs.io/f/D6128dhWEyDgO0oANfuBovmrawFceg0UJ1y5Z2AYiuxQkdft",
-  "https://utfs.io/f/D6128dhWEyDgdMfTsPUwXK86uSIDEUgqpYfM9eGxV0WbCZtm",
-  "https://utfs.io/f/D6128dhWEyDgX6WmxerohSmd1bgqzcURawVyYNpnTI6ZHF7Q",
-  "https://utfs.io/f/D6128dhWEyDgrZxklVbvENtxud2o9LcAq8nvS7MUlfZIsJP3",
-  "https://utfs.io/f/D6128dhWEyDgrhWfapvENtxud2o9LcAq8nvS7MUlfZIsJP3k",
-  "https://utfs.io/f/D6128dhWEyDgrZo5i2lvENtxud2o9LcAq8nvS7MUlfZIsJP3",
-  "https://utfs.io/f/D6128dhWEyDg3h79WYsT4wRBpgx589YjAqGOEbI6cHUrvzyi",
-  "https://utfs.io/f/D6128dhWEyDgA5UQPP9Nj6EKR2Bcz3sxD4SqVIW5pPCah8eF",
-  "https://utfs.io/f/D6128dhWEyDgZGatISIkzZ4aTb98m0VCO1weSjMrouvUcHyf",
-  "https://utfs.io/f/D6128dhWEyDgf9PnwQ3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox",
-  "https://utfs.io/f/D6128dhWEyDgPymeM0wFAiRv7GzkQ3tZcUSmjrNd6VExw9Jh",
-  "https://utfs.io/f/D6128dhWEyDgiAzGa9rt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0",
-  "https://utfs.io/f/D6128dhWEyDgcV74h1HJVK5ha7AgB43xbjIlyeo69GNS8QMp",
-  "https://utfs.io/f/D6128dhWEyDgnf7kKKXzHwgo4CriD32JdTa19yM8ZLNcqUKp",
-  "https://utfs.io/f/D6128dhWEyDgbhFEmcx81ygt4ZMWafIGx7D5hXKuievPCw2j",
-  "https://utfs.io/f/D6128dhWEyDgtQMTCT7Yk2j70f6F4z9pJo8DOqidQIBAyZea",
-  "https://utfs.io/f/D6128dhWEyDgcKM9J3HJVK5ha7AgB43xbjIlyeo69GNS8QMp",
-  "https://utfs.io/f/D6128dhWEyDgdYYjI4wXK86uSIDEUgqpYfM9eGxV0WbCZtmv",
-  "https://utfs.io/f/D6128dhWEyDgMizHNHSWeD3fHMoznm16ktdqXB5P2FAvcQYr",
-  "https://utfs.io/f/D6128dhWEyDg9Q11cra8RVfu1gx4OIi5P0XzENoc6UevLsTH",
-  "https://utfs.io/f/D6128dhWEyDgc2pLX2HJVK5ha7AgB43xbjIlyeo69GNS8QMp",
-  "https://utfs.io/f/D6128dhWEyDgX7B2egrohSmd1bgqzcURawVyYNpnTI6ZHF7Q",
-  "https://utfs.io/f/D6128dhWEyDgMCom0DSWeD3fHMoznm16ktdqXB5P2FAvcQYr",
-  "https://utfs.io/f/D6128dhWEyDgfOu6yit3F3lNqIcvyjnSp4QJ8wLAbu6HVXko",
-  "https://utfs.io/f/D6128dhWEyDgj38qusNCauIRlyF5cXsTSoUEtBnD6whdYNjr",
-  "https://utfs.io/f/D6128dhWEyDgAPsh32Nj6EKR2Bcz3sxD4SqVIW5pPCah8eFd",
-  "https://utfs.io/f/D6128dhWEyDgY3kOKQBhrxmiLdCbNpEqOP2MwcaY3ujAz9S8",
-  "https://utfs.io/f/D6128dhWEyDgDUXx8IhWEyDguin6VpMtwF7PGLzbfvBJah1e",
-  "https://utfs.io/f/D6128dhWEyDgtfJXKX7Yk2j70f6F4z9pJo8DOqidQIBAyZea",
-  "https://utfs.io/f/D6128dhWEyDguIyIIynDuFQ2svylY84Sn1mfp3dRxNrObqWU",
-  "https://utfs.io/f/D6128dhWEyDgoIzrOBiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk",
-  "https://utfs.io/f/D6128dhWEyDgtLllhn7Yk2j70f6F4z9pJo8DOqidQIBAyZea",
-  "https://utfs.io/f/D6128dhWEyDgXJKPG7rohSmd1bgqzcURawVyYNpnTI6ZHF7Q",
-  "https://utfs.io/f/D6128dhWEyDgnvtn3lfXzHwgo4CriD32JdTa19yM8ZLNcqUK",
-  "https://utfs.io/f/D6128dhWEyDg83KSdXWZkzE6wj21eODm3Rc9T80Up5lBgMFW",
-  "https://utfs.io/f/D6128dhWEyDgG9zKq9o6rIVCyNMgwjls0UZp5JzqKLmv38AT",
-  "https://utfs.io/f/D6128dhWEyDg8rqmUbWZkzE6wj21eODm3Rc9T80Up5lBgMFW",
-  "https://utfs.io/f/D6128dhWEyDgJmQIwFpp9ykNzg6MU5WLjo4rXmA1COws0EPS",
-  "https://utfs.io/f/D6128dhWEyDgWEk2mVlYlqogbO3dBTsVQXGnieNvtfrkFAD6",
-  "https://utfs.io/f/D6128dhWEyDgaK5rHJg3nHosRfpbYkCS2MhVPw6QZWr1yXdI",
-  "https://utfs.io/f/D6128dhWEyDgPBLb7RFAiRv7GzkQ3tZcUSmjrNd6VExw9JhH",
-  "https://utfs.io/f/D6128dhWEyDgrC8KKZvENtxud2o9LcAq8nvS7MUlfZIsJP3k",
-  "https://utfs.io/f/D6128dhWEyDgGAuralo6rIVCyNMgwjls0UZp5JzqKLmv38AT",
-  "https://utfs.io/f/D6128dhWEyDg3uFxb0wsT4wRBpgx589YjAqGOEbI6cHUrvzy",
-  "https://utfs.io/f/D6128dhWEyDgA6rCMiNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd",
-  "https://utfs.io/f/D6128dhWEyDgvsIsk01pj2S0Q8hV1swqFYn5G6r7uBtaxJRb",
-  "https://utfs.io/f/D6128dhWEyDgTGvGqQb2QH4PsORfG0jVebz8vgmlhxCXJqTy",
-  "https://utfs.io/f/D6128dhWEyDgXnSp7ErohSmd1bgqzcURawVyYNpnTI6ZHF7Q",
-  "https://utfs.io/f/D6128dhWEyDgko99n2YLBfrMVAaOGYjgl6D5bqzN8w0TWIUR",
-  "https://utfs.io/f/D6128dhWEyDgX1UfcjYrohSmd1bgqzcURawVyYNpnTI6ZHF7",
-  "https://utfs.io/f/D6128dhWEyDgSYJ30pj38Q4IFcMKp2Ty07imVZ5DzWkJj9RA",
-  "https://utfs.io/f/D6128dhWEyDg1uxptMZahJ6ZRXyzMStWkYcVxNCdKfUq4e7D",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgPyqUneHFAiRv7GzkQ3tZcUSmjrNd6VExw9Jh&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgyooAV982sbnctFEejWoHDi1YUqJ3mKgNxXVp&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgLzKDb4GNstaRSlyigdBT4Z1mYhMbVIJX8Apw&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgof6TNeiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDglUh7KeRF1iZYzrSR6Pvy4X03ebokADH9J87V&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgGcWHOCo6rIVCyNMgwjls0UZp5JzqKLmv38AT&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgFPCtMkqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0bN&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgr4f66KvENtxud2o9LcAq8nvS7MUlfZIsJP3k&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgN629iFU0LT4M6Up89rolmxAfVd3eFuZvQyEC&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDghREhMXVIjgvYrUfRZTCctk7S1q5NpaJsDXQ8&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgX4hHi4rohSmd1bgqzcURawVyYNpnTI6ZHF7Q&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgCsIdnHXfbyhE3LuGsRM1Q9oZP0elv4nkDgpi&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgmveMLLcxTzpRywahCdem1LBcVs457lOI0XDq&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgvHWNnw1pj2S0Q8hV1swqFYn5G6r7uBtaxJRb&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgnvUEjTvXzHwgo4CriD32JdTa19yM8ZLNcqUK&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg9CLctpa8RVfu1gx4OIi5P0XzENoc6UevLsTH&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDguIRyfpzDuFQ2svylY84Sn1mfp3dRxNrObqWU&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgp4c8bhPYJKBSEwmnPxvIlTCQoi9cVF47afXM&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgUuCCE5wM8WVtQaUSJGIPou6nmXpxK1RdvLrN&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgUBAlno5wM8WVtQaUSJGIPou6nmXpxK1RdvLr&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgjByDHSCauIRlyF5cXsTSoUEtBnD6whdYNjrK&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDguR4J5zDuFQ2svylY84Sn1mfp3dRxNrObqWUV&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgxmWnqr9bZSe2sDFlvPu57CYfAQUtchqJz8wg&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgOhYKF5YuBovmrawFceg0UJ1y5Z2AYiuxQkdf&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgdjM61QwXK86uSIDEUgqpYfM9eGxV0WbCZtmv&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg7UVSwI0AL9tjnN24fbmHDy7Ok1VJoYr6ZScP&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgLBchCTGNstaRSlyigdBT4Z1mYhMbVIJX8Apw&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgHe1mO6nuTewkdl6BVM5rAtpxPGIFa4fH0UWD&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgHMYQqWnuTewkdl6BVM5rAtpxPGIFa4fH0UWD&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgXz1wzRrohSmd1bgqzcURawVyYNpnTI6ZHF7Q&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg4jfLbJKM8Zrop2kIEY9Dn5ePbcMLCitqmsuV&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgJEAvt6pp9ykNzg6MU5WLjo4rXmA1COws0EPS&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgR1XUt8J5JOc7ksyxnNmUHawrWGVS6DzThpLB&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgyYBlEcr82sbnctFEejWoHDi1YUqJ3mKgNxXV&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgW2f3vfYlqogbO3dBTsVQXGnieNvtfrkFAD6m&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgdMS3uD6wXK86uSIDEUgqpYfM9eGxV0WbCZtm&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgCeNaWvfbyhE3LuGsRM1Q9oZP0elv4nkDgpiV&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgNJQ2BRU0LT4M6Up89rolmxAfVd3eFuZvQyEC&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgYIy5HwBhrxmiLdCbNpEqOP2MwcaY3ujAz9S8&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgiykp0kt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgtr29Q27Yk2j70f6F4z9pJo8DOqidQIBAyZea&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg3buUXmsT4wRBpgx589YjAqGOEbI6cHUrvzyi&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgiAbg1Y1t6Tzhmn9MAvpPjCxDwJIrH8RlV4L0&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgHTUMEcnuTewkdl6BVM5rAtpxPGIFa4fH0UWD&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgIiP4LPlbi23Qp80SgzZNnUdGJxath5BoYk9s&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDga9Doxdg3nHosRfpbYkCS2MhVPw6QZWr1yXdI&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgZvGNWRkzZ4aTb98m0VCO1weSjMrouvUcHyf3&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg10fj1dZahJ6ZRXyzMStWkYcVxNCdKfUq4e7D&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgZM5649kzZ4aTb98m0VCO1weSjMrouvUcHyf3&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgqU31obywZVRpKX0k1mJ7SsTnjir5AQaEdhgv&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgiJIKRVt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgIJFg4p0lbi23Qp80SgzZNnUdGJxath5BoYk9&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgTmGMBBb2QH4PsORfG0jVebz8vgmlhxCXJqTy&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgCksSvqHJVK5ha7AgB43xbjIlyeo69GNS8QMp&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgAwfiUqNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgtNb9J4U7Yk2j70f6F4z9pJo8DOqidQIBAyZe&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgUeWY8K5wM8WVtQaUSJGIPou6nmXpxK1RdvLr&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgaeaGaOg3nHosRfpbYkCS2MhVPw6QZWr1yXdI&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgSyUIQJj38Q4IFcMKp2Ty07imVZ5DzWkJj9RA&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg7I2uo5AL9tjnN24fbmHDy7Ok1VJoYr6ZScPK&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgJhAuVxpp9ykNzg6MU5WLjo4rXmA1COws0EPS&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgLgdkZPGNstaRSlyigdBT4Z1mYhMbVIJX8Apw&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgGunV0To6rIVCyNMgwjls0UZp5JzqKLmv38AT&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgduiX8IwXK86uSIDEUgqpYfM9eGxV0WbCZtmv&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgrZLhZjWvENtxud2o9LcAq8nvS7MUlfZIsJP3&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgNz0GfY1U0LT4M6Up89rolmxAfVd3eFuZvQyE&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgfR6kNY3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgGTdGzao6rIVCyNMgwjls0UZp5JzqKLmv38AT&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDghgDUgIjgvYrUfRZTCctk7S1q5NpaJsDXQ8GI&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgfRO4Ji3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgcXPQC4HJVK5ha7AgB43xbjIlyeo69GNS8QMp&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgyqi5Sp82sbnctFEejWoHDi1YUqJ3mKgNxXVp&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgJE8Q1Zpp9ykNzg6MU5WLjo4rXmA1COws0EPS&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgqL9sL3ywZVRpKX0k1mJ7SsTnjir5AQaEdhgv&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgTlw9fb2QH4PsORfG0jVebz8vgmlhxCXJqTyE&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgOGFmMvuBovmrawFceg0UJ1y5Z2AYiuxQkdft&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgAbmV4aNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgiU9Z8rt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg1KqHFmZahJ6ZRXyzMStWkYcVxNCdKfUq4e7D&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgLd5US0GNstaRSlyigdBT4Z1mYhMbVIJX8Apw&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgokYVhJiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgLiT6ZoQGNstaRSlyigdBT4Z1mYhMbVIJX8Ap&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg5YelLbzMZsyzNmTrg6fCY4onbJdOX81GV9Lu&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgX0NXLWrohSmd1bgqzcURawVyYNpnTI6ZHF7Q&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDghNlUAfIjgvYrUfRZTCctk7S1q5NpaJsDXQ8G&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDglO4aHJRF1iZYzrSR6Pvy4X03ebokADH9J87V&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgAMDQyDNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg4WqtWZM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgi15T1ot6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgW3K0VFYlqogbO3dBTsVQXGnieNvtfrkFAD6m&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgF8H5kJEqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0b&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgbKtPnPx81ygt4ZMWafIGx7D5hXKuievPCw2j&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgCdqG7ufbyhE3LuGsRM1Q9oZP0elv4nkDgpiV&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgvPpz4v1pj2S0Q8hV1swqFYn5G6r7uBtaxJRb&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgoc1HEGiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgjQa0hcCauIRlyF5cXsTSoUEtBnD6whdYNjrK&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgXxdINyrohSmd1bgqzcURawVyYNpnTI6ZHF7Q&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgrZ3ipdvENtxud2o9LcAq8nvS7MUlfZIsJP3k&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg4QTWxzM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg4nEAlWM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgDMRnGJhWEyDguin6VpMtwF7PGLzbfvBJah1e&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgk1UrjiLBfrMVAaOGYjgl6D5bqzN8w0TWIURH&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgj5t18cCauIRlyF5cXsTSoUEtBnD6whdYNjrK&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg9kRrVXa8RVfu1gx4OIi5P0XzENoc6UevLsTH&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgsRh7JoOpbzeJNEyfZxSXg9nk4lVGrw3Lc2vR&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgf9StBe3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgoIzrOBiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgtLllhn7Yk2j70f6F4z9pJo8DOqidQIBAyZea&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgXJKPG7rohSmd1bgqzcURawVyYNpnTI6ZHF7Q&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgnvtn3lfXzHwgo4CriD32JdTa19yM8ZLNcqUK&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg83KSdXWZkzE6wj21eODm3Rc9T80Up5lBgMFW&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgG9zKq9o6rIVCyNMgwjls0UZp5JzqKLmv38AT&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg8rqmUbWZkzE6wj21eODm3Rc9T80Up5lBgMFW&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgJmQIwFpp9ykNzg6MU5WLjo4rXmA1COws0EPS&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgWEk2mVlYlqogbO3dBTsVQXGnieNvtfrkFAD6&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgaK5rHJg3nHosRfpbYkCS2MhVPw6QZWr1yXdI&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgPBLb7RFAiRv7GzkQ3tZcUSmjrNd6VExw9JhH&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgrC8KKZvENtxud2o9LcAq8nvS7MUlfZIsJP3k&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgGAuralo6rIVCyNMgwjls0UZp5JzqKLmv38AT&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg3uFxb0wsT4wRBpgx589YjAqGOEbI6cHUrvzy&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgA6rCMiNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgvsIsk01pj2S0Q8hV1swqFYn5G6r7uBtaxJRb&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgTGvGqQb2QH4PsORfG0jVebz8vgmlhxCXJqTy&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgXnSp7ErohSmd1bgqzcURawVyYNpnTI6ZHF7Q&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgko99n2YLBfrMVAaOGYjgl6D5bqzN8w0TWIUR&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgX1UfcjYrohSmd1bgqzcURawVyYNpnTI6ZHF7&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDgSYJ30pj38Q4IFcMKp2Ty07imVZ5DzWkJj9RA&w=828&q=85",
+  "https://flowtide.app/_next/image?url=https://utfs.io/a/et7hfeee8z/D6128dhWEyDg1uxptMZahJ6ZRXyzMStWkYcVxNCdKfUq4e7D&w=828&q=85",
 ];
 
 const colors = [
@@ -265,22 +251,40 @@ function App() {
   const [background, setBackground] = useState(
     localStorage.getItem("background") || "wallpaper"
   );
+  const [widgetPreferences, setWidgetPreferences] = useState(
+    JSON.parse(localStorage.getItem("widgetPreferences")) || {
+      mantras: "true",
+      clock: "false",
+      soundscapes: "false",
+      todos: "false",
+      bookmarks: "false",
+    }
+  );
+  const [onboardingComplete, setOnboardingComplete] = useState(
+    localStorage.getItem("onboardingComplete") || false
+  );
   const [selectedColor, setSelectedColor] = useState(
     colors[Math.floor(Math.random() * colors.length)]
   );
   const [gradient, setGradient] = useState(
     gradients[Math.floor(Math.random() * gradients.length)]
   );
-  const [clockFormat, setClockFormat] = useState(
-    localStorage.getItem("clockFormat") === "true"
-  );
-  if (!localStorage.getItem("clockFormat")) {
-    localStorage.setItem("clockFormat", true);
-    setClockFormat(true);
-  }
+  const [clockFormat, setClockFormat] = useState(() => {
+    const format = localStorage.getItem("clockFormat");
+    if (!format) {
+      localStorage.setItem("clockFormat", true);
+      return true;
+    }
+    return format === "true";
+  });
   const [changeTime, setChangeTime] = useState(
     Number(localStorage.getItem("changeTime")) ?? 1000 * 60 * 60 * 24
   );
+  const [showCompleted, setShowCompleted] = useState(() => {
+    const saved = localStorage.getItem("showCompleted");
+    return saved ? JSON.parse(saved) : false;
+  });
+  const [bookmarks, setBookmarks] = useState([]);
   const currentFont =
     {
       serif: "font-serif",
@@ -331,7 +335,7 @@ function App() {
         "Rain.wav by idomusics -- https://freesound.org/s/518863/ -- License: Creative Commons 0",
       ],
       image:
-        "https://utfs.io/f/VU8He2t54NdYObTBgr45tUV7W1K4ESdzvZfN8Pr2yCwGuTiB",
+        "https://utfs.io/f/VU8He2t54NdYOYYMxdZ45tUV7W1K4ESdzvZfN8Pr2yCwGuTiB",
       index: 2,
     },
     {
@@ -547,21 +551,42 @@ function App() {
   };
 
   useEffect(() => {
-
-  if (!rendered) {
-    if (background === "color") {
-      setRendered(true);
-    } else {
-      checkCachedImage();
+    if (!rendered) {
+      if (background === "color") {
+        setRendered(true);
+      } else {
+        checkCachedImage();
+      }
+      setInterval(() => {
+        setTime(new Date());
+      }, 1000);
     }
-    setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-  }
-
   }, [rendered]);
 
+  useEffect(() => {
+    if (widgetPreferences?.bookmarks === "true") {
+      chrome.bookmarks.getTree((bookmarkTreeNodes) => {
+        const flattenBookmarks = (nodes) => {
+          let bookmarks = [];
+          for (const node of nodes) {
+            if (node.url) {
+              bookmarks.push({ name: node.title, url: node.url });
+            }
+            if (node.children) {
+              bookmarks = bookmarks.concat(flattenBookmarks(node.children));
+            }
+          }
+          return bookmarks;
+        };
+        const allBookmarks = flattenBookmarks(bookmarkTreeNodes);
+        setBookmarks(allBookmarks);
+      });
+    }
+  }, [widgetPreferences?.bookmarks]);
+
   const options = { hour: "2-digit", minute: "2-digit", hour12: clockFormat };
+
+  const firstUncompletedTask = tasks.find((task) => !task.completed);
 
   return (
     <div
@@ -570,16 +595,20 @@ function App() {
         currentFont
       )}
       style={{
+        backgroundColor: background === "color" ? selectedColor : "#000000",
         backgroundImage:
           background === "wallpaper"
             ? `url(${
                 selectedImage.url ||
-                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
               })`
-            : (background == "gradient" ? gradient : "none"),
-        backgroundColor: background === "color" ? selectedColor : "#000000",
-
-        transition: "background-image 0.2s ease-in-out",
+            : background == "gradient"
+            ? gradient
+            : "none",
+        transition:
+          background === "wallpaper"
+            ? "background-image 0.4s ease-in-out"
+            : undefined,
       }}
       id="app"
     >
@@ -599,448 +628,839 @@ function App() {
         })}
         style={{ color: "#FFFFFF" }}
       >
-        {time.toLocaleTimeString(undefined, options)}
+        {widgetPreferences?.clock === "true" &&
+          time.toLocaleTimeString(undefined, options)}
       </h1>
+      <h3 className="text-2xl mt-3 text-shadow-lg">
+        {widgetPreferences?.mantras === "true" &&
+          chrome.i18n.getMessage(randomMantra)}
+      </h3>
+      {widgetPreferences?.todos === "true" &&
+        tasks.some((task) => !task.completed) && (
+          <div
+            id="checkbox-container"
+            className="flex items-center gap-2 text-xl mt-3"
+          >
+            <Checkbox
+              id="clock_checkbox"
+              onCheckedChange={(checked) => {
+                setTasks((tasks) =>
+                  tasks.map((t) =>
+                    t.id === firstUncompletedTask.id
+                      ? { ...t, completed: checked }
+                      : t
+                  )
+                );
+              }}
+              checked={false}
+            />
+            <label htmlFor="clock_checkbox">{firstUncompletedTask?.text}</label>
+          </div>
+        )}
+      {widgetPreferences?.bookmarks === "true" && (
+        <div className="mt-4 grid grid-cols-3 gap-4 max-w-4xl">
+          {bookmarks.map((bookmark, index) => (
+            <div
+              key={index}
+              onClick={() => window.open(bookmark.url, "_blank")}
+              className="p-4 rounded-lg bg-black/20 backdrop-blur-sm hover:bg-black/30 cursor-pointer transition-colors text-white text-center"
+            >
+              <div className="text-sm font-medium truncate">
+                {bookmark.name}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       {selectedPage === "character-counter" && (
         <CharacterCounter setSelectedPage={setSelectedPage} />
       )}
       {selectedPage === "word-counter" && (
         <WordCounter setSelectedPage={setSelectedPage} />
       )}
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild className="fixed bottom-0 left-0 z-50 m-4">
+      <Sheet>
+        <SheetTrigger asChild>
           <Button
             variant="ghost"
             aria-label={chrome.i18n.getMessage("settings")}
-            className="select-none text-white"
+            className="text-white select-none absolute bottom-0 left-0 m-4"
           >
             <SettingsIcon className="h-5 w-5" />
             {chrome.i18n.getMessage("settings")}
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className={cn("w-56 ml-4", currentFont)}>
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("themes")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setTheme("dark");
-              localStorage.setItem("theme", "dark");
-            }}
-            checked={theme === "dark"}
-          >
-            <span>{chrome.i18n.getMessage("dark_mode")}</span>
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setTheme("light");
-              localStorage.setItem("theme", "light");
-            }}
-            checked={theme === "light"}
-          >
-            <span>{chrome.i18n.getMessage("light_mode")}</span>
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setTheme("system");
-              localStorage.setItem("theme", "system");
-            }}
-            checked={theme === "system"}
-          >
-            <span>{chrome.i18n.getMessage("system")}</span>
-          </DropdownMenuCheckboxItem>
-          <br />
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("font")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setFont("sans");
-              localStorage.setItem("font", "sans");
-            }}
-            checked={font === "sans"}
-          >
-            {chrome.i18n.getMessage("sans")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setFont("monospace");
-              localStorage.setItem("font", "monospace");
-            }}
-            checked={font === "monospace"}
-          >
-            {chrome.i18n.getMessage("monospace")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setFont("serif");
-              localStorage.setItem("font", "serif");
-            }}
-            checked={font === "serif"}
-          >
-            {chrome.i18n.getMessage("serif")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={(e) => {
-              e.preventDefault();
-              setShowMoreFonts((prev) => !prev);
-            }}
-          >
-            {showMoreFonts
-              ? chrome.i18n.getMessage("show_less")
-              : chrome.i18n.getMessage("show_more")}
-          </DropdownMenuCheckboxItem>
-          {showMoreFonts && (
-            <>
-              <DropdownMenuCheckboxItem
-                onClick={() => {
-                  setFont("times-new-roman");
-                  localStorage.setItem("font", "times-new-roman");
-                }}
-                checked={font === "times-new-roman"}
-              >
-                {chrome.i18n.getMessage("times_new_roman")}
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                onClick={() => {
-                  setFont("verdana");
-                  localStorage.setItem("font", "verdana");
-                }}
-                checked={font === "verdana"}
-              >
-                {chrome.i18n.getMessage("verdana")}
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                onClick={() => {
-                  setFont("georgia");
-                  localStorage.setItem("font", "georgia");
-                }}
-                checked={font === "georgia"}
-              >
-                {chrome.i18n.getMessage("georgia")}
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                onClick={() => {
-                  setFont("brush-script-mt");
-                  localStorage.setItem("font", "brush-script-mt");
-                }}
-                checked={font === "brush-script-mt"}
-              >
-                {chrome.i18n.getMessage("brush_script_mt")}
-              </DropdownMenuCheckboxItem>
-            </>
-          )}
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("background")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setBackground("wallpaper");
-              localStorage.setItem("background", "wallpaper");
-              window.location.reload();
-            }}
-            checked={background === "wallpaper"}
-          >
-            {chrome.i18n.getMessage("wallpaper")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setBackground("color");
-              localStorage.setItem("background", "color");
-              window.location.reload();
-            }}
-            checked={background === "color"}
-          >
-            {chrome.i18n.getMessage("color_palette")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setBackground("gradient");
-              localStorage.setItem("background", "gradient");
-              window.location.reload();
-            }}
-            checked={background === "gradient"}
-          >
-            {chrome.i18n.getMessage("gradient")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>Change photo</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setChangeTime(Infinity);
-              localStorage.setItem("changeTime", Infinity);
-              removeCache();
-              loadNewImage(false);
-            }}
-            checked={changeTime === Infinity}
-          >
-            {chrome.i18n.getMessage("never")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setChangeTime(0);
-              localStorage.setItem("changeTime", 0);
-              removeCache();
-              loadNewImage(false);
-            }}
-            checked={changeTime === 0}
-          >
-            {chrome.i18n.getMessage("as_soon_as_possible")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setChangeTime(1000 * 60 * 60);
-              localStorage.setItem("changeTime", 1000 * 60 * 60);
-              removeCache();
-              loadNewImage(false);
-            }}
-            checked={changeTime == 1000 * 60 * 60}
-          >
-            {chrome.i18n.getMessage("every_hour")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setChangeTime(1000 * 60 * 60 * 24);
-              localStorage.setItem("changeTime", 1000 * 60 * 60 * 24);
-              removeCache();
-              loadNewImage(false);
-            }}
-            checked={changeTime == 1000 * 60 * 60 * 24}
-          >
-            {chrome.i18n.getMessage("every_day")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("clock_format")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockFormat(true);
-              localStorage.setItem("clockFormat", "true");
-            }}
-            checked={clockFormat}
-          >
-            {chrome.i18n.getMessage("12_hour")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockFormat(false);
-              localStorage.setItem("clockFormat", "false");
-            }}
-            checked={!clockFormat}
-          >
-            {chrome.i18n.getMessage("24_hour")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("clock_size")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockSize("small");
-              localStorage.setItem("clockSize", "small");
-            }}
-            checked={clockSize === "small"}
-          >
-            {chrome.i18n.getMessage("small")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockSize("medium");
-              localStorage.setItem("clockSize", "medium");
-            }}
-            checked={clockSize === "medium"}
-          >
-            {chrome.i18n.getMessage("medium")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            onClick={() => {
-              setClockSize("large");
-              localStorage.setItem("clockSize", "large");
-            }}
-            checked={clockSize === "large"}
-          >
-            {chrome.i18n.getMessage("large")}
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuLabel>
-            {chrome.i18n.getMessage("more")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              window.open("https://tally.so/r/3NB8vj");
-            }}
-          >
-            {chrome.i18n.getMessage("suggest_feature")}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <Popover>
-        <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
-          <Button
-            variant="ghost"
-            aria-label="To-do list"
-            className="text-white select-none"
-          >
-            <List className="h-5 w-5" />
-            {chrome.i18n.getMessage("todos")}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className={cn("w-80 mr-4 max-h-[70vh] overflow-y-auto scrollbar", currentFont)}
-        >
-          <div className="grid gap-4">
-            <div className="space-y-2">
-              <h1 className="text-2xl font-bold leading-none">
-                {chrome.i18n.getMessage("todos")}
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                {chrome.i18n.getMessage("todos_description")}
-              </p>
-            </div>
-            <div id="tasks">
-              {tasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex items-center justify-between gap-4"
-                >
-                  <div className="flex items-center gap-3">
-                    <Checkbox
-                      checked={task.completed}
-                      onCheckedChange={(checked) => {
-                        setTasks((tasks) =>
-                          tasks.map((t) =>
-                            t.id === task.id ? { ...t, completed: checked } : t
-                          )
-                        );
-                      }}
-                    />
-                    <span
-                      className="text-sm font-medium leading-none select-none focus-within:select-all outline-none"
-                      onDoubleClick={(e) => {
-                        e.target.contentEditable = "true";
-                        e.target.focus();
-                      }}
-                      onBlur={(e) => {
-                        e.target.contentEditable = "false";
-                        setTasks((tasks) =>
-                          tasks.map((t) =>
-                            t.id === task.id
-                              ? { ...t, text: e.target.innerText }
-                              : t
-                          )
-                        );
-                      }}
-                    >
-                      {task.text}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setTasks((tasks) =>
-                          tasks.filter((t) => t.id !== task.id)
-                        );
-                      }}
-                    >
-                      <Trash className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setTaskInput(task.text);
-                        setTasks((tasks) =>
-                          tasks.filter((t) => t.id !== task.id)
-                        );
-                      }}
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                  </div>
+        </SheetTrigger>
+        <SheetContent className="overflow-y-auto" side="left">
+          <SheetHeader>
+            <SheetTitle>{chrome.i18n.getMessage("settings")}</SheetTitle>
+          </SheetHeader>
+          <div className="grid gap-4 py-4">
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("features")}
+              </h4>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="clock"
+                    checked={widgetPreferences?.clock === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        clock: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          clock: checked.toString(),
+                        })
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="clock"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("clock")}
+                  </label>
                 </div>
-              ))}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="soundscapes-checkbox"
+                    checked={widgetPreferences?.soundscapes === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        soundscapes: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          soundscapes: checked.toString(),
+                        })
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="soundscapes-checkbox"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("soundscapes")}
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="todos-check"
+                    checked={widgetPreferences?.todos === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        todos: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          todos: checked.toString(),
+                        })
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="todos-check"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("todos")}
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="mantras-checkbox"
+                    checked={widgetPreferences?.mantras === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        mantras: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          mantras: checked.toString(),
+                        })
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="mantras-checkbox"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("mantras")}
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="bookmarks-checkbox"
+                    checked={widgetPreferences?.bookmarks === "true"}
+                    onCheckedChange={(checked) => {
+                      setWidgetPreferences({
+                        ...widgetPreferences,
+                        bookmarks: checked.toString(),
+                      });
+                      localStorage.setItem(
+                        "widgetPreferences",
+                        JSON.stringify({
+                          ...widgetPreferences,
+                          bookmarks: checked.toString(),
+                        })
+                      );
+                    }}
+                  />
+                  <label
+                    htmlFor="bookmarks-checkbox"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                    "
+                  >
+                    {chrome.i18n.getMessage("bookmarks")}
+                  </label>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Input
-                value={taskInput}
-                onChange={(e) => setTaskInput(e.target.value)}
-                placeholder={chrome.i18n.getMessage("add_todo")}
-              />
-              <Button
-                onClick={() => {
-                  if (taskInput.trim() !== "") {
-                    setTasks((tasks) => [
-                      ...tasks,
-                      { id: Date.now(), text: taskInput, completed: false },
-                    ]);
-                    setTaskInput("");
-                  }
-                }}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("themes")}
+              </h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    theme === "dark" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setTheme("dark");
+                    localStorage.setItem("theme", "dark");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("dark_mode")}</span>
+                  {theme === "dark" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    theme === "light" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setTheme("light");
+                    localStorage.setItem("theme", "light");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("light_mode")}</span>
+                  {theme === "light" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    theme === "system" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setTheme("system");
+                    localStorage.setItem("theme", "system");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("system")}</span>
+                  {theme === "system" && <Check className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">{chrome.i18n.getMessage("font")}</h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    font === "sans" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setFont("sans");
+                    localStorage.setItem("font", "sans");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("sans")}</span>
+                  {font === "sans" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    font === "monospace" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setFont("monospace");
+                    localStorage.setItem("font", "monospace");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("monospace")}</span>
+                  {font === "monospace" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    font === "serif" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setFont("serif");
+                    localStorage.setItem("font", "serif");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("serif")}</span>
+                  {font === "serif" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowMoreFonts((prev) => !prev);
+                  }}
+                >
+                  <span>
+                    {showMoreFonts
+                      ? chrome.i18n.getMessage("show_less")
+                      : chrome.i18n.getMessage("show_more")}
+                  </span>
+                </button>
+                {showMoreFonts && (
+                  <div className="space-y-2">
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-md px-3 py-2",
+                        font === "times-new-roman" && "bg-accent"
+                      )}
+                      onClick={() => {
+                        setFont("times-new-roman");
+                        localStorage.setItem("font", "times-new-roman");
+                      }}
+                    >
+                      <span>{chrome.i18n.getMessage("times_new_roman")}</span>
+                      {font === "times-new-roman" && (
+                        <Check className="h-4 w-4" />
+                      )}
+                    </button>
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-md px-3 py-2",
+                        font === "verdana" && "bg-accent"
+                      )}
+                      onClick={() => {
+                        setFont("verdana");
+                        localStorage.setItem("font", "verdana");
+                      }}
+                    >
+                      <span>{chrome.i18n.getMessage("verdana")}</span>
+                      {font === "verdana" && <Check className="h-4 w-4" />}
+                    </button>
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-md px-3 py-2",
+                        font === "georgia" && "bg-accent"
+                      )}
+                      onClick={() => {
+                        setFont("georgia");
+                        localStorage.setItem("font", "georgia");
+                      }}
+                    >
+                      <span>{chrome.i18n.getMessage("georgia")}</span>
+                      {font === "georgia" && <Check className="h-4 w-4" />}
+                    </button>
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-md px-3 py-2",
+                        font === "brush-script-mt" && "bg-accent"
+                      )}
+                      onClick={() => {
+                        setFont("brush-script-mt");
+                        localStorage.setItem("font", "brush-script-mt");
+                      }}
+                    >
+                      <span>{chrome.i18n.getMessage("brush_script_mt")}</span>
+                      {font === "brush-script-mt" && (
+                        <Check className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("background")}
+              </h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    background === "wallpaper" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setBackground("wallpaper");
+                    localStorage.setItem("background", "wallpaper");
+                    window.location.reload();
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("wallpaper")}</span>
+                  {background === "wallpaper" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    background === "color" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setBackground("color");
+                    localStorage.setItem("background", "color");
+                    window.location.reload();
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("color_palette")}</span>
+                  {background === "color" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    background === "gradient" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setBackground("gradient");
+                    localStorage.setItem("background", "gradient");
+                    window.location.reload();
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("gradient")}</span>
+                  {background === "gradient" && <Check className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("change_time")}
+              </h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    changeTime === Infinity && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setChangeTime(Infinity);
+                    localStorage.setItem("changeTime", Infinity);
+                    removeCache();
+                    loadNewImage(false);
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("never")}</span>
+                  {changeTime === Infinity && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    changeTime === 0 && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setChangeTime(0);
+                    localStorage.setItem("changeTime", 0);
+                    removeCache();
+                    loadNewImage(false);
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("as_soon_as_possible")}</span>
+                  {changeTime === 0 && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    changeTime === 1000 * 60 * 60 && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setChangeTime(1000 * 60 * 60);
+                    localStorage.setItem("changeTime", 1000 * 60 * 60);
+                    removeCache();
+                    loadNewImage(false);
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("every_hour")}</span>
+                  {changeTime === 1000 * 60 * 60 && (
+                    <Check className="h-4 w-4" />
+                  )}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    changeTime === 1000 * 60 * 60 * 24 && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setChangeTime(1000 * 60 * 60 * 24);
+                    localStorage.setItem("changeTime", 1000 * 60 * 60 * 24);
+                    removeCache();
+                    loadNewImage(false);
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("every_day")}</span>
+                  {changeTime === 1000 * 60 * 60 * 24 && (
+                    <Check className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("clock_format")}
+              </h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    clockFormat && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockFormat(true);
+                    localStorage.setItem("clockFormat", "true");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("12_hour")}</span>
+                  {clockFormat && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    !clockFormat && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockFormat(false);
+                    localStorage.setItem("clockFormat", "false");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("24_hour")}</span>
+                  {!clockFormat && <Check className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">
+                {chrome.i18n.getMessage("clock_size")}
+              </h4>
+              <div className="space-y-2">
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    clockSize === "small" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockSize("small");
+                    localStorage.setItem("clockSize", "small");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("small")}</span>
+                  {clockSize === "small" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    clockSize === "medium" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockSize("medium");
+                    localStorage.setItem("clockSize", "medium");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("medium")}</span>
+                  {clockSize === "medium" && <Check className="h-4 w-4" />}
+                </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    clockSize === "large" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setClockSize("large");
+                    localStorage.setItem("clockSize", "large");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("large")}</span>
+                  {clockSize === "large" && <Check className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-medium">{chrome.i18n.getMessage("more")}</h4>
+              <div className="space-y-2">
+                <button
+                  className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
+                  onClick={() => {
+                    window.open("https://tally.so/r/3NB8vj");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("suggest_feature")}</span>
+                </button>
+              </div>
             </div>
           </div>
-        </PopoverContent>
-      </Popover>
-      <Popover>
-        <PopoverTrigger asChild className="fixed top-0 left-0 z-50 m-4">
-          <Button
-            variant="ghost"
-            aria-label={chrome.i18n.getMessage("soundscapes")}
-            className="select-none text-white"
+        </SheetContent>
+      </Sheet>
+      {widgetPreferences?.todos == "true" && (
+        <Popover>
+          <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
+            <Button
+              variant="ghost"
+              aria-label="To-do list"
+              className="text-white select-none"
+            >
+              <List className="h-5 w-5" />
+              {chrome.i18n.getMessage("todos")}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className={cn(
+              "w-80 mr-4 max-h-[70vh] overflow-y-auto scrollbar",
+              currentFont
+            )}
           >
-            <AudioLines className="h-5 w-5" />
-            {chrome.i18n.getMessage("soundscapes")}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className={cn(
-            "w-[300px] h-[300px] ml-4 relative overflow-y-auto scrollbar",
-            currentFont
-          )}
-        >
-          <div>
-            <ul className="flex flex-col gap-2">
-              {soundscapes.map((sound, index) => (
-                <li
-                  key={index}
-                  onClick={() =>
-                    playSound(
-                      sound.url,
-                      sound.volume,
-                      sound.name,
-                      sound.image,
-                      sound.index
-                    )
-                  }
-                  className="select-none cursor-pointer"
-                >
-                  <b>{sound.name}</b>
-                  <br />
-                  {sound.attribution.map((attribution, index) => (
+            <div className="grid gap-4">
+              <div className="space-y-2">
+                <h1 className="text-2xl font-bold leading-none">
+                  {chrome.i18n.getMessage("todos")}
+                </h1>
+                <p className="text-sm text-muted-foreground">
+                  {chrome.i18n.getMessage("todos_description")}
+                </p>
+              </div>
+              <div id="tasks">
+                {tasks
+                  .filter((task) => showCompleted || !task.completed)
+                  .map((task) => (
                     <div
-                      key={index}
-                      className="text-sm text-gray-500 dark:text-gray-300"
+                      key={task.id}
+                      className="flex items-center justify-between gap-4"
                     >
-                      {attribution}
-                      <br />
+                      <div className="flex items-center gap-3">
+                        <Checkbox
+                          checked={task.completed}
+                          onCheckedChange={(checked) => {
+                            setTasks((tasks) =>
+                              tasks.map((t) =>
+                                t.id === task.id
+                                  ? { ...t, completed: checked }
+                                  : t
+                              )
+                            );
+                          }}
+                        />
+                        <span
+                          className="text-sm font-medium leading-none select-none focus-within:select-all outline-none"
+                          onDoubleClick={(e) => {
+                            e.target.contentEditable = "true";
+                            e.target.focus();
+                          }}
+                          onBlur={(e) => {
+                            e.target.contentEditable = "false";
+                            setTasks((tasks) =>
+                              tasks.map((t) =>
+                                t.id === task.id
+                                  ? { ...t, text: e.target.innerText }
+                                  : t
+                              )
+                            );
+                          }}
+                        >
+                          {task.text}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          onClick={() => {
+                            setTasks((tasks) =>
+                              tasks.filter((t) => t.id !== task.id)
+                            );
+                          }}
+                        >
+                          <Trash className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          onClick={() => {
+                            setTaskInput(task.text);
+                            setTasks((tasks) =>
+                              tasks.filter((t) => t.id !== task.id)
+                            );
+                          }}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
                   ))}
-                </li>
-              ))}
-            </ul>
-            <br />
-            <a href="https://noisefill.com/">
-              {chrome.i18n.getMessage("from_noisefill")}
-            </a>
-          </div>
-        </PopoverContent>
-      </Popover>
+              </div>
+              <div className="flex items-center gap-2">
+                <Input
+                  value={taskInput}
+                  onChange={(e) => setTaskInput(e.target.value)}
+                  placeholder={chrome.i18n.getMessage("add_todo")}
+                />
+                <Button
+                  onClick={() => {
+                    if (taskInput.trim() !== "") {
+                      setTasks((tasks) => [
+                        ...tasks,
+                        { id: Date.now(), text: taskInput, completed: false },
+                      ]);
+                      setTaskInput("");
+                    }
+                  }}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="show-completed"
+                  checked={showCompleted}
+                  onCheckedChange={(checked) => {
+                    setShowCompleted(checked);
+                    localStorage.setItem(
+                      "showCompleted",
+                      JSON.stringify(checked)
+                    );
+                  }}
+                />
+                <label
+                  htmlFor="show-completed"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {chrome.i18n.getMessage("show_completed")}
+                </label>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
+      {widgetPreferences?.soundscapes == "true" && (
+        <Popover>
+          <PopoverTrigger asChild className="fixed top-0 left-0 z-50 m-4">
+            <Button
+              variant="ghost"
+              aria-label={chrome.i18n.getMessage("soundscapes")}
+              className="select-none text-white"
+            >
+              <AudioLines className="h-5 w-5" />
+              {chrome.i18n.getMessage("soundscapes")}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className={cn(
+              "w-[300px] h-[300px] ml-4 relative overflow-y-auto scrollbar",
+              currentFont
+            )}
+          >
+            <div>
+              <ul className="flex flex-col gap-2">
+                {soundscapes.map((sound, index) => (
+                  <li
+                    key={index}
+                    onClick={() =>
+                      playSound(
+                        sound.url,
+                        sound.volume,
+                        sound.name,
+                        sound.image,
+                        sound.index
+                      )
+                    }
+                    className="select-none cursor-pointer"
+                  >
+                    <b>{sound.name}</b>
+                    <br />
+                    {sound.attribution.map((attribution, index) => (
+                      <div
+                        key={index}
+                        className="text-sm text-gray-500 dark:text-gray-300"
+                      >
+                        {attribution}
+                        <br />
+                      </div>
+                    ))}
+                  </li>
+                ))}
+              </ul>
+              <br />
+              <a href="https://noisefill.com/">
+                {chrome.i18n.getMessage("from_noisefill")}
+              </a>
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
+      {widgetPreferences?.bookmarks == "true" && (
+        <Popover>
+          <PopoverTrigger asChild className="fixed top-0 right-0 z-50 m-4">
+            <Button
+              variant="ghost"
+              aria-label={chrome.i18n.getMessage("bookmarks")}
+              className="select-none text-white"
+            >
+              <Computer className="h-5 w-5" />
+              {chrome.i18n.getMessage("bookmarks")}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className={cn(
+              "w-[300px] h-[300px] mr-4 relative overflow-y-auto scrollbar",
+              currentFont
+            )}
+          >
+            <div>
+              <ul className="flex flex-col gap-2">
+                {bookmarks.map((bookmark, index) => (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      window.open(bookmark.url, "_blank");
+                    }}
+                    className="select-none cursor-pointer"
+                  >
+                    <b>{bookmark.name}</b>
+                    <br />
+                    <span className="text-sm text-gray-500 dark:text-gray-300 break-all">
+                      {bookmark.url}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <br />
+              <button
+                className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
+                onClick={() => {
+                  const name = prompt(chrome.i18n.getMessage("enter_name"));
+                  const url = prompt(chrome.i18n.getMessage("enter_url"));
+                  if (name && url) {
+                    setBookmarks((bookmarks) => [...bookmarks, { name, url }]);
+                  }
+                }}
+              >
+                <span>{chrome.i18n.getMessage("add_bookmark")}</span>
+              </button>
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
     </div>
   );
 }
