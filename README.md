@@ -2,6 +2,8 @@
 
 Flowtide is a beautiful, smart New Tab page for your browser. Magic Search is the core feature of Flowtide, allowing you to easily complete tasks (e.g. making a Google Doc or Excel workbook) and search your bookmarks all with `/`.
 
+![Screenshot](https://utfs.io/f/rY9f3xCqBWAKx7Md4Dcv8YlumGai6k7dfTn3tXQqoypswhPE)
+
 ## Install for your browser
 
 - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/flowtide-new-tab/)
