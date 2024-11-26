@@ -1205,7 +1205,9 @@ function App() {
                 <button
                   className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
                   onClick={() => {
-                    window.open("https://tally.so/r/3NB8vj");
+                    window.open(
+                      "https://github.com/thingbomb/flowtide/discussions"
+                    );
                   }}
                 >
                   <span>{chrome.i18n.getMessage("suggest_feature")}</span>
