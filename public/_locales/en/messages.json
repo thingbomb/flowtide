@@ -298,5 +298,8 @@
   },
   "mantras": {
     "message": "Mantras"
+  },
+  "documentation": {
+    "message": "Documentation"
   }
 }

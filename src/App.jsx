@@ -1212,6 +1212,14 @@ function App() {
                 >
                   <span>{chrome.i18n.getMessage("suggest_feature")}</span>
                 </button>
+                <button
+                  className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
+                  onClick={() => {
+                    window.open("https://docs.flowtide.app");
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("documentation")}</span>
+                </button>
               </div>
             </div>
           </div>
