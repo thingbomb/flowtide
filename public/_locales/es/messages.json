@@ -298,5 +298,11 @@
   },
   "mantras": {
     "message": "Mantras"
+  },
+  "documentation": {
+    "message": "Documentation"
+  },
+  "blank": {
+    "message": "Blank"
   }
 }
