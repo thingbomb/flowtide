@@ -10,6 +10,7 @@ Flowtide is a beautiful, smart New Tab page for your browser. Magic Search is th
 
 - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/flowtide-new-tab/)
 - [Chrome](https://chromewebstore.google.com/detail/flowtide-beautiful-new-ta/fpdjjjmglibdjocjpcchgkbakeelaghm)
+- [Vivaldi](https://docs.flowtide.app/install-guides/vivaldi)
 
 ## License
 
