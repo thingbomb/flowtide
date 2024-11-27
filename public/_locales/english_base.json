@@ -271,5 +271,8 @@
   },
   "documentation": {
     "message": "Documentation"
+  },
+  "blank": {
+    "message": "Blank"
   }
 }

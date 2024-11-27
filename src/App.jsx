@@ -1043,6 +1043,20 @@ function App() {
                   <span>{chrome.i18n.getMessage("gradient")}</span>
                   {background === "gradient" && <Check className="h-4 w-4" />}
                 </button>
+                <button
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-md px-3 py-2",
+                    background === "gradient" && "bg-accent"
+                  )}
+                  onClick={() => {
+                    setBackground("null");
+                    localStorage.setItem("background", "null");
+                    window.location.reload();
+                  }}
+                >
+                  <span>{chrome.i18n.getMessage("blank")}</span>
+                  {background === "null" && <Check className="h-4 w-4" />}
+                </button>
               </div>
             </div>
 
