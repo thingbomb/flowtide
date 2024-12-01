@@ -621,17 +621,19 @@ function App() {
       />
       <CommandPalette setSelectedPage={setSelectedPage} />
       <h1
-        className={cn("font-bold clock select-none text-shadow-lg", {
-          "text-9xl": clockSize === "large",
-          "text-7xl": clockSize === "medium",
-          "text-5xl": clockSize === "small",
-        })}
-        style={{ color: "#FFFFFF" }}
+        className={cn(
+          "font-bold clock select-none text-shadow-lg !text-white",
+          {
+            "text-9xl": clockSize === "large",
+            "text-7xl": clockSize === "medium",
+            "text-5xl": clockSize === "small",
+          }
+        )}
       >
         {widgetPreferences?.clock === "true" &&
           time.toLocaleTimeString(undefined, options)}
       </h1>
-      <h3 className="text-2xl mt-3 text-shadow-lg">
+      <h3 className="text-2xl mt-3 text-shadow-lg !text-white">
         {widgetPreferences?.mantras === "true" &&
           chrome.i18n.getMessage(randomMantra)}
       </h3>
