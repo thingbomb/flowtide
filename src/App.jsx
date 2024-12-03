@@ -241,7 +241,9 @@ const gradients = [
 
 function App() {
   const [time, setTime] = useState(new Date());
-  const [selectedImage, setSelectedImage] = useState({});
+  const [selectedImage, setSelectedImage] = useState({
+    url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0r4IAAAAASUVORK5CYII",
+  });
   const [selectedPage, setSelectedPage] = useState("none");
   const { theme, setTheme } = useTheme();
   const [font, setFont] = useState(localStorage.getItem("font") || "sans");
@@ -481,73 +483,53 @@ function App() {
     saveTasks();
   }, [tasks]);
 
-  const toDataURL = (url) => {
-    return new Promise((resolve) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        const reader = new FileReader();
-        reader.onloadend = function () {
-          resolve(reader.result);
-        };
-        reader.readAsDataURL(xhr.response);
-      };
-      xhr.open("GET", url);
-      xhr.responseType = "blob";
-      xhr.send();
-    });
-  };
-
   const loadNewImage = async (setBackground) => {
     const newImage = images[Math.floor(Math.random() * images.length)];
-    const dataUrl = await toDataURL(newImage);
-    const now = new Date().getTime();
 
-    const db = await openDB();
-    const transaction = db.transaction(["imageCache"], "readwrite");
-    const store = transaction.objectStore("imageCache");
+    try {
+      fetch(newImage, {
+        cache: "force-cache",
+      }).then((response) => {
+        localStorage.setItem(
+          "backgroundImage",
+          JSON.stringify({
+            url: newImage,
+            expires: new Date().getTime() + changeTime,
+          })
+        );
 
-    store.put({
-      id: "background",
-      url: dataUrl,
-      expiry: now + changeTime,
-    });
-
-    if (setBackground) {
-      setSelectedImage({ url: dataUrl });
+        if (setBackground) {
+          setSelectedImage({ url: newImage });
+        }
+      });
+    } catch (error) {
+      console.error("Failed to cache image:", error);
     }
   };
 
-  const removeCache = async () => {
-    const db = await openDB();
-    const transaction = db.transaction(["imageCache"], "readwrite");
-    const store = transaction.objectStore("imageCache");
-    await store.clear();
-  };
-
-  const checkCachedImage = async () => {
+  const checkCachedImage = () => {
     setRendered(true);
-    const db = await openDB();
-    const transaction = db.transaction(["imageCache"], "readonly");
-    const store = transaction.objectStore("imageCache");
-    const request = store.get("background");
+    let cachedImageUrl;
+    try {
+      cachedImageUrl = JSON.parse(localStorage.getItem("backgroundImage"));
+    } catch (error) {
+      cachedImageUrl = null;
+    }
 
-    request.onsuccess = (event) => {
-      const cachedData = event.target.result;
-      const now = Date.now();
-
-      if (cachedData && now - cachedData.expiry < 0) {
-        setSelectedImage({ url: cachedData.url });
-      } else if (navigator.onLine) {
-        if (cachedData) {
-          setSelectedImage({ url: cachedData.url });
-          loadNewImage(false);
-        } else {
-          loadNewImage(true);
-        }
-      } else if (cachedData) {
-        setSelectedImage({ url: cachedData.url });
+    if (
+      (cachedImageUrl && cachedImageUrl.expires > new Date().getTime()) ||
+      !navigator.onLine
+    ) {
+      setSelectedImage({ url: cachedImageUrl.url });
+      loadNewImage(false);
+    } else if (cachedImageUrl) {
+      setSelectedImage({ url: cachedImageUrl.url });
+      if (navigator.onLine) {
+        loadNewImage(false);
       }
-    };
+    } else {
+      loadNewImage(true);
+    }
   };
 
   useEffect(() => {
@@ -591,24 +573,14 @@ function App() {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center h-screen bg-black !bg-cover transition-background-image background",
+        "flex flex-col items-center justify-center h-screen !bg-cover transition-background-image background",
         currentFont
       )}
       style={{
-        backgroundColor: background === "color" ? selectedColor : "#000000",
-        backgroundImage:
-          background === "wallpaper"
-            ? `url(${
-                selectedImage.url ||
-                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA1wMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIBABAQEAAQQDAQEAAAAAAAAAAAERMRIhQVECYXEikf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDh0OBAavyvtEABUAUAJc4LbeUAVFAQFAWfKzyyA1ylRQQVAF4EBrqvipyiggoCCwBBQEBQFl+p/iWoC1BewIKAizsIDd+W+GUXQQXlAAUCXPC9TIAKAgKBF1NQGr3GQBZnkQGr0sigguIACzAWZ5LnhkAFAQFwEanSlQFqKAgACzPJgDX84zeeyKCCoAAAKgAAKvTvmIgLmVFMBAAUncwBenJuxEXsCAAAoEm+lvxzzEQAXsAgAKs+O+UALMBAWU5Dj9Ay+qL1VKCAAAApx4Jc4Xd5BKgAAAumX0eFnysBOC03f0BAAFReAMvqi9VTkEAAABagAKgC8osa6vwGQvdAAAU8Is7UEVer8QBAAWIAtFlz0b9QERUAABUXFlwEFt0BBFgIq3p+2QVAAVAFFmeS54BEABUAURr+fsEC541AAAXRFgIuNfz9s36A1AAABRAFEAXEGunQReEvZAVABeRF5BFxentygAgCiAAsmrfjnkENQAVAFxFXp3yDItmAGINcgyLl9GgCALCxFlBBcAMDUBYIAqLpl9AinAAgAqCgguX0cAYgAogAs5AFvyvtkAAAAAWWzhbbeQBkAAABqW+wBLygAAAAA1tk5ZAAAAAH/9k="
-              })`
-            : background == "gradient"
-            ? gradient
-            : "none",
+        backgroundColor: background === "color" ? selectedColor : "",
+        backgroundImage: `url(${selectedImage.url})`,
         transition:
-          background === "wallpaper"
-            ? "background-image 0.4s ease-in-out"
-            : undefined,
+          "background-image 0.4s ease-in-out, background-color 0.4s ease-in-out",
       }}
       id="app"
     >
@@ -1075,8 +1047,6 @@ function App() {
                   onClick={() => {
                     setChangeTime(Infinity);
                     localStorage.setItem("changeTime", Infinity);
-                    removeCache();
-                    loadNewImage(false);
                   }}
                 >
                   <span>{chrome.i18n.getMessage("never")}</span>
@@ -1090,8 +1060,6 @@ function App() {
                   onClick={() => {
                     setChangeTime(0);
                     localStorage.setItem("changeTime", 0);
-                    removeCache();
-                    loadNewImage(false);
                   }}
                 >
                   <span>{chrome.i18n.getMessage("as_soon_as_possible")}</span>
@@ -1105,8 +1073,6 @@ function App() {
                   onClick={() => {
                     setChangeTime(1000 * 60 * 60);
                     localStorage.setItem("changeTime", 1000 * 60 * 60);
-                    removeCache();
-                    loadNewImage(false);
                   }}
                 >
                   <span>{chrome.i18n.getMessage("every_hour")}</span>
@@ -1122,8 +1088,6 @@ function App() {
                   onClick={() => {
                     setChangeTime(1000 * 60 * 60 * 24);
                     localStorage.setItem("changeTime", 1000 * 60 * 60 * 24);
-                    removeCache();
-                    loadNewImage(false);
                   }}
                 >
                   <span>{chrome.i18n.getMessage("every_day")}</span>
