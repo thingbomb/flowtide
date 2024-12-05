@@ -578,7 +578,12 @@ function App() {
       )}
       style={{
         backgroundColor: background === "color" ? selectedColor : "",
-        backgroundImage: `url(${selectedImage.url})`,
+        backgroundImage:
+          background === "wallpaper"
+            ? `url(${selectedImage.url})`
+            : background === "gradient"
+            ? gradient
+            : "",
         transition:
           "background-image 0.4s ease-in-out, background-color 0.4s ease-in-out",
       }}
@@ -633,7 +638,7 @@ function App() {
         )}
       {widgetPreferences?.bookmarks === "true" && (
         <div className="mt-4 grid grid-cols-3 gap-4 max-w-4xl">
-          {bookmarks.map((bookmark, index) => (
+          {bookmarks.slice(0, 9).map((bookmark, index) => (
             <div
               key={index}
               onClick={() => window.open(bookmark.url, "_blank")}
@@ -1020,16 +1025,16 @@ function App() {
                 <button
                   className={cn(
                     "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    background === "gradient" && "bg-accent"
+                    background === "blank" && "bg-accent"
                   )}
                   onClick={() => {
-                    setBackground("null");
-                    localStorage.setItem("background", "null");
+                    setBackground("blank");
+                    localStorage.setItem("background", "blank");
                     window.location.reload();
                   }}
                 >
                   <span>{chrome.i18n.getMessage("blank")}</span>
-                  {background === "null" && <Check className="h-4 w-4" />}
+                  {background === "blank" && <Check className="h-4 w-4" />}
                 </button>
               </div>
             </div>
