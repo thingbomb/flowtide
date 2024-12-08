@@ -278,6 +278,7 @@ function App() {
   const [selectedColor, setSelectedColor] = useState(
     colors[Math.floor(Math.random() * colors.length)]
   );
+  const [wallpaperLoaded, setWallpaperLoaded] = useState(false);
   const [gradient, setGradient] = useState(
     gradients[Math.floor(Math.random() * gradients.length)]
   );
@@ -629,22 +630,27 @@ function App() {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center h-screen !bg-cover transition-background-image background",
+        "flex flex-col items-center justify-center h-screen !bg-cover transition-background-image background relative",
         currentFont
       )}
       style={{
         backgroundColor: background === "color" ? selectedColor : "",
-        backgroundImage:
-          background === "wallpaper"
-            ? `url(${selectedImage.url})`
-            : background === "gradient"
-            ? gradient
-            : "",
+        backgroundImage: background === "gradient" ? gradient : "",
         transition:
           "background-image 0.4s ease-in-out, background-color 0.4s ease-in-out",
       }}
       id="app"
     >
+      {background === "wallpaper" && (
+        <img
+          src={selectedImage.url}
+          alt="Background"
+          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity -z-10 ${
+            wallpaperLoaded ? "opacity-80" : "opacity-0"
+          }`}
+          onLoad={() => setWallpaperLoaded(true)}
+        />
+      )}
       <audio
         className="hidden"
         id="player"
