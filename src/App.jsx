@@ -655,17 +655,17 @@ function App() {
       <CommandPalette setSelectedPage={setSelectedPage} />
       <h1
         className={cn(
-          "m-4 text-4xl font-mono text-white select-none group",
+          "m-4 mb-0 text-4xl font-mono text-white select-none group",
           currentFont,
           {
-            "text-2xl": clockSize === "small",
-            "text-4xl": clockSize === "medium",
-            "text-6xl": clockSize === "large",
+            "text-9xl": clockSize === "large",
+            "text-7xl": clockSize === "medium",
+            "text-5xl": clockSize === "small",
           }
         )}
       >
         {widgetPreferences?.clock === "true" && (
-          <div className="flex items-center space-x-2 ml-[40px]">
+          <div className="flex items-center space-x-2 ml-[40px] font-[600]">
             <span>
               {clockMode === "clock"
                 ? time.toLocaleTimeString(undefined, options)
