@@ -21,6 +21,8 @@ import {
   Trash,
   Edit,
   AudioLines,
+  MenuIcon,
+  Settings,
 } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { useTheme } from "./components/ui/theme-provider";
@@ -41,6 +43,13 @@ import {
   SheetTrigger,
 } from "./components/ui/sheet";
 import { Check } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./components/ui/dialog";
 
 const dbName = "flowtide";
 const dbVersion = 1;
@@ -121,7 +130,7 @@ const images = [
   "https://utfs.io/a/et7hfeee8z/D6128dhWEyDgR1XUt8J5JOc7ksyxnNmUHawrWGVS6DzThpLB",
   "https://utfs.io/a/et7hfeee8z/D6128dhWEyDgyYBlEcr82sbnctFEejWoHDi1YUqJ3mKgNxXV",
   "https://utfs.io/a/et7hfeee8z/D6128dhWEyDgW2f3vfYlqogbO3dBTsVQXGnieNvtfrkFAD6m",
-  "https://utfs.io/a/et7hfeee8z/D6128dhWEyDgdMS3uD6wXK86uSIDEUgqpYfM9eGxV0WbCZtm",
+  "https://utfs.io/a/et7hfeee8z/D6128dhWEyDgmdMS3uD6wXK86uSIDEUgqpYfM9eGxV0WbCZtm",
   "https://utfs.io/a/et7hfeee8z/D6128dhWEyDgCeNaWvfbyhE3LuGsRM1Q9oZP0elv4nkDgpiV",
   "https://utfs.io/a/et7hfeee8z/D6128dhWEyDgNJQ2BRU0LT4M6Up89rolmxAfVd3eFuZvQyEC",
   "https://utfs.io/a/et7hfeee8z/D6128dhWEyDgYIy5HwBhrxmiLdCbNpEqOP2MwcaY3ujAz9S8",
@@ -260,6 +269,7 @@ function App() {
       soundscapes: "false",
       todos: "false",
       bookmarks: "false",
+      pomodoro: "true",
     }
   );
   const [onboardingComplete, setOnboardingComplete] = useState(
@@ -303,6 +313,30 @@ function App() {
   const [clockSize, setClockSize] = useState(
     localStorage.getItem("clockSize") || "medium"
   );
+  const [clockMode, setClockMode] = useState(
+    localStorage.getItem("clockMode") || "clock"
+  );
+  const [pomodoroTime, setPomodoroTime] = useState(
+    parseInt(localStorage.getItem("pomodoroTime")) || 25 * 60
+  );
+  const [breakTime, setBreakTime] = useState(
+    parseInt(localStorage.getItem("breakTime")) || 5 * 60
+  );
+  const [currentTimer, setCurrentTimer] = useState(pomodoroTime);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("clockMode", clockMode);
+  }, [clockMode]);
+
+  useEffect(() => {
+    localStorage.setItem("pomodoroTime", pomodoroTime);
+  }, [pomodoroTime]);
+
+  useEffect(() => {
+    localStorage.setItem("breakTime", breakTime);
+  }, [breakTime]);
+
   const soundscapes = [
     {
       name: chrome.i18n.getMessage("ocean"),
@@ -437,6 +471,7 @@ function App() {
       index: 10,
     },
   ];
+
   function playSound(url, volume, name, image, index) {
     const audio = document.getElementById("player");
     if (audio.src === url && playing) {
@@ -570,6 +605,27 @@ function App() {
 
   const firstUncompletedTask = tasks.find((task) => !task.completed);
 
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  useEffect(() => {
+    let interval;
+    if (clockMode === "pomodoro" && isTimerRunning && currentTimer > 0) {
+      interval = setInterval(() => {
+        setCurrentTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (currentTimer === 0) {
+      setIsTimerRunning(false);
+      setCurrentTimer(currentTimer === pomodoroTime ? breakTime : pomodoroTime);
+    }
+    return () => clearInterval(interval);
+  }, [clockMode, isTimerRunning, currentTimer, pomodoroTime, breakTime]);
+
   return (
     <div
       className={cn(
@@ -599,16 +655,115 @@ function App() {
       <CommandPalette setSelectedPage={setSelectedPage} />
       <h1
         className={cn(
-          "font-bold clock select-none text-shadow-lg !text-white",
+          "m-4 text-4xl font-mono text-white select-none group",
+          currentFont,
           {
-            "text-9xl": clockSize === "large",
-            "text-7xl": clockSize === "medium",
-            "text-5xl": clockSize === "small",
+            "text-2xl": clockSize === "small",
+            "text-4xl": clockSize === "medium",
+            "text-6xl": clockSize === "large",
           }
         )}
       >
-        {widgetPreferences?.clock === "true" &&
-          time.toLocaleTimeString(undefined, options)}
+        {widgetPreferences?.clock === "true" && (
+          <div className="flex items-center space-x-2 ml-[40px]">
+            <span>
+              {clockMode === "clock"
+                ? time.toLocaleTimeString(undefined, options)
+                : formatTime(currentTimer)}
+            </span>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <MenuIcon className="h-4 w-4 text-white" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setClockMode("clock");
+                    setIsTimerRunning(false);
+                  }}
+                >
+                  Clock Mode
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setClockMode("pomodoro");
+                    setCurrentTimer(pomodoroTime);
+                  }}
+                >
+                  Pomodoro Mode
+                </DropdownMenuItem>
+                {clockMode === "pomodoro" && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() => setIsTimerRunning(!isTimerRunning)}
+                    >
+                      {isTimerRunning ? "Pause" : "Start"}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        setIsTimerRunning(false);
+                        setCurrentTimer(pomodoroTime);
+                      }}
+                    >
+                      Reset
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                          <Settings className="mr-2 h-4 w-4" />
+                          Settings
+                        </DropdownMenuItem>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Timer Settings</DialogTitle>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                          <div className="grid grid-cols-4 items-center gap-4">
+                            <label htmlFor="pomodoro">Pomodoro (min)</label>
+                            <Input
+                              id="pomodoro"
+                              type="number"
+                              className="col-span-3"
+                              value={pomodoroTime / 60}
+                              onChange={(e) => {
+                                const newTime = parseInt(e.target.value) * 60;
+                                setPomodoroTime(newTime);
+                                if (!isTimerRunning) {
+                                  setCurrentTimer(newTime);
+                                }
+                              }}
+                            />
+                          </div>
+                          <div className="grid grid-cols-4 items-center gap-4">
+                            <label htmlFor="break">Break (min)</label>
+                            <Input
+                              id="break"
+                              type="number"
+                              className="col-span-3"
+                              value={breakTime / 60}
+                              onChange={(e) => {
+                                setBreakTime(parseInt(e.target.value) * 60);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
       </h1>
       <h3 className="text-2xl mt-3 text-shadow-lg !text-white">
         {widgetPreferences?.mantras === "true" &&
