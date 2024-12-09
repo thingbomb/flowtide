@@ -32,7 +32,6 @@ pnpm dev
 
 To test the extension in the browser, go to `chrome://extensions` and enable developer mode. Then, click on "Load unpacked" and select the `dist` directory.
 
-
 ## Building from source
 
 First, install the dependencies:
@@ -43,8 +42,16 @@ pnpm install
 
 Then, build the extension:
 
+**Chrome compatible:**
+
 ```bash
-pnpm build-only
+pnpm build:chrome
+```
+
+**Firefox compatible:**
+
+```bash
+pnpm build:firefox
 ```
 
 The extension's source code will be inside the `dist` folder.
