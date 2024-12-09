@@ -524,7 +524,10 @@ function App() {
 
     try {
       fetch(newImage, {
-        cache: "force-cache",
+        mode: "no-cors",
+        headers: {
+          "Cache-Control": "public, max-age=315360000, immutable",
+        },
       }).then((response) => {
         localStorage.setItem(
           "backgroundImage",
@@ -552,15 +555,9 @@ function App() {
       cachedImageUrl = null;
     }
 
-    if (
-      (cachedImageUrl && cachedImageUrl.expires > new Date().getTime()) ||
-      !navigator.onLine
-    ) {
+    if (cachedImageUrl) {
       setSelectedImage({ url: cachedImageUrl.url });
-      loadNewImage(false);
-    } else if (cachedImageUrl) {
-      setSelectedImage({ url: cachedImageUrl.url });
-      if (navigator.onLine) {
+      if (navigator.onLine && new Date().getTime() > cachedImageUrl.expires) {
         loadNewImage(false);
       }
     } else {
