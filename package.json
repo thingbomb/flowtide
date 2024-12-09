@@ -4,11 +4,12 @@
   "version": "2.2.2",
   "type": "module",
   "scripts": {
-    "build": "pnpm lint && vite build",
     "build-only": "vite build",
     "lint": "oxlint .",
     "preview": "vite preview",
-    "dev": "chokidar 'src/**/*' 'public/**/*' -c 'echo Change detected! && pnpm run build-only'"
+    "dev": "chokidar 'src/**/*' 'public/**/*' -c 'echo Change detected! && pnpm run build-only'",
+    "build:firefox": "vite build; cp targets/firefox/manifest.json dist/manifest.json",
+    "build:chrome": "vite build; cp targets/chrome/manifest.json dist/manifest.json"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.1.2",
