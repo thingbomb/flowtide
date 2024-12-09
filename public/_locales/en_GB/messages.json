@@ -304,5 +304,32 @@
   },
   "blank": {
     "message": "Blank"
+  },
+  "pomodoro": {
+    "message": "Pomodoro"
+  },
+  "work": {
+    "message": "Work"
+  },
+  "break": {
+    "message": "Break"
+  },
+  "timer_settings": {
+    "message": "Timer Settings"
+  },
+  "pause": {
+    "message": "Pause"
+  },
+  "start": {
+    "message": "Start"
+  },
+  "reset": {
+    "message": "Reset"
+  },
+  "break_time": {
+    "message": "Break (min)"
+  },
+  "background_timer": {
+    "message": "Background"
   }
 }
