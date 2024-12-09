@@ -297,6 +297,9 @@ function App() {
     const saved = localStorage.getItem("showCompleted");
     return saved ? JSON.parse(saved) : false;
   });
+  const [currentBlock, setCurrentBlock] = useState(
+    chrome.i18n.getMessage("work")
+  );
   const [bookmarks, setBookmarks] = useState([]);
   const currentFont =
     {
@@ -615,11 +618,19 @@ function App() {
     let interval;
     if (clockMode === "pomodoro" && isTimerRunning && currentTimer > 0) {
       interval = setInterval(() => {
+        document.title = `${currentBlock} - ${formatTime(currentTimer - 1)}`;
         setCurrentTimer((prev) => prev - 1);
       }, 1000);
     } else if (currentTimer === 0) {
       setIsTimerRunning(false);
-      setCurrentTimer(currentTimer === pomodoroTime ? breakTime : pomodoroTime);
+      const isWorkBlock = currentBlock === chrome.i18n.getMessage("work");
+      setCurrentTimer(isWorkBlock ? breakTime : pomodoroTime);
+      setCurrentBlock(
+        isWorkBlock
+          ? chrome.i18n.getMessage("break")
+          : chrome.i18n.getMessage("work")
+      );
+      setIsTimerRunning(true);
     }
     return () => clearInterval(interval);
   }, [clockMode, isTimerRunning, currentTimer, pomodoroTime, breakTime]);
@@ -641,7 +652,7 @@ function App() {
       {background === "wallpaper" && (
         <img
           src={selectedImage.url}
-          alt="Background"
+          alt={chrome.i18n.getMessage("background")}
           className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity -z-10 ${
             wallpaperLoaded ? "opacity-80" : "opacity-0"
           }`}
@@ -672,7 +683,7 @@ function App() {
             <span>
               {clockMode === "clock"
                 ? time.toLocaleTimeString(undefined, options)
-                : formatTime(currentTimer)}
+                : `${currentBlock} - ${formatTime(currentTimer)}`}
             </span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -691,7 +702,7 @@ function App() {
                     setIsTimerRunning(false);
                   }}
                 >
-                  Clock Mode
+                  {chrome.i18n.getMessage("clock")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
@@ -699,7 +710,7 @@ function App() {
                     setCurrentTimer(pomodoroTime);
                   }}
                 >
-                  Pomodoro Mode
+                  {chrome.i18n.getMessage("pomodoro")}
                 </DropdownMenuItem>
                 {clockMode === "pomodoro" && (
                   <>
@@ -707,7 +718,9 @@ function App() {
                     <DropdownMenuItem
                       onClick={() => setIsTimerRunning(!isTimerRunning)}
                     >
-                      {isTimerRunning ? "Pause" : "Start"}
+                      {isTimerRunning
+                        ? chrome.i18n.getMessage("pause")
+                        : chrome.i18n.getMessage("start")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => {
@@ -715,23 +728,27 @@ function App() {
                         setCurrentTimer(pomodoroTime);
                       }}
                     >
-                      Reset
+                      {chrome.i18n.getMessage("reset")}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <Dialog>
                       <DialogTrigger asChild>
                         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                           <Settings className="mr-2 h-4 w-4" />
-                          Settings
+                          {chrome.i18n.getMessage("settings")}
                         </DropdownMenuItem>
                       </DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
-                          <DialogTitle>Timer Settings</DialogTitle>
+                          <DialogTitle>
+                            {chrome.i18n.getMessage("timer_settings")}
+                          </DialogTitle>
                         </DialogHeader>
                         <div className="grid gap-4 py-4">
                           <div className="grid grid-cols-4 items-center gap-4">
-                            <label htmlFor="pomodoro">Pomodoro (min)</label>
+                            <label htmlFor="pomodoro">
+                              {chrome.i18n.getMessage("pomodoro")} (min)
+                            </label>
                             <Input
                               id="pomodoro"
                               type="number"
@@ -747,7 +764,9 @@ function App() {
                             />
                           </div>
                           <div className="grid grid-cols-4 items-center gap-4">
-                            <label htmlFor="break">Break (min)</label>
+                            <label htmlFor="break">
+                              {chrome.i18n.getMessage("break_time")}
+                            </label>
                             <Input
                               id="break"
                               type="number"
