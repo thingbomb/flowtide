@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CommandPalette } from "./components/ui/cmd";
+import { CommandPalette } from "./components/cmd";
 import CharacterCounter from "./CharacterCounter";
 import WordCounter from "./WordCounter";
 import {
@@ -50,6 +50,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
+import data from "../public/_locales/en/messages.json";
 
 const dbName = "flowtide";
 const dbVersion = 1;
@@ -70,6 +71,11 @@ const mantras = [
   "mantra_14",
   "mantra_15",
 ];
+
+if (!chrome.i18n) {
+  chrome.i18n = {};
+  chrome.i18n.getMessage = (message) => data[message].message;
+}
 
 const randomMantra = mantras[Math.floor(Math.random() * mantras.length)];
 
@@ -130,7 +136,6 @@ const images = [
   "https://img.flowtide.app/D6128dhWEyDgR1XUt8J5JOc7ksyxnNmUHawrWGVS6DzThpLB.jpeg",
   "https://img.flowtide.app/D6128dhWEyDgyYBlEcr82sbnctFEejWoHDi1YUqJ3mKgNxXV.jpeg",
   "https://img.flowtide.app/D6128dhWEyDgW2f3vfYlqogbO3dBTsVQXGnieNvtfrkFAD6m.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgmdMS3uD6wXK86uSIDEUgqpYfM9eGxV0WbCZt.jpeg",
   "https://img.flowtide.app/D6128dhWEyDgCeNaWvfbyhE3LuGsRM1Q9oZP0elv4nkDgpiV.jpeg",
   "https://img.flowtide.app/D6128dhWEyDgNJQ2BRU0LT4M6Up89rolmxAfVd3eFuZvQyEC.jpeg",
   "https://img.flowtide.app/D6128dhWEyDgYIy5HwBhrxmiLdCbNpEqOP2MwcaY3ujAz9S8.jpeg",
@@ -652,7 +657,6 @@ function App() {
       {background === "wallpaper" && (
         <img
           src={selectedImage.url}
-          alt={chrome.i18n.getMessage("background")}
           className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity -z-10 ${
             wallpaperLoaded ? "opacity-80" : "opacity-0"
           }`}

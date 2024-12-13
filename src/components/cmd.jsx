@@ -7,7 +7,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./command";
+} from "./ui/command";
 import { toast } from "sonner";
 
 export function CommandPalette(props) {
@@ -114,6 +114,7 @@ export function CommandPalette(props) {
 
   useEffect(() => {
     const fetchBookmarks = () => {
+      if (!chrome.bookmarks) return;
       chrome.bookmarks.getTree(function (bookmarks) {
         const newBookmarks = [];
         const newFolders = [];
@@ -159,7 +160,9 @@ export function CommandPalette(props) {
         !folder.children[i].url.startsWith("javascript")
       ) {
         window.open(folder.children[i].url);
-        toast(chrome.i18n.getMessage("opened") + " " + folder.children[i].title);
+        toast(
+          chrome.i18n.getMessage("opened") + " " + folder.children[i].title
+        );
       }
     }
   };
@@ -294,7 +297,9 @@ export function CommandPalette(props) {
               }}
               className="flex items-center"
             >
-              <span className="text-primary">{chrome.i18n.getMessage("character_counter")}</span>
+              <span className="text-primary">
+                {chrome.i18n.getMessage("character_counter")}
+              </span>
             </CommandItem>
             <CommandItem
               onSelect={() => {
@@ -303,25 +308,32 @@ export function CommandPalette(props) {
               }}
               className="flex items-center"
             >
-              <span className="text-primary">{chrome.i18n.getMessage("word_counter")}</span>
+              <span className="text-primary">
+                {chrome.i18n.getMessage("word_counter")}
+              </span>
             </CommandItem>
           </CommandGroup>
 
           <CommandGroup heading={chrome.i18n.getMessage("tabs")}>
             <CommandItem
               onSelect={() => {
+                if (!chrome.permissions) {
+                  alert(
+                    "You're using a preview version of Flowtide. Get the official version to use this feature."
+                  );
+                  setOpen(false);
+                  return;
+                }
                 setOpen(false);
-                if (
-                  confirm(
-                    chrome.i18n.getMessage("remove_tabs_confirm")
-                  )
-                ) {
+                if (confirm(chrome.i18n.getMessage("remove_tabs_confirm"))) {
                   deleteAllTabs();
                 }
               }}
               className="flex items-center"
             >
-              <span className="text-primary">{chrome.i18n.getMessage("remove_all_tabs")}</span>
+              <span className="text-primary">
+                {chrome.i18n.getMessage("remove_all_tabs")}
+              </span>
             </CommandItem>
           </CommandGroup>
         </CommandList>
