@@ -1,7 +1,7 @@
 {
   "name": "flowtide",
   "private": true,
-  "version": "2.3",
+  "version": "2.3.1",
   "type": "module",
   "scripts": {
     "build-only": "vite build",
