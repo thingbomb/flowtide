@@ -309,27 +309,27 @@
     "message": "Pomodoro"
   },
   "work": {
-    "message": "Work"
+    "message": "Travail"
   },
   "break": {
-    "message": "Break"
+    "message": "Pause"
   },
   "timer_settings": {
-    "message": "Timer Settings"
+    "message": "Réglages de la minuterie"
   },
   "pause": {
     "message": "Pause"
   },
   "start": {
-    "message": "Start"
+    "message": "Démarrage"
   },
   "reset": {
-    "message": "Reset"
+    "message": "Remise à zéro"
   },
   "break_time": {
-    "message": "Break (min)"
+    "message": "Pause (min)"
   },
   "background_timer": {
-    "message": "Background"
+    "message": "Arrière-plan"
   }
 }
