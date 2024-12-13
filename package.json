@@ -10,7 +10,8 @@
     "dev": "chokidar 'src/**/*' 'public/**/*' './vite.config.js' './package.json' -c 'pnpm run build-only && cp targets/chrome/manifest.json dist/manifest.json'",
     "dev:beta": "vite",
     "build:firefox": "vite build; cp targets/firefox/manifest.json dist/manifest.json",
-    "build:chrome": "vite build; cp targets/chrome/manifest.json dist/manifest.json"
+    "build:chrome": "vite build; cp targets/chrome/manifest.json dist/manifest.json",
+    "build:web": "vite build;"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.1.2",
