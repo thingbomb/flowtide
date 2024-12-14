@@ -30,7 +30,7 @@ Then, start the development server:
 pnpm dev
 ```
 
-To test the extension in the browser, go to `chrome://extensions` and enable developer mode. Then, click on "Load unpacked" and select the `dist` directory.
+Go to the port shown for the development server.
 
 ## Building from source
 
@@ -54,7 +54,7 @@ pnpm build:chrome
 pnpm build:firefox
 ```
 
-The extension's source code will be inside the `dist` folder.
+The extension's source code will be inside the `apps/new-tab/dist` folder.
 
 ## Contributions
 

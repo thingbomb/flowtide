@@ -1,0 +1,25 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "outputs": ["dist/**"],
+      "dependsOn": ["build:firefox", "build:chrome", "build:web"]
+    },
+    "build:firefox": {
+      "outputs": ["dist/**"]
+    },
+    "build:chrome": {
+      "outputs": ["dist/**"]
+    },
+    "build:web": {
+      "outputs": ["dist/**"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    }
+  }
+}
