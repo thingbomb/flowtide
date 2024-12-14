@@ -6,7 +6,8 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md,html,json,css,yml}\"",
     "build:firefox": "turbo build:firefox",
-    "build:chrome": "turbo build:chrome"
+    "build:chrome": "turbo build:chrome",
+    "build:web": "turbo build:web"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
