@@ -16,9 +16,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build:firefox": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
-    "build:chrome": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
-    "build:web": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+    "build:ui": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
     "dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
     "type-check": "tsc --noEmit"
   },

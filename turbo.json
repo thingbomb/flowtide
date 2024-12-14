@@ -6,13 +6,19 @@
       "dependsOn": ["build:firefox", "build:chrome", "build:web"]
     },
     "build:firefox": {
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**"],
+      "dependsOn": ["build:ui"]
     },
     "build:chrome": {
+      "outputs": ["dist/**"],
+      "dependsOn": ["build:ui"]
+    },
+    "build:ui": {
       "outputs": ["dist/**"]
     },
     "build:web": {
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**"],
+      "dependsOn": ["build:ui"]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
