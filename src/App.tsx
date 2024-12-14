@@ -72,24 +72,32 @@ const mantras = [
   "mantra_15",
 ];
 
+type MessageKeys = any;
+
+interface data {
+  [key: string]: { message: string };
+}
+
 if (!chrome.i18n) {
-  chrome.i18n = {};
-  chrome.i18n.getMessage = (message) => data[message].message;
+  let jsonData: data = data;
+  chrome.i18n = {
+    getMessage: (message: MessageKeys) => (jsonData[message] as { message: string }).message,
+  } as any;
 }
 
 const randomMantra = mantras[Math.floor(Math.random() * mantras.length)];
 
-const openDB = () => {
+const openDB = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(dbName, dbVersion);
+    const request: IDBOpenDBRequest = indexedDB.open(dbName, dbVersion);
 
-    request.onerror = (event) =>
-      reject("IndexedDB error: " + event.target.error);
+    request.onerror = (event: IDBOpenDBRequest) =>
+      reject("IndexedDB error: " + (event.target as IDBRequest)?.error);
 
-    request.onsuccess = (event) => resolve(event.target.result);
+    request.onsuccess = (event) => resolve((event.target as IDBRequest)?.result);
 
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
+    request.onupgradeneeded = (event: IDBOpenDBRequest) => {
+      const db = (event.target as IDBRequest)?.result;
       if (!db.objectStoreNames.contains("todos")) {
         db.createObjectStore("todos", { keyPath: "id" });
       }
@@ -140,7 +148,7 @@ const images = [
   "https://img.flowtide.app/D6128dhWEyDgNJQ2BRU0LT4M6Up89rolmxAfVd3eFuZvQyEC.jpeg",
   "https://img.flowtide.app/D6128dhWEyDgYIy5HwBhrxmiLdCbNpEqOP2MwcaY3ujAz9S8.jpeg",
   "https://img.flowtide.app/D6128dhWEyDgiykp0kt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgtr29Q27Yk2j70f6F4z9pJo8DOqidQIBAyZea.jpeg",
+  "https://img.flowtide.app/D6128dhWEyDgtr29Q27Yk2j70f6F4z9pJo8DOqidQIBAyZe.jpeg",
   "https://img.flowtide.app/D6128dhWEyDg3buUXmsT4wRBpgx589YjAqGOEbI6cHUrvzyi.jpeg",
   "https://img.flowtide.app/D6128dhWEyDgiAbg1Y1t6Tzhmn9MAvpPjCxDwJIrH8RlV4L0.jpeg",
   "https://img.flowtide.app/D6128dhWEyDgHTUMEcnuTewkdl6BVM5rAtpxPGIFa4fH0UWD.jpeg",
@@ -264,11 +272,11 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [taskInput, setTaskInput] = useState("");
   const [rendered, setRendered] = useState(false);
-  const [background, setBackground] = useState(
+  const [background, setBackground] = useState<string>(
     localStorage.getItem("background") || "wallpaper"
   );
   const [widgetPreferences, setWidgetPreferences] = useState(
-    JSON.parse(localStorage.getItem("widgetPreferences")) || {
+    JSON.parse(localStorage.getItem("widgetPreferences") || "{}") || {
       mantras: "true",
       clock: "false",
       soundscapes: "false",
@@ -290,7 +298,7 @@ function App() {
   const [clockFormat, setClockFormat] = useState(() => {
     const format = localStorage.getItem("clockFormat");
     if (!format) {
-      localStorage.setItem("clockFormat", true);
+      localStorage.setItem("clockFormat", "true");
       return true;
     }
     return format === "true";
@@ -326,10 +334,10 @@ function App() {
     localStorage.getItem("clockMode") || "clock"
   );
   const [pomodoroTime, setPomodoroTime] = useState(
-    parseInt(localStorage.getItem("pomodoroTime")) || 25 * 60
+    parseInt(localStorage.getItem("pomodoroTime") || "0") || 25 * 60
   );
   const [breakTime, setBreakTime] = useState(
-    parseInt(localStorage.getItem("breakTime")) || 5 * 60
+    parseInt(localStorage.getItem("breakTime") || "0") || 5 * 60
   );
   const [currentTimer, setCurrentTimer] = useState(pomodoroTime);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -339,11 +347,11 @@ function App() {
   }, [clockMode]);
 
   useEffect(() => {
-    localStorage.setItem("pomodoroTime", pomodoroTime);
+    localStorage.setItem("pomodoroTime", String(pomodoroTime));
   }, [pomodoroTime]);
 
   useEffect(() => {
-    localStorage.setItem("breakTime", breakTime);
+    localStorage.setItem("breakTime", String(breakTime));
   }, [breakTime]);
 
   const soundscapes = [
@@ -481,34 +489,34 @@ function App() {
     },
   ];
 
-  function playSound(url, volume, name, image, index) {
-    const audio = document.getElementById("player");
-    if (audio.src === url && playing) {
+  function playSound(url: string, volume: number, name: string, image: string, index: number) {
+    const audio = document.getElementById("player") as HTMLAudioElement;
+    if (audio?.src === url && playing) {
       audio.pause();
     } else {
       audio.src = url;
       audio.volume = volume;
       audio.title = name;
       audio.setAttribute("image", image);
-      audio.setAttribute("index", index);
+      audio.setAttribute("index", String(index));
       setCurrentURL(url);
       audio.play();
     }
   }
 
   useEffect(() => {
-    const loadTasks = async () => {
+    const loadTasks = async (event: IDBOpenDBRequest) => {
       const db = await openDB();
       const transaction = db.transaction(["todos"], "readonly");
       const store = transaction.objectStore("todos");
       const request = store.getAll();
 
-      request.onsuccess = (event) => {
+      request.onsuccess = (event: any) => {
         setTasks(event.target.result);
       };
     };
 
-    loadTasks();
+    loadTasks;
   }, []);
 
   useEffect(() => {
@@ -941,7 +949,7 @@ function App() {
                   <Checkbox
                     id="mantras-checkbox"
                     checked={widgetPreferences?.mantras === "true"}
-                    onCheckedChange={(checked) => {
+                    onCheckedChange={(checked: Event) => {
                       setWidgetPreferences({
                         ...widgetPreferences,
                         mantras: checked.toString(),
