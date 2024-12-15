@@ -317,7 +317,9 @@ function App() {
     return format === "true";
   });
   const [changeTime, setChangeTime] = useState(
-    Number(localStorage.getItem("changeTime")) ?? 1000 * 60 * 60 * 24,
+    Number(localStorage.getItem("changeTime")) != null
+      ? Number(localStorage.getItem("changeTime"))
+      : 1000 * 60 * 60 * 24,
   );
   const [showCompleted, setShowCompleted] = useState(() => {
     const saved = localStorage.getItem("showCompleted");
