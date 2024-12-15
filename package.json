@@ -7,7 +7,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,html,json,css,yml}\"",
     "build:firefox": "turbo build:firefox",
     "build:chrome": "turbo build:chrome",
-    "build:web": "turbo build:web"
+    "build:web": "turbo build:web --filter=apps/new-tab",
+    "build:ui": "turbo build:ui --filter=packages/ui"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
