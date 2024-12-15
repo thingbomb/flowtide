@@ -27,11 +27,7 @@ import {
 import { Button } from "@flowtide/ui";
 import { useTheme } from "@flowtide/ui";
 import { cn } from "@/lib/utils";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@flowtide/ui";
+import { Popover, PopoverContent, PopoverTrigger } from "@flowtide/ui";
 import { Checkbox } from "@flowtide/ui";
 import { Input } from "@flowtide/ui";
 import {
@@ -287,7 +283,8 @@ function App() {
   const [font, setFont] = useState(localStorage.getItem("font") || "sans");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskInput, setTaskInput] = useState<string | undefined>("");
-  const [rendered, setRendered] = useState(false);
+  const isFirstRender = useRef(true);
+  const isTasksFirstRender = useRef(true);
   const [background, setBackground] = useState<string>(
     localStorage.getItem("background") || "wallpaper",
   );
@@ -541,20 +538,24 @@ function App() {
     loadTasks();
   }, []);
 
+  const saveTasks = async () => {
+    console.log("Saving tasks");
+    const db = await openDB();
+    const transaction = db.transaction(["todos"], "readwrite");
+    const store = transaction.objectStore("todos");
+
+    await store.clear();
+
+    tasks.forEach((task) => {
+      store.add(task);
+    });
+  };
+
   useEffect(() => {
-    const saveTasks = async () => {
-      console.log("Saving tasks");
-      const db = await openDB();
-      const transaction = db.transaction(["todos"], "readwrite");
-      const store = transaction.objectStore("todos");
-
-      await store.clear();
-
-      tasks.forEach((task) => {
-        store.add(task);
-      });
-    };
-
+    if (isTasksFirstRender.current) {
+      isTasksFirstRender.current = false;
+      return;
+    }
     saveTasks();
   }, [tasks]);
 
@@ -586,10 +587,11 @@ function App() {
   };
 
   const checkCachedImage = () => {
-    setRendered(true);
     let cachedImageUrl;
     try {
-      cachedImageUrl = JSON.parse(localStorage.getItem("backgroundImage") || "null");
+      cachedImageUrl = JSON.parse(
+        localStorage.getItem("backgroundImage") || "null",
+      );
     } catch (error) {
       cachedImageUrl = null;
     }
@@ -605,20 +607,23 @@ function App() {
   };
 
   useEffect(() => {
-    if (!rendered) {
-      if (background === "color") {
-        setRendered(true);
-      } else {
-        checkCachedImage();
-      }
-      setInterval(() => {
-        setTime(new Date());
-      }, 1000);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
     }
-  }, [rendered]);
+    if (background == "wallpaper") {
+      checkCachedImage();
+    }
+    setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+  }, []);
 
   useEffect(() => {
-    if (widgetPreferences?.bookmarks === "true" && chrome.bookmarks !== undefined) {
+    if (
+      widgetPreferences?.bookmarks === "true" &&
+      chrome.bookmarks !== undefined
+    ) {
       chrome.bookmarks.getTree((bookmarkTreeNodes) => {
         const flattenBookmarks = (nodes: any[]): Bookmark[] => {
           let bookmarks: Bookmark[] = [];
@@ -638,7 +643,11 @@ function App() {
     }
   }, [widgetPreferences?.bookmarks]);
 
-  const options: object = { hour: "2-digit", minute: "2-digit", hour12: clockFormat };
+  const options: object = {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: clockFormat,
+  };
 
   const firstUncompletedTask = tasks.find((task) => !task.completed);
 
@@ -842,6 +851,7 @@ function App() {
                       : t,
                   ),
                 );
+                saveTasks();
               }}
               checked={false}
             />
@@ -1304,7 +1314,10 @@ function App() {
                   )}
                   onClick={() => {
                     setChangeTime(1000 * 60 * 60 * 24);
-                    localStorage.setItem("changeTime", String(1000 * 60 * 60 * 24));
+                    localStorage.setItem(
+                      "changeTime",
+                      String(1000 * 60 * 60 * 24),
+                    );
                   }}
                 >
                   <span>{chrome.i18n.getMessage("every_day")}</span>
@@ -1476,11 +1489,13 @@ function App() {
                         <span
                           className="text-sm font-medium leading-none select-none focus-within:select-all outline-none"
                           onDoubleClick={(e) => {
-                            (e.target as HTMLSpanElement).contentEditable = "true";
+                            (e.target as HTMLSpanElement).contentEditable =
+                              "true";
                             (e.target as HTMLSpanElement).focus();
                           }}
                           onBlur={(e) => {
-                            (e.target as HTMLSpanElement).contentEditable = "false";
+                            (e.target as HTMLSpanElement).contentEditable =
+                              "false";
                             setTasks((tasks) =>
                               tasks.map((t) =>
                                 t.id === task.id
@@ -1533,11 +1548,11 @@ function App() {
                     if (taskInput?.trim() !== "") {
                       setTasks((tasks: Task[]) => [
                         ...tasks,
-                        ({
+                        {
                           id: Date.now(),
                           text: taskInput,
                           completed: false,
-                        } as Task),
+                        } as Task,
                       ]);
                       setTaskInput("");
                     }
@@ -1608,9 +1623,7 @@ function App() {
                 ))}
               </ul>
               <br />
-              <a href="https://noisefill.com/credits">
-                View sound attributions
-              </a>
+              <a href="https://noisefill.com/credits">View sound attribution</a>
             </div>
           </PopoverContent>
         </Popover>

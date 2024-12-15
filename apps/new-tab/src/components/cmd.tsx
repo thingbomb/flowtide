@@ -178,7 +178,7 @@ export function CommandPalette(props: any) {
       ) {
         window.open(folder.children[i].url);
         toast(
-          chrome.i18n.getMessage("opened") + " " + folder.children[i].title
+          chrome.i18n.getMessage("opened") + " " + folder.children[i].title,
         );
       }
     }
@@ -222,7 +222,7 @@ export function CommandPalette(props: any) {
         } else {
           console.log("Permission denied for tabs");
         }
-      }
+      },
     );
 
     function closeOtherTabs() {
@@ -231,7 +231,7 @@ export function CommandPalette(props: any) {
         tabs.forEach((tab) => {
           if (tab.id !== currentTab.id) {
             if (tab.id !== undefined) {
-            chrome.tabs.remove(tab.id);
+              chrome.tabs.remove(tab.id);
             }
           }
         });
@@ -254,7 +254,7 @@ export function CommandPalette(props: any) {
               onClick={() => {
                 const copiedResult = result.result;
                 setResult({
-                  result: (chrome.i18n.getMessage("copied_to_clipboard")),
+                  result: chrome.i18n.getMessage("copied_to_clipboard"),
                   copied: true,
                   expression: result.expression,
                 });
@@ -338,7 +338,7 @@ export function CommandPalette(props: any) {
               onSelect={() => {
                 if (!chrome.permissions) {
                   alert(
-                    "You're using a preview version of Flowtide. Get the official version to use this feature."
+                    "You're using a preview version of Flowtide. Get the official version to use this feature.",
                   );
                   setOpen(false);
                   return;

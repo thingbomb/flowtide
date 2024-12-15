@@ -1,7 +1,7 @@
 {
-    "extends": "@flowtide/typescript-config/react-library.json",
-    "compilerOptions": {
-        "outDir": "dist"
-    },
-    "include": ["src", "./index.tsx"]
+  "extends": "@flowtide/typescript-config/react-library.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["src", "./index.tsx"]
 }
