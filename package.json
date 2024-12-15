@@ -7,7 +7,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,html,json,css,yml}\"",
     "build:firefox": "turbo build:ui --filter=@flowtide/ui && turbo build:firefox --filter=@flowtide/new-tab",
     "build:chrome": "turbo build:ui --filter=@flowtide/ui && turbo build:chrome --filter=@flowtide/new-tab",
-    "build:web": "turbo build:ui --filter=@flowtide/ui && turbo build:web --filter=@flowtide/new-tab"
+    "build:web": "turbo build:ui --filter=@flowtide/ui && turbo build:web --filter=@flowtide/new-tab",
+    "build:lander": "turbo build:lander --filter=@flowtide/www"
   },
   "devDependencies": {
     "prettier": "^3.2.5",

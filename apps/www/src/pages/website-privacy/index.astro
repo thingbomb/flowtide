@@ -1,0 +1,99 @@
+---
+import Header from "../../components/Header.astro";
+import Button from "../../components/Button.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Website Privacy Policy - {SITE_TITLE}</title>
+  </head>
+  <body class="bg-black">
+    <Header title={SITE_TITLE} />
+
+    <div
+      class="p-6 bg-black text-white flex justify-center pt-10 animate-fade-in opacity-0 [--animation-delay:200ms]"
+    >
+      <article class="space-y-6 w-full max-w-2xl">
+        <h1 class="text-2xl font-bold">Website Privacy Policy</h1>
+
+        <p class="text-base font-semibold">
+          In short: Flowtide does not store any personally identifiable
+          information (PII) about or from you. Any data that is collected is
+          handled by our hosting, proxy, and analytics providers, which are
+          committed to privacy.
+        </p>
+
+        <p class="text-base font-semibold">Scope</p>
+        <p class="text-base">
+          This privacy policy applies to the Flowtide website (flowtide.app).
+        </p>
+
+        <p class="text-base font-semibold">Terms</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>
+            <p class="text-base font-semibold">Flowtide</p>
+            <p class="text-base">– The Flowtide web app (flowtide.app)</p>
+          </li>
+          <li>
+            <p class="text-base font-semibold">We/Us</p>
+            <p class="text-base">– The developer of Flowtide</p>
+          </li>
+          <li>
+            <p class="text-base font-semibold">PII</p>
+            <p class="text-base">– Personally identifiable information</p>
+          </li>
+        </ul>
+
+        <h2 class="text-xl font-bold">Data Usage</h2>
+
+        <p class="text-base font-semibold">Website Hosting</p>
+        <p class="text-base">
+          Flowtide is hosted on the Cloudflare platform. Cloudflare may collect
+          certain data, such as IP addresses and system configurations, for
+          performance and security purposes. This data is handled by Cloudflare
+          and is subject to their privacy policy. For more details, you can
+          refer to Cloudflare's privacy policy.
+        </p>
+
+        <p class="text-base font-semibold">DDoS Protection</p>
+        <p class="text-base">
+          Flowtide also uses Cloudflare’s proxy services to provide protection
+          against distributed denial-of-service (DDoS) attacks. As part of this
+          service, Cloudflare processes incoming web traffic and may collect
+          data such as IP addresses, device information, and request headers to
+          detect and mitigate malicious traffic. This data is handled
+          exclusively by Cloudflare and is governed by their privacy policy.
+        </p>
+
+        <p class="text-base font-semibold">Analytics</p>
+        <p class="text-base">
+          Analytics for Flowtide is provided by SimpleAnalytics. SimpleAnalytics
+          is a 100% privacy-friendly analytics provider hosted in the EU. It
+          does not collect any personally identifiable information (PII) or use
+          cookies for tracking purposes. For more details, you can refer to
+          SimpleAnalytics' privacy policy.
+        </p>
+
+        <h2 class="text-xl font-bold">Changes and Support</h2>
+        <p class="text-base">
+          We may update this privacy policy from time to time. Any changes will
+          be published here with an updated revision date. If you have any
+          questions, please contact us at: hello@thingbomb.com.
+        </p>
+
+        <p class="text-base font-semibold">Last updated</p>
+        <p class="text-base">November 16, 2024</p>
+      </article>
+    </div>
+    <script src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+    <br />
+    <Footer />
+  </body>
+</html>

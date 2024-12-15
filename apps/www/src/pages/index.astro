@@ -1,0 +1,211 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import Button from "../components/Button.astro";
+
+let defaultBrowser = "chrome";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`${SITE_TITLE} - beautiful new tab`}
+      description={SITE_DESCRIPTION}
+    />
+  </head>
+  <body class="bg-black">
+    <Header />
+    <section
+      class="flex flex-col items-center justify-center pt-24 max-w-7xl text-center m-auto"
+    >
+      <h1
+        class="animate-fade-in -translate-y-4 text-balance py-6 text-5xl text-white font-semibold leading-none tracking-tighter opacity-0 [--animation-delay:200ms] sm:text-6xl md:text-7xl lg:text-8xl"
+      >
+        Flowtide is a modern, customizable start page for your browser.
+      </h1>
+      <p
+        class="animate-fade-in mb-12 -translate-y-4 text-balance text-lg tracking-tight text-gray-400 opacity-0 [--animation-delay:400ms] md:text-xl"
+      >
+        Flowtide is an open-source, minimal, and beautiful New Tab page for your
+        browser. Track your todos, see a beautiful wallpaper, and listen to
+        relaxing soundscapes.
+      </p>
+      <div
+        class="animate-fade-in opacity-0 [--animation-delay:600ms] flex gap-3"
+      >
+        <Button
+          id="browser-button"
+          href="https://chromewebstore.google.com/detail/fpdjjjmglibdjocjpcchgkbakeelaghm"
+        >
+          Download for Chrome
+        </Button>
+        <Button variant="outline" href="/install"> Other browsers </Button>
+      </div>
+      <div class="animate-fade-in opacity-0 [--animation-delay:650ms] mt-2">
+        <a
+          class="text-white text-sm hover:underline"
+          href="https://demo.flowtide.app"
+        >
+          Try web version
+        </a>
+      </div>
+      <br />
+      <div
+        class="m-4 !mt-4 rounded-3xl bg-white/5 p-2 ring-1 ring-inset ring-zinc-600/10 xl:-m-2 lg:rounded-2xl lg:p-2 animate-fade-in opacity-0 [--animation-delay:800ms]"
+      >
+        <img
+          src="/hero-image.webp"
+          alt="Flowtide hero image"
+          class="rounded-3xl w-full"
+        />
+      </div>
+    </section>
+    <section
+      class="flex flex-col items-center justify-center pt-24 max-w-screen-xl text-center opacity-0 m-auto mt-8 animate-fade-in [--animation-delay:1000ms]"
+    >
+      <h1
+        class="tracking-tight text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl -translate-y-4 text-balance"
+      >
+        Features to boost your browser
+      </h1>
+      <div
+        class="grid grid-cols-1 grid-rows-6 gap-4 mt-8 sm:grid-cols-2 sm:grid-rows-3 xl:grid-cols-3 xl:grid-rows-2 p-3"
+      >
+        <div class="flex flex-col gap-2 text-left bg-zinc-900 p-4 rounded-2xl">
+          <h2
+            class="tracking-tight text-2xl font-semibold leading-tight text-white"
+          >
+            Track your todos
+          </h2>
+          <p class="text-lg text-gray-400">
+            Keep track of your tasks and projects with Flowtide's todo list.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 text-left bg-zinc-900 p-4 rounded-2xl">
+          <h2
+            class="tracking-tight text-2xl font-semibold leading-tight text-white"
+          >
+            Listen to relaxing soundscapes
+          </h2>
+          <p class="text-lg text-gray-400">
+            Flowtide has a collection of beautiful soundscapes to relax with.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 text-left bg-zinc-900 p-4 rounded-2xl">
+          <h2
+            class="tracking-tight text-2xl font-semibold leading-tight text-white"
+          >
+            See a beautiful wallpaper
+          </h2>
+          <p class="text-lg text-gray-400">
+            Flowtide comes with a collection of beautiful wallpapers.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 text-left bg-zinc-900 p-4 rounded-2xl">
+          <h2
+            class="tracking-tight text-2xl font-semibold leading-tight text-white"
+          >
+            Customize your start page
+          </h2>
+          <p class="text-lg text-gray-400">
+            Flowtide is fully customizable. You can change the wallpaper, the
+            soundscapes, and the todo list.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 text-left bg-zinc-900 p-4 rounded-2xl">
+          <h2
+            class="tracking-tight text-2xl font-semibold leading-tight text-white"
+          >
+            Inspiration
+          </h2>
+          <p class="text-lg text-gray-400">
+            Get inspirational mantras on every reload.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 text-left bg-zinc-900 p-4 rounded-2xl">
+          <h2
+            class="tracking-tight text-2xl font-semibold leading-tight text-white"
+          >
+            Open-source
+          </h2>
+          <p class="text-lg text-gray-400">
+            Flowtide is open-source. You can find the source code on GitHub.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section
+      class="flex flex-col items-center justify-center pt-24 mb-12 max-w-screen-xl text-center m-auto mt-8 animate-fade-in opacity-0 [--animation-delay:1200ms]"
+    >
+      <h1
+        class="tracking-tight text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl -translate-y-4 text-balance"
+      >
+        A next-level productivity tool.
+      </h1>
+      <p
+        class="mb-4 mt-4 -translate-y-4 text-balance text-lg tracking-tight text-gray-400 md:text-xl"
+      >
+        Search your bookmarks, solve math, count words, and create content with
+        Magic Search. <br />To use it, just type `/` in Flowtide and you're good
+        to go.
+      </p>
+      <div
+        class="m-4 !mt-4 rounded-3xl bg-white/5 p-2 ring-1 ring-inset ring-zinc-600/10 xl:-m-2 lg:rounded-2xl lg:p-2 animate-fade-in opacity-0 [--animation-delay:800ms]"
+      >
+        <img
+          src="/magic-search.png"
+          alt="Flowtide hero image"
+          class="rounded-3xl w-full"
+        />
+      </div>
+    </section>
+    <section
+      class="flex flex-col items-center justify-center pt-24 mb-12 max-w-screen-xl text-center m-auto mt-8 animate-fade-in opacity-0 [--animation-delay:1400ms]"
+    >
+      <h1
+        class="tracking-tight text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl -translate-y-4 text-balance"
+      >
+        Ready to give it a try?
+      </h1>
+      <p
+        class="mb-4 mt-4 -translate-y-4 text-balance text-lg tracking-tight text-gray-400 md:text-xl"
+      >
+        Install it today for your preferred browser and start using the magic of
+        Flowtide.
+      </p>
+      <div
+        class="animate-fade-in opacity-0 [--animation-delay:600ms] flex gap-3"
+      >
+        <Button
+          id="browser-button-2"
+          href="https://chromewebstore.google.com/detail/flowtide-beautiful-new-ta/fpdjjjmglibakeelaghm"
+        >
+          Download for Chrome
+        </Button>
+        <Button variant="outline" href="/install"> Other browsers </Button>
+      </div>
+    </section>
+    <Footer />
+    <script>
+      const isFirefox = navigator.userAgent.toLowerCase().includes("firefox");
+      const button = document.getElementById(
+        "browser-button"
+      ) as HTMLLinkElement;
+      const button2 = document.getElementById(
+        "browser-button-2"
+      ) as HTMLLinkElement;
+      if (button && button2 && isFirefox) {
+        button.href =
+          "https://addons.mozilla.org/en-US/firefox/addon/flowtide-new-tab/";
+        button.textContent = "Download for Firefox";
+        button2.href =
+          "https://addons.mozilla.org/en-US/firefox/addon/flowtide-new-tab/";
+        button2.textContent = "Download for Firefox";
+      }
+    </script>
+    <script src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  </body>
+</html>

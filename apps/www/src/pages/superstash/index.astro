@@ -1,0 +1,60 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import Button from "../../components/Button.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Superstash - best way to organize your tabs`}
+      description={`Superstash is a modern, versatile tab-stash for your browser. Superstash can be used as a read-later list, tab-stash, or tab manager.`}
+    />
+  </head>
+  <body class="bg-black">
+    <Header />
+    <section
+      class="flex flex-col items-center justify-center pt-24 max-w-7xl text-center m-auto"
+    >
+      <h1
+        class="animate-fade-in -translate-y-4 text-balance py-6 text-5xl text-white font-semibold leading-none tracking-tighter opacity-0 [--animation-delay:200ms] sm:text-6xl md:text-7xl lg:text-8xl"
+      >
+        Superstash is a versatile, tab-stash for your browser.
+      </h1>
+      <p
+        class="animate-fade-in mb-12 -translate-y-4 text-balance text-lg tracking-tight text-gray-400 opacity-0 [--animation-delay:400ms] md:text-xl"
+      >
+        Superstash is a modern, versatile tab-stash for your browser. <br
+        />Superstash can be used as a read-later list, tab-stash, or tab
+        manager.
+      </p>
+      <div
+        class="animate-fade-in opacity-0 [--animation-delay:600ms] flex gap-3"
+      >
+        <Button
+          id="browser-button"
+          href="https://chromewebstore.google.com/detail/superstash/egihopfihghnngaaffbmfoggfmdbedfc?hl=en-US"
+        >
+          Download for Chrome
+        </Button>
+      </div>
+      <br />
+      <div
+        class="m-4 !mt-4 rounded-3xl bg-white/5 p-2 ring-1 ring-inset ring-zinc-600/10 xl:-m-2 lg:rounded-2xl lg:p-2 animate-fade-in opacity-0 [--animation-delay:800ms]"
+      >
+        <img
+          src="/hero-superstash.jpeg"
+          alt="Superstash hero image"
+          class="rounded-3xl w-full"
+        />
+      </div>
+    </section>
+    <br />
+    <br />
+    <Footer />
+    <script src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  </body>
+</html>

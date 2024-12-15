@@ -16,6 +16,9 @@
     "build:ui": {
       "outputs": ["dist/index.css"]
     },
+    "build:lander": {
+      "outputs": ["dist/**"]
+    },
     "build:web": {
       "outputs": ["dist/**"],
       "dependsOn": ["build:ui"]

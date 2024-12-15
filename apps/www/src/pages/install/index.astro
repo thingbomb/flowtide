@@ -1,0 +1,106 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Button from "../../components/Button.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+
+let defaultBrowser = "chrome";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Install for your browser - ${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+    />
+  </head>
+  <body class="bg-black">
+    <Header title={SITE_TITLE} />
+    <main
+      class="flex flex-col items-center justify-center max-w-screen-xl text-left m-auto mt-8"
+    >
+      <h1
+        class="tracking-tight text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl -translate-y-4 text-balance animate-fade-in opacity-0 [--animation-delay:200ms]"
+      >
+        Install Flowtide
+      </h1>
+      <p
+        class="animate-fade-in mb-12 -translate-y-4 text-balance text-lg tracking-tight text-gray-400 opacity-0 [--animation-delay:400ms] md:text-xl"
+      >
+        Choose your browser to get started with Flowtide
+      </p>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full p-4 animate-fade-in opacity-0 [--animation-delay:600ms]"
+      >
+        <a
+          class="flex items-center gap-4 p-4 rounded-xl bg-zinc-900"
+          href="https://chromewebstore.google.com/detail/flowtide-beautiful-new-ta/fpdjjjmglibdjocjpcchgkbakeelaghm"
+        >
+          <div class="text-left">
+            <h3 class="text-lg font-medium text-white">Google Chrome</h3>
+            <p class="text-sm text-gray-400">Install from Chrome Web Store</p>
+          </div>
+        </a>
+
+        <a
+          class="flex items-center gap-4 p-4 rounded-xl bg-zinc-900"
+          href="https://addons.mozilla.org/en-US/firefox/addon/flowtide-new-tab/"
+        >
+          <div class="text-left">
+            <h3 class="text-lg font-medium text-white">Mozilla Firefox</h3>
+            <p class="text-sm text-gray-400">
+              Get a beautiful new tab page for Firefox
+            </p>
+          </div>
+        </a>
+
+        <a
+          class="flex items-center gap-4 p-4 rounded-xl bg-zinc-900"
+          href="https://chromewebstore.google.com/detail/flowtide-beautiful-new-ta/fpdjjjmglibdjocjpcchgkbakeelaghm"
+        >
+          <div class="text-left">
+            <h3 class="text-lg font-medium text-white">Microsoft Edge</h3>
+            <p class="text-sm text-gray-400">Install from Chrome Web Store</p>
+          </div>
+        </a>
+        <a
+          class="flex items-center gap-4 p-4 rounded-xl bg-zinc-900"
+          href="https://docs.flowtide.app/install-guides/vivaldi"
+        >
+          <div class="text-left">
+            <h3 class="text-lg font-medium text-white">Vivaldi</h3>
+            <p class="text-sm text-gray-400">
+              Follow our guide to install Flowtide in Vivaldi
+            </p>
+          </div>
+        </a>
+        <a
+          class="flex items-center gap-4 p-4 rounded-xl bg-zinc-900"
+          href="https://github.com/thingbomb/flowtide/releases/latest/download/Dist-chrome.zip"
+        >
+          <div class="text-left">
+            <h3 class="text-lg font-medium text-white">ZIP archive (Chrome)</h3>
+            <p class="text-sm text-gray-400">Chrome-compatible ZIP archive</p>
+          </div>
+        </a>
+        <a
+          class="flex items-center gap-4 p-4 rounded-xl bg-zinc-900"
+          href="https://github.com/thingbomb/flowtide/releases/latest/download/Dist-firefox.zip"
+        >
+          <div class="text-left">
+            <h3 class="text-lg font-medium text-white">
+              ZIP archive (Firefox)
+            </h3>
+            <p class="text-sm text-gray-400">Firefox-compatible ZIP archive</p>
+          </div>
+        </a>
+      </div>
+    </main>
+    <br />
+    <Footer />
+    <script src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  </body>
+</html>
