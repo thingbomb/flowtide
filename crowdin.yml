@@ -1,0 +1,3 @@
+files:
+  - source: /apps/new-tab/public/_locales/en/messages.json
+    translation: /apps/new-tab/public/_locales/%two_letters_code%/messages.json
