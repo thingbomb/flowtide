@@ -14,7 +14,7 @@
       "dependsOn": ["build:ui"]
     },
     "build:ui": {
-      "outputs": ["dist/**"]
+      "outputs": ["dist/index.css"]
     },
     "build:web": {
       "outputs": ["dist/**"],
