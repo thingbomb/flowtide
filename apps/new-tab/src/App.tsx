@@ -78,8 +78,11 @@ interface data {
   [key: string]: { message: string };
 }
 
-if (!chrome.i18n) {
+try {
+  chrome.i18n.getMessage("work");
+} catch (error) {
   let jsonData: data = data;
+  window.chrome = {} as any;
   chrome.i18n = {
     getMessage: (message: MessageKeys) => {
       return (jsonData[message] as { message: string }).message;
