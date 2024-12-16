@@ -3,70 +3,70 @@
     "message": "Flowtide"
   },
   "soundscapes": {
-    "message": "Scènes sonores"
+    "message": "Soundscapes"
   },
   "settings": {
-    "message": "Réglages"
+    "message": "Settings"
   },
   "suggest_feature": {
-    "message": "Suggérer une fonctionnalité"
+    "message": "Suggest a feature"
   },
   "light_mode": {
-    "message": "Mode de lumière"
+    "message": "Light mode"
   },
   "dark_mode": {
-    "message": "Mode sombre"
+    "message": "Dark mode"
   },
   "system": {
-    "message": "Par défaut du système"
+    "message": "System default"
   },
   "todos": {
-    "message": "Liste à faire"
+    "message": "To-do list"
   },
   "todos_description": {
-    "message": "Gérez vos tâches ici."
+    "message": "Manage your tasks here."
   },
   "add_todo": {
-    "message": "Ajouter une nouvelle tâche"
+    "message": "Add a new task"
   },
   "clock_size": {
-    "message": "Taille de l'horloge"
+    "message": "Clock size"
   },
   "12_hour": {
-    "message": "12 heures"
+    "message": "12-hour"
   },
   "24_hour": {
-    "message": "24 heures"
+    "message": "24-hour"
   },
   "clock_format": {
-    "message": "Format horloge"
+    "message": "Clock format"
   },
   "every_day": {
-    "message": "Tous les jours"
+    "message": "Every day"
   },
   "every_hour": {
-    "message": "Toutes les heures"
+    "message": "Every hour"
   },
   "as_soon_as_possible": {
-    "message": "Dès que possible"
+    "message": "As soon as possible"
   },
   "never": {
-    "message": "Jamais"
+    "message": "Never"
   },
   "gradient": {
-    "message": "Dégradé"
+    "message": "Gradient"
   },
   "color_palette": {
-    "message": "Palette de couleurs"
+    "message": "Color Palette"
   },
   "font": {
     "message": "Font"
   },
   "wallpaper": {
-    "message": "Fond d'écran"
+    "message": "Wallpaper"
   },
   "background": {
-    "message": "Arrière-plan"
+    "message": "Background"
   },
   "georgia": {
     "message": "Georgia"
@@ -81,10 +81,10 @@
     "message": "Times New Roman"
   },
   "show_more": {
-    "message": "Afficher plus"
+    "message": "Show more"
   },
   "show_less": {
-    "message": "Afficher moins"
+    "message": "Show less"
   },
   "serif": {
     "message": "Serif"
@@ -96,205 +96,205 @@
     "message": "Sans"
   },
   "themes": {
-    "message": "Thèmes"
+    "message": "Themes"
   },
   "small": {
-    "message": "Petit"
+    "message": "Small"
   },
   "medium": {
-    "message": "Moyenne"
+    "message": "Medium"
   },
   "large": {
-    "message": "Gros"
+    "message": "Large"
   },
   "more": {
-    "message": "En savoir plus"
+    "message": "More"
   },
   "from_noisefill": {
-    "message": "Depuis Noisefill"
+    "message": "From Noisefill"
   },
   "word_counter": {
-    "message": "Compteur de mots"
+    "message": "Word Counter"
   },
   "character_counter": {
-    "message": "Compteur de caractères"
+    "message": "Character Counter"
   },
   "enter_text": {
-    "message": "Entrez du texte..."
+    "message": "Enter some text..."
   },
   "type_command": {
-    "message": "Tapez une commande ou calculez..."
+    "message": "Type a command or calculate..."
   },
   "no_results": {
-    "message": "Aucun résultat trouvé."
+    "message": "No results found."
   },
   "actions": {
     "message": "Actions"
   },
   "bookmarks": {
-    "message": "Signets"
+    "message": "Bookmarks"
   },
   "bookmark_folders": {
-    "message": "Dossiers de marque-pages"
+    "message": "Bookmark Folders"
   },
   "tools": {
-    "message": "Outils"
+    "message": "Tools"
   },
   "tabs": {
     "message": "Tabs"
   },
   "remove_all_tabs": {
-    "message": "Supprimer tous les onglets"
+    "message": "Remove all tabs"
   },
   "remove_tabs_confirm": {
-    "message": "Êtes-vous sûr de vouloir supprimer tous les onglets ? Assurez-vous d'avoir sauvegardé votre travail."
+    "message": "Are you sure you want to remove all tabs? Make sure you have saved your work."
   },
   "opened": {
-    "message": "Ouvert"
+    "message": "Opened"
   },
   "copied_to_clipboard": {
-    "message": "Copié dans le presse-papiers"
+    "message": "Copied to clipboard"
   },
   "create_google_document": {
-    "message": "Créer un document Google"
+    "message": "Create Google Document"
   },
   "create_word_document": {
-    "message": "Créer un document Word"
+    "message": "Create Word Document"
   },
   "create_notion_page": {
-    "message": "Créer une page de Notion"
+    "message": "Create Notion Page"
   },
   "create_google_sheet": {
-    "message": "Créer Google Sheet"
+    "message": "Create Google Sheet"
   },
   "compose_gmail_message": {
-    "message": "Écrire un message Gmail"
+    "message": "Compose Gmail Message"
   },
   "create_google_slide": {
-    "message": "Créer un slide Google"
+    "message": "Create Google Slide"
   },
   "create_google_calendar_event": {
-    "message": "Créer un événement Google Agenda"
+    "message": "Create Google Calendar Event"
   },
   "create_excel_workbook": {
-    "message": "Créer un classeur Excel"
+    "message": "Create Excel Workbook"
   },
   "create_powerpoint_presentation": {
-    "message": "Créer une présentation PowerPoint"
+    "message": "Create PowerPoint Presentation"
   },
   "create_paper_document": {
-    "message": "Créer un document papier"
+    "message": "Create Paper Document"
   },
   "create_todoist_task": {
-    "message": "Créer une tâche Todoist"
+    "message": "Create Todoist Task"
   },
   "create_github_repository": {
-    "message": "Créer un dépôt GitHub"
+    "message": "Create GitHub Repository"
   },
   "create_github_gist": {
-    "message": "Créer une Gist GitHub"
+    "message": "Create GitHub Gist"
   },
   "create_figma_file": {
-    "message": "Créer un fichier Figma"
+    "message": "Create Figma File"
   },
   "create_zoom_meeting": {
-    "message": "Créer une réunion Zoom"
+    "message": "Create Zoom Meeting"
   },
   "create_bitly_link": {
-    "message": "Créer un lien Bitly"
+    "message": "Create Bitly Link"
   },
   "create_canva_design": {
-    "message": "Créer un design Canva"
+    "message": "Create Canva Design"
   },
   "ocean": {
-    "message": "Océan"
+    "message": "Ocean"
   },
   "forest": {
-    "message": "Forêt"
+    "message": "Forest"
   },
   "rain": {
-    "message": "Pluie"
+    "message": "Rain"
   },
   "river": {
-    "message": "Rivière"
+    "message": "River"
   },
   "wind": {
-    "message": "Vent"
+    "message": "Wind"
   },
   "fire": {
-    "message": "Feu"
+    "message": "Fire"
   },
   "desert": {
-    "message": "Désert"
+    "message": "Desert"
   },
   "arctic": {
-    "message": "Arctique"
+    "message": "Arctic"
   },
   "kettle": {
-    "message": "Bouilloire"
+    "message": "Kettle"
   },
   "crickets": {
     "message": "Crickets"
   },
   "underwater": {
-    "message": "Sous-marin"
+    "message": "Underwater"
   },
   "change_time": {
-    "message": "Changer l'heure"
+    "message": "Change time"
   },
   "show_completed": {
-    "message": "Afficher les données terminées"
+    "message": "Show completed"
   },
   "mantra_1": {
-    "message": "Chaque jour est une chance de grandir."
+    "message": "Every day is a chance to grow."
   },
   "mantra_2": {
-    "message": "Progress, pas la perfection."
+    "message": "Progress, not perfection."
   },
   "mantra_3": {
-    "message": "De petites étapes mènent à de grands changements."
+    "message": "Small steps lead to big changes."
   },
   "mantra_4": {
-    "message": "Les retours sont des configurations pour les retours."
+    "message": "Setbacks are setups for comebacks."
   },
   "mantra_5": {
-    "message": "Vous êtes plus fort que vous ne le pensez."
+    "message": "You are stronger than you think."
   },
   "mantra_6": {
-    "message": "Les défis construisent votre force."
+    "message": "Challenges build your strength."
   },
   "mantra_7": {
-    "message": "Les bonnes choses vous attendent."
+    "message": "Good things are coming your way."
   },
   "mantra_8": {
-    "message": "Voyez le bien dans toutes les situations."
+    "message": "See the good in every situation."
   },
   "mantra_9": {
-    "message": "Un cœur plein d'espoir voit des possibilités infinies."
+    "message": "A hopeful heart sees endless possibilities."
   },
   "mantra_10": {
-    "message": "Soyez ici, en ce moment."
+    "message": "Be here, in this moment."
   },
   "mantra_11": {
-    "message": "Chaque souffle est un nouveau départ."
+    "message": "Each breath is a fresh start."
   },
   "mantra_12": {
-    "message": "Le présent est tout ce que nous avons vraiment."
+    "message": "The now is all we truly have."
   },
   "mantra_13": {
-    "message": "Rêvez grand, commencez petit."
+    "message": "Dream big, start small."
   },
   "mantra_14": {
-    "message": "Concentrez-vous sur ce que vous pouvez contrôler."
+    "message": "Focus on what you can control."
   },
   "mantra_15": {
-    "message": "La grandeur commence par la première étape."
+    "message": "Greatness begins with the first step."
   },
   "features": {
-    "message": "Fonctionnalités"
+    "message": "Features"
   },
   "clock": {
-    "message": "Horloge"
+    "message": "Clock"
   },
   "mantras": {
     "message": "Mantras"
@@ -303,33 +303,36 @@
     "message": "Documentation"
   },
   "blank": {
-    "message": "Vide"
+    "message": "Blank"
   },
   "pomodoro": {
     "message": "Pomodoro"
   },
   "work": {
-    "message": "Travail"
+    "message": "Work"
   },
   "break": {
-    "message": "Pause"
+    "message": "Break"
   },
   "timer_settings": {
-    "message": "Réglages de la minuterie"
+    "message": "Timer Settings"
   },
   "pause": {
     "message": "Pause"
   },
   "start": {
-    "message": "Démarrage"
+    "message": "Start"
   },
   "reset": {
-    "message": "Remise à zéro"
+    "message": "Reset"
   },
   "break_time": {
-    "message": "Pause (min)"
+    "message": "Break (min)"
   },
   "background_timer": {
-    "message": "Arrière-plan"
+    "message": "Background"
+  },
+  "background-blur": {
+    "message": "Background Blur"
   }
 }

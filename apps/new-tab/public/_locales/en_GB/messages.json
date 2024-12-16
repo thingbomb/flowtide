@@ -57,7 +57,7 @@
     "message": "Gradient"
   },
   "color_palette": {
-    "message": "Colour palette"
+    "message": "Color Palette"
   },
   "font": {
     "message": "Font"
@@ -331,5 +331,8 @@
   },
   "background_timer": {
     "message": "Background"
+  },
+  "background-blur": {
+    "message": "Background Blur"
   }
 }
