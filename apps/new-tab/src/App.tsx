@@ -288,6 +288,9 @@ function App() {
   const [background, setBackground] = useState<string>(
     localStorage.getItem("background") || "wallpaper",
   );
+  const [backgroundBlur, setBackgroundBlur] = useState<boolean>(
+    Boolean(localStorage.getItem("backgroundBlur")) || false,
+  );
   const [widgetPreferences, setWidgetPreferences] = useState(
     JSON.parse(localStorage.getItem("widgetPreferences") || "{}") || {
       mantras: "true",
@@ -685,7 +688,7 @@ function App() {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center h-screen !bg-cover transition-background-image background relative",
+        "flex flex-col items-center justify-center h-screen !bg-cover transition-background-image relative",
         currentFont,
       )}
       style={{
@@ -699,9 +702,15 @@ function App() {
       {background === "wallpaper" && (
         <img
           src={selectedImage.url}
-          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity -z-10 opacity-0`}
+          className={cn(
+            `absolute top-0 left-0 w-full h-full object-cover transition-opacity -z-10 opacity-0`,
+            {
+              "blur-lg": backgroundBlur,
+            },
+          )}
+          alt="Background"
           onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
-            (e.target as HTMLImageElement).style.opacity = "1";
+            (e.target as HTMLImageElement).style.opacity = "0.8";
           }}
         />
       )}
@@ -1413,6 +1422,22 @@ function App() {
 
             <div className="space-y-4">
               <h4 className="font-medium">{chrome.i18n.getMessage("more")}</h4>
+              <button
+                className={cn(
+                  "flex w-full items-center justify-between rounded-md px-3 py-2",
+                  backgroundBlur == true && "bg-accent",
+                )}
+                onClick={() => {
+                  setBackgroundBlur(!backgroundBlur);
+                  localStorage.setItem(
+                    "backgroundBlur",
+                    String(!backgroundBlur),
+                  );
+                }}
+              >
+                <span>{chrome.i18n.getMessage("background-blur")}</span>
+                {backgroundBlur && <Check className="h-4 w-4" />}
+              </button>
               <div className="space-y-2">
                 <button
                   className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"

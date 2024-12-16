@@ -301,5 +301,8 @@
   },
   "background_timer": {
     "message": "Background"
+  },
+  "background-blur": {
+    "message": "Background Blur"
   }
 }
