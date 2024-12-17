@@ -1435,7 +1435,7 @@ function App() {
                   );
                 }}
               >
-                <span>{chrome.i18n.getMessage("background-blur")}</span>
+                <span>{chrome.i18n.getMessage("background_blur")}</span>
                 {backgroundBlur && <Check className="h-4 w-4" />}
               </button>
               <div className="space-y-2">
