@@ -332,7 +332,7 @@
   "background_timer": {
     "message": "Fondo"
   },
-  "background-blur": {
+  "background_blur": {
     "message": "Background Blur"
   }
 }
