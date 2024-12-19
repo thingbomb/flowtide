@@ -1,17 +1,20 @@
 {
-  "name": "vite-template-solid",
-  "version": "0.0.0",
-  "description": "",
+  "name": "@flowtide/new-tab",
+  "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "build-only": "vite build",
+    "lint": "oxlint .",
+    "preview": "vite preview",
     "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "build:firefox": "vite build; cp targets/firefox/manifest.json dist/manifest.json",
+    "build:chrome": "vite build; cp targets/chrome/manifest.json dist/manifest.json",
+    "build:web": "vite build;"
   },
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "oxlint": "^0.15.3",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.16",
     "typescript": "^5.7.2",

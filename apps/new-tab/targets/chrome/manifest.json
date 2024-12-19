@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Flowtide - Beautiful New Tab",
+  "version": "3.0.0",
+  "description": "Flowtide is a beautiful new tab page for your browser.",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": ["bookmarks"],
+  "optional_permissions": ["tabs"],
+  "icons": {
+    "128": "assets/logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "default_locale": "en"
+}
