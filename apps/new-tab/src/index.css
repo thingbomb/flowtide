@@ -74,3 +74,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+.widget {
+  @apply bg-gray-300 dark:bg-zinc-700 p-6 rounded-[20px] text-3xl relative h-[150px] w-[400px] shadow-lg dark:shadow-sm;
+}
+
+.slot[data-swapy-highlighted] {
+  @apply bg-zinc-600 rounded-[20px] max-h-[150px] max-w-[400px];
+}
+
+.blob-gradient {
+  background: radial-gradient(circle, #9a62f7, #8396d5 47%, #00d4ff00);
+  filter: blur(100px);
+}
