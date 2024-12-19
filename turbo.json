@@ -6,22 +6,16 @@
       "dependsOn": ["build:firefox", "build:chrome", "build:web"]
     },
     "build:firefox": {
-      "outputs": ["dist/**"],
-      "dependsOn": ["build:ui"]
+      "outputs": ["dist/**"]
     },
     "build:chrome": {
-      "outputs": ["dist/**"],
-      "dependsOn": ["build:ui"]
-    },
-    "build:ui": {
-      "outputs": ["dist/index.css"]
+      "outputs": ["dist/**"]
     },
     "build:lander": {
       "outputs": ["dist/**"]
     },
     "build:web": {
-      "outputs": ["dist/**"],
-      "dependsOn": ["build:ui"]
+      "outputs": ["dist/**"]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
