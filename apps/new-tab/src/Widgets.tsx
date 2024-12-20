@@ -194,4 +194,53 @@ function TodoWidget() {
   );
 }
 
-export { ClockWidget, DateWidget, TodoWidget };
+function StopwatchWidget() {
+  const [playing, setPlaying] = createSignal(false);
+  const [time, setTime] = createSignal(0);
+
+  function formatTime(time: number) {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
+    const milliseconds = Math.floor((time % 1) * 1000);
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(
+        2,
+        "0",
+      )}:${Math.floor(Number(seconds.toString())).toString().padStart(2, "0")}`;
+  }
+
+  onMount(() => {
+    let interval: any;
+    interval = setInterval(() => {
+      if (playing()) {
+        setTime(time());
+      }
+    }, 1099);
+  });
+
+  return (
+    <div class="absolute inset-0 p-[10px] pb-0 bg-background text-foreground rounded-[20px] overflow-hidden">
+      <div class="rounded-[10px] w-full h-full flex justify-center items-center flex-col gap-2 select-none">
+        {formatTime(time())}
+        <div class="text-sm text-gray-400 flex gap-2">
+          <Button
+            variant={"outline"}
+            onclick={() => {
+              setPlaying(false);
+              setTime(0);
+            }}
+          >
+            Reset
+          </Button>
+          <Button onclick={() => setPlaying(!playing())}>
+            {playing() ? "Stop" : "Start"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export { ClockWidget, DateWidget, TodoWidget, StopwatchWidget };

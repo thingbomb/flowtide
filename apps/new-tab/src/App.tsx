@@ -4,7 +4,12 @@ import { Button } from "./components/ui/button";
 import { ArrowRight, Check, GripVertical, Key, Plus, X } from "lucide-solid";
 import { createSwapy } from "swapy";
 import { v4 as uuidv4 } from "uuid";
-import { ClockWidget, DateWidget, TodoWidget } from "./Widgets";
+import {
+  ClockWidget,
+  DateWidget,
+  StopwatchWidget,
+  TodoWidget,
+} from "./Widgets";
 import {
   Dialog,
   DialogContent,
@@ -111,7 +116,7 @@ const App: Component = () => {
     );
   };
 
-  const widgets = ["clock", "date", "todo"];
+  const widgets = ["clock", "date", "todo", "stopwatch"];
 
   function updateFilteredWidgets() {
     const currentWidgets = widgets.filter(
@@ -214,6 +219,7 @@ const App: Component = () => {
                   {widgetOrder()[item] === "clock" && <ClockWidget />}
                   {widgetOrder()[item] === "date" && <DateWidget />}
                   {widgetOrder()[item] === "todo" && <TodoWidget />}
+                  {widgetOrder()[item] === "stopwatch" && <StopwatchWidget />}
                   <button
                     class="absolute -top-2 -right-2 hidden group-hover:block bg-white shadow-sm size-[24px] justify-center items-center !rounded-full"
                     onclick={(e) => {
@@ -255,6 +261,11 @@ const App: Component = () => {
               {chrome.i18n.getMessage("blocks_description")}
             </DialogDescription>
             <br />
+            <Block
+              title="Stopwatch"
+              description="Add a stopwatch widget to your start page."
+              key="stopwatch"
+            />
             <Block
               title="Clock"
               description="Adds a clock widget to your start page."
