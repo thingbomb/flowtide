@@ -114,45 +114,48 @@ function TodoWidget() {
   );
   const [taskInputValue, setTaskInputValue] = createSignal("");
   return (
-    <div class="absolute inset-0 p-[10px] bg-white rounded-[20px]">
-      <div class="bg-gray-200 rounded-[10px] w-full h-full max-h-20">
+    <div class="absolute inset-0 p-[10px] pb-0 bg-white rounded-[20px] overflow-hidden">
+      <div class="rounded-[10px] w-full h-full">
         <div class="relative h-full w-full bg-white rounded-[10px] pt-2">
-          <div
-            class="text-left text-2xl text-teal-700 font-bold px-3.5 select-none"
-            id="title"
-          >
-            To-do list
+          <div class="overflow-auto max-h-[84px] scrollbar-hidden">
+            <div
+              class="text-left text-2xl text-teal-700 font-bold px-3.5 select-none"
+              id="title"
+            >
+              To-do list
+            </div>
+            <div id="tasks" class="px-3.5 mt-2">
+              {tasks()
+                .filter((task: Task) => !task.completed)
+                .map((task: Task, index: number) => (
+                  <div class="flex gap-2 items-center task">
+                    <Checkbox
+                      id={String(index)}
+                      onChange={(checked: boolean) => {
+                        setTasks(
+                          tasks().map((t: Task, i: number) =>
+                            i === tasks().indexOf(task)
+                              ? { ...t, completed: checked }
+                              : t,
+                          ),
+                        );
+                        setTasks(tasks().filter((t: Task) => !t.completed));
+                        localStorage.setItem("tasks", JSON.stringify(tasks()));
+                      }}
+                    >
+                      <CheckboxControl />
+                    </Checkbox>
+                    <label
+                      for={`${String(index)}-input`}
+                      class="text-sm text-black"
+                    >
+                      {task.title}
+                    </label>
+                  </div>
+                ))}
+            </div>
           </div>
-          <div id="tasks" class="px-3.5 mt-2">
-            {tasks()
-              .filter((task: Task) => !task.completed)
-              .map((task: Task, index: number) => (
-                <div class="flex gap-2 items-center task">
-                  <Checkbox
-                    id={String(index)}
-                    onChange={(checked: boolean) => {
-                      setTasks(
-                        tasks().map((t: Task, i: number) =>
-                          i === tasks().indexOf(task)
-                            ? { ...t, completed: checked }
-                            : t,
-                        ),
-                      );
-                      localStorage.setItem("tasks", JSON.stringify(tasks()));
-                    }}
-                  >
-                    <CheckboxControl />
-                  </Checkbox>
-                  <label
-                    for={`${String(index)}-input`}
-                    class="text-sm text-black"
-                  >
-                    {task.title}
-                  </label>
-                </div>
-              ))}
-          </div>
-          <div class="absolute bottom-0 right-0 left-0 pr-3.5 flex gap-4">
+          <div class="absolute bottom-0 right-0 left-0 pr-3.5 flex gap-4 pb-[10px] bg-white">
             <TextFieldRoot class="flex-1">
               <TextField
                 class="!border-none !outline-none !ring-0 !text-black shadow-none"
