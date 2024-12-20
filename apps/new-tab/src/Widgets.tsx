@@ -115,7 +115,7 @@ function TodoWidget() {
   const [taskInputValue, setTaskInputValue] = createSignal("");
   return (
     <div class="absolute inset-0 p-[10px] bg-white rounded-[20px]">
-      <div class="bg-gray-200 rounded-[10px] w-full h-full">
+      <div class="bg-gray-200 rounded-[10px] w-full h-full max-h-20">
         <div class="relative h-full w-full bg-white rounded-[10px] pt-2">
           <div
             class="text-left text-2xl text-teal-700 font-bold px-3.5 select-none"
@@ -123,7 +123,7 @@ function TodoWidget() {
           >
             To-do list
           </div>
-          <div id="tasks" class="px-3.5 mt-2 overflow-hidden">
+          <div id="tasks" class="px-3.5 mt-2">
             {tasks()
               .filter((task: Task) => !task.completed)
               .map((task: Task, index: number) => (

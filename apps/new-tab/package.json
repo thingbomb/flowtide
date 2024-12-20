@@ -14,20 +14,18 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "^0.0.287",
-    "autoprefixer": "^10.4.20",
     "oxlint": "^0.15.3",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.16",
+    "tailwindcss": "4.0.0-beta.8",
     "typescript": "^5.7.2",
     "vite": "^6.0.0",
     "vite-plugin-solid": "^2.11.0"
   },
   "dependencies": {
     "@kobalte/core": "^0.13.7",
+    "@tailwindcss/vite": "4.0.0-beta.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-solid": "^0.468.0",
-    "postcss-nested": "^7.0.2",
     "solid-js": "^1.9.3",
     "swapy": "^1.0.2",
     "tailwind-merge": "^2.5.5",

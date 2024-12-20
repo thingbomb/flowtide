@@ -13,7 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
-import Block from "./Block";
 import data from "../public/_locales/en/messages.json";
 
 type MessageKeys = any;
