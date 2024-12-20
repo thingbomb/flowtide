@@ -1,0 +1,26 @@
+{
+  "welcome_message": {
+    "message": "Welcome to Flowtide"
+  },
+  "get_started": {
+    "message": "Get started"
+  },
+  "resources": {
+    "message": "Resources"
+  },
+  "start_using": {
+    "message": "Start using Flowtide"
+  },
+  "blocks": {
+    "message": "Blocks"
+  },
+  "blocks_description": {
+    "message": "Supercharge your New Tab page with beautifully designed blocks created by Flowtide. You can add as many as you like to your start page."
+  },
+  "add": {
+    "message": "Add"
+  },
+  "added": {
+    "message": "Added"
+  }
+}

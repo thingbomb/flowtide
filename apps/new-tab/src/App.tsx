@@ -14,6 +14,25 @@ import {
   DialogTrigger,
 } from "./components/ui/dialog";
 import Block from "./Block";
+import data from "../public/_locales/en/messages.json";
+
+type MessageKeys = any;
+
+interface data {
+  [key: string]: { message: string };
+}
+
+try {
+  chrome.i18n.getMessage("work");
+} catch (error) {
+  let jsonData: data = data;
+  window.chrome = {} as any;
+  chrome.i18n = {
+    getMessage: (message: MessageKeys) => {
+      return (jsonData[message] as { message: string }).message;
+    },
+  } as any;
+}
 
 const App: Component = () => {
   const [needsOnboarding, setNeedsOnboarding] = createSignal(
@@ -32,9 +51,11 @@ const App: Component = () => {
   const OnboardingScreen1: Component = () => {
     return (
       <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
-        <h1 class="text-7xl font-[600]">Welcome to Flowtide</h1>
+        <h1 class="text-7xl font-[600]">
+          {chrome.i18n.getMessage("welcome_message")}
+        </h1>
         <Button class="group" onclick={() => setOnboardingScreen(2)}>
-          Get started
+          {chrome.i18n.getMessage("get_started")}
           <ArrowRight
             class="group-hover:translate-x-1 transition-transform"
             height={16}
@@ -47,7 +68,9 @@ const App: Component = () => {
     return (
       <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
         <div>
-          <h1 class="text-5xl font-[600] mb-4">Resources</h1>
+          <h1 class="text-5xl font-[600] mb-4">
+            {chrome.i18n.getMessage("resources")}
+          </h1>
           <p class="w-[280px] text-left mb-4">
             If you need any help setting up Flowtide, check out our{" "}
             <a href="https://docs.flowtide.app" class="hover:underline">
@@ -69,7 +92,7 @@ const App: Component = () => {
               setNeedsOnboarding(false);
             }}
           >
-            Start using Flowtide
+            {chrome.i18n.getMessage("start_using")}
             <ArrowRight
               class="group-hover:translate-x-1 transition-transform"
               height={16}
@@ -171,8 +194,8 @@ const App: Component = () => {
               <Plus />
             )}
             {getKeyForValue(widgetOrder(), props.key) != undefined
-              ? "Added"
-              : "Add"}
+              ? chrome.i18n.getMessage("added")
+              : chrome.i18n.getMessage("add")}
           </Button>
         </div>
       </div>
@@ -182,8 +205,8 @@ const App: Component = () => {
   return (
     <main>
       {needsOnboarding() && <OnboardingFlow />}
-      <div class="fixed overflow-hidden p-4 inset-0 bg-white dark:bg-[#2f2f2f]">
-        <div class="absolute top-0 w-full h-full blob-gradient opacity-50 dark:opacity-20 blob-gradient z-20"></div>
+      <div class="fixed overflow-hidden p-4 inset-0 bg-white dark:bg-[#1f1f1f]">
+        <div class="absolute top-0 w-full h-full blob-gradient opacity-50 dark:opacity-20 blob-gradient z-20 dark:hidden"></div>
         <div class="widgets m-0 grid [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)] gap-3 flex-wrap z-30 absolute inset-0 p-4">
           {filteredWidgets().length > 0 ? (
             filteredWidgets().map((item: any) => (
@@ -228,11 +251,9 @@ const App: Component = () => {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Blocks</DialogTitle>
+            <DialogTitle>{chrome.i18n.getMessage("blocks")}</DialogTitle>
             <DialogDescription>
-              Supercharge your New Tab page with beautifully designed blocks
-              created by Flowtide. You can add as many as you like to your start
-              page.
+              {chrome.i18n.getMessage("blocks_description")}
             </DialogDescription>
             <br />
             <Block
