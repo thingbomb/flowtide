@@ -22,5 +22,8 @@
   },
   "added": {
     "message": "Added"
+  },
+  "settings": {
+    "message": "Settings"
   }
 }

@@ -98,3 +98,7 @@
     -ms-overflow-style: none;
   }
 }
+
+button {
+  cursor: pointer !important;
+}

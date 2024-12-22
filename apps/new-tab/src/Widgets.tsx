@@ -215,9 +215,9 @@ function StopwatchWidget() {
     let interval: any;
     interval = setInterval(() => {
       if (playing()) {
-        setTime(time());
+        setTime(time() + 1);
       }
-    }, 1099);
+    }, 1000);
   });
 
   return (
