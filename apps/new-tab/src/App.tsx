@@ -31,6 +31,7 @@ import {
   DialogTrigger,
 } from "./components/ui/dialog";
 import { createStoredSignal } from "./hooks/localStorage";
+import { TextField, TextFieldRoot } from "./components/ui/textfield";
 
 type MessageKeys = any;
 
@@ -51,17 +52,16 @@ try {
 }
 
 const colorPalette = [
-  "oklch(0.637 0.237 25.331)",
-  "oklch(0.714 0.203 305.504)",
-  "oklch(0.609 0.126 221.723)",
-  "oklch(0.592 0.249 0.584)",
-  "oklch(0.705 0.213 47.604)",
-  "oklch(0.302 0.056 229.695)",
-  "oklch(0.257 0.09 281.288)",
-  "oklch(0.408 0.153 2.432)",
-  "oklch(0.765 0.177 163.223)",
-  "oklch(0.262 0.051 172.552)",
-  "oklch(0.257 0.09 281.288)",
+  "#fb2c36",
+  "#c27aff",
+  "#0092b8",
+  "#e60076",
+  "#ff6900",
+  "#053345",
+  "#1e1a4d",
+  "#861043",
+  "#00d492",
+  "#002c22",
 ];
 
 const gradients = [
@@ -102,6 +102,7 @@ const App: Component = () => {
       ? JSON.parse(localStorage.getItem("widgetPlacement") as string)
       : {},
   );
+  const [greetingNameValue, setGreetingNameValue] = createSignal("");
   const [imageLoaded, setImageLoaded] = createSignal(false);
   const [count, setCount] = createSignal(0);
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
@@ -109,8 +110,10 @@ const App: Component = () => {
   const [selectedImage, setSelectedImage] = createSignal<string>(
     images[Math.floor(Math.random() * images.length)],
   );
+  const [layout, setLayout] = createStoredSignal("layout", "center");
   const [currentFont, setCurrentFont] = createStoredSignal("font", "sans");
   const [background, setBackground] = createStoredSignal("background", "image");
+  const [name, setName] = createStoredSignal("name", "");
 
   const OnboardingScreen1: Component = () => {
     return (
@@ -133,30 +136,28 @@ const App: Component = () => {
       <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
         <div>
           <h1 class="text-5xl font-[600] mb-4">
-            {chrome.i18n.getMessage("resources")}
+            {chrome.i18n.getMessage("greeting")}
           </h1>
-          <p class="w-[280px] text-left mb-4">
-            If you need any help setting up Flowtide, check out our{" "}
-            <a href="https://docs.flowtide.app" class="hover:underline">
-              documentation
-            </a>{" "}
-            or ask me for help on{" "}
-            <a
-              class="hover:underline"
-              href="https://github.com/thingbomb/flowtide/discussions"
-            >
-              GitHub discussions
-            </a>
-            .
-          </p>
+          <TextFieldRoot class="flex-1">
+            <TextField
+              class="not-focus:border-zinc-400"
+              placeholder={chrome.i18n.getMessage("enter_name")}
+              value={greetingNameValue()}
+              onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
+            />
+          </TextFieldRoot>
+          <br />
           <Button
             class="group"
             onclick={() => {
               localStorage.setItem("onboarding", "true");
               setNeedsOnboarding(false);
+              setName(greetingNameValue());
             }}
           >
-            {chrome.i18n.getMessage("start_using")}
+            {greetingNameValue()
+              ? "Set greeting"
+              : chrome.i18n.getMessage("skip")}
             <ArrowRight
               class="group-hover:translate-x-1 transition-transform"
               height={16}
@@ -314,41 +315,79 @@ const App: Component = () => {
             imageLoaded() ? "hidden" : "",
           )}
         ></div>
-        <div class="widgets m-0 grid [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)] gap-3 flex-wrap z-30 absolute inset-0 p-4">
-          {filteredWidgets().length > 0 ? (
-            filteredWidgets().map((item: any) => (
-              <div class={`${uuidv4()} slot h-fit`} data-swapy-slot={item}>
-                <div class="widget group" data-swapy-item={widgetOrder()[item]}>
-                  {widgetOrder()[item] === "clock" && <ClockWidget />}
-                  {widgetOrder()[item] === "date" && <DateWidget />}
-                  {widgetOrder()[item] === "todo" && <TodoWidget />}
-                  {widgetOrder()[item] === "stopwatch" && <StopwatchWidget />}
-                  <button
-                    class="absolute -top-2 -right-2 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full"
-                    onclick={(e) => {
-                      const newWidgetOrder = widgetOrder();
-                      delete newWidgetOrder[item];
-                      setWidgetOrder(newWidgetOrder);
-                      e.target.parentElement?.parentElement?.remove();
-                      localStorage.setItem(
-                        "widgetPlacement",
-                        JSON.stringify(newWidgetOrder),
-                      );
-                      updateFilteredWidgets();
-                    }}
+        <div
+          class="h-screen gap-3 flex-wrap justify-center items-center z-30 absolute inset-0 p-4"
+          style={{
+            "align-content": layout() == "center" ? "center" : "flex-start",
+            "padding-top": layout() == "top" ? "2.5rem" : "0",
+          }}
+        >
+          <h1
+            id="greeting"
+            class="mb-6 text-5xl font-bold inset-shadow-2xl [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
+            style={{
+              "text-align": layout() == "center" ? "center" : "left",
+              "padding-left": layout() == "top" ? "2.5rem" : "0",
+              display: name() == "" ? "none" : "block",
+            }}
+          >
+            Good{" "}
+            {new Date().getHours() < 12
+              ? new Date().getHours() >= 5
+                ? "morning"
+                : "night"
+              : new Date().getHours() < 18
+                ? "afternoon"
+                : "evening"}
+            , {name()}.
+          </h1>
+          <div
+            class={cn(
+              "widgets m-0 grid [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)] gap-3 p-4",
+              layout() == "center" &&
+                "xl:[grid-template-columns:repeat(3,400px)]",
+              layout() == "center" && "justify-center",
+              layout() == "top" && "!pl-8",
+            )}
+          >
+            {filteredWidgets().length > 0 ? (
+              filteredWidgets().map((item: any) => (
+                <div class={`${uuidv4()} slot h-fit`} data-swapy-slot={item}>
+                  <div
+                    class="widget group"
+                    data-swapy-item={widgetOrder()[item]}
                   >
-                    <X height={16} class="text-black" />
-                  </button>
+                    {widgetOrder()[item] === "clock" && <ClockWidget />}
+                    {widgetOrder()[item] === "date" && <DateWidget />}
+                    {widgetOrder()[item] === "todo" && <TodoWidget />}
+                    {widgetOrder()[item] === "stopwatch" && <StopwatchWidget />}
+                    <button
+                      class="absolute -top-2 -right-2 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full"
+                      onclick={(e) => {
+                        const newWidgetOrder = widgetOrder();
+                        delete newWidgetOrder[item];
+                        setWidgetOrder(newWidgetOrder);
+                        e.target.parentElement?.parentElement?.remove();
+                        localStorage.setItem(
+                          "widgetPlacement",
+                          JSON.stringify(newWidgetOrder),
+                        );
+                        updateFilteredWidgets();
+                      }}
+                    >
+                      <X height={16} class="text-black" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <section>
-              <div class="fallback">
-                You don't have any widgets. Add one to get started.
-              </div>
-            </section>
-          )}
+              ))
+            ) : (
+              <section>
+                <div class="fallback">
+                  You don't have any widgets. Add one to get started.
+                </div>
+              </section>
+            )}
+          </div>
         </div>
       </div>
       <div class="fixed top-2 right-2 text-white flex justify-center items-center rounded-full gap-2">

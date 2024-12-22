@@ -25,5 +25,14 @@
   },
   "settings": {
     "message": "Settings"
+  },
+  "greeting": {
+    "message": "Set up a greeting"
+  },
+  "enter_name": {
+    "message": "Enter your name"
+  },
+  "skip": {
+    "message": "Skip"
   }
 }
