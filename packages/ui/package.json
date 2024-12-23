@@ -26,7 +26,7 @@
   "devDependencies": {
     "@flowtide/tailwind-config": "workspace:*",
     "@flowtide/typescript-config": "workspace:*",
-    "@types/react": "^18.2.61",
+    "@types/react": "^19.0.2",
     "autoprefixer": "^10.4.18",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
