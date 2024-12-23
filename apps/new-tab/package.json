@@ -27,7 +27,7 @@
     "mathjs": "^13.2.0",
     "nanoid": "3.3.8",
     "postcss-nested": "^6.2.0",
-    "react": "^18.3.1",
+    "react": "^19.0.0",
     "react-dom": "^18.3.1",
     "sonner": "^1.7.0",
     "tailwind-merge": "^2.5.4",
@@ -36,7 +36,7 @@
     "@flowtide/tailwind-config": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "^18.3.11",
+    "@types/react": "^19.0.2",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
