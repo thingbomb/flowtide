@@ -16,7 +16,7 @@ import { cn } from "./libs/cn";
 function SettingsTrigger() {
   const [open, setOpen] = createSignal(false);
   const [font, setFont] = createStoredSignal("font", "sans");
-  const [theme, setTheme] = createStoredSignal("kb-color-mode", "light");
+  const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
   const [background, setBackground] = createStoredSignal("background", "image");
   const [layout, setLayout] = createStoredSignal("layout", "center");
 
@@ -252,7 +252,7 @@ function SettingsTrigger() {
       </button>
       <button
         class={cn(
-          "fixed top-0 left-0 flex items-center gap-2 p-4 cursor-pointer z-20 !text-foreground",
+          "fixed top-0 left-0 flex items-center gap-2 p-4 cursor-pointer z-20 !text-foreground text-[16px]",
           open() ? "" : "hidden",
         )}
         onClick={() => setOpen(false)}

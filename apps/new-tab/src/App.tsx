@@ -13,6 +13,7 @@ import {
 import { createSwapy } from "swapy";
 import { v4 as uuidv4 } from "uuid";
 import {
+  BookmarksWidget,
   ClockWidget,
   DateWidget,
   StopwatchWidget,
@@ -91,6 +92,8 @@ const gradients = [
   "linear-gradient(to right, #764ba2, #667eea)",
   "linear-gradient(to right, #fdfcfb, #e2d1c3)",
 ];
+
+type Widget = "clock" | "date" | "stopwatch" | "todo" | "bookmarks";
 
 const App: Component = () => {
   const [needsOnboarding, setNeedsOnboarding] = createSignal(
@@ -177,7 +180,7 @@ const App: Component = () => {
     );
   };
 
-  const widgets = ["clock", "date", "todo", "stopwatch"];
+  const widgets: Widget[] = ["clock", "date", "todo", "stopwatch", "bookmarks"];
 
   function updateFilteredWidgets() {
     const currentWidgets = widgets.filter(
@@ -227,7 +230,7 @@ const App: Component = () => {
     return Object.keys(obj).find((key) => obj[key] === value);
   }
 
-  function Block(props: any) {
+  function Block(props: { title: string; description: string; key: Widget }) {
     return (
       <div class="flex justify-between items-center">
         <div class="info">
@@ -238,7 +241,7 @@ const App: Component = () => {
           <Button
             class="group w-[100px]"
             onclick={() => {
-              const newWidgetOrder = widgetOrder();
+              const newWidgetOrder: any = widgetOrder();
               if (newWidgetOrder[props.key]) {
                 newWidgetOrder[props.key] = undefined;
               } else {
@@ -361,6 +364,7 @@ const App: Component = () => {
                     {widgetOrder()[item] === "date" && <DateWidget />}
                     {widgetOrder()[item] === "todo" && <TodoWidget />}
                     {widgetOrder()[item] === "stopwatch" && <StopwatchWidget />}
+                    {widgetOrder()[item] === "bookmarks" && <BookmarksWidget />}
                     <button
                       class="absolute -top-2 -right-2 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full"
                       onclick={(e) => {
@@ -381,11 +385,7 @@ const App: Component = () => {
                 </div>
               ))
             ) : (
-              <section>
-                <div class="fallback">
-                  You don't have any widgets. Add one to get started.
-                </div>
-              </section>
+              <section></section>
             )}
           </div>
         </div>
@@ -403,6 +403,11 @@ const App: Component = () => {
                 {chrome.i18n.getMessage("blocks_description")}
               </DialogDescription>
               <br />
+              <Block
+                title="Bookmarks"
+                description="Easy access to your first 9 bookmarks with this widget."
+                key="bookmarks"
+              />
               <Block
                 title="Stopwatch"
                 description="Add a stopwatch widget to your start page."

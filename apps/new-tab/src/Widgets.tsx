@@ -243,4 +243,73 @@ function StopwatchWidget() {
   );
 }
 
-export { ClockWidget, DateWidget, TodoWidget, StopwatchWidget };
+interface Bookmark {
+  name: string;
+  url: string;
+}
+
+function BookmarksWidget() {
+  const [bookmarks, setBookmarks] = createSignal<any[]>([]);
+  onMount(() => {
+    if (chrome.bookmarks !== undefined) {
+      chrome.bookmarks.getTree((bookmarkTreeNodes) => {
+        const flattenBookmarks = (nodes: any[]): Bookmark[] => {
+          let bookmarks: Bookmark[] = [];
+          for (const node of nodes) {
+            if (node.url) {
+              bookmarks.push({ name: node.title, url: node.url });
+            }
+            if (node.children) {
+              bookmarks = bookmarks.concat(flattenBookmarks(node.children));
+            }
+          }
+          return bookmarks;
+        };
+        const allBookmarks = flattenBookmarks(bookmarkTreeNodes);
+        setBookmarks(allBookmarks);
+      });
+    }
+  });
+  return (
+    <div class="absolute inset-0 p-[10px] pb-0 bg-white rounded-[20px] overflow-hidden">
+      <div class="rounded-[10px] w-full h-full">
+        <div class="relative h-full w-full bg-white rounded-[10px] pt-2">
+          <div class="overflow-auto scrollbar-hidden">
+            <div
+              class="text-left text-xl text-cyan-700 font-bold px-3.5 select-none"
+              id="title"
+            >
+              Bookmarks
+            </div>
+            <div
+              id="bookmarks"
+              class="px-3.5 mt-2 grid grid-cols-3 grid-rows-3 gap-2"
+            >
+              {bookmarks()
+                .slice(0, 9)
+                .map((bookmark: Bookmark, index: number) => (
+                  <div class="flex gap-2 items-center bookmark">
+                    <a
+                      href={bookmark.url}
+                      target="_blank"
+                      class="text-[17px] text-black whitespace-nowrap overflow-hidden text-ellipsis font-medium"
+                    >
+                      {bookmark.name}
+                    </a>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export {
+  ClockWidget,
+  DateWidget,
+  TodoWidget,
+  StopwatchWidget,
+  BookmarksWidget,
+};
