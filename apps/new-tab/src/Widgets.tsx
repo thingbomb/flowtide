@@ -2,6 +2,8 @@ import { createSignal, onMount } from "solid-js";
 import { Checkbox, CheckboxControl } from "./components/ui/checkbox";
 import { Button } from "./components/ui/button";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
+import soundscapes, { Category } from "./soundscapes";
+import { Pause, Play } from "lucide-solid";
 
 function ClockWidget() {
   function createTime(date: Date) {
@@ -119,7 +121,7 @@ function TodoWidget() {
         <div class="relative h-full w-full bg-white rounded-[10px] pt-2">
           <div class="overflow-auto max-h-[84px] scrollbar-hidden">
             <div
-              class="text-left text-2xl text-teal-700 font-bold px-3.5 select-none"
+              class="text-left text-xl text-teal-700 font-bold px-3.5 select-none"
               id="title"
             >
               To-do list
@@ -306,10 +308,86 @@ function BookmarksWidget() {
   );
 }
 
+function NatureWidget() {
+  const [currentlyPlaying, setCurrentlyPlaying] = createSignal<any>(null);
+  function PlayButton({ key, index }: { key: string; index: number }) {
+    return (
+      <button
+        class="text-black font-bold !rounded-full size-[30px] flex justify-center items-center"
+        onclick={() => {
+          if (currentlyPlaying() == index) {
+            setCurrentlyPlaying(null);
+            (document.getElementById("audio") as HTMLAudioElement)?.load();
+          } else {
+            setCurrentlyPlaying(index);
+            (document.getElementById("audio") as HTMLAudioElement)?.load();
+          }
+        }}
+      >
+        {currentlyPlaying() == index ? (
+          <Pause height={20} fill="black" />
+        ) : (
+          <Play height={20} fill="black" />
+        )}
+      </button>
+    );
+  }
+
+  return (
+    <div class="absolute inset-0 p-[10px] pb-0 bg-white rounded-[20px] overflow-hidden">
+      <div class="rounded-[10px] w-full h-full">
+        <div class="relative h-full w-full bg-white rounded-[10px] pt-2">
+          <div class="overflow-auto scrollbar-hidden">
+            <div
+              class="text-left text-xl text-green-700 font-bold px-3.5 select-none"
+              id="title"
+            >
+              Nature
+            </div>
+            <div
+              id="soundscapes"
+              class="grid grid-cols-3 grid-rows-2 gap-2 p-3.5"
+            >
+              {soundscapes
+                .filter((soundscape) =>
+                  soundscape.categories.includes("nature"),
+                )
+                .map((soundscape, index: number) => (
+                  <div class="flex gap-2 items-center soundscape">
+                    <div class="flex gap-2 items-center">
+                      <div class="flex gap-2 items-center">
+                        <div class="flex items-center gap-2">
+                          <PlayButton
+                            key={soundscape.name}
+                            index={soundscape.index}
+                          />
+                          <div class="text-[17px] text-black whitespace-nowrap overflow-hidden text-ellipsis font-medium">
+                            {soundscape.name}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <audio
+              src={soundscapes[currentlyPlaying()]?.url}
+              id="audio"
+              autoplay
+              loop
+            ></audio>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export {
   ClockWidget,
   DateWidget,
   TodoWidget,
   StopwatchWidget,
   BookmarksWidget,
+  NatureWidget,
 };

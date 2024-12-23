@@ -16,6 +16,7 @@ import {
   BookmarksWidget,
   ClockWidget,
   DateWidget,
+  NatureWidget,
   StopwatchWidget,
   TodoWidget,
 } from "./Widgets";
@@ -93,7 +94,7 @@ const gradients = [
   "linear-gradient(to right, #fdfcfb, #e2d1c3)",
 ];
 
-type Widget = "clock" | "date" | "stopwatch" | "todo" | "bookmarks";
+type Widget = "clock" | "date" | "stopwatch" | "todo" | "bookmarks" | "nature";
 
 const App: Component = () => {
   const [needsOnboarding, setNeedsOnboarding] = createSignal(
@@ -180,7 +181,14 @@ const App: Component = () => {
     );
   };
 
-  const widgets: Widget[] = ["clock", "date", "todo", "stopwatch", "bookmarks"];
+  const widgets: Widget[] = [
+    "clock",
+    "date",
+    "todo",
+    "stopwatch",
+    "bookmarks",
+    "nature",
+  ];
 
   function updateFilteredWidgets() {
     const currentWidgets = widgets.filter(
@@ -242,10 +250,14 @@ const App: Component = () => {
             class="group w-[100px]"
             onclick={() => {
               const newWidgetOrder: any = widgetOrder();
-              if (newWidgetOrder[props.key]) {
-                newWidgetOrder[props.key] = undefined;
+              if (
+                newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`]
+              ) {
+                newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`] =
+                  undefined;
               } else {
-                newWidgetOrder[props.key] = props.key;
+                newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`] =
+                  props.key;
               }
               setWidgetOrder(newWidgetOrder);
               localStorage.setItem(
@@ -317,6 +329,9 @@ const App: Component = () => {
             "absolute top-0 w-full h-full blob-gradient opacity-50 dark:opacity-20 blob-gradient z-20 dark:hidden",
             imageLoaded() ? "hidden" : "",
           )}
+          style={{
+            display: background() != "image" ? "none" : "",
+          }}
         ></div>
         <div
           class="h-screen gap-3 flex-wrap justify-center items-center z-30 absolute inset-0 p-4"
@@ -332,6 +347,12 @@ const App: Component = () => {
               "text-align": layout() == "center" ? "center" : "left",
               "padding-left": layout() == "top" ? "2.5rem" : "0",
               display: name() == "" ? "none" : "block",
+              color:
+                background() == "image" &&
+                !imageLoaded() &&
+                document.documentElement.style.colorScheme != "dark"
+                  ? ""
+                  : "#fff",
             }}
           >
             Good{" "}
@@ -365,6 +386,7 @@ const App: Component = () => {
                     {widgetOrder()[item] === "todo" && <TodoWidget />}
                     {widgetOrder()[item] === "stopwatch" && <StopwatchWidget />}
                     {widgetOrder()[item] === "bookmarks" && <BookmarksWidget />}
+                    {widgetOrder()[item] === "nature" && <NatureWidget />}
                     <button
                       class="absolute -top-2 -right-2 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full"
                       onclick={(e) => {
@@ -407,6 +429,11 @@ const App: Component = () => {
                 title="Bookmarks"
                 description="Easy access to your first 9 bookmarks with this widget."
                 key="bookmarks"
+              />
+              <Block
+                title="Nature"
+                description="Listen to nature soundscapees with this widget."
+                key="nature"
               />
               <Block
                 title="Stopwatch"
