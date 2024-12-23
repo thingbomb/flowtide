@@ -7,7 +7,6 @@
     "newtab": "index.html"
   },
   "permissions": ["bookmarks"],
-  "optional_permissions": ["tabs"],
   "icons": {
     "128": "assets/logo.png"
   },

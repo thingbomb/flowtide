@@ -256,8 +256,7 @@ const App: Component = () => {
                 newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`] =
                   undefined;
               } else {
-                newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`] =
-                  props.key;
+                newWidgetOrder[props.key] = props.key;
               }
               setWidgetOrder(newWidgetOrder);
               localStorage.setItem(
