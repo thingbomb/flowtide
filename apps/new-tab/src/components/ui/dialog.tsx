@@ -29,18 +29,20 @@ export const DialogContent = <T extends ValidComponent = "div">(
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay
-        class={cn("fixed inset-0 z-50 bg-black/70")}
+        class={cn(
+          "fixed inset-0 z-50 bg-background/80 data-[expanded]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[expanded]:fade-in-0",
+        )}
         {...rest}
       />
       <DialogPrimitive.Content
         class={cn(
-          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 bg-white dark:bg-[#1f1f1f] p-6 shadow-lg sm:rounded-lg md:w-full",
+          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg data-[closed]:duration-200 data-[expanded]:duration-200 data-[expanded]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[expanded]:fade-in-0 data-[closed]:zoom-out-95 data-[expanded]:zoom-in-95 data-[closed]:slide-out-to-left-1/2 data-[closed]:slide-out-to-top-[48%] data-[expanded]:slide-in-from-left-1/2 data-[expanded]:slide-in-from-top-[48%] sm:rounded-lg md:w-full",
           local.class,
         )}
         {...rest}
       >
         {local.children}
-        <DialogPrimitive.CloseButton class="absolute right-4 top-4 rounded-sm opacity-70 transition-[opacity,box-shadow] hover:opacity-100 focus-within:text-black dark:focus-within:text-white disabled:pointer-events-none">
+        <DialogPrimitive.CloseButton class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-[opacity,box-shadow] hover:opacity-100 focus:outline-none focus:ring-[1.5px] focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

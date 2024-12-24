@@ -34,6 +34,7 @@ import {
 } from "./components/ui/dialog";
 import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
+import { CommandPalette } from "./components/ui/cmd";
 
 type MessageKeys = any;
 
@@ -48,7 +49,11 @@ try {
   window.chrome = {} as any;
   chrome.i18n = {
     getMessage: (message: MessageKeys) => {
-      return (jsonData[message] as { message: string }).message;
+      try {
+        return (jsonData[message] as { message: string }).message;
+      } catch (error) {
+        console.log(message);
+      }
     },
   } as any;
 }
@@ -458,6 +463,7 @@ const App: Component = () => {
           </DialogContent>
         </Dialog>
       </div>
+      <CommandPalette />
     </main>
   );
 };
