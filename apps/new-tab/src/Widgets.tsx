@@ -4,6 +4,15 @@ import { Button } from "./components/ui/button";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import soundscapes, { Category } from "./soundscapes";
 import { Pause, Play } from "lucide-solid";
+import { createStoredSignal } from "./hooks/localStorage";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./components/ui/dialog";
 
 function ClockWidget() {
   function createTime(date: Date) {
@@ -383,6 +392,119 @@ function NatureWidget() {
   );
 }
 
+function PomodoroWidget() {
+  const [workMinutes, setWorkMinutes] = createStoredSignal("workMinutes", 30);
+  const [breakMinutes, setBreakMinutes] = createStoredSignal("breakMinutes", 5);
+  const [pomodoro, setPomodoro] = createSignal(workMinutes() * 60);
+  const [pomodoroSession, setPomodoroSession] = createSignal("work");
+  const [isRunning, setIsRunning] = createSignal(false);
+  const [dialogOpen, setDialogOpen] = createSignal(false);
+
+  function formatTime(time: number) {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, "0")}:${Math.floor(
+      Number(seconds.toString()),
+    )
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
+  onMount(() => {
+    let interval: any;
+    interval = setInterval(() => {
+      if (isRunning()) {
+        setPomodoro(pomodoro() - 1);
+        document.title = `${pomodoroSession() == "work" ? "Work" : "Break"} - ${formatTime(
+          pomodoro(),
+        )}`;
+        if (pomodoro() <= 0) {
+          if (pomodoroSession() == "work") {
+            setPomodoroSession("break");
+            setPomodoro(breakMinutes() * 60);
+          } else {
+            setPomodoroSession("work");
+            setPomodoro(workMinutes() * 60);
+          }
+        }
+      } else {
+        document.title = "New Tab";
+      }
+    }, 1000);
+  });
+
+  return (
+    <div class="absolute inset-0 p-[10px] bg-white dark:bg-[#2f2f2f] rounded-[20px] overflow-hidden">
+      <div class="rounded-[10px] w-full h-full">
+        <div class="relative h-full w-full bg-white dark:bg-[#2f2f2f] rounded-[10px] pt-2">
+          <div class="overflow-auto scrollbar-hidden">
+            <div
+              class="text-left text-xl text-teal-700 dark:text-blues-400 font-bold px-3.5 select-none"
+              id="title"
+            >
+              {isRunning()
+                ? pomodoroSession() == "work"
+                  ? "Work"
+                  : "Break"
+                : "Pomodoro"}
+            </div>
+            <div class="px-3.5 mt-2">
+              <h1 class="text-xl text-black dark:text-white font-bold">
+                {formatTime(pomodoro())}
+              </h1>
+              <div class="flex gap-4 items-center mt-3">
+                <Button
+                  onclick={() => {
+                    setIsRunning(!isRunning());
+                  }}
+                >
+                  {isRunning() ? "Stop" : "Start"}
+                </Button>
+                <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
+                  <DialogTrigger
+                    class="group text-sm flex justify-center items-center h-[36px] font-medium select-none"
+                    aria-label="Add widget"
+                  >
+                    Settings
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Pomodoro Settings</DialogTitle>
+                      <DialogDescription>
+                        Edit the pomodoro settings.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <TextFieldRoot class="flex-1">
+                      <TextField
+                        placeholder="Work minutes"
+                        value={workMinutes()}
+                        onInput={(e) =>
+                          setWorkMinutes(Number(e.currentTarget.value))
+                        }
+                      />
+                    </TextFieldRoot>
+                    <TextFieldRoot class="flex-1">
+                      <TextField
+                        placeholder="Break minutes"
+                        value={breakMinutes()}
+                        onInput={(e) =>
+                          setBreakMinutes(Number(e.currentTarget.value))
+                        }
+                      />
+                    </TextFieldRoot>
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      You may need to refresh the page to see the changes.
+                    </span>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 export {
   ClockWidget,
   DateWidget,
@@ -390,4 +512,5 @@ export {
   StopwatchWidget,
   BookmarksWidget,
   NatureWidget,
+  PomodoroWidget,
 };

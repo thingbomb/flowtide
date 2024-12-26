@@ -17,6 +17,7 @@ import {
   ClockWidget,
   DateWidget,
   NatureWidget,
+  PomodoroWidget,
   StopwatchWidget,
   TodoWidget,
 } from "./Widgets";
@@ -99,7 +100,14 @@ const gradients = [
   "linear-gradient(to right, #fdfcfb, #e2d1c3)",
 ];
 
-type Widget = "clock" | "date" | "stopwatch" | "todo" | "bookmarks" | "nature";
+type Widget =
+  | "clock"
+  | "date"
+  | "stopwatch"
+  | "todo"
+  | "bookmarks"
+  | "nature"
+  | "pomodoro";
 
 const App: Component = () => {
   const [needsOnboarding, setNeedsOnboarding] = createSignal(
@@ -193,6 +201,7 @@ const App: Component = () => {
     "stopwatch",
     "bookmarks",
     "nature",
+    "pomodoro",
   ];
 
   function updateFilteredWidgets() {
@@ -391,6 +400,7 @@ const App: Component = () => {
                     {widgetOrder()[item] === "stopwatch" && <StopwatchWidget />}
                     {widgetOrder()[item] === "bookmarks" && <BookmarksWidget />}
                     {widgetOrder()[item] === "nature" && <NatureWidget />}
+                    {widgetOrder()[item] === "pomodoro" && <PomodoroWidget />}
                     <button
                       class="absolute -top-2 -right-2 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full"
                       onclick={(e) => {
@@ -433,6 +443,11 @@ const App: Component = () => {
                 title="Bookmarks"
                 description="Easy access to your first 9 bookmarks with this widget."
                 key="bookmarks"
+              />
+              <Block
+                title="Pomodoro"
+                description="Use the pomodoro technique for an interval-based workflow."
+                key="pomodoro"
               />
               <Block
                 title="Nature"
