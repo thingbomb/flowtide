@@ -444,7 +444,7 @@ const App: Component = () => {
         <img
           src={selectedImage()}
           alt=""
-          class="absolute inset-0 w-full h-full object-cover"
+          class="absolute inset-0 w-full h-full object-cover transition-all"
           style={{ opacity: 0 }}
           onLoad={(e: any) => {
             if (document.documentElement.style.colorScheme === "dark") {
