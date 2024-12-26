@@ -2,6 +2,9 @@ import {
   AlignCenter,
   AlignVerticalJustifyStart,
   ArrowLeft,
+  Bookmark,
+  Clock,
+  Grid,
   Image,
   Moon,
   PaintBucket,
@@ -12,6 +15,8 @@ import {
 import { createSignal } from "solid-js";
 import { createStoredSignal } from "./hooks/localStorage";
 import { cn } from "./libs/cn";
+import { TextField, TextFieldRoot } from "./components/ui/textfield";
+import { Button } from "./components/ui/button";
 
 function SettingsTrigger() {
   const [open, setOpen] = createSignal(false);
@@ -19,6 +24,9 @@ function SettingsTrigger() {
   const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
   const [background, setBackground] = createStoredSignal("background", "image");
   const [layout, setLayout] = createStoredSignal("layout", "center");
+  const [name, setName] = createStoredSignal("name", "");
+  const [mode, setMode] = createStoredSignal("mode", "widgets");
+  const [greetingNameValue, setGreetingNameValue] = createSignal(name());
 
   function SettingsPage() {
     return (
@@ -29,38 +37,83 @@ function SettingsTrigger() {
           </h1>
           <br />
           <br />
-          <h3 class="text-2xl font-[500]">Layout</h3>
-          <div class="w-full grid grid-cols-1 gap-4 grid-rows-2 **:data-selected:!ring-primary">
+          <h3 class="text-2xl font-[500]">Mode</h3>
+          <div class="w-full grid grid-cols-3 gap-4 grid-rows-1 **:data-selected:!ring-primary">
             <button
               class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
               border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
-              {...(layout() === "center" ? { "data-selected": true } : {})}
+              {...(mode() === "widgets" ? { "data-selected": true } : {})}
               onClick={() => {
-                setLayout("center");
+                setMode("widgets");
               }}
             >
-              <AlignCenter class="size-[64px]" fill="currentColor" />
+              <Grid class="size-[64px]" />
               <br />
-              <span class="text-xl">Center</span>
+              <span class="text-xl">Widgets</span>
             </button>
             <button
               class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
               border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
-              {...(layout() === "top" ? { "data-selected": true } : {})}
+              {...(mode() === "nightstand" ? { "data-selected": true } : {})}
               onClick={() => {
-                setLayout("top");
+                setMode("nightstand");
               }}
             >
-              <AlignVerticalJustifyStart
-                class="size-[64px]"
-                fill="currentColor"
-              />
+              <Clock class="size-[64px]" />
               <br />
-              <span class="text-xl">Top</span>
+              <span class="text-xl">Nightstand</span>
+            </button>
+            <button
+              class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
+              border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
+              {...(mode() === "speeddial" ? { "data-selected": true } : {})}
+              onClick={() => {
+                setMode("speeddial");
+              }}
+            >
+              <Bookmark class="size-[64px]" />
+              <br />
+              <span class="text-xl">Speed Dial</span>
             </button>
           </div>
           <br />
           <br />
+          {mode() === "widgets" && (
+            <div>
+              <h3 class="text-2xl font-[500]">Layout</h3>
+              <div class="w-full grid grid-cols-1 gap-4 grid-rows-2 **:data-selected:!ring-primary">
+                <button
+                  class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
+              border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
+                  {...(layout() === "center" ? { "data-selected": true } : {})}
+                  onClick={() => {
+                    setLayout("center");
+                  }}
+                >
+                  <AlignCenter class="size-[64px]" fill="currentColor" />
+                  <br />
+                  <span class="text-xl">Center</span>
+                </button>
+                <button
+                  class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
+              border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
+                  {...(layout() === "top" ? { "data-selected": true } : {})}
+                  onClick={() => {
+                    setLayout("top");
+                  }}
+                >
+                  <AlignVerticalJustifyStart
+                    class="size-[64px]"
+                    fill="currentColor"
+                  />
+                  <br />
+                  <span class="text-xl">Top</span>
+                </button>
+              </div>
+              <br />
+              <br />
+            </div>
+          )}
           <h3 class="text-2xl font-[500]">Font</h3>
           <div class="w-full grid grid-cols-3 gap-4 grid-rows-1 **:data-selected:!ring-primary">
             <button
@@ -230,6 +283,24 @@ function SettingsTrigger() {
               <br />
               <span class="text-xl">Blank</span>
             </button>
+          </div>
+          <br />
+          <br />
+          <h2 class="text-2xl font-[500] mb-3">Greeting</h2>
+          <div class="flex gap-2 items-start">
+            <TextFieldRoot class="flex-1">
+              <TextField
+                placeholder="Enter greeting"
+                value={greetingNameValue()}
+                onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
+              />
+              <span class="text-sm text-muted-foreground">
+                Leave blank to disable.
+              </span>
+            </TextFieldRoot>
+            <Button onClick={() => setName(greetingNameValue())}>
+              Set greeting
+            </Button>
           </div>
           <br />
           <br />

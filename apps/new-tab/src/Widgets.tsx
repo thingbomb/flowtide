@@ -39,12 +39,15 @@ function ClockWidget() {
     }, 1000);
   });
   return (
-    <div class="absolute inset-0 p-[10px] bg-black rounded-[20px] !select-none">
-      <div class="bg-zinc-900 rounded-[10px] w-full h-full flex justify-center items-center relative">
+    <div class="absolute inset-0 p-[10px] bg-white dark:bg-background rounded-[20px] !select-none">
+      <div class="bg-gray-200 dark:bg-zinc-900 rounded-[10px] w-full h-full flex justify-center items-center relative">
         <div class="self-start absolute w-full text-gray-400 flex justify-between px-3.5 py-2.5 text-xs font-semibold">
           <div id="amPm">{createTime(new Date()).amPm}</div>
         </div>
-        <div class="text-center text-5xl text-white font-bold" id="currentTime">
+        <div
+          class="text-center text-5xl text-black dark:text-white font-bold"
+          id="currentTime"
+        >
           {createTime(new Date()).time}
         </div>
       </div>
@@ -94,14 +97,17 @@ function DateWidget() {
     }, 1000);
   });
   return (
-    <div class="absolute inset-0 p-[10px] bg-white rounded-[20px] !select-none">
-      <div class="bg-gray-200 rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-gray-200 rounded-[10px] flex items-center justify-center">
+    <div class="absolute inset-0 p-[10px] bg-white dark:bg-background rounded-[20px] !select-none">
+      <div class="bg-gray-200 dark:bg-zinc-900 rounded-[10px] w-full h-full">
+        <div class="relative h-full w-full bg-gray-200 dark:bg-zinc-900 rounded-[10px] flex items-center justify-center">
           <div class="self-start absolute w-full text-gray-400 flex justify-between px-3.5 py-2.5 text-xs font-semibold">
             <div id="month">{months[new Date().getMonth()]}</div>
             <div id="year">{new Date().getFullYear()}</div>
           </div>
-          <div class="text-center text-5xl text-black font-bold" id="day">
+          <div
+            class="text-center text-5xl text-black dark:text-white font-bold"
+            id="day"
+          >
             {new Date().getDate()}
           </div>
         </div>
@@ -358,12 +364,12 @@ function BookmarksWidget() {
     }
   });
   return (
-    <div class="absolute inset-0 p-[10px] pb-0 bg-white rounded-[20px] overflow-hidden">
+    <div class="absolute inset-0 p-[10px] pb-0 bg-white dark:bg-background rounded-[20px] overflow-hidden">
       <div class="rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-white rounded-[10px] pt-2">
+        <div class="relative h-full w-full bg-white dark:bg-background rounded-[10px] pt-2">
           <div class="overflow-auto scrollbar-hidden">
             <div
-              class="text-left text-xl text-cyan-700 font-bold px-3.5 select-none"
+              class="text-left text-xl text-cyan-700 dark:text-white font-bold px-3.5 select-none"
               id="title"
             >
               Bookmarks
@@ -410,21 +416,21 @@ function NatureWidget() {
         }}
       >
         {currentlyPlaying() == index ? (
-          <Pause height={20} fill="black" />
+          <Pause height={20} fill="currentColor" class="text-foreground" />
         ) : (
-          <Play height={20} fill="black" />
+          <Play height={20} fill="currentColor" class="text-foreground" />
         )}
       </button>
     );
   }
 
   return (
-    <div class="absolute inset-0 p-[10px] pb-0 bg-white rounded-[20px] overflow-hidden">
+    <div class="absolute inset-0 p-[10px] pb-0 bg-background rounded-[20px] overflow-hidden">
       <div class="rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-white rounded-[10px] pt-2">
+        <div class="relative h-full w-full bg-background rounded-[10px] pt-2">
           <div class="overflow-auto scrollbar-hidden">
             <div
-              class="text-left text-xl text-green-700 font-bold px-3.5 select-none"
+              class="text-left text-xl text-green-700 dark:text-white font-bold px-3.5 select-none"
               id="title"
             >
               Nature
@@ -446,7 +452,7 @@ function NatureWidget() {
                             key={soundscape.name}
                             index={soundscape.index}
                           />
-                          <div class="text-[17px] text-black whitespace-nowrap overflow-hidden text-ellipsis font-medium">
+                          <div class="text-[17px] text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium">
                             {soundscape.name}
                           </div>
                         </div>
@@ -510,12 +516,12 @@ function PomodoroWidget() {
   });
 
   return (
-    <div class="absolute inset-0 p-[10px] bg-white dark:bg-[#2f2f2f] rounded-[20px] overflow-hidden">
+    <div class="absolute inset-0 p-[10px] bg-white dark:bg-background rounded-[20px] overflow-hidden">
       <div class="rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-white dark:bg-[#2f2f2f] rounded-[10px] pt-2">
+        <div class="relative h-full w-full bg-white dark:bg-background rounded-[10px] pt-2">
           <div class="overflow-auto scrollbar-hidden">
             <div
-              class="text-left text-xl text-teal-700 dark:text-blues-400 font-bold px-3.5 select-none"
+              class="text-left text-xl text-teal-700 dark:text-white font-bold px-3.5 select-none"
               id="title"
             >
               {isRunning()
