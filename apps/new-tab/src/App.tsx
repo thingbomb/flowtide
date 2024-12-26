@@ -148,7 +148,8 @@ const App: Component = () => {
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
   const [selectedImage, setSelectedImage] = createSignal<string>(
-    images[Math.floor(Math.random() * images.length)],
+    localStorage.getItem("selectedImage") ||
+      images[Math.floor(Math.random() * images.length)],
   );
   const [layout, setLayout] = createStoredSignal("layout", "center");
   const [currentFont, setCurrentFont] = createStoredSignal("font", "sans");
@@ -351,6 +352,15 @@ const App: Component = () => {
         localStorage.setItem("widgetPlacement", JSON.stringify({}));
       }
     }
+
+    let newImage = images[Math.floor(Math.random() * images.length)];
+    localStorage.setItem("selectedImage", newImage);
+    fetch(newImage, {
+      mode: "no-cors",
+      headers: {
+        "Cache-Control": "public, max-age=315360000, immutable",
+      },
+    });
 
     setInterval(() => {
       setTime(createTime(new Date()).time);
