@@ -385,7 +385,7 @@ function BookmarksWidget() {
                     <a
                       href={bookmark.url}
                       target="_blank"
-                      class="text-[17px] text-black whitespace-nowrap overflow-hidden text-ellipsis font-medium"
+                      class="text-[17px] text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium"
                     >
                       {bookmark.name}
                     </a>
