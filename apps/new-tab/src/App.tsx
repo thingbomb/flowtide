@@ -16,9 +16,11 @@ import {
 import { createSwapy } from "swapy";
 import { v4 as uuidv4 } from "uuid";
 import {
+  AmbienceSoundscapes,
   BookmarksWidget,
   ClockWidget,
   DateWidget,
+  FocusSoundscapes,
   NatureWidget,
   PomodoroWidget,
   StopwatchWidget,
@@ -110,7 +112,9 @@ type Widget =
   | "todo"
   | "bookmarks"
   | "nature"
-  | "pomodoro";
+  | "pomodoro"
+  | "focus"
+  | "ambience";
 
 type Bookmark = {
   name: string;
@@ -306,6 +310,8 @@ const App: Component = () => {
     "bookmarks",
     "nature",
     "pomodoro",
+    "focus",
+    "ambience",
   ];
 
   function updateFilteredWidgets() {
@@ -380,7 +386,15 @@ const App: Component = () => {
                 newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`] =
                   undefined;
               } else {
-                newWidgetOrder[props.key] = props.key;
+                if (newWidgetOrder[props.key]) {
+                  for (const key in widgets) {
+                    if (newWidgetOrder[key] == undefined) {
+                      newWidgetOrder[key] = key;
+                    }
+                  }
+                } else {
+                  newWidgetOrder[props.key] = props.key;
+                }
               }
               setWidgetOrder(newWidgetOrder);
               localStorage.setItem(
@@ -512,6 +526,12 @@ const App: Component = () => {
                         {widgetOrder()[item] === "clock" && <ClockWidget />}
                         {widgetOrder()[item] === "date" && <DateWidget />}
                         {widgetOrder()[item] === "todo" && <TodoWidget />}
+                        {widgetOrder()[item] === "focus" && (
+                          <FocusSoundscapes />
+                        )}
+                        {widgetOrder()[item] === "ambience" && (
+                          <AmbienceSoundscapes />
+                        )}
                         {widgetOrder()[item] === "stopwatch" && (
                           <StopwatchWidget />
                         )}
@@ -653,6 +673,21 @@ const App: Component = () => {
                   title="Nature"
                   description="Listen to nature soundscapees with this widget."
                   key="nature"
+                />
+                <Block
+                  title="Focus Sounds"
+                  description="Soundscapes to help you focus."
+                  key="focus"
+                />
+                <Block
+                  title="Ambience Sounds"
+                  description="Ambient soundscapes to help you relax."
+                  key="ambience"
+                />
+                <Block
+                  title="To-do list"
+                  description="Track your todos with an easy widget."
+                  key="todo"
                 />
                 <Block
                   title="Stopwatch"

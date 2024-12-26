@@ -404,7 +404,7 @@ function NatureWidget() {
   function PlayButton({ key, index }: { key: string; index: number }) {
     return (
       <button
-        class="text-black font-bold !rounded-full size-[30px] flex justify-center items-center"
+        class="text-black font-bold !rounded-full size-[24px] flex justify-center items-center"
         onclick={() => {
           if (currentlyPlaying() == index) {
             setCurrentlyPlaying(null);
@@ -416,16 +416,16 @@ function NatureWidget() {
         }}
       >
         {currentlyPlaying() == index ? (
-          <Pause height={20} fill="currentColor" class="text-foreground" />
+          <Pause height={16} fill="currentColor" class="text-foreground" />
         ) : (
-          <Play height={20} fill="currentColor" class="text-foreground" />
+          <Play height={16} fill="currentColor" class="text-foreground" />
         )}
       </button>
     );
   }
 
   return (
-    <div class="absolute inset-0 p-[10px] pb-0 bg-background rounded-[20px] overflow-hidden">
+    <div class="absolute inset-0 p-[10px] bg-background rounded-[20px] overflow-hidden">
       <div class="rounded-[10px] w-full h-full">
         <div class="relative h-full w-full bg-background rounded-[10px] pt-2">
           <div class="overflow-auto scrollbar-hidden">
@@ -437,7 +437,7 @@ function NatureWidget() {
             </div>
             <div
               id="soundscapes"
-              class="grid grid-cols-3 grid-rows-2 gap-2 p-3.5"
+              class="grid grid-cols-3 grid-rows-2 gap-2 p-1.5 pb-0"
             >
               {soundscapes
                 .filter((soundscape) =>
@@ -452,7 +452,7 @@ function NatureWidget() {
                             key={soundscape.name}
                             index={soundscape.index}
                           />
-                          <div class="text-[17px] text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium">
+                          <div class="text-sm text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium">
                             {soundscape.name}
                           </div>
                         </div>
@@ -461,6 +461,12 @@ function NatureWidget() {
                   </div>
                 ))}
             </div>
+            <a
+              href="https://noisefill.com/credits"
+              class="text-xs font-medium text-gray-500 dark:text-gray-400 m-0 pl-3.5 -mt-2"
+            >
+              Sound attribution
+            </a>
             <audio
               src={soundscapes[currentlyPlaying()]?.url}
               id="audio"
@@ -587,6 +593,165 @@ function PomodoroWidget() {
     </div>
   );
 }
+
+function FocusSoundscapes() {
+  const [currentlyPlaying, setCurrentlyPlaying] = createSignal<any>(null);
+  function PlayButton({ key, index }: { key: string; index: number }) {
+    return (
+      <button
+        class="text-black font-bold !rounded-full size-[24px] flex justify-center items-center"
+        onclick={() => {
+          if (currentlyPlaying() == index) {
+            setCurrentlyPlaying(null);
+            (document.getElementById("audio-1") as HTMLAudioElement)?.load();
+          } else {
+            setCurrentlyPlaying(index);
+            (document.getElementById("audio-1") as HTMLAudioElement)?.load();
+          }
+        }}
+      >
+        {currentlyPlaying() == index ? (
+          <Pause height={16} fill="currentColor" class="text-foreground" />
+        ) : (
+          <Play height={16} fill="currentColor" class="text-foreground" />
+        )}
+      </button>
+    );
+  }
+
+  return (
+    <div class="absolute inset-0 p-[10px] bg-background rounded-[20px] overflow-hidden">
+      <div class="rounded-[10px] w-full h-full">
+        <div class="relative h-full w-full bg-background rounded-[10px] pt-2">
+          <div class="overflow-auto scrollbar-hidden">
+            <div
+              class="text-left text-xl text-purple-700 dark:text-white font-bold px-3.5 select-none"
+              id="title"
+            >
+              Focus
+            </div>
+            <div
+              id="soundscapes"
+              class="grid grid-cols-3 grid-rows-2 gap-2 p-1.5 pb-0"
+            >
+              {soundscapes
+                .filter((soundscape) => soundscape.categories.includes("focus"))
+                .map((soundscape, index: number) => (
+                  <div class="flex gap-2 items-center soundscape">
+                    <div class="flex gap-2 items-center">
+                      <div class="flex gap-2 items-center">
+                        <div class="flex items-center gap-2">
+                          <PlayButton
+                            key={soundscape.name}
+                            index={soundscape.index}
+                          />
+                          <div class="text-sm text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium">
+                            {soundscape.name}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <a
+              href="https://noisefill.com/credits"
+              class="text-xs font-medium text-gray-500 dark:text-gray-400 m-0 pl-3.5 -mt-2"
+            >
+              Sound attribution
+            </a>
+            <audio
+              src={soundscapes[currentlyPlaying()]?.url}
+              id="audio-1"
+              autoplay
+              loop
+            ></audio>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AmbienceSoundscapes() {
+  const [currentlyPlaying, setCurrentlyPlaying] = createSignal<any>(null);
+  function PlayButton({ key, index }: { key: string; index: number }) {
+    return (
+      <button
+        class="text-black font-bold !rounded-full size-[24px] flex justify-center items-center"
+        onclick={() => {
+          if (currentlyPlaying() == index) {
+            setCurrentlyPlaying(null);
+            (document.getElementById("audio-2") as HTMLAudioElement)?.load();
+          } else {
+            setCurrentlyPlaying(index);
+            (document.getElementById("audio-2") as HTMLAudioElement)?.load();
+          }
+        }}
+      >
+        {currentlyPlaying() == index ? (
+          <Pause height={16} fill="currentColor" class="text-foreground" />
+        ) : (
+          <Play height={16} fill="currentColor" class="text-foreground" />
+        )}
+      </button>
+    );
+  }
+
+  return (
+    <div class="absolute inset-0 p-[10px] bg-background rounded-[20px] overflow-hidden">
+      <div class="rounded-[10px] w-full h-full">
+        <div class="relative h-full w-full bg-background rounded-[10px] pt-2">
+          <div class="overflow-auto scrollbar-hidden">
+            <div
+              class="text-left text-xl text-cyan-700 dark:text-white font-bold px-3.5 select-none"
+              id="title"
+            >
+              Ambience
+            </div>
+            <div
+              id="soundscapes"
+              class="grid grid-cols-3 grid-rows-2 gap-2 p-1.5 pb-0"
+            >
+              {soundscapes
+                .filter((soundscape) => soundscape.categories.includes("focus"))
+                .map((soundscape, index: number) => (
+                  <div class="flex gap-2 items-center soundscape">
+                    <div class="flex gap-2 items-center">
+                      <div class="flex gap-2 items-center">
+                        <div class="flex items-center gap-2">
+                          <PlayButton
+                            key={soundscape.name}
+                            index={soundscape.index}
+                          />
+                          <div class="text-sm text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium">
+                            {soundscape.name}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <a
+              href="https://noisefill.com/credits"
+              class="text-xs font-medium text-gray-500 dark:text-gray-400 m-0 pl-3.5 -mt-2"
+            >
+              Sound attribution
+            </a>
+            <audio
+              src={soundscapes[currentlyPlaying()]?.url}
+              id="audio-2"
+              autoplay
+              loop
+            ></audio>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export {
   ClockWidget,
   DateWidget,
@@ -595,4 +760,6 @@ export {
   BookmarksWidget,
   NatureWidget,
   PomodoroWidget,
+  FocusSoundscapes,
+  AmbienceSoundscapes,
 };
