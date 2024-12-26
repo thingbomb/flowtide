@@ -417,6 +417,14 @@ const App: Component = () => {
                     >
                       <X height={16} class="text-black" />
                     </button>
+                    {widgetOrder()[item] == "todo" && (
+                      <button
+                        class="absolute -top-2 right-5 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full !cursor-move"
+                        data-swapy-handle
+                      >
+                        <GripVertical height={16} class="text-black" />
+                      </button>
+                    )}
                   </div>
                 </div>
               ))

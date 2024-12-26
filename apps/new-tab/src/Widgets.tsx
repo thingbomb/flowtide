@@ -3,7 +3,7 @@ import { Checkbox, CheckboxControl } from "./components/ui/checkbox";
 import { Button } from "./components/ui/button";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import soundscapes, { Category } from "./soundscapes";
-import { Pause, Play } from "lucide-solid";
+import { GripVertical, Pause, Play } from "lucide-solid";
 import { createStoredSignal } from "./hooks/localStorage";
 import {
   Dialog,
@@ -114,90 +114,166 @@ function TodoWidget() {
   interface Task {
     completed: boolean;
     title: string;
+    id: string;
   }
-  const [tasks, setTasks] = createSignal<Task[]>(
-    localStorage.getItem("tasks")
-      ? JSON.parse(localStorage.getItem("tasks") as string)
-      : [
-          { completed: false, title: "Task 1" },
-          { completed: false, title: "Task 2" },
-        ],
-  );
+
+  const getInitialTasks = () => {
+    try {
+      const stored = localStorage.getItem("tasks");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed.map((task: Task) => ({
+          ...task,
+          id: task.id || crypto.randomUUID(),
+        }));
+      }
+    } catch (error) {
+      console.error("Error loading tasks from localStorage:", error);
+    }
+    return [
+      { completed: false, title: "Task 1", id: crypto.randomUUID() },
+      { completed: false, title: "Task 2", id: crypto.randomUUID() },
+    ];
+  };
+
+  const [tasks, setTasks] = createSignal<Task[]>(getInitialTasks());
+
   const [taskInputValue, setTaskInputValue] = createSignal("");
+  const [draggedTaskId, setDraggedTaskId] = createSignal<string | null>(null);
+
+  const handleDragStart = (e: DragEvent, taskId: string) => {
+    if (!(e.target instanceof HTMLElement)) return;
+
+    setDraggedTaskId(taskId);
+    e.dataTransfer?.setData("text/plain", taskId);
+
+    e.target.classList.add("opacity-50");
+
+    const dragImage = e.target.cloneNode(true) as HTMLElement;
+    dragImage.classList.add("fixed", "top-0", "left-0", "pointer-events-none");
+    document.body.appendChild(dragImage);
+    e.dataTransfer?.setDragImage(dragImage, 0, 0);
+    setTimeout(() => document.body.removeChild(dragImage), 0);
+  };
+
+  const handleDragOver = (e: DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer!.dropEffect = "move";
+  };
+
+  const handleDragEnd = (e: DragEvent) => {
+    if (!(e.target instanceof HTMLElement)) return;
+    e.target.classList.remove("opacity-50");
+    setDraggedTaskId(null);
+    localStorage.setItem("tasks", JSON.stringify(tasks()));
+  };
+
+  const handleDrop = (e: DragEvent, targetTaskId: string) => {
+    e.preventDefault();
+
+    const sourceTaskId = draggedTaskId();
+    if (!sourceTaskId || sourceTaskId === targetTaskId) return;
+
+    try {
+      const currentTasks = tasks();
+      const sourceIndex = currentTasks.findIndex((t) => t.id === sourceTaskId);
+      const targetIndex = currentTasks.findIndex((t) => t.id === targetTaskId);
+
+      if (sourceIndex === -1 || targetIndex === -1) return;
+
+      const newTasks = [...currentTasks];
+      const [movedTask] = newTasks.splice(sourceIndex, 1);
+      newTasks.splice(targetIndex, 0, movedTask);
+
+      setTasks(newTasks);
+      localStorage.setItem("tasks", JSON.stringify(newTasks));
+    } catch (error) {
+      console.error("Error reordering tasks:", error);
+    }
+  };
+
+  const addTask = () => {
+    if (!taskInputValue().trim()) return;
+
+    try {
+      const newTask = {
+        completed: false,
+        title: taskInputValue(),
+        id: crypto.randomUUID(),
+      };
+
+      const newTasks = [...tasks(), newTask];
+      setTasks(newTasks);
+      setTaskInputValue("");
+      localStorage.setItem("tasks", JSON.stringify(newTasks));
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
+  };
+
   return (
-    <div class="absolute inset-0 p-[10px] pb-0 bg-white rounded-[20px] overflow-hidden">
-      <div class="rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-white rounded-[10px] pt-2">
-          <div class="overflow-auto max-h-[84px] scrollbar-hidden">
-            <div
-              class="text-left text-xl text-teal-700 font-bold px-3.5 select-none"
-              id="title"
-            >
-              To-do list
-            </div>
-            <div id="tasks" class="px-3.5 mt-2">
+    <div class="absolute inset-0 p-[10px] bg-background rounded-[20px] overflow-hidden">
+      <div class="rounded-lg w-full h-full">
+        <div class="relative h-full w-full bg-background rounded-[20px] pt-2 text-foreground">
+          <div class="overflow-auto max-h-[76px] scrollbar-hidden">
+            <div id="tasks" class="px-4 mt-2">
               {tasks()
                 .filter((task: Task) => !task.completed)
                 .map((task: Task, index: number) => (
-                  <div class="flex gap-2 items-center task">
+                  <div
+                    draggable="true"
+                    onDragStart={(e) => handleDragStart(e, task.id)}
+                    onDragOver={handleDragOver}
+                    onDragEnd={handleDragEnd}
+                    onDrop={(e) => handleDrop(e, task.id)}
+                    class="flex gap-2 items-center task rounded cursor-move transition-colors"
+                  >
                     <Checkbox
-                      id={String(index)}
+                      id={task.id}
                       onChange={(checked: boolean) => {
-                        setTasks(
-                          tasks().map((t: Task, i: number) =>
-                            i === tasks().indexOf(task)
-                              ? { ...t, completed: checked }
-                              : t,
-                          ),
-                        );
-                        setTasks(tasks().filter((t: Task) => !t.completed));
-                        localStorage.setItem("tasks", JSON.stringify(tasks()));
+                        try {
+                          setTasks(
+                            tasks()
+                              .map((t: Task) =>
+                                t.id === task.id
+                                  ? { ...t, completed: checked }
+                                  : t,
+                              )
+                              .filter((t: Task) => !t.completed),
+                          );
+                          localStorage.setItem(
+                            "tasks",
+                            JSON.stringify(tasks()),
+                          );
+                        } catch (error) {
+                          console.error("Error updating task:", error);
+                        }
                       }}
                     >
-                      <CheckboxControl />
+                      <CheckboxControl class="dark:!border-white" />
                     </Checkbox>
-                    <label
-                      for={`${String(index)}-input`}
-                      class="text-sm text-black"
-                    >
+                    <label for={task.id} class="text-sm select-none">
                       {task.title}
                     </label>
                   </div>
                 ))}
+              <br />
             </div>
           </div>
-          <div class="absolute bottom-0 right-0 left-0 pr-3.5 flex gap-4 pb-[10px] bg-white">
+          <div class="absolute bottom-0 right-0 left-0 pr-4 pl-2 pb-[10px] flex gap-4 bg-background">
             <TextFieldRoot class="flex-1">
               <TextField
-                class="!border-none !outline-none !ring-0 !text-black shadow-none"
                 placeholder="New task"
                 value={taskInputValue()}
                 onInput={(e) => setTaskInputValue(e.currentTarget.value)}
                 onKeyDown={(e: KeyboardEvent) => {
                   if (e.key === "Enter") {
-                    setTasks([
-                      ...tasks(),
-                      { completed: false, title: taskInputValue() },
-                    ]);
-                    setTaskInputValue("");
-                    localStorage.setItem("tasks", JSON.stringify(tasks()));
+                    addTask();
                   }
                 }}
               />
             </TextFieldRoot>
-            <Button
-              onclick={() => {
-                setTasks([
-                  ...tasks(),
-                  { completed: false, title: taskInputValue() },
-                ]);
-                setTaskInputValue("");
-                localStorage.setItem("tasks", JSON.stringify(tasks()));
-              }}
-              class="!text-white !bg-teal-600 hover:!bg-teal-700/90"
-            >
-              Add task
-            </Button>
+            <Button onClick={addTask}>Add task</Button>
           </div>
         </div>
       </div>
