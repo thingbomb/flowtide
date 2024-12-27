@@ -174,7 +174,7 @@
     "message": "Blank"
   },
   "solid_color": {
-    "message": "Solid color"
+    "message": "Solid colour"
   },
   "leave_blank_to_disable": {
     "message": "Leave blank to disable."
@@ -198,7 +198,7 @@
     "message": "Saved"
   },
   "center": {
-    "message": "Center"
+    "message": "Centre"
   },
   "top": {
     "message": "Top"
