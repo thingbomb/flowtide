@@ -28,7 +28,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "customize", "development"]
+      "pages": ["introduction", "development"]
     },
     {
       "group": "Install Guides",
