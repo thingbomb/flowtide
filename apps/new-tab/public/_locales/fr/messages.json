@@ -1,144 +1,144 @@
 {
   "welcome_message": {
-    "message": "Welcome to Flowtide"
+    "message": "Bienvenue à Flowtide"
   },
   "get_started": {
-    "message": "Get started"
+    "message": "Commencer"
   },
   "resources": {
-    "message": "Resources"
+    "message": "Ressources"
   },
   "start_using": {
-    "message": "Start using Flowtide"
+    "message": "Commencer à utiliser Flowtide"
   },
   "blocks": {
-    "message": "Blocks"
+    "message": "Blocs"
   },
   "blocks_description": {
-    "message": "Supercharge your New Tab page with beautifully designed blocks created by Flowtide. You can add as many as you like to your start page."
+    "message": "Améliorez votre page Nouvel onglet avec des blocs magnifiquement conçus par Flowtide. Vous pouvez en ajouter autant que vous le souhaitez à votre page d'accueil."
   },
   "add": {
-    "message": "Add"
+    "message": "Ajouter"
   },
   "added": {
-    "message": "Added"
+    "message": "Ajouté"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Réglages"
   },
   "greeting": {
-    "message": "Set up a greeting"
+    "message": "Créer un message d'accueil"
   },
   "enter_name": {
-    "message": "Enter your name"
+    "message": "Entrez votre nom"
   },
   "skip": {
-    "message": "Skip"
+    "message": "Sauter"
   },
   "copied_to_clipboard": {
-    "message": "Copied to clipboard"
+    "message": "Copié dans le presse-papiers"
   },
   "create_google_document": {
-    "message": "Create Google Document"
+    "message": "Créer un document Google"
   },
   "create_word_document": {
-    "message": "Create Word Document"
+    "message": "Créer un document Word"
   },
   "create_notion_page": {
-    "message": "Create Notion Page"
+    "message": "Créer une page de Notion"
   },
   "create_google_sheet": {
-    "message": "Create Google Sheet"
+    "message": "Créer Google Sheet"
   },
   "compose_gmail_message": {
-    "message": "Compose Gmail Message"
+    "message": "Écrire un message Gmail"
   },
   "create_google_slide": {
-    "message": "Create Google Slide"
+    "message": "Créer un slide Google"
   },
   "create_google_calendar_event": {
-    "message": "Create Google Calendar Event"
+    "message": "Créer un événement Google Agenda"
   },
   "create_excel_workbook": {
-    "message": "Create Excel Workbook"
+    "message": "Créer un classeur Excel"
   },
   "create_powerpoint_presentation": {
-    "message": "Create PowerPoint Presentation"
+    "message": "Créer une présentation PowerPoint"
   },
   "create_paper_document": {
-    "message": "Create Paper Document"
+    "message": "Créer un document papier"
   },
   "create_todoist_task": {
-    "message": "Create Todoist Task"
+    "message": "Créer une tâche Todoist"
   },
   "create_github_repository": {
-    "message": "Create GitHub Repository"
+    "message": "Créer un dépôt GitHub"
   },
   "create_github_gist": {
-    "message": "Create GitHub Gist"
+    "message": "Créer une Gist GitHub"
   },
   "create_figma_file": {
-    "message": "Create Figma File"
+    "message": "Créer un fichier Figma"
   },
   "create_zoom_meeting": {
-    "message": "Create Zoom Meeting"
+    "message": "Créer une réunion Zoom"
   },
   "create_bitly_link": {
-    "message": "Create Bitly Link"
+    "message": "Créer un lien Bitly"
   },
   "create_canva_design": {
-    "message": "Create Canva Design"
+    "message": "Créer un design Canva"
   },
   "create_canva_video": {
-    "message": "Create Canva Video"
+    "message": "Créer une vidéo Canva"
   },
   "type_command": {
-    "message": "Type a command"
+    "message": "Tapez une commande"
   },
   "no_results": {
-    "message": "No results found"
+    "message": "Aucun résultat trouvé"
   },
   "actions": {
     "message": "Actions"
   },
   "bookmarks": {
-    "message": "Bookmarks"
+    "message": "Signets"
   },
   "bookmark_folders": {
-    "message": "Bookmark Folders"
+    "message": "Dossiers de marque-pages"
   },
   "good_morning": {
-    "message": "Good morning"
+    "message": "Bonjour"
   },
   "good_night": {
-    "message": "Good night"
+    "message": "Bonne nuit"
   },
   "good_afternoon": {
-    "message": "Good afternoon"
+    "message": "Bonjour à tous"
   },
   "good_evening": {
-    "message": "Good evening"
+    "message": "Bonsoir à tous"
   },
   "widgets": {
     "message": "Widgets"
   },
   "nightstand": {
-    "message": "Nightstand"
+    "message": "Table de nuit"
   },
   "speed_dial": {
-    "message": "Speed Dial"
+    "message": "Numérotation rapide"
   },
   "choose_mode": {
-    "message": "Choose a mode"
+    "message": "Choisir un mode"
   },
   "complete": {
-    "message": "Complete"
+    "message": "Compléter"
   },
   "mode": {
     "message": "Mode"
   },
   "layout": {
-    "message": "Layout"
+    "message": "Mise en page"
   },
   "font": {
     "message": "Font"
@@ -153,54 +153,54 @@
     "message": "Mono"
   },
   "theme": {
-    "message": "Theme"
+    "message": "Thème"
   },
   "light": {
-    "message": "Light"
+    "message": "Lumière"
   },
   "dark": {
-    "message": "Dark"
+    "message": "Sombre"
   },
   "background": {
-    "message": "Background"
+    "message": "Arrière-plan"
   },
   "image": {
     "message": "Image"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Dégradé"
   },
   "blank": {
-    "message": "Blank"
+    "message": "Vide"
   },
   "solid_color": {
-    "message": "Solid color"
+    "message": "Couleur unie"
   },
   "leave_blank_to_disable": {
-    "message": "Leave blank to disable."
+    "message": "Laisser en blanc pour désactiver."
   },
   "set_greeting": {
-    "message": "Set greeting"
+    "message": "Définir un message d'accueil."
   },
   "more": {
-    "message": "More"
+    "message": "En savoir plus"
   },
   "go_back": {
-    "message": "Go back"
+    "message": "Retourner"
   },
   "forum": {
     "message": "Forum"
   },
   "feature_request": {
-    "message": "Feature request"
+    "message": "Demande de fonctionnalité"
   },
   "saved": {
-    "message": "Saved"
+    "message": "Sauvegardé"
   },
   "center": {
-    "message": "Center"
+    "message": "Centre"
   },
   "top": {
-    "message": "Top"
+    "message": "Haut"
   }
 }
