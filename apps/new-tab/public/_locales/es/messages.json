@@ -1,338 +1,206 @@
 {
-  "title": {
-    "message": "Flowtide"
+  "welcome_message": {
+    "message": "Welcome to Flowtide"
   },
-  "soundscapes": {
-    "message": "Paisajes sonoros"
+  "get_started": {
+    "message": "Get started"
+  },
+  "resources": {
+    "message": "Resources"
+  },
+  "start_using": {
+    "message": "Start using Flowtide"
+  },
+  "blocks": {
+    "message": "Blocks"
+  },
+  "blocks_description": {
+    "message": "Supercharge your New Tab page with beautifully designed blocks created by Flowtide. You can add as many as you like to your start page."
+  },
+  "add": {
+    "message": "Add"
+  },
+  "added": {
+    "message": "Added"
   },
   "settings": {
-    "message": "Ajustes"
+    "message": "Settings"
   },
-  "suggest_feature": {
-    "message": "Sugerir una función"
+  "greeting": {
+    "message": "Set up a greeting"
   },
-  "light_mode": {
-    "message": "Modo luz"
+  "enter_name": {
+    "message": "Enter your name"
   },
-  "dark_mode": {
-    "message": "Modo oscuro"
+  "skip": {
+    "message": "Skip"
   },
-  "system": {
-    "message": "Sistema por defecto"
+  "copied_to_clipboard": {
+    "message": "Copied to clipboard"
   },
-  "todos": {
-    "message": "Lista de tareas pendientes"
+  "create_google_document": {
+    "message": "Create Google Document"
   },
-  "todos_description": {
-    "message": "Gestione aquí sus tareas."
+  "create_word_document": {
+    "message": "Create Word Document"
   },
-  "add_todo": {
-    "message": "Añade una nueva tarea"
+  "create_notion_page": {
+    "message": "Create Notion Page"
   },
-  "clock_size": {
-    "message": "Tamaño del reloj"
+  "create_google_sheet": {
+    "message": "Create Google Sheet"
   },
-  "12_hour": {
-    "message": "12 horas"
+  "compose_gmail_message": {
+    "message": "Compose Gmail Message"
   },
-  "24_hour": {
-    "message": "24 horas"
+  "create_google_slide": {
+    "message": "Create Google Slide"
   },
-  "clock_format": {
-    "message": "Formato del reloj"
+  "create_google_calendar_event": {
+    "message": "Create Google Calendar Event"
   },
-  "every_day": {
-    "message": "Todos los días"
+  "create_excel_workbook": {
+    "message": "Create Excel Workbook"
   },
-  "every_hour": {
-    "message": "Cada hora"
+  "create_powerpoint_presentation": {
+    "message": "Create PowerPoint Presentation"
   },
-  "as_soon_as_possible": {
-    "message": "Lo antes posible"
+  "create_paper_document": {
+    "message": "Create Paper Document"
   },
-  "never": {
-    "message": "Nunca"
+  "create_todoist_task": {
+    "message": "Create Todoist Task"
   },
-  "gradient": {
-    "message": "Gradiente"
+  "create_github_repository": {
+    "message": "Create GitHub Repository"
   },
-  "color_palette": {
-    "message": "Paleta de colores"
+  "create_github_gist": {
+    "message": "Create GitHub Gist"
+  },
+  "create_figma_file": {
+    "message": "Create Figma File"
+  },
+  "create_zoom_meeting": {
+    "message": "Create Zoom Meeting"
+  },
+  "create_bitly_link": {
+    "message": "Create Bitly Link"
+  },
+  "create_canva_design": {
+    "message": "Create Canva Design"
+  },
+  "create_canva_video": {
+    "message": "Create Canva Video"
+  },
+  "type_command": {
+    "message": "Type a command"
+  },
+  "no_results": {
+    "message": "No results found"
+  },
+  "actions": {
+    "message": "Actions"
+  },
+  "bookmarks": {
+    "message": "Bookmarks"
+  },
+  "bookmark_folders": {
+    "message": "Bookmark Folders"
+  },
+  "good_morning": {
+    "message": "Good morning"
+  },
+  "good_night": {
+    "message": "Good night"
+  },
+  "good_afternoon": {
+    "message": "Good afternoon"
+  },
+  "good_evening": {
+    "message": "Good evening"
+  },
+  "widgets": {
+    "message": "Widgets"
+  },
+  "nightstand": {
+    "message": "Nightstand"
+  },
+  "speed_dial": {
+    "message": "Speed Dial"
+  },
+  "choose_mode": {
+    "message": "Choose a mode"
+  },
+  "complete": {
+    "message": "Complete"
+  },
+  "mode": {
+    "message": "Mode"
+  },
+  "layout": {
+    "message": "Layout"
   },
   "font": {
-    "message": "Fuente"
-  },
-  "wallpaper": {
-    "message": "Papel pintado"
-  },
-  "background": {
-    "message": "Fondo"
-  },
-  "georgia": {
-    "message": "Georgia"
-  },
-  "verdana": {
-    "message": "Verdana"
-  },
-  "brush_script_mt": {
-    "message": "Brush Script MT"
-  },
-  "times_new_roman": {
-    "message": "Times New Roman"
-  },
-  "show_more": {
-    "message": "Ver más"
-  },
-  "show_less": {
-    "message": "Mostrar menos"
-  },
-  "serif": {
-    "message": "Serif"
-  },
-  "monospace": {
-    "message": "Monospace"
+    "message": "Font"
   },
   "sans": {
     "message": "Sans"
   },
-  "themes": {
-    "message": "Temas"
+  "serif": {
+    "message": "Serif"
   },
-  "small": {
-    "message": "Pequeño"
+  "mono": {
+    "message": "Mono"
   },
-  "medium": {
-    "message": "Medio"
+  "theme": {
+    "message": "Theme"
   },
-  "large": {
-    "message": "Grande"
+  "light": {
+    "message": "Light"
   },
-  "more": {
-    "message": "Más"
+  "dark": {
+    "message": "Dark"
   },
-  "from_noisefill": {
-    "message": "Desde Noisefill"
+  "background": {
+    "message": "Background"
   },
-  "word_counter": {
-    "message": "Contador de palabras"
+  "image": {
+    "message": "Image"
   },
-  "character_counter": {
-    "message": "Contador de caracteres"
-  },
-  "enter_text": {
-    "message": "Escriba algún texto..."
-  },
-  "type_command": {
-    "message": "Escriba un comando o calcule..."
-  },
-  "no_results": {
-    "message": "No se han encontrado resultados."
-  },
-  "actions": {
-    "message": "Acciones"
-  },
-  "bookmarks": {
-    "message": "Marcadores"
-  },
-  "bookmark_folders": {
-    "message": "Carpetas de marcadores"
-  },
-  "tools": {
-    "message": "Herramientas"
-  },
-  "tabs": {
-    "message": "Tabs"
-  },
-  "remove_all_tabs": {
-    "message": "Eliminar todas las pestañas"
-  },
-  "remove_tabs_confirm": {
-    "message": "¿Está seguro que desea eliminar todas las pestañas? Asegúrese de que ha guardado su trabajo."
-  },
-  "opened": {
-    "message": "Abierto"
-  },
-  "copied_to_clipboard": {
-    "message": "Copiado al portapapeles"
-  },
-  "create_google_document": {
-    "message": "Crear documento de Google"
-  },
-  "create_word_document": {
-    "message": "Crear documento Word"
-  },
-  "create_notion_page": {
-    "message": "Crear página de noción"
-  },
-  "create_google_sheet": {
-    "message": "Crear Hoja de Google"
-  },
-  "compose_gmail_message": {
-    "message": "Redactar mensaje de Gmail"
-  },
-  "create_google_slide": {
-    "message": "Crear Google Slide"
-  },
-  "create_google_calendar_event": {
-    "message": "Crear Evento del calendario de Google"
-  },
-  "create_excel_workbook": {
-    "message": "Crear libro de trabajo de Excel"
-  },
-  "create_powerpoint_presentation": {
-    "message": "Crear presentación de PowerPoint"
-  },
-  "create_paper_document": {
-    "message": "Crear documento en papel"
-  },
-  "create_todoist_task": {
-    "message": "Crear tarea Todoist"
-  },
-  "create_github_repository": {
-    "message": "Crear repositorio GitHub"
-  },
-  "create_github_gist": {
-    "message": "Crear Gist de GitHub"
-  },
-  "create_figma_file": {
-    "message": "Crear archivo Figma"
-  },
-  "create_zoom_meeting": {
-    "message": "Crear Reunión Zoom"
-  },
-  "create_bitly_link": {
-    "message": "Crear Enlace Bitly"
-  },
-  "create_canva_design": {
-    "message": "Crear Diseño de Canva"
-  },
-  "ocean": {
-    "message": "Océano"
-  },
-  "forest": {
-    "message": "Bosque"
-  },
-  "rain": {
-    "message": "Lluvia"
-  },
-  "river": {
-    "message": "Río"
-  },
-  "wind": {
-    "message": "Viento"
-  },
-  "fire": {
-    "message": "Fuego"
-  },
-  "desert": {
-    "message": "Desierto"
-  },
-  "arctic": {
-    "message": "Ártico"
-  },
-  "kettle": {
-    "message": "Hervidor"
-  },
-  "crickets": {
-    "message": "Gritos"
-  },
-  "underwater": {
-    "message": "Bajo el agua"
-  },
-  "change_time": {
-    "message": "Cambiar hora"
-  },
-  "show_completed": {
-    "message": "Mostrar completada"
-  },
-  "mantra_1": {
-    "message": "Cada día es una oportunidad de crecer."
-  },
-  "mantra_2": {
-    "message": "Progreso, no perfección."
-  },
-  "mantra_3": {
-    "message": "Los pequeños pasos conducen a grandes cambios."
-  },
-  "mantra_4": {
-    "message": "Los ajustes son configuraciones para los regresos."
-  },
-  "mantra_5": {
-    "message": "Usted es más fuerte de lo que piensa."
-  },
-  "mantra_6": {
-    "message": "Los desafíos construyen su fuerza."
-  },
-  "mantra_7": {
-    "message": "Las cosas buenas vienen a tu manera."
-  },
-  "mantra_8": {
-    "message": "Ve lo bueno en cada situación."
-  },
-  "mantra_9": {
-    "message": "Un corazón esperanzador ve posibilidades infinitas."
-  },
-  "mantra_10": {
-    "message": "Esté aquí, en este momento."
-  },
-  "mantra_11": {
-    "message": "Cada aliento es un nuevo comienzo."
-  },
-  "mantra_12": {
-    "message": "Ahora es todo lo que realmente tenemos."
-  },
-  "mantra_13": {
-    "message": "Sueño grande, empezar pequeño."
-  },
-  "mantra_14": {
-    "message": "Concéntrate en lo que puedes controlar."
-  },
-  "mantra_15": {
-    "message": "La grandeza comienza con el primer paso."
-  },
-  "features": {
-    "message": "Características"
-  },
-  "clock": {
-    "message": "Reloj"
-  },
-  "mantras": {
-    "message": "Mantras"
-  },
-  "documentation": {
-    "message": "Documentación"
+  "gradient": {
+    "message": "Gradient"
   },
   "blank": {
-    "message": "En blanco"
+    "message": "Blank"
   },
-  "pomodoro": {
-    "message": "Pomodoro"
+  "solid_color": {
+    "message": "Solid color"
   },
-  "work": {
-    "message": "Trabajo"
+  "leave_blank_to_disable": {
+    "message": "Leave blank to disable."
   },
-  "break": {
-    "message": "Pausa"
+  "set_greeting": {
+    "message": "Set greeting"
   },
-  "timer_settings": {
-    "message": "Ajustes del temporizador"
+  "more": {
+    "message": "More"
   },
-  "pause": {
-    "message": "Pausa"
+  "go_back": {
+    "message": "Go back"
   },
-  "start": {
-    "message": "Inicio"
+  "forum": {
+    "message": "Forum"
   },
-  "reset": {
-    "message": "Restablecer"
+  "feature_request": {
+    "message": "Feature request"
   },
-  "break_time": {
-    "message": "Pausa (min)"
+  "saved": {
+    "message": "Saved"
   },
-  "background_timer": {
-    "message": "Fondo"
+  "center": {
+    "message": "Center"
   },
-  "background_blur": {
-    "message": "Background Blur"
+  "top": {
+    "message": "Top"
   }
 }
