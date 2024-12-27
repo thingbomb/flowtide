@@ -99,6 +99,7 @@
   }
 }
 
-button {
-  cursor: pointer !important;
+button:not(:disabled) {
+  cursor: pointer;
+}
 }
