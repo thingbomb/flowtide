@@ -2,10 +2,10 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Flowtide Docs",
   "logo": {
-    "dark": "./flowtide-logo.png",
-    "light": "./flowtide-logo.png"
+    "dark": "/flowtide-logo.png",
+    "light": "/flowtide-logo.png"
   },
-  "favicon": "./flowtide-logo.png",
+  "favicon": "/flowtide-logo.png",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
