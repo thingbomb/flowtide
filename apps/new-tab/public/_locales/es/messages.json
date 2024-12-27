@@ -1,147 +1,147 @@
 {
   "welcome_message": {
-    "message": "Welcome to Flowtide"
+    "message": "Bienvenido a Flowtide"
   },
   "get_started": {
-    "message": "Get started"
+    "message": "Empezar"
   },
   "resources": {
-    "message": "Resources"
+    "message": "Recursos"
   },
   "start_using": {
-    "message": "Start using Flowtide"
+    "message": "Empezar a utilizar Flowtide"
   },
   "blocks": {
-    "message": "Blocks"
+    "message": "Bloquea"
   },
   "blocks_description": {
-    "message": "Supercharge your New Tab page with beautifully designed blocks created by Flowtide. You can add as many as you like to your start page."
+    "message": "Potencie su página de Nueva pestaña con bloques de bonito diseño creados por Flowtide. Puedes añadir tantos como quieras a tu página de inicio."
   },
   "add": {
-    "message": "Add"
+    "message": "Añadir"
   },
   "added": {
-    "message": "Added"
+    "message": "Añadido"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Ajustes"
   },
   "greeting": {
-    "message": "Set up a greeting"
+    "message": "Establecer un saludo"
   },
   "enter_name": {
-    "message": "Enter your name"
+    "message": "Introduzca su nombre"
   },
   "skip": {
-    "message": "Skip"
+    "message": "Saltar"
   },
   "copied_to_clipboard": {
-    "message": "Copied to clipboard"
+    "message": "Copiado al portapapeles"
   },
   "create_google_document": {
-    "message": "Create Google Document"
+    "message": "Crear documento de Google"
   },
   "create_word_document": {
-    "message": "Create Word Document"
+    "message": "Crear documento Word"
   },
   "create_notion_page": {
-    "message": "Create Notion Page"
+    "message": "Crear página de noción"
   },
   "create_google_sheet": {
-    "message": "Create Google Sheet"
+    "message": "Crear Hoja de Google"
   },
   "compose_gmail_message": {
-    "message": "Compose Gmail Message"
+    "message": "Redactar mensaje de Gmail"
   },
   "create_google_slide": {
-    "message": "Create Google Slide"
+    "message": "Crear Google Slide"
   },
   "create_google_calendar_event": {
-    "message": "Create Google Calendar Event"
+    "message": "Crear Evento del calendario de Google"
   },
   "create_excel_workbook": {
-    "message": "Create Excel Workbook"
+    "message": "Crear libro de trabajo de Excel"
   },
   "create_powerpoint_presentation": {
-    "message": "Create PowerPoint Presentation"
+    "message": "Crear presentación de PowerPoint"
   },
   "create_paper_document": {
-    "message": "Create Paper Document"
+    "message": "Crear documento en papel"
   },
   "create_todoist_task": {
-    "message": "Create Todoist Task"
+    "message": "Crear tarea Todoist"
   },
   "create_github_repository": {
-    "message": "Create GitHub Repository"
+    "message": "Crear repositorio GitHub"
   },
   "create_github_gist": {
-    "message": "Create GitHub Gist"
+    "message": "Crear Gist de GitHub"
   },
   "create_figma_file": {
-    "message": "Create Figma File"
+    "message": "Crear archivo Figma"
   },
   "create_zoom_meeting": {
-    "message": "Create Zoom Meeting"
+    "message": "Crear Reunión Zoom"
   },
   "create_bitly_link": {
-    "message": "Create Bitly Link"
+    "message": "Crear Enlace Bitly"
   },
   "create_canva_design": {
-    "message": "Create Canva Design"
+    "message": "Crear Diseño de Canva"
   },
   "create_canva_video": {
-    "message": "Create Canva Video"
+    "message": "Crear un vídeo de Canva"
   },
   "type_command": {
-    "message": "Type a command"
+    "message": "Escriba un comando"
   },
   "no_results": {
-    "message": "No results found"
+    "message": "No se han encontrado resultados"
   },
   "actions": {
-    "message": "Actions"
+    "message": "Acciones"
   },
   "bookmarks": {
-    "message": "Bookmarks"
+    "message": "Marcadores"
   },
   "bookmark_folders": {
-    "message": "Bookmark Folders"
+    "message": "Carpetas de marcadores"
   },
   "good_morning": {
-    "message": "Good morning"
+    "message": "Buenos días"
   },
   "good_night": {
-    "message": "Good night"
+    "message": "Buenas noches"
   },
   "good_afternoon": {
-    "message": "Good afternoon"
+    "message": "Buenas tardes"
   },
   "good_evening": {
-    "message": "Good evening"
+    "message": "Buenas noches"
   },
   "widgets": {
     "message": "Widgets"
   },
   "nightstand": {
-    "message": "Nightstand"
+    "message": "Mesilla de noche"
   },
   "speed_dial": {
-    "message": "Speed Dial"
+    "message": "Marcación rápida"
   },
   "choose_mode": {
-    "message": "Choose a mode"
+    "message": "Elige un modo"
   },
   "complete": {
     "message": "Complete"
   },
   "mode": {
-    "message": "Mode"
+    "message": "Modo"
   },
   "layout": {
-    "message": "Layout"
+    "message": "Diseño"
   },
   "font": {
-    "message": "Font"
+    "message": "Fuente"
   },
   "sans": {
     "message": "Sans"
@@ -153,52 +153,52 @@
     "message": "Mono"
   },
   "theme": {
-    "message": "Theme"
+    "message": "Tema"
   },
   "light": {
-    "message": "Light"
+    "message": "Luz"
   },
   "dark": {
-    "message": "Dark"
+    "message": "Oscuro"
   },
   "background": {
-    "message": "Background"
+    "message": "Fondo"
   },
   "image": {
-    "message": "Image"
+    "message": "Imagen"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Gradiente"
   },
   "blank": {
-    "message": "Blank"
+    "message": "En blanco"
   },
   "solid_color": {
-    "message": "Solid color"
+    "message": "Color sólido"
   },
   "leave_blank_to_disable": {
-    "message": "Leave blank to disable."
+    "message": "Dejar en blanco para desactivar."
   },
   "set_greeting": {
-    "message": "Set greeting"
+    "message": "Establecer saludo"
   },
   "more": {
-    "message": "More"
+    "message": "Más"
   },
   "go_back": {
-    "message": "Go back"
+    "message": "Volver atrás"
   },
   "forum": {
-    "message": "Forum"
+    "message": "Foro"
   },
   "feature_request": {
-    "message": "Feature request"
+    "message": "Solicitud de funciones"
   },
   "saved": {
-    "message": "Saved"
+    "message": "Guardado"
   },
   "center": {
-    "message": "Center"
+    "message": "Centro"
   },
   "top": {
     "message": "Top"
