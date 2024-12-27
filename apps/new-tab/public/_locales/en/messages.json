@@ -106,5 +106,101 @@
   },
   "bookmark_folders": {
     "message": "Bookmark Folders"
+  },
+  "good_morning": {
+    "message": "Good morning"
+  },
+  "good_night": {
+    "message": "Good night"
+  },
+  "good_afternoon": {
+    "message": "Good afternoon"
+  },
+  "good_evening": {
+    "message": "Good evening"
+  },
+  "widgets": {
+    "message": "Widgets"
+  },
+  "nightstand": {
+    "message": "Nightstand"
+  },
+  "speed_dial": {
+    "message": "Speed Dial"
+  },
+  "choose_mode": {
+    "message": "Choose a mode"
+  },
+  "complete": {
+    "message": "Complete"
+  },
+  "mode": {
+    "message": "Mode"
+  },
+  "layout": {
+    "message": "Layout"
+  },
+  "font": {
+    "message": "Font"
+  },
+  "sans": {
+    "message": "Sans"
+  },
+  "serif": {
+    "message": "Serif"
+  },
+  "mono": {
+    "message": "Mono"
+  },
+  "theme": {
+    "message": "Theme"
+  },
+  "light": {
+    "message": "Light"
+  },
+  "dark": {
+    "message": "Dark"
+  },
+  "background": {
+    "message": "Background"
+  },
+  "image": {
+    "message": "Image"
+  },
+  "gradient": {
+    "message": "Gradient"
+  },
+  "blank": {
+    "message": "Blank"
+  },
+  "solid_color": {
+    "message": "Solid color"
+  },
+  "leave_blank_to_disable": {
+    "message": "Leave blank to disable."
+  },
+  "set_greeting": {
+    "message": "Set greeting"
+  },
+  "more": {
+    "message": "More"
+  },
+  "go_back": {
+    "message": "Go back"
+  },
+  "forum": {
+    "message": "Forum"
+  },
+  "feature_request": {
+    "message": "Feature request"
+  },
+  "saved": {
+    "message": "Saved"
+  },
+  "center": {
+    "message": "Center"
+  },
+  "top": {
+    "message": "Top"
   }
 }

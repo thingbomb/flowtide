@@ -42,21 +42,21 @@ import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
 
-type MessageKeys = any;
+type MessageKeys = keyof typeof data;
 
-interface data {
+interface Data {
   [key: string]: { message: string };
 }
 
 try {
   chrome.i18n.getMessage("work");
 } catch (error) {
-  let jsonData: data = data;
+  const jsonDataTyped = data as Data;
   window.chrome = {} as any;
   chrome.i18n = {
     getMessage: (message: MessageKeys) => {
       try {
-        return (jsonData[message] as { message: string }).message;
+        return jsonDataTyped[message]?.message || message;
       } catch (error) {
         console.log(message);
       }
@@ -219,7 +219,7 @@ const App: Component = () => {
             }}
           >
             {greetingNameValue()
-              ? "Set greeting"
+              ? chrome.i18n.getMessage("set_greeting")
               : chrome.i18n.getMessage("skip")}
             <ArrowRight
               class="group-hover:translate-x-1 transition-transform"
@@ -234,7 +234,9 @@ const App: Component = () => {
     return (
       <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
         <div>
-          <h1 class="text-5xl font-[600] mb-4">Choose a mode</h1>
+          <h1 class="text-5xl font-[600] mb-4">
+            {chrome.i18n.getMessage("choose_mode")}
+          </h1>
           <div class="w-full grid grid-cols-1 gap-4 grid-rows-3 **:data-selected:!ring-primary">
             <button
               class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
@@ -246,7 +248,7 @@ const App: Component = () => {
             >
               <Grid class="size-[64px]" />
               <br />
-              <span class="text-xl">Widgets</span>
+              <span class="text-xl">{chrome.i18n.getMessage("widgets")}</span>
             </button>
             <button
               class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
@@ -258,7 +260,9 @@ const App: Component = () => {
             >
               <Clock class="size-[64px]" />
               <br />
-              <span class="text-xl">Nightstand</span>
+              <span class="text-xl">
+                {chrome.i18n.getMessage("nightstand")}
+              </span>
             </button>
             <button
               class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
@@ -270,7 +274,9 @@ const App: Component = () => {
             >
               <Bookmark class="size-[64px]" />
               <br />
-              <span class="text-xl">Speed Dial</span>
+              <span class="text-xl">
+                {chrome.i18n.getMessage("speed_dial")}
+              </span>
             </button>
           </div>
           <br />
@@ -282,7 +288,7 @@ const App: Component = () => {
               setName(greetingNameValue());
             }}
           >
-            Complete
+            {chrome.i18n.getMessage("complete")}
             <ArrowRight
               class="group-hover:translate-x-1 transition-transform"
               height={16}
@@ -504,14 +510,13 @@ const App: Component = () => {
                       : "#fff",
                 }}
               >
-                Good{" "}
                 {new Date().getHours() < 12
                   ? new Date().getHours() >= 5
-                    ? "morning"
-                    : "night"
+                    ? chrome.i18n.getMessage("good_morning")
+                    : chrome.i18n.getMessage("good_night")
                   : new Date().getHours() < 18
-                    ? "afternoon"
-                    : "evening"}
+                    ? chrome.i18n.getMessage("good_afternoon")
+                    : chrome.i18n.getMessage("good_evening")}
                 , {name()}.
               </h1>
               <div
