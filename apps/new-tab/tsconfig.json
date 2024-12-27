@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
     "strict": true,
-    "jsx": "react-jsx",
-    "allowJs": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "types": ["@types/chrome", "@types/react", "@types/react-dom"],
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "types": ["vite/client", "@types/chrome"],
+    "noEmit": true,
+    "isolatedModules": true,
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
-    }
-  },
-  "include": ["src", "../../packages/ui/src"]
+    },
+    "resolveJsonModule": true,
+  }
 }

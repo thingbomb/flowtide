@@ -2,7 +2,17 @@
 
 <a href="https://chromewebstore.google.com/detail/flowtide-beautiful-new-ta/fpdjjjmglibdjocjpcchgkbakeelaghm"><img alt="Chrome Web Store Users" src="https://img.shields.io/chrome-web-store/users/fpdjjjmglibdjocjpcchgkbakeelaghm?color=red"></a>
 
-Flowtide is a beautiful, smart New Tab page for your browser. Magic Search is the core feature of Flowtide, allowing you to easily complete tasks (e.g. making a Google Doc or Excel workbook) and search your bookmarks all with `/`.
+Flowtide is a heavily customizable, beautiful, and modular New Tab page. Flowtide lets you build your New Tab page, customizing it every step of the way, using a simple drag-and-drop widget system. Get stuff done with todos and the pomodoro technique, relax with soundscapes, and move faster with Magic Search.
+
+Features:
+
+- Widget-based system for max customizability
+- Use it as a speed dial or a nightstand-style clock
+- Listen to relaxing soundscapes
+- Focus with the pomodoro technique
+- Beautiful background images, solid colors, gradients, all up to you
+- Change the font, layout, theme, and more
+- Be greeted on every New Tab
 
 ![Screenshot](https://utfs.io/f/rY9f3xCqBWAKPdnBT85CnSYuHethWmJioz4IcG2bM5FX8TD3)
 

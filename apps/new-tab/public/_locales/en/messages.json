@@ -1,156 +1,39 @@
 {
-  "title": {
-    "message": "Flowtide"
+  "welcome_message": {
+    "message": "Welcome to Flowtide"
   },
-  "soundscapes": {
-    "message": "Soundscapes"
+  "get_started": {
+    "message": "Get started"
+  },
+  "resources": {
+    "message": "Resources"
+  },
+  "start_using": {
+    "message": "Start using Flowtide"
+  },
+  "blocks": {
+    "message": "Blocks"
+  },
+  "blocks_description": {
+    "message": "Supercharge your New Tab page with beautifully designed blocks created by Flowtide. You can add as many as you like to your start page."
+  },
+  "add": {
+    "message": "Add"
+  },
+  "added": {
+    "message": "Added"
   },
   "settings": {
     "message": "Settings"
   },
-  "suggest_feature": {
-    "message": "Suggest a feature"
+  "greeting": {
+    "message": "Set up a greeting"
   },
-  "light_mode": {
-    "message": "Light mode"
+  "enter_name": {
+    "message": "Enter your name"
   },
-  "dark_mode": {
-    "message": "Dark mode"
-  },
-  "system": {
-    "message": "System default"
-  },
-  "todos": {
-    "message": "To-do list"
-  },
-  "todos_description": {
-    "message": "Manage your tasks here."
-  },
-  "add_todo": {
-    "message": "Add a new task"
-  },
-  "clock_size": {
-    "message": "Clock size"
-  },
-  "12_hour": {
-    "message": "12-hour"
-  },
-  "24_hour": {
-    "message": "24-hour"
-  },
-  "clock_format": {
-    "message": "Clock format"
-  },
-  "every_day": {
-    "message": "Every day"
-  },
-  "every_hour": {
-    "message": "Every hour"
-  },
-  "as_soon_as_possible": {
-    "message": "As soon as possible"
-  },
-  "never": {
-    "message": "Never"
-  },
-  "gradient": {
-    "message": "Gradient"
-  },
-  "color_palette": {
-    "message": "Color Palette"
-  },
-  "font": {
-    "message": "Font"
-  },
-  "wallpaper": {
-    "message": "Wallpaper"
-  },
-  "background": {
-    "message": "Background"
-  },
-  "georgia": {
-    "message": "Georgia"
-  },
-  "verdana": {
-    "message": "Verdana"
-  },
-  "brush_script_mt": {
-    "message": "Brush Script MT"
-  },
-  "times_new_roman": {
-    "message": "Times New Roman"
-  },
-  "show_more": {
-    "message": "Show more"
-  },
-  "show_less": {
-    "message": "Show less"
-  },
-  "serif": {
-    "message": "Serif"
-  },
-  "monospace": {
-    "message": "Monospace"
-  },
-  "sans": {
-    "message": "Sans"
-  },
-  "themes": {
-    "message": "Themes"
-  },
-  "small": {
-    "message": "Small"
-  },
-  "medium": {
-    "message": "Medium"
-  },
-  "large": {
-    "message": "Large"
-  },
-  "more": {
-    "message": "More"
-  },
-  "from_noisefill": {
-    "message": "From Noisefill"
-  },
-  "word_counter": {
-    "message": "Word Counter"
-  },
-  "character_counter": {
-    "message": "Character Counter"
-  },
-  "enter_text": {
-    "message": "Enter some text..."
-  },
-  "type_command": {
-    "message": "Type a command or calculate..."
-  },
-  "no_results": {
-    "message": "No results found."
-  },
-  "actions": {
-    "message": "Actions"
-  },
-  "bookmarks": {
-    "message": "Bookmarks"
-  },
-  "bookmark_folders": {
-    "message": "Bookmark Folders"
-  },
-  "tools": {
-    "message": "Tools"
-  },
-  "tabs": {
-    "message": "Tabs"
-  },
-  "remove_all_tabs": {
-    "message": "Remove all tabs"
-  },
-  "remove_tabs_confirm": {
-    "message": "Are you sure you want to remove all tabs? Make sure you have saved your work."
-  },
-  "opened": {
-    "message": "Opened"
+  "skip": {
+    "message": "Skip"
   },
   "copied_to_clipboard": {
     "message": "Copied to clipboard"
@@ -206,103 +89,118 @@
   "create_canva_design": {
     "message": "Create Canva Design"
   },
-  "ocean": {
-    "message": "Ocean"
+  "create_canva_video": {
+    "message": "Create Canva Video"
   },
-  "forest": {
-    "message": "Forest"
+  "type_command": {
+    "message": "Type a command"
   },
-  "rain": {
-    "message": "Rain"
+  "no_results": {
+    "message": "No results found"
   },
-  "river": {
-    "message": "River"
+  "actions": {
+    "message": "Actions"
   },
-  "wind": {
-    "message": "Wind"
+  "bookmarks": {
+    "message": "Bookmarks"
   },
-  "fire": {
-    "message": "Fire"
+  "bookmark_folders": {
+    "message": "Bookmark Folders"
   },
-  "desert": {
-    "message": "Desert"
+  "good_morning": {
+    "message": "Good morning"
   },
-  "arctic": {
-    "message": "Arctic"
+  "good_night": {
+    "message": "Good night"
   },
-  "kettle": {
-    "message": "Kettle"
+  "good_afternoon": {
+    "message": "Good afternoon"
   },
-  "crickets": {
-    "message": "Crickets"
+  "good_evening": {
+    "message": "Good evening"
   },
-  "underwater": {
-    "message": "Underwater"
+  "widgets": {
+    "message": "Widgets"
   },
-  "change_time": {
-    "message": "Change time"
+  "nightstand": {
+    "message": "Nightstand"
   },
-  "show_completed": {
-    "message": "Show completed"
+  "speed_dial": {
+    "message": "Speed Dial"
   },
-  "mantra_1": { "message": "Every day is a chance to grow." },
-  "mantra_2": { "message": "Progress, not perfection." },
-  "mantra_3": { "message": "Small steps lead to big changes." },
-  "mantra_4": { "message": "Setbacks are setups for comebacks." },
-  "mantra_5": { "message": "You are stronger than you think." },
-  "mantra_6": { "message": "Challenges build your strength." },
-  "mantra_7": { "message": "Good things are coming your way." },
-  "mantra_8": { "message": "See the good in every situation." },
-  "mantra_9": { "message": "A hopeful heart sees endless possibilities." },
-  "mantra_10": { "message": "Be here, in this moment." },
-  "mantra_11": { "message": "Each breath is a fresh start." },
-  "mantra_12": { "message": "The now is all we truly have." },
-  "mantra_13": { "message": "Dream big, start small." },
-  "mantra_14": { "message": "Focus on what you can control." },
-  "mantra_15": { "message": "Greatness begins with the first step." },
-  "features": {
-    "message": "Features"
+  "choose_mode": {
+    "message": "Choose a mode"
   },
-  "clock": {
-    "message": "Clock"
+  "complete": {
+    "message": "Complete"
   },
-  "mantras": {
-    "message": "Mantras"
+  "mode": {
+    "message": "Mode"
   },
-  "documentation": {
-    "message": "Documentation"
+  "layout": {
+    "message": "Layout"
+  },
+  "font": {
+    "message": "Font"
+  },
+  "sans": {
+    "message": "Sans"
+  },
+  "serif": {
+    "message": "Serif"
+  },
+  "mono": {
+    "message": "Mono"
+  },
+  "theme": {
+    "message": "Theme"
+  },
+  "light": {
+    "message": "Light"
+  },
+  "dark": {
+    "message": "Dark"
+  },
+  "background": {
+    "message": "Background"
+  },
+  "image": {
+    "message": "Image"
+  },
+  "gradient": {
+    "message": "Gradient"
   },
   "blank": {
     "message": "Blank"
   },
-  "pomodoro": {
-    "message": "Pomodoro"
+  "solid_color": {
+    "message": "Solid color"
   },
-  "work": {
-    "message": "Work"
+  "leave_blank_to_disable": {
+    "message": "Leave blank to disable."
   },
-  "break": {
-    "message": "Break"
+  "set_greeting": {
+    "message": "Set greeting"
   },
-  "timer_settings": {
-    "message": "Timer Settings"
+  "more": {
+    "message": "More"
   },
-  "pause": {
-    "message": "Pause"
+  "go_back": {
+    "message": "Go back"
   },
-  "start": {
-    "message": "Start"
+  "forum": {
+    "message": "Forum"
   },
-  "reset": {
-    "message": "Reset"
+  "feature_request": {
+    "message": "Feature request"
   },
-  "break_time": {
-    "message": "Break (min)"
+  "saved": {
+    "message": "Saved"
   },
-  "background_timer": {
-    "message": "Background"
+  "center": {
+    "message": "Center"
   },
-  "background-blur": {
-    "message": "Background Blur"
+  "top": {
+    "message": "Top"
   }
 }

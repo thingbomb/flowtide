@@ -1,634 +1,165 @@
-import { useState, useEffect, useRef } from "react";
-import { CommandPalette } from "@/components/cmd";
-import CharacterCounter from "@/CharacterCounter";
-import WordCounter from "@/WordCounter";
+import { createEffect, createSignal, createUniqueId, onMount } from "solid-js";
+import type { Component } from "solid-js";
+import { Button } from "./components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@flowtide/ui";
-import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
-import {
-  SettingsIcon,
-  Sun,
-  Moon,
-  Computer,
-  List,
+  ArrowRight,
+  Bookmark,
+  Check,
+  Clock,
+  Grid,
+  GripVertical,
+  Key,
   Plus,
-  Trash,
-  Edit,
-  AudioLines,
-  MenuIcon,
   Settings,
-} from "lucide-react";
-import { Button } from "@flowtide/ui";
-import { useTheme } from "@flowtide/ui";
-import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger } from "@flowtide/ui";
-import { Checkbox } from "@flowtide/ui";
-import { Input } from "@flowtide/ui";
+  X,
+} from "lucide-solid";
+import { createSwapy } from "swapy";
+import { v4 as uuidv4 } from "uuid";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@flowtide/ui";
-import { Check } from "lucide-react";
+  AmbienceSoundscapes,
+  BookmarksWidget,
+  ClockWidget,
+  DateWidget,
+  FocusSoundscapes,
+  NatureWidget,
+  PomodoroWidget,
+  StopwatchWidget,
+  TodoWidget,
+} from "./Widgets";
+import data from "../public/_locales/en/messages.json";
+import images from "./images";
+import { cn } from "./libs/cn";
+import { SettingsTrigger } from "./Settings";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@flowtide/ui";
-import data from "../public/_locales/en/messages.json";
+} from "./components/ui/dialog";
+import { createStoredSignal } from "./hooks/localStorage";
+import { TextField, TextFieldRoot } from "./components/ui/textfield";
+import { CommandPalette } from "./components/ui/cmd";
 
-const dbName = "flowtide";
-const dbVersion = 1;
-const mantras = [
-  "mantra_1",
-  "mantra_2",
-  "mantra_3",
-  "mantra_4",
-  "mantra_5",
-  "mantra_6",
-  "mantra_7",
-  "mantra_8",
-  "mantra_9",
-  "mantra_10",
-  "mantra_11",
-  "mantra_12",
-  "mantra_13",
-  "mantra_14",
-  "mantra_15",
-];
+type MessageKeys = keyof typeof data;
 
-type MessageKeys = any;
-
-interface data {
+interface Data {
   [key: string]: { message: string };
 }
 
 try {
   chrome.i18n.getMessage("work");
 } catch (error) {
-  let jsonData: data = data;
+  const jsonDataTyped = data as Data;
   window.chrome = {} as any;
   chrome.i18n = {
     getMessage: (message: MessageKeys) => {
-      return (jsonData[message] as { message: string }).message;
+      try {
+        return jsonDataTyped[message]?.message || message;
+      } catch (error) {
+        console.log(message);
+      }
     },
   } as any;
 }
 
-const randomMantra = mantras[Math.floor(Math.random() * mantras.length)];
-
-const openDB = (): Promise<IDBDatabase> => {
-  return new Promise((resolve, reject) => {
-    const request: IDBOpenDBRequest = indexedDB.open(dbName, dbVersion);
-
-    request.onerror = (event: any) =>
-      reject("IndexedDB error: " + (event.target as IDBRequest)?.error);
-
-    request.onsuccess = (event) =>
-      resolve((event.target as IDBRequest)?.result);
-
-    request.onupgradeneeded = (event: any) => {
-      const db = (event.target as IDBRequest)?.result;
-      if (!db.objectStoreNames.contains("todos")) {
-        db.createObjectStore("todos", { keyPath: "id" });
-      }
-      if (!db.objectStoreNames.contains("imageCache")) {
-        db.createObjectStore("imageCache", { keyPath: "id" });
-      }
-    };
-  });
-};
-
-const images = [
-  "https://img.flowtide.app/D6128dhWEyDgPyqUneHFAiRv7GzkQ3tZcUSmjrNd6VExw9Jh.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgyooAV982sbnctFEejWoHDi1YUqJ3mKgNxXVp.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgLzKDb4GNstaRSlyigdBT4Z1mYhMbVIJX8Apw.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgof6TNeiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDglUh7KeRF1iZYzrSR6Pvy4X03ebokADH9J87V.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgGcWHOCo6rIVCyNMgwjls0UZp5JzqKLmv38AT.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgFPCtMkqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0bN.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgr4f66KvENtxud2o9LcAq8nvS7MUlfZIsJP3k.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgN629iFU0LT4M6Up89rolmxAfVd3eFuZvQyEC.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDghREhMXVIjgvYrUfRZTCctk7S1q5NpaJsDXQ8.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgX4hHi4rohSmd1bgqzcURawVyYNpnTI6ZHF7Q.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgCsIdnHXfbyhE3LuGsRM1Q9oZP0elv4nkDgpi.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgmveMLLcxTzpRywahCdem1LBcVs457lOI0XDq.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgvHWNnw1pj2S0Q8hV1swqFYn5G6r7uBtaxJRb.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgnvUEjTvXzHwgo4CriD32JdTa19yM8ZLNcqUK.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg9CLctpa8RVfu1gx4OIi5P0XzENoc6UevLsTH.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDguIRyfpzDuFQ2svylY84Sn1mfp3dRxNrObqWU.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgp4c8bhPYJKBSEwmnPxvIlTCQoi9cVF47afXM.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgUuCCE5wM8WVtQaUSJGIPou6nmXpxK1RdvLrN.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgUBAlno5wM8WVtQaUSJGIPou6nmXpxK1RdvLr.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgjByDHSCauIRlyF5cXsTSoUEtBnD6whdYNjrK.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDguR4J5zDuFQ2svylY84Sn1mfp3dRxNrObqWUV.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgxmWnqr9bZSe2sDFlvPu57CYfAQUtchqJz8wg.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgOhYKF5YuBovmrawFceg0UJ1y5Z2AYiuxQkdf.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgdjM61QwXK86uSIDEUgqpYfM9eGxV0WbCZtmv.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg7UVSwI0AL9tjnN24fbmHDy7Ok1VJoYr6ZScP.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgLBchCTGNstaRSlyigdBT4Z1mYhMbVIJX8Apw.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgHe1mO6nuTewkdl6BVM5rAtpxPGIFa4fH0UWD.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgHMYQqWnuTewkdl6BVM5rAtpxPGIFa4fH0UWD.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgXz1wzRrohSmd1bgqzcURawVyYNpnTI6ZHF7Q.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg4jfLbJKM8Zrop2kIEY9Dn5ePbcMLCitqmsuV.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgJEAvt6pp9ykNzg6MU5WLjo4rXmA1COws0EPS.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgR1XUt8J5JOc7ksyxnNmUHawrWGVS6DzThpLB.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgyYBlEcr82sbnctFEejWoHDi1YUqJ3mKgNxXV.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgW2f3vfYlqogbO3dBTsVQXGnieNvtfrkFAD6m.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgCeNaWvfbyhE3LuGsRM1Q9oZP0elv4nkDgpiV.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgNJQ2BRU0LT4M6Up89rolmxAfVd3eFuZvQyEC.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgYIy5HwBhrxmiLdCbNpEqOP2MwcaY3ujAz9S8.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgiykp0kt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgtr29Q27Yk2j70f6F4z9pJo8DOqidQIBAyZe.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg3buUXmsT4wRBpgx589YjAqGOEbI6cHUrvzyi.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgiAbg1Y1t6Tzhmn9MAvpPjCxDwJIrH8RlV4L0.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgHTUMEcnuTewkdl6BVM5rAtpxPGIFa4fH0UWD.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgIiP4LPlbi23Qp80SgzZNnUdGJxath5BoYk9s.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDga9Doxdg3nHosRfpbYkCS2MhVPw6QZWr1yXdI.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgZvGNWRkzZ4aTb98m0VCO1weSjMrouvUcHyf3.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg10fj1dZahJ6ZRXyzMStWkYcVxNCdKfUq4e7D.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgZM5649kzZ4aTb98m0VCO1weSjMrouvUcHyf3.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgqU31obywZVRpKX0k1mJ7SsTnjir5AQaEdhgv.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgiJIKRVt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgIJFg4p0lbi23Qp80SgzZNnUdGJxath5BoYk9.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgTmGMBBb2QH4PsORfG0jVebz8vgmlhxCXJqTy.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgCksSvqHJVK5ha7AgB43xbjIlyeo69GNS8QMp.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgAwfiUqNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgtNb9J4U7Yk2j70f6F4z9pJo8DOqidQIBAyZe.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgUeWY8K5wM8WVtQaUSJGIPou6nmXpxK1RdvLr.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgaeaGaOg3nHosRfpbYkCS2MhVPw6QZWr1yXdI.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgSyUIQJj38Q4IFcMKp2Ty07imVZ5DzWkJj9RA.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg7I2uo5AL9tjnN24fbmHDy7Ok1VJoYr6ZScPK.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgJhAuVxpp9ykNzg6MU5WLjo4rXmA1COws0EPS.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgLgdkZPGNstaRSlyigdBT4Z1mYhMbVIJX8Apw.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgGunV0To6rIVCyNMgwjls0UZp5JzqKLmv38AT.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgduiX8IwXK86uSIDEUgqpYfM9eGxV0WbCZtmv.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgrZLhZjWvENtxud2o9LcAq8nvS7MUlfZIsJP3.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgNz0GfY1U0LT4M6Up89rolmxAfVd3eFuZvQyE.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgfR6kNY3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgGTdGzao6rIVCyNMgwjls0UZp5JzqKLmv38AT.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDghgDUgIjgvYrUfRZTCctk7S1q5NpaJsDXQ8GI.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgfRO4Ji3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgcXPQC4HJVK5ha7AgB43xbjIlyeo69GNS8QMp.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgyqi5Sp82sbnctFEejWoHDi1YUqJ3mKgNxXVp.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgJE8Q1Zpp9ykNzg6MU5WLjo4rXmA1COws0EPS.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgqL9sL3ywZVRpKX0k1mJ7SsTnjir5AQaEdhgv.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgTlw9fb2QH4PsORfG0jVebz8vgmlhxCXJqTyE.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgOGFmMvuBovmrawFceg0UJ1y5Z2AYiuxQkdft.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgAbmV4aNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgiU9Z8rt6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg1KqHFmZahJ6ZRXyzMStWkYcVxNCdKfUq4e7D.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgLd5US0GNstaRSlyigdBT4Z1mYhMbVIJX8Apw.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgokYVhJiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgLiT6ZoQGNstaRSlyigdBT4Z1mYhMbVIJX8Ap.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg5YelLbzMZsyzNmTrg6fCY4onbJdOX81GV9Lu.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgX0NXLWrohSmd1bgqzcURawVyYNpnTI6ZHF7Q.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDghNlUAfIjgvYrUfRZTCctk7S1q5NpaJsDXQ8G.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDglO4aHJRF1iZYzrSR6Pvy4X03ebokADH9J87V.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgAMDQyDNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg4WqtWZM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgi15T1ot6Tzhmn9MAvpPjCxDwJIrH8RlV4L0F.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgW3K0VFYlqogbO3dBTsVQXGnieNvtfrkFAD6m.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgF8H5kJEqrL6kiHcgaQ1IUo9MjxO8ndE4Fq0b.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgbKtPnPx81ygt4ZMWafIGx7D5hXKuievPCw2j.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgCdqG7ufbyhE3LuGsRM1Q9oZP0elv4nkDgpiV.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgvPpz4v1pj2S0Q8hV1swqFYn5G6r7uBtaxJRb.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgoc1HEGiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgjQa0hcCauIRlyF5cXsTSoUEtBnD6whdYNjrK.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgXxdINyrohSmd1bgqzcURawVyYNpnTI6ZHF7Q.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgrZ3ipdvENtxud2o9LcAq8nvS7MUlfZIsJP3k.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg4QTWxzM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg4nEAlWM8Zrop2kIEY9Dn5ePbcMLCitqmsuVj.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgDMRnGJhWEyDguin6VpMtwF7PGLzbfvBJah1e.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgk1UrjiLBfrMVAaOGYjgl6D5bqzN8w0TWIURH.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgj5t18cCauIRlyF5cXsTSoUEtBnD6whdYNjrK.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg9kRrVXa8RVfu1gx4OIi5P0XzENoc6UevLsTH.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgsRh7JoOpbzeJNEyfZxSXg9nk4lVGrw3Lc2vR.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgf9StBe3F3lNqIcvyjnSp4QJ8wLAbu6HVXkox.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgoIzrOBiu0g9VlhxEzvpcMJ7jTnH1O43BqCDk.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgtLllhn7Yk2j70f6F4z9pJo8DOqidQIBAyZea.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgXJKPG7rohSmd1bgqzcURawVyYNpnTI6ZHF7Q.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgnvtn3lfXzHwgo4CriD32JdTa19yM8ZLNcqUK.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg83KSdXWZkzE6wj21eODm3Rc9T80Up5lBgMFW.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgG9zKq9o6rIVCyNMgwjls0UZp5JzqKLmv38AT.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg8rqmUbWZkzE6wj21eODm3Rc9T80Up5lBgMFW.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgJmQIwFpp9ykNzg6MU5WLjo4rXmA1COws0EPS.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgWEk2mVlYlqogbO3dBTsVQXGnieNvtfrkFAD6.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgaK5rHJg3nHosRfpbYkCS2MhVPw6QZWr1yXdI.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgPBLb7RFAiRv7GzkQ3tZcUSmjrNd6VExw9JhH.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgrC8KKZvENtxud2o9LcAq8nvS7MUlfZIsJP3k.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgGAuralo6rIVCyNMgwjls0UZp5JzqKLmv38AT.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg3uFxb0wsT4wRBpgx589YjAqGOEbI6cHUrvzy.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgA6rCMiNj6EKR2Bcz3sxD4SqVIW5pPCah8eFd.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgvsIsk01pj2S0Q8hV1swqFYn5G6r7uBtaxJRb.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgTGvGqQb2QH4PsORfG0jVebz8vgmlhxCXJqTy.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgXnSp7ErohSmd1bgqzcURawVyYNpnTI6ZHF7Q.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgko99n2YLBfrMVAaOGYjgl6D5bqzN8w0TWIUR.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgX1UfcjYrohSmd1bgqzcURawVyYNpnTI6ZHF7.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDgSYJ30pj38Q4IFcMKp2Ty07imVZ5DzWkJj9RA.jpeg",
-  "https://img.flowtide.app/D6128dhWEyDg1uxptMZahJ6ZRXyzMStWkYcVxNCdKfUq4e7D.jpeg",
-];
-
-const colors = [
-  "#61a5c2",
-  "#c8b6ff",
-  "#d1495b",
-  "#70a288",
-  "#3ab795",
-  "#ff9770",
+const colorPalette = [
+  "#fb2c36",
+  "#c27aff",
+  "#0092b8",
+  "#e60076",
+  "#ff6900",
+  "#053345",
+  "#1e1a4d",
+  "#861043",
+  "#00d492",
+  "#002c22",
 ];
 
 const gradients = [
-  "linear-gradient(to bottom, #12c2e9, #c471ed, #f64f59)",
-  "linear-gradient(to right, #348f50, #56b4d3)",
-  "linear-gradient(to bottom, #da22ff, #9733ee)",
-  "linear-gradient(to left, #02aab0, #00cdac)",
-  "linear-gradient(to left, #ff6e7f, #bfe9ff)",
-  "linear-gradient(to left, #314755, #26a0da)",
-  "linear-gradient(to right, #ec008c, #fc6767)",
-  "linear-gradient(to left, #1488cc, #2b32b2)",
-  "linear-gradient(to right, #9796f0, #fbc7d4)",
-  "linear-gradient(to left, #ffe259, #ffa751)",
-  "linear-gradient(to right, #c6ffdd, #fbd786, #f7797d)",
+  "linear-gradient(to right, #2e3192, #1bffff)",
+  "linear-gradient(to right, #d4145a, #fbb03b)",
+  "linear-gradient(to right, #009245, #fcee21)",
+  "linear-gradient(to right, #662d8c, #ed1e79)",
+  "linear-gradient(to right, #ee9ca7, #ffdde1)",
+  "linear-gradient(to right, #614385, #516395)",
+  "linear-gradient(to right, #02aabd, #00cdac)",
+  "linear-gradient(to right, #ff512f, #dd2476)",
+  "linear-gradient(to right, #ff5f6d, #ffc371)",
+  "linear-gradient(to right, #11998e, #38ef7d)",
+  "linear-gradient(to right, #c6ea8d, #fe90af)",
+  "linear-gradient(to right, #ea8d8d, #a890fe)",
+  "linear-gradient(to right, #d8b5ff, #1eae98)",
+  "linear-gradient(to right, #ff61d2, #fe9090)",
+  "linear-gradient(to right, #bff098, #6fd6ff)",
+  "linear-gradient(to right, #4e65ff, #92effd)",
+  "linear-gradient(to right, #a9f1df, #ffbbbb)",
+  "linear-gradient(to right, #c33764, #1d2671)",
+  "linear-gradient(to right, #93a5cf, #e4efe9)",
+  "linear-gradient(to right, #868f96, #596164)",
+  "linear-gradient(to right, #09203f, #537895)",
+  "linear-gradient(to right, #ffecd2, #fcb69f)",
+  "linear-gradient(to right, #a1c4fd, #c2e9fb)",
+  "linear-gradient(to right, #764ba2, #667eea)",
+  "linear-gradient(to right, #fdfcfb, #e2d1c3)",
 ];
 
-interface Task {
-  task: string;
-  completed: boolean;
-  id: number;
-  text?: string;
-}
+type Widget =
+  | "clock"
+  | "date"
+  | "stopwatch"
+  | "todo"
+  | "bookmarks"
+  | "nature"
+  | "pomodoro"
+  | "focus"
+  | "ambience";
 
-interface Bookmark {
+type Bookmark = {
   name: string;
   url: string;
-}
+};
 
-function App() {
-  const [time, setTime] = useState(new Date());
-  const [selectedImage, setSelectedImage] = useState({ url: "" });
-  const [selectedPage, setSelectedPage] = useState("none");
-  const { theme, setTheme } = useTheme();
-  const [font, setFont] = useState(localStorage.getItem("font") || "sans");
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [taskInput, setTaskInput] = useState<string | undefined>("");
-  const isFirstRender = useRef(true);
-  const isTasksFirstRender = useRef(true);
-  const [background, setBackground] = useState<string>(
-    localStorage.getItem("background") || "wallpaper",
-  );
-  const [backgroundBlur, setBackgroundBlur] = useState<boolean>(
-    Boolean(localStorage.getItem("backgroundBlur")) || false,
-  );
-  const [widgetPreferences, setWidgetPreferences] = useState(
-    JSON.parse(localStorage.getItem("widgetPreferences") || "{}") || {
-      mantras: "true",
-      clock: "false",
-      soundscapes: "false",
-      todos: "false",
-      bookmarks: "false",
-      pomodoro: "true",
-    },
-  );
-  const [onboardingComplete, setOnboardingComplete] = useState(
-    localStorage.getItem("onboardingComplete") || false,
-  );
-  const [selectedColor, setSelectedColor] = useState(
-    colors[Math.floor(Math.random() * colors.length)],
-  );
-  const [wallpaperLoaded, setWallpaperLoaded] = useState(false);
-  const [gradient, setGradient] = useState(
-    gradients[Math.floor(Math.random() * gradients.length)],
-  );
-  const [clockFormat, setClockFormat] = useState(() => {
-    const format = localStorage.getItem("clockFormat");
-    if (!format) {
-      localStorage.setItem("clockFormat", "true");
-      return true;
-    }
-    return format === "true";
-  });
-  const [changeTime, setChangeTime] = useState(
-    Number(localStorage.getItem("changeTime")) != null
-      ? Number(localStorage.getItem("changeTime"))
-      : 1000 * 60 * 60 * 24,
-  );
-  const [showCompleted, setShowCompleted] = useState(() => {
-    const saved = localStorage.getItem("showCompleted");
-    return saved ? JSON.parse(saved) : false;
-  });
-  const [currentBlock, setCurrentBlock] = useState(
-    chrome.i18n.getMessage("work"),
-  );
-  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
-  const currentFont =
-    {
-      serif: "font-serif",
-      monospace: "font-mono",
-      georgia: "font-georgia",
-      sans: "font-sans",
-      "brush-script-mt": "font-brush-script-mt",
-      "times-new-roman": "font-times-new-roman",
-      verdana: "font-verdana",
-    }[font] || "";
-  const [currentURL, setCurrentURL] = useState<string | null>(null);
-  const [playing, setPlaying] = useState(false);
-  const [showMoreFonts, setShowMoreFonts] = useState(false);
-  const [clockSize, setClockSize] = useState(
-    localStorage.getItem("clockSize") || "medium",
-  );
-  const [clockMode, setClockMode] = useState(
-    localStorage.getItem("clockMode") || "clock",
-  );
-  const [pomodoroTime, setPomodoroTime] = useState(
-    parseInt(localStorage.getItem("pomodoroTime") || "0") || 25 * 60,
-  );
-  const [breakTime, setBreakTime] = useState(
-    parseInt(localStorage.getItem("breakTime") || "0") || 5 * 60,
-  );
-  const [currentTimer, setCurrentTimer] = useState(pomodoroTime);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-
-  useEffect(() => {
-    localStorage.setItem("clockMode", clockMode);
-  }, [clockMode]);
-
-  useEffect(() => {
-    localStorage.setItem("pomodoroTime", String(pomodoroTime));
-  }, [pomodoroTime]);
-
-  useEffect(() => {
-    localStorage.setItem("breakTime", String(breakTime));
-  }, [breakTime]);
-
-  const soundscapes = [
-    {
-      name: chrome.i18n.getMessage("ocean"),
-      emoji: "🌊",
-      url: "https://utfs.io/f/VU8He2t54NdYu8EVsK5tgWb3e9PanFUMzSxQm0HhV1XofujB",
-      volume: 1,
-      attribution: [
-        "Seawash (calm)  by craiggroshek -- https://freesound.org/s/176617/ -- License: Creative Commons 0",
-      ],
-      image:
-        "https://utfs.io/f/VU8He2t54NdYnavqSh6Uydx5HzbJtTENYqUwVaPOXZCnAiK2",
-      index: 0,
-    },
-    {
-      name: chrome.i18n.getMessage("forest"),
-      emoji: "🌴",
-      url: "https://utfs.io/f/VU8He2t54NdYuNACgha5tgWb3e9PanFUMzSxQm0HhV1Xofuj",
-      volume: 1,
-      attribution: [
-        "Birds In Spring (Scotland) by BurghRecords -- https://freesound.org/s/463903/ -- License: Creative Commons 0",
-      ],
-      image:
-        "https://utfs.io/f/VU8He2t54NdYpgBC9am76CiVAS4EwQty3arMPfHR1bxgdkZD",
-      index: 1,
-    },
-    {
-      name: chrome.i18n.getMessage("rain"),
-      emoji: "💦",
-      url: "https://utfs.io/f/VU8He2t54NdY9vI0WdS2OVPpzlUIsm50S3eRo4JLb68vxBYA",
-      volume: 1,
-      attribution: [
-        "Rain.wav by idomusics -- https://freesound.org/s/518863/ -- License: Creative Commons 0",
-      ],
-      image:
-        "https://utfs.io/f/VU8He2t54NdYOYYMxdZ45tUV7W1K4ESdzvZfN8Pr2yCwGuTiB",
-      index: 2,
-    },
-    {
-      name: chrome.i18n.getMessage("river"),
-      emoji: "🪨",
-      url: "https://utfs.io/f/VU8He2t54NdYd9CJeYhMOCr41owzn9sPYh5cNKJQFBEtaWu0",
-      volume: 0.8,
-      attribution: [
-        "river small brook stream with rolling splashy good detail.flac by kyles -- https://freesound.org/s/454155/ -- License: Creative Commons 0",
-      ],
-      image:
-        "https://utfs.io/f/VU8He2t54NdYK6sDVKYu2OlbUPXGzdjtJ5iT6AaRH0yZuqD8",
-      index: 3,
-    },
-    {
-      name: chrome.i18n.getMessage("wind"),
-      emoji: "💨",
-      url: "https://utfs.io/f/VU8He2t54NdYhES01SIQ6Taob8Wf0SXDOuUA1VKkE9IHx4qd",
-      volume: 1,
-      attribution: [
-        "wind.ogg by sleepCircle -- https://freesound.org/s/22331/ -- License: Creative Commons 0",
-      ],
-      image:
-        "https://utfs.io/f/VU8He2t54NdYvQshHTaHAWjPnCZrtxmV56SkaM3oO0qw4huf",
-      index: 4,
-    },
-    {
-      name: chrome.i18n.getMessage("fire"),
-      emoji: "🔥",
-      url: "https://utfs.io/f/VU8He2t54NdYGNe8h39BnItq9LXQlVPu4jNzU1xdaYCM0pF8",
-      volume: 1,
-      attribution: [
-        "Bonfire by forfie -- https://freesound.org/s/364992/ -- License: Creative Commons 0",
-      ],
-      image:
-        "https://utfs.io/f/VU8He2t54NdYpRQh5Mcm76CiVAS4EwQty3arMPfHR1bxgdkZ",
-      index: 5,
-    },
-    {
-      name: chrome.i18n.getMessage("desert"),
-      emoji: "🌵",
-      url: "https://utfs.io/f/VU8He2t54NdYHpvbBvYhmu5O2LJfYdtvzgw0s3nbQXlkZDFS",
-      volume: 1,
-      attribution: [
-        "Desert Simple.wav by Proxima4 -- https://freesound.org/s/104320/ -- License: Creative Commons 0",
-      ],
-      image:
-        "https://utfs.io/f/VU8He2t54NdYOYYMxdZ45tUV7W1K4ESdzvZfN8Pr2yCwGuTi",
-      index: 6,
-    },
-    {
-      name: chrome.i18n.getMessage("arctic"),
-      emoji: "❄️",
-      url: "https://utfs.io/f/VU8He2t54NdY6fCCfMVNjR9Nmtg7h50VGWKc8AQoryMUblvI",
-      volume: 0.6,
-      image:
-        "https://utfs.io/f/VU8He2t54NdYxIBXaQ0DONIyCht8a6ZwdKgqEQSTLR51sMYB",
-      attribution: [
-        "Wind__Artic__Cold.wav by cobratronik -- https://freesound.org/s/117136/ -- License: Creative Commons 0",
-      ],
-      index: 7,
-    },
-    {
-      name: chrome.i18n.getMessage("kettle"),
-      emoji: "☕️",
-      url: "https://utfs.io/f/VU8He2t54NdY59NfzQ6fcCLQl6pk53zFgINtnv9PqHDjbRJy",
-      volume: 1,
-      image:
-        "https://utfs.io/f/VU8He2t54NdYH7NV0ddYhmu5O2LJfYdtvzgw0s3nbQXlkZDF",
-      attribution: [
-        "water boil.wav by fryzu82 -- https://freesound.org/s/142333/ -- License: Creative Commons 0",
-      ],
-      index: 8,
-    },
-    {
-      name: chrome.i18n.getMessage("crickets"),
-      emoji: "🦗",
-      url: "https://utfs.io/f/VU8He2t54NdYOGnYUk45tUV7W1K4ESdzvZfN8Pr2yCwGuTiB",
-      volume: 0.2,
-      image:
-        "https://utfs.io/f/VU8He2t54NdYDAOUVo88fqOGlaboRgjxshLUcB5MT4ZS2iE1",
-      attribution: [
-        "crickets by FreethinkerAnon -- https://freesound.org/s/129678/ -- License: Creative Commons 0",
-      ],
-      index: 9,
-    },
-    {
-      name: chrome.i18n.getMessage("underwater"),
-      emoji: "🐠",
-      url: "https://utfs.io/f/VU8He2t54NdYrTIK1A7PtLG5Y82xDew0Ncpqo6IhCjBQRZOn",
-      volume: 0.6,
-      image:
-        "https://utfs.io/f/VU8He2t54NdYI934tMkGS15s7ymktfMgw0zeF4dO2HlKZXbu",
-      attribution: [
-        "Underwater Ambience by Fission9 -- https://freesound.org/s/504641/ -- License: Creative Commons 0",
-      ],
-      index: 10,
-    },
-  ];
-
-  function playSound(
-    url: string,
-    volume: number,
-    name: string,
-    image: string,
-    index: number,
-  ) {
-    const audio = document.getElementById("player") as HTMLAudioElement;
-    if (audio?.src === url && playing) {
-      audio.pause();
-    } else {
-      audio.src = url;
-      audio.volume = volume;
-      audio.title = name;
-      audio.setAttribute("image", image);
-      audio.setAttribute("index", String(index));
-      setCurrentURL(url);
-      audio.play();
-    }
-  }
-
-  useEffect(() => {
-    const loadTasks = async () => {
-      const db = await openDB();
-      const transaction = db.transaction(["todos"], "readonly");
-      const store = transaction.objectStore("todos");
-      const request = store.getAll();
-
-      request.onsuccess = (event: any) => {
-        setTasks(event.target.result);
-      };
+const App: Component = () => {
+  function createTime(date: Date) {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const amPm = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    return {
+      time: `${formattedHours}:${formattedMinutes}`,
+      amPm: amPm,
     };
-
-    loadTasks();
-  }, []);
-
-  const saveTasks = async () => {
-    console.log("Saving tasks");
-    const db = await openDB();
-    const transaction = db.transaction(["todos"], "readwrite");
-    const store = transaction.objectStore("todos");
-
-    await store.clear();
-
-    tasks.forEach((task) => {
-      store.add(task);
-    });
-  };
-
-  useEffect(() => {
-    if (isTasksFirstRender.current) {
-      isTasksFirstRender.current = false;
-      return;
-    }
-    saveTasks();
-  }, [tasks]);
-
-  const loadNewImage = async (setBackground: boolean) => {
-    const newImage = images[Math.floor(Math.random() * images.length)];
-
-    try {
-      fetch(newImage, {
-        mode: "no-cors",
-        headers: {
-          "Cache-Control": "public, max-age=315360000, immutable",
-        },
-      }).then((response) => {
-        localStorage.setItem(
-          "backgroundImage",
-          JSON.stringify({
-            url: newImage,
-            expires: new Date().getTime() + changeTime,
-          }),
-        );
-
-        if (setBackground) {
-          setSelectedImage({ url: newImage });
-        }
-      });
-    } catch (error) {
-      console.error("Failed to cache image:", error);
-    }
-  };
-
-  const checkCachedImage = () => {
-    let cachedImageUrl;
-    try {
-      cachedImageUrl = JSON.parse(
-        localStorage.getItem("backgroundImage") || "null",
-      );
-    } catch (error) {
-      cachedImageUrl = null;
-    }
-
-    if (cachedImageUrl) {
-      setSelectedImage({ url: cachedImageUrl.url });
-      if (navigator.onLine && new Date().getTime() > cachedImageUrl.expires) {
-        loadNewImage(false);
-      }
-    } else {
-      loadNewImage(true);
-    }
-  };
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    if (background == "wallpaper") {
-      checkCachedImage();
-    }
-    setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-  }, []);
-
-  useEffect(() => {
-    if (
-      widgetPreferences?.bookmarks === "true" &&
-      chrome.bookmarks !== undefined
-    ) {
+  }
+  const [needsOnboarding, setNeedsOnboarding] = createSignal(
+    localStorage.getItem("onboarding") !== "true",
+  );
+  const [onboardingScreen, setOnboardingScreen] = createSignal<number>(1);
+  const [widgetOrder, setWidgetOrder] = createSignal<any[]>(
+    localStorage.getItem("widgetPlacement")
+      ? JSON.parse(localStorage.getItem("widgetPlacement") as string)
+      : {},
+  );
+  const [greetingNameValue, setGreetingNameValue] = createSignal("");
+  const [imageLoaded, setImageLoaded] = createSignal(false);
+  const [count, setCount] = createSignal(0);
+  const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
+  const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
+  const [selectedImage, setSelectedImage] = createSignal<string>(
+    localStorage.getItem("selectedImage") ||
+      images[Math.floor(Math.random() * images.length)],
+  );
+  const [layout, setLayout] = createStoredSignal("layout", "center");
+  const [currentFont, setCurrentFont] = createStoredSignal("font", "sans");
+  const [background, setBackground] = createStoredSignal("background", "image");
+  const [name, setName] = createStoredSignal("name", "");
+  const [mode, setMode] = createStoredSignal("mode", "widgets");
+  const [time, setTime] = createSignal(`${createTime(new Date()).time}`);
+  const [bookmarks, setBookmarks] = createSignal<any[]>([]);
+  onMount(() => {
+    if (chrome.bookmarks !== undefined) {
       chrome.bookmarks.getTree((bookmarkTreeNodes) => {
         const flattenBookmarks = (nodes: any[]): Bookmark[] => {
           let bookmarks: Bookmark[] = [];
@@ -646,1057 +177,561 @@ function App() {
         setBookmarks(allBookmarks);
       });
     }
-  }, [widgetPreferences?.bookmarks]);
+  });
 
-  const options: object = {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: clockFormat,
+  const OnboardingScreen1: Component = () => {
+    return (
+      <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
+        <h1 class="text-7xl font-[600]">
+          {chrome.i18n.getMessage("welcome_message")}
+        </h1>
+        <Button class="group" onclick={() => setOnboardingScreen(2)}>
+          {chrome.i18n.getMessage("get_started")}
+          <ArrowRight
+            class="group-hover:translate-x-1 transition-transform"
+            height={16}
+          />
+        </Button>
+      </div>
+    );
+  };
+  const OnboardingScreen2: Component = () => {
+    return (
+      <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
+        <div>
+          <h1 class="text-5xl font-[600] mb-4">
+            {chrome.i18n.getMessage("greeting")}
+          </h1>
+          <TextFieldRoot class="flex-1">
+            <TextField
+              class="not-focus:border-zinc-400"
+              placeholder={chrome.i18n.getMessage("enter_name")}
+              value={greetingNameValue()}
+              onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
+            />
+          </TextFieldRoot>
+          <br />
+          <Button
+            class="group"
+            onclick={() => {
+              setOnboardingScreen(3);
+              setName(greetingNameValue());
+            }}
+          >
+            {greetingNameValue()
+              ? chrome.i18n.getMessage("set_greeting")
+              : chrome.i18n.getMessage("skip")}
+            <ArrowRight
+              class="group-hover:translate-x-1 transition-transform"
+              height={16}
+            />
+          </Button>
+        </div>
+      </div>
+    );
+  };
+  const OnboardingScreen3: Component = () => {
+    return (
+      <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
+        <div>
+          <h1 class="text-5xl font-[600] mb-4">
+            {chrome.i18n.getMessage("choose_mode")}
+          </h1>
+          <div class="w-full grid grid-cols-1 gap-4 grid-rows-3 **:data-selected:!ring-primary">
+            <button
+              class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
+              border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
+              {...(mode() === "widgets" ? { "data-selected": true } : {})}
+              onClick={() => {
+                setMode("widgets");
+              }}
+            >
+              <Grid class="size-[64px]" />
+              <br />
+              <span class="text-xl">{chrome.i18n.getMessage("widgets")}</span>
+            </button>
+            <button
+              class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
+              border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
+              {...(mode() === "nightstand" ? { "data-selected": true } : {})}
+              onClick={() => {
+                setMode("nightstand");
+              }}
+            >
+              <Clock class="size-[64px]" />
+              <br />
+              <span class="text-xl">
+                {chrome.i18n.getMessage("nightstand")}
+              </span>
+            </button>
+            <button
+              class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
+              border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
+              {...(mode() === "speeddial" ? { "data-selected": true } : {})}
+              onClick={() => {
+                setMode("speeddial");
+              }}
+            >
+              <Bookmark class="size-[64px]" />
+              <br />
+              <span class="text-xl">
+                {chrome.i18n.getMessage("speed_dial")}
+              </span>
+            </button>
+          </div>
+          <br />
+          <Button
+            class="group"
+            onclick={() => {
+              localStorage.setItem("onboarding", "true");
+              setNeedsOnboarding(false);
+              setName(greetingNameValue());
+            }}
+          >
+            {chrome.i18n.getMessage("complete")}
+            <ArrowRight
+              class="group-hover:translate-x-1 transition-transform"
+              height={16}
+            />
+          </Button>
+        </div>
+      </div>
+    );
   };
 
-  const firstUncompletedTask = tasks.find((task) => !task.completed);
-
-  const formatTime = (timeInSeconds: number) => {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = timeInSeconds % 60;
-    return `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
+  const OnboardingFlow: Component = () => {
+    return (
+      <div class="absolute inset-0 bg-white dark:bg-[#2f2f2f] z-50">
+        {onboardingScreen() === 1 && <OnboardingScreen1 />}
+        {onboardingScreen() === 2 && <OnboardingScreen2 />}
+        {onboardingScreen() === 3 && <OnboardingScreen3 />}
+      </div>
+    );
   };
 
-  useEffect(() => {
-    let interval: any;
-    if (clockMode === "pomodoro" && isTimerRunning && currentTimer > 0) {
-      interval = setInterval(() => {
-        document.title = `${currentBlock} - ${formatTime(currentTimer - 1)}`;
-        setCurrentTimer((prev) => prev - 1);
-      }, 1000);
-    } else if (currentTimer === 0) {
-      setIsTimerRunning(false);
-      const isWorkBlock = currentBlock === chrome.i18n.getMessage("work");
-      setCurrentTimer(isWorkBlock ? breakTime : pomodoroTime);
-      setCurrentBlock(
-        isWorkBlock
-          ? chrome.i18n.getMessage("break")
-          : chrome.i18n.getMessage("work"),
-      );
-      setIsTimerRunning(true);
+  const widgets: Widget[] = [
+    "clock",
+    "date",
+    "todo",
+    "stopwatch",
+    "bookmarks",
+    "nature",
+    "pomodoro",
+    "focus",
+    "ambience",
+  ];
+
+  function updateFilteredWidgets() {
+    const currentWidgets = widgets.filter(
+      (item: any) =>
+        widgetOrder()[item] !== "" && widgetOrder()[item] !== undefined,
+    );
+    setFilteredWidgets(currentWidgets);
+  }
+
+  createEffect(() => updateFilteredWidgets());
+
+  onMount(() => {
+    if (mode() === "widgets") {
+      const container = document.querySelector(".widgets") as HTMLDivElement;
+
+      const swapy = createSwapy(container, {
+        animation: "dynamic",
+      });
+
+      swapy.onSwap((event) => {
+        localStorage.setItem(
+          "widgetPlacement",
+          JSON.stringify(event.newSlotItemMap.asObject),
+        );
+      });
+
+      createEffect(() => {
+        if (swapy && filteredWidgets() && widgets && widgetOrder()) {
+          swapy.update();
+        }
+      });
+
+      swapy.enable(true);
+
+      if (localStorage.getItem("widgetPlacement") === null) {
+        localStorage.setItem("widgetPlacement", JSON.stringify({}));
+      }
     }
-    return () => clearInterval(interval);
-  }, [clockMode, isTimerRunning, currentTimer, pomodoroTime, breakTime]);
+
+    let newImage = images[Math.floor(Math.random() * images.length)];
+    localStorage.setItem("selectedImage", newImage);
+    fetch(newImage, {
+      mode: "no-cors",
+      headers: {
+        "Cache-Control": "public, max-age=315360000, immutable",
+      },
+    });
+
+    setInterval(() => {
+      setTime(createTime(new Date()).time);
+    }, 1000);
+  });
+
+  function getKeyForValue(obj: any, value: any) {
+    return Object.keys(obj).find((key) => obj[key] === value);
+  }
+
+  function getKeyByValue<T extends Record<string, any>>(
+    obj: T,
+    value: T[keyof T],
+  ): string | undefined {
+    return Object.keys(obj).find((key) => obj[key] === value);
+  }
+
+  function Block(props: { title: string; description: string; key: Widget }) {
+    return (
+      <div class="flex justify-between items-center">
+        <div class="info">
+          <h1>{props.title}</h1>
+          <p class="text-sm text-muted-foreground">{props.description}</p>
+        </div>
+        <div class="add">
+          <Button
+            class="group w-[100px]"
+            onclick={() => {
+              const newWidgetOrder: any = widgetOrder();
+              if (
+                newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`]
+              ) {
+                newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`] =
+                  undefined;
+              } else {
+                if (newWidgetOrder[props.key]) {
+                  for (const key in widgets) {
+                    if (newWidgetOrder[key] == undefined) {
+                      newWidgetOrder[key] = key;
+                    }
+                  }
+                } else {
+                  newWidgetOrder[props.key] = props.key;
+                }
+              }
+              setWidgetOrder(newWidgetOrder);
+              localStorage.setItem(
+                "widgetPlacement",
+                JSON.stringify(newWidgetOrder),
+              );
+              updateFilteredWidgets();
+              setDialogOpen(false);
+            }}
+          >
+            {getKeyForValue(widgetOrder(), props.key) != undefined ? (
+              <Check />
+            ) : (
+              <Plus />
+            )}
+            {getKeyForValue(widgetOrder(), props.key) != undefined
+              ? chrome.i18n.getMessage("added")
+              : chrome.i18n.getMessage("add")}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div
-      className={cn(
-        "flex flex-col items-center justify-center h-screen !bg-cover transition-background-image relative",
-        currentFont,
+    <main
+      class={cn(
+        `font-mono`,
+        `font-serif`,
+        `font-sans`,
+        `font-${currentFont()}`,
+        imageLoaded() ? "bg-black dark:bg-none" : "",
       )}
-      style={{
-        backgroundColor: background === "color" ? selectedColor : "",
-        backgroundImage: background === "gradient" ? gradient : "",
-        transition:
-          "background-image 0.4s ease-in-out, background-color 0.4s ease-in-out",
-      }}
-      id="app"
     >
-      {background === "wallpaper" && (
+      {needsOnboarding() && <OnboardingFlow />}
+      {background() === "image" && (
         <img
-          src={selectedImage.url}
-          className={cn(
-            `absolute top-0 left-0 w-full h-full object-cover transition-opacity -z-10 opacity-0`,
-            {
-              "blur-lg": backgroundBlur,
-            },
-          )}
-          alt="Background"
-          onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
-            (e.target as HTMLImageElement).style.opacity = "0.8";
+          src={selectedImage()}
+          alt=""
+          class="absolute inset-0 w-full h-full object-cover transition-all"
+          style={{ opacity: 0 }}
+          onLoad={(e: any) => {
+            if (document.documentElement.style.colorScheme === "dark") {
+              e.target.style.opacity = 0.8;
+            } else {
+              e.target.style.opacity = 1;
+              e.target.style.filter = "brightness(0.8)";
+            }
+            setImageLoaded(true);
           }}
         />
       )}
-      <audio
-        className="hidden"
-        id="player"
-        loop
-        onPause={() => setPlaying(false)}
-        onPlay={() => setPlaying(true)}
-      />
-      <CommandPalette setSelectedPage={setSelectedPage} />
-      <h1
-        className={cn(
-          "m-4 mb-0 text-4xl font-mono text-white select-none group",
-          currentFont,
-          {
-            "text-9xl": clockSize === "large",
-            "text-7xl": clockSize === "medium",
-            "text-5xl": clockSize === "small",
-          },
+      <div
+        class={cn(
+          "fixed overflow-hidden p-4 inset-0",
+          imageLoaded() ? "" : "bg-white dark:bg-[#1f1f1f]",
         )}
+        style={{
+          background:
+            background() === "solid-color"
+              ? colorPalette[Math.floor(Math.random() * colorPalette.length)]
+              : background() == "gradient"
+                ? gradients[Math.floor(Math.random() * gradients.length)]
+                : "",
+        }}
       >
-        {widgetPreferences?.clock === "true" && (
-          <div className="flex items-center space-x-2 ml-[40px] font-[600]">
-            <span>
-              {clockMode === "clock"
-                ? time.toLocaleTimeString(undefined, options)
-                : `${currentBlock} - ${formatTime(currentTimer)}`}
-            </span>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <MenuIcon className="h-4 w-4 text-white" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem
-                  onClick={() => {
-                    setClockMode("clock");
-                    setIsTimerRunning(false);
-                  }}
-                >
-                  {chrome.i18n.getMessage("clock")}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    setClockMode("pomodoro");
-                    setCurrentTimer(pomodoroTime);
-                  }}
-                >
-                  {chrome.i18n.getMessage("pomodoro")}
-                </DropdownMenuItem>
-                {clockMode === "pomodoro" && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      onClick={() => setIsTimerRunning(!isTimerRunning)}
-                    >
-                      {isTimerRunning
-                        ? chrome.i18n.getMessage("pause")
-                        : chrome.i18n.getMessage("start")}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => {
-                        setIsTimerRunning(false);
-                        setCurrentTimer(pomodoroTime);
-                      }}
-                    >
-                      {chrome.i18n.getMessage("reset")}
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                          <Settings className="mr-2 h-4 w-4" />
-                          {chrome.i18n.getMessage("settings")}
-                        </DropdownMenuItem>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>
-                            {chrome.i18n.getMessage("timer_settings")}
-                          </DialogTitle>
-                        </DialogHeader>
-                        <div className="grid gap-4 py-4">
-                          <div className="grid grid-cols-4 items-center gap-4">
-                            <label htmlFor="pomodoro">
-                              {chrome.i18n.getMessage("pomodoro")} (min)
-                            </label>
-                            <Input
-                              id="pomodoro"
-                              type="number"
-                              className="col-span-3"
-                              value={pomodoroTime / 60}
-                              onChange={(e) => {
-                                const newTime = parseInt(e.target.value) * 60;
-                                setPomodoroTime(newTime);
-                                if (!isTimerRunning) {
-                                  setCurrentTimer(newTime);
-                                }
-                              }}
-                            />
-                          </div>
-                          <div className="grid grid-cols-4 items-center gap-4">
-                            <label htmlFor="break">
-                              {chrome.i18n.getMessage("break_time")}
-                            </label>
-                            <Input
-                              id="break"
-                              type="number"
-                              className="col-span-3"
-                              value={breakTime / 60}
-                              onChange={(e) => {
-                                setBreakTime(parseInt(e.target.value) * 60);
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        )}
-      </h1>
-      <h3 className="text-2xl mt-3 text-shadow-lg !text-white">
-        {widgetPreferences?.mantras === "true" &&
-          chrome.i18n.getMessage(randomMantra)}
-      </h3>
-      {widgetPreferences?.todos === "true" &&
-        tasks.some((task) => !task.completed) && (
-          <div
-            id="checkbox-container"
-            className="flex items-center gap-2 text-xl mt-3"
-          >
-            <Checkbox
-              id="clock_checkbox"
-              onCheckedChange={(checked) => {
-                setTasks((tasks: Task[]) =>
-                  tasks.map((t: Task) =>
-                    t.id === firstUncompletedTask?.id
-                      ? { ...t, completed: checked === true }
-                      : t,
-                  ),
-                );
-                saveTasks();
-              }}
-              checked={false}
-            />
-            <label htmlFor="clock_checkbox">{firstUncompletedTask?.text}</label>
-          </div>
-        )}
-      {widgetPreferences?.bookmarks === "true" && (
-        <div className="mt-4 grid grid-cols-3 gap-4 max-w-4xl">
-          {bookmarks.slice(0, 9).map((bookmark, index) => (
-            <div
-              key={index}
-              onClick={() => window.open(bookmark.url, "_blank")}
-              className="p-4 rounded-lg bg-black/20 backdrop-blur-sm hover:bg-black/30 cursor-pointer transition-colors text-white text-center"
-            >
-              <div className="text-sm font-medium truncate">
-                {bookmark.name}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-      {selectedPage === "character-counter" && (
-        <CharacterCounter setSelectedPage={setSelectedPage} />
-      )}
-      {selectedPage === "word-counter" && (
-        <WordCounter setSelectedPage={setSelectedPage} />
-      )}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button
-            variant="ghost"
-            aria-label={chrome.i18n.getMessage("settings")}
-            className="text-white select-none absolute bottom-0 left-0 m-4"
-          >
-            <SettingsIcon className="h-5 w-5" />
-            {chrome.i18n.getMessage("settings")}
-          </Button>
-        </SheetTrigger>
-        <SheetContent className="overflow-y-auto" side="left">
-          <SheetHeader>
-            <SheetTitle>{chrome.i18n.getMessage("settings")}</SheetTitle>
-          </SheetHeader>
-          <div className="grid gap-4 py-4">
-            <div className="space-y-4">
-              <h4 className="font-medium">
-                {chrome.i18n.getMessage("features")}
-              </h4>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="clock"
-                    checked={widgetPreferences?.clock === "true"}
-                    onCheckedChange={(checked) => {
-                      setWidgetPreferences({
-                        ...widgetPreferences,
-                        clock: checked.toString(),
-                      });
-                      localStorage.setItem(
-                        "widgetPreferences",
-                        JSON.stringify({
-                          ...widgetPreferences,
-                          clock: checked.toString(),
-                        }),
-                      );
-                    }}
-                  />
-                  <label
-                    htmlFor="clock"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
-                    "
-                  >
-                    {chrome.i18n.getMessage("clock")}
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="soundscapes-checkbox"
-                    checked={widgetPreferences?.soundscapes === "true"}
-                    onCheckedChange={(checked) => {
-                      setWidgetPreferences({
-                        ...widgetPreferences,
-                        soundscapes: checked.toString(),
-                      });
-                      localStorage.setItem(
-                        "widgetPreferences",
-                        JSON.stringify({
-                          ...widgetPreferences,
-                          soundscapes: checked.toString(),
-                        }),
-                      );
-                    }}
-                  />
-                  <label
-                    htmlFor="soundscapes-checkbox"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
-                    "
-                  >
-                    {chrome.i18n.getMessage("soundscapes")}
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="todos-check"
-                    checked={widgetPreferences?.todos === "true"}
-                    onCheckedChange={(checked) => {
-                      setWidgetPreferences({
-                        ...widgetPreferences,
-                        todos: checked.toString(),
-                      });
-                      localStorage.setItem(
-                        "widgetPreferences",
-                        JSON.stringify({
-                          ...widgetPreferences,
-                          todos: checked.toString(),
-                        }),
-                      );
-                    }}
-                  />
-                  <label
-                    htmlFor="todos-check"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
-                    "
-                  >
-                    {chrome.i18n.getMessage("todos")}
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="mantras-checkbox"
-                    checked={widgetPreferences?.mantras === "true"}
-                    onCheckedChange={(checked) => {
-                      setWidgetPreferences({
-                        ...widgetPreferences,
-                        mantras: checked.toString(),
-                      });
-                      localStorage.setItem(
-                        "widgetPreferences",
-                        JSON.stringify({
-                          ...widgetPreferences,
-                          mantras: checked.toString(),
-                        }),
-                      );
-                    }}
-                  />
-                  <label
-                    htmlFor="mantras-checkbox"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
-                    "
-                  >
-                    {chrome.i18n.getMessage("mantras")}
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="bookmarks-checkbox"
-                    checked={widgetPreferences?.bookmarks === "true"}
-                    onCheckedChange={(checked) => {
-                      setWidgetPreferences({
-                        ...widgetPreferences,
-                        bookmarks: checked.toString(),
-                      });
-                      localStorage.setItem(
-                        "widgetPreferences",
-                        JSON.stringify({
-                          ...widgetPreferences,
-                          bookmarks: checked.toString(),
-                        }),
-                      );
-                    }}
-                  />
-                  <label
-                    htmlFor="bookmarks-checkbox"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
-                    "
-                  >
-                    {chrome.i18n.getMessage("bookmarks")}
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <h4 className="font-medium">
-                {chrome.i18n.getMessage("themes")}
-              </h4>
-              <div className="space-y-2">
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    theme === "dark" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setTheme("dark");
-                    localStorage.setItem("theme", "dark");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("dark_mode")}</span>
-                  {theme === "dark" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    theme === "light" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setTheme("light");
-                    localStorage.setItem("theme", "light");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("light_mode")}</span>
-                  {theme === "light" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    theme === "system" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setTheme("system");
-                    localStorage.setItem("theme", "system");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("system")}</span>
-                  {theme === "system" && <Check className="h-4 w-4" />}
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">{chrome.i18n.getMessage("font")}</h4>
-              <div className="space-y-2">
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    font === "sans" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setFont("sans");
-                    localStorage.setItem("font", "sans");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("sans")}</span>
-                  {font === "sans" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    font === "monospace" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setFont("monospace");
-                    localStorage.setItem("font", "monospace");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("monospace")}</span>
-                  {font === "monospace" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    font === "serif" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setFont("serif");
-                    localStorage.setItem("font", "serif");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("serif")}</span>
-                  {font === "serif" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowMoreFonts((prev) => !prev);
-                  }}
-                >
-                  <span>
-                    {showMoreFonts
-                      ? chrome.i18n.getMessage("show_less")
-                      : chrome.i18n.getMessage("show_more")}
-                  </span>
-                </button>
-                {showMoreFonts && (
-                  <div className="space-y-2">
-                    <button
-                      className={cn(
-                        "flex w-full items-center justify-between rounded-md px-3 py-2",
-                        font === "times-new-roman" && "bg-accent",
-                      )}
-                      onClick={() => {
-                        setFont("times-new-roman");
-                        localStorage.setItem("font", "times-new-roman");
-                      }}
-                    >
-                      <span>{chrome.i18n.getMessage("times_new_roman")}</span>
-                      {font === "times-new-roman" && (
-                        <Check className="h-4 w-4" />
-                      )}
-                    </button>
-                    <button
-                      className={cn(
-                        "flex w-full items-center justify-between rounded-md px-3 py-2",
-                        font === "verdana" && "bg-accent",
-                      )}
-                      onClick={() => {
-                        setFont("verdana");
-                        localStorage.setItem("font", "verdana");
-                      }}
-                    >
-                      <span>{chrome.i18n.getMessage("verdana")}</span>
-                      {font === "verdana" && <Check className="h-4 w-4" />}
-                    </button>
-                    <button
-                      className={cn(
-                        "flex w-full items-center justify-between rounded-md px-3 py-2",
-                        font === "georgia" && "bg-accent",
-                      )}
-                      onClick={() => {
-                        setFont("georgia");
-                        localStorage.setItem("font", "georgia");
-                      }}
-                    >
-                      <span>{chrome.i18n.getMessage("georgia")}</span>
-                      {font === "georgia" && <Check className="h-4 w-4" />}
-                    </button>
-                    <button
-                      className={cn(
-                        "flex w-full items-center justify-between rounded-md px-3 py-2",
-                        font === "brush-script-mt" && "bg-accent",
-                      )}
-                      onClick={() => {
-                        setFont("brush-script-mt");
-                        localStorage.setItem("font", "brush-script-mt");
-                      }}
-                    >
-                      <span>{chrome.i18n.getMessage("brush_script_mt")}</span>
-                      {font === "brush-script-mt" && (
-                        <Check className="h-4 w-4" />
-                      )}
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">
-                {chrome.i18n.getMessage("background")}
-              </h4>
-              <div className="space-y-2">
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    background === "wallpaper" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setBackground("wallpaper");
-                    localStorage.setItem("background", "wallpaper");
-                    window.location.reload();
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("wallpaper")}</span>
-                  {background === "wallpaper" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    background === "color" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setBackground("color");
-                    localStorage.setItem("background", "color");
-                    window.location.reload();
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("color_palette")}</span>
-                  {background === "color" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    background === "gradient" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setBackground("gradient");
-                    localStorage.setItem("background", "gradient");
-                    window.location.reload();
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("gradient")}</span>
-                  {background === "gradient" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    background === "blank" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setBackground("blank");
-                    localStorage.setItem("background", "blank");
-                    window.location.reload();
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("blank")}</span>
-                  {background === "blank" && <Check className="h-4 w-4" />}
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">
-                {chrome.i18n.getMessage("change_time")}
-              </h4>
-              <div className="space-y-2">
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    changeTime === Infinity && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setChangeTime(Infinity);
-                    localStorage.setItem("changeTime", String(Infinity));
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("never")}</span>
-                  {changeTime === Infinity && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    changeTime === 0 && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setChangeTime(0);
-                    localStorage.setItem("changeTime", String(0));
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("as_soon_as_possible")}</span>
-                  {changeTime === 0 && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    changeTime === 1000 * 60 * 60 && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setChangeTime(1000 * 60 * 60);
-                    localStorage.setItem("changeTime", String(1000 * 60 * 60));
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("every_hour")}</span>
-                  {changeTime === 1000 * 60 * 60 && (
-                    <Check className="h-4 w-4" />
-                  )}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    changeTime === 1000 * 60 * 60 * 24 && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setChangeTime(1000 * 60 * 60 * 24);
-                    localStorage.setItem(
-                      "changeTime",
-                      String(1000 * 60 * 60 * 24),
-                    );
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("every_day")}</span>
-                  {changeTime === 1000 * 60 * 60 * 24 && (
-                    <Check className="h-4 w-4" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">
-                {chrome.i18n.getMessage("clock_format")}
-              </h4>
-              <div className="space-y-2">
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    clockFormat && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setClockFormat(true);
-                    localStorage.setItem("clockFormat", "true");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("12_hour")}</span>
-                  {clockFormat && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    !clockFormat && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setClockFormat(false);
-                    localStorage.setItem("clockFormat", "false");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("24_hour")}</span>
-                  {!clockFormat && <Check className="h-4 w-4" />}
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">
-                {chrome.i18n.getMessage("clock_size")}
-              </h4>
-              <div className="space-y-2">
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    clockSize === "small" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setClockSize("small");
-                    localStorage.setItem("clockSize", "small");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("small")}</span>
-                  {clockSize === "small" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    clockSize === "medium" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setClockSize("medium");
-                    localStorage.setItem("clockSize", "medium");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("medium")}</span>
-                  {clockSize === "medium" && <Check className="h-4 w-4" />}
-                </button>
-                <button
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-md px-3 py-2",
-                    clockSize === "large" && "bg-accent",
-                  )}
-                  onClick={() => {
-                    setClockSize("large");
-                    localStorage.setItem("clockSize", "large");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("large")}</span>
-                  {clockSize === "large" && <Check className="h-4 w-4" />}
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">{chrome.i18n.getMessage("more")}</h4>
-              <button
-                className={cn(
-                  "flex w-full items-center justify-between rounded-md px-3 py-2",
-                  backgroundBlur == true && "bg-accent",
-                )}
-                onClick={() => {
-                  setBackgroundBlur(!backgroundBlur);
-                  localStorage.setItem(
-                    "backgroundBlur",
-                    String(!backgroundBlur),
-                  );
+        <div
+          class={cn(
+            "absolute top-0 w-full h-full blob-gradient opacity-50 dark:opacity-20 blob-gradient z-20 dark:hidden",
+            imageLoaded() ? "hidden" : "",
+          )}
+          style={{
+            display: background() != "image" ? "none" : "",
+          }}
+        ></div>
+        <div
+          class="h-screen gap-3 flex-wrap justify-center items-center z-30 absolute inset-0 p-4"
+          style={{
+            "align-content": layout() == "center" ? "center" : "flex-start",
+            "padding-top": layout() == "top" ? "2.5rem" : "0",
+          }}
+        >
+          {mode() === "widgets" && (
+            <div>
+              <h1
+                id="greeting"
+                class="mb-6 text-5xl font-bold inset-shadow-2xl [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
+                style={{
+                  "text-align": layout() == "center" ? "center" : "left",
+                  "padding-left": layout() == "top" ? "2.5rem" : "0",
+                  display: name() == "" ? "none" : "block",
+                  color:
+                    background() == "image" &&
+                    !imageLoaded() &&
+                    document.documentElement.style.colorScheme != "dark"
+                      ? ""
+                      : "#fff",
                 }}
               >
-                <span>{chrome.i18n.getMessage("background-blur")}</span>
-                {backgroundBlur && <Check className="h-4 w-4" />}
-              </button>
-              <div className="space-y-2">
-                <button
-                  className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
-                  onClick={() => {
-                    window.open(
-                      "https://github.com/thingbomb/flowtide/discussions",
-                    );
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("suggest_feature")}</span>
-                </button>
-                <button
-                  className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-accent"
-                  onClick={() => {
-                    window.open("https://docs.flowtide.app");
-                  }}
-                >
-                  <span>{chrome.i18n.getMessage("documentation")}</span>
-                </button>
+                {new Date().getHours() < 12
+                  ? new Date().getHours() >= 5
+                    ? chrome.i18n.getMessage("good_morning")
+                    : chrome.i18n.getMessage("good_night")
+                  : new Date().getHours() < 18
+                    ? chrome.i18n.getMessage("good_afternoon")
+                    : chrome.i18n.getMessage("good_evening")}
+                , {name()}.
+              </h1>
+              <div
+                class={cn(
+                  "widgets m-0 grid [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)] gap-3 p-4",
+                  layout() == "center" &&
+                    "xl:[grid-template-columns:repeat(3,400px)]",
+                  layout() == "center" && "justify-center",
+                  layout() == "top" && "!pl-8",
+                )}
+              >
+                {filteredWidgets().length > 0 ? (
+                  filteredWidgets().map((item: any) => (
+                    <div
+                      class={`${uuidv4()} slot h-fit`}
+                      data-swapy-slot={item}
+                    >
+                      <div
+                        class="widget group"
+                        data-swapy-item={widgetOrder()[item]}
+                      >
+                        {widgetOrder()[item] === "clock" && <ClockWidget />}
+                        {widgetOrder()[item] === "date" && <DateWidget />}
+                        {widgetOrder()[item] === "todo" && <TodoWidget />}
+                        {widgetOrder()[item] === "focus" && (
+                          <FocusSoundscapes />
+                        )}
+                        {widgetOrder()[item] === "ambience" && (
+                          <AmbienceSoundscapes />
+                        )}
+                        {widgetOrder()[item] === "stopwatch" && (
+                          <StopwatchWidget />
+                        )}
+                        {widgetOrder()[item] === "bookmarks" && (
+                          <BookmarksWidget />
+                        )}
+                        {widgetOrder()[item] === "nature" && <NatureWidget />}
+                        {widgetOrder()[item] === "pomodoro" && (
+                          <PomodoroWidget />
+                        )}
+                        <button
+                          class="absolute -top-2 -right-2 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full"
+                          onclick={(e) => {
+                            const newWidgetOrder = widgetOrder();
+                            delete newWidgetOrder[item];
+                            setWidgetOrder(newWidgetOrder);
+                            e.target.parentElement?.parentElement?.remove();
+                            localStorage.setItem(
+                              "widgetPlacement",
+                              JSON.stringify(newWidgetOrder),
+                            );
+                            updateFilteredWidgets();
+                          }}
+                        >
+                          <X height={16} class="text-black" />
+                        </button>
+                        {widgetOrder()[item] == "todo" && (
+                          <button
+                            class="absolute -top-2 right-5 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full !cursor-move"
+                            data-swapy-handle
+                          >
+                            <GripVertical height={16} class="text-black" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <section></section>
+                )}
               </div>
             </div>
-          </div>
-        </SheetContent>
-      </Sheet>
-      {widgetPreferences?.todos == "true" && (
-        <Popover>
-          <PopoverTrigger asChild className="fixed bottom-0 right-0 z-50 m-4">
-            <Button
-              variant="ghost"
-              aria-label="To-do list"
-              className="text-white select-none"
-            >
-              <List className="h-5 w-5" />
-              {chrome.i18n.getMessage("todos")}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent
-            className={cn(
-              "w-80 mr-4 max-h-[70vh] overflow-y-auto scrollbar",
-              currentFont,
-            )}
-          >
-            <div className="grid gap-4">
-              <div className="space-y-2">
-                <h1 className="text-2xl font-bold leading-none">
-                  {chrome.i18n.getMessage("todos")}
+          )}
+          {mode() === "nightstand" && (
+            <div class="flex justify-center items-center">
+              <div class="w-full max-w-lg select-none">
+                <h1 class="text-[200px] p-0 m-0 font-bold [line-height:1.2]">
+                  {time()}
                 </h1>
-                <p className="text-sm text-muted-foreground">
-                  {chrome.i18n.getMessage("todos_description")}
+                <p class="text-3xl pl-2 mt-3 font-medium">
+                  {
+                    [
+                      "Sunday",
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday",
+                      "Saturday",
+                    ][new Date().getDay()]
+                  }
+                  ,{" "}
+                  {
+                    [
+                      "January",
+                      "February",
+                      "March",
+                      "April",
+                      "May",
+                      "June",
+                      "July",
+                      "August",
+                      "September",
+                      "October",
+                      "November",
+                      "December",
+                    ][new Date().getMonth()]
+                  }{" "}
+                  {new Date().getDate()}
                 </p>
               </div>
-              <div id="tasks">
-                {tasks
-                  .filter((task) => showCompleted || !task.completed)
-                  .map((task) => (
-                    <div
-                      key={task.id}
-                      className="flex items-center justify-between gap-4"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Checkbox
-                          checked={task.completed}
-                          onCheckedChange={(checked: boolean) => {
-                            setTasks((tasks: Task[]) =>
-                              tasks.map((t) =>
-                                t.id === task.id
-                                  ? {
-                                      ...t,
-                                      completed: checked === true,
-                                    }
-                                  : t,
-                              ),
-                            );
-                          }}
-                        />
-                        <span
-                          className="text-sm font-medium leading-none select-none focus-within:select-all outline-none"
-                          onDoubleClick={(e) => {
-                            (e.target as HTMLSpanElement).contentEditable =
-                              "true";
-                            (e.target as HTMLSpanElement).focus();
-                          }}
-                          onBlur={(e) => {
-                            (e.target as HTMLSpanElement).contentEditable =
-                              "false";
-                            setTasks((tasks) =>
-                              tasks.map((t) =>
-                                t.id === task.id
-                                  ? {
-                                      ...t,
-                                      text: e.target.innerText,
-                                    }
-                                  : t,
-                              ),
-                            );
-                          }}
-                        >
-                          {task.text}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          onClick={() => {
-                            setTasks((tasks) =>
-                              tasks.filter((t) => t.id !== task.id),
-                            );
-                          }}
-                        >
-                          <Trash className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          onClick={() => {
-                            setTaskInput(task.text);
-                            setTasks((tasks) =>
-                              tasks.filter((t) => t.id !== task.id),
-                            );
-                          }}
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                      </div>
+            </div>
+          )}
+          {mode() === "speeddial" && (
+            <div class="flex justify-center items-center flex-col gap-2">
+              <div
+                id="bookmarks"
+                class={cn(
+                  "px-3.5 mt-2 grid gap-6",
+                  "grid-cols-4",
+                  bookmarks().length % 2 == 0 && "grid-cols-2",
+                  bookmarks().length % 3 == 0 && "grid-cols-3",
+                  bookmarks().length % 4 == 0 && "grid-cols-4",
+                )}
+              >
+                {bookmarks()
+                  .slice(0, 12)
+                  .map((bookmark: Bookmark, index: number) => (
+                    <div class="flex items-center bookmark gap-2">
+                      <a
+                        href={bookmark.url}
+                        target="_blank"
+                        class="text-[28px] text-white whitespace-nowrap overflow-hidden text-ellipsis font-medium"
+                      >
+                        {bookmark.name}
+                      </a>
                     </div>
                   ))}
               </div>
-              <div className="flex items-center gap-2">
-                <Input
-                  value={taskInput}
-                  onChange={(e) => setTaskInput(e.target.value)}
-                  placeholder={chrome.i18n.getMessage("add_todo")}
+            </div>
+          )}
+        </div>
+      </div>
+      <div class="fixed top-2 right-2 text-white flex justify-center items-center rounded-full gap-2">
+        <SettingsTrigger />
+        {mode() === "widgets" && (
+          <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
+            <DialogTrigger class="group" aria-label="Add widget">
+              <Plus class="group-hover:rotate-45 transition-transform" />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{chrome.i18n.getMessage("blocks")}</DialogTitle>
+                <DialogDescription>
+                  {chrome.i18n.getMessage("blocks_description")}
+                </DialogDescription>
+                <br />
+                <Block
+                  title="Bookmarks"
+                  description="Easy access to your first 9 bookmarks with this widget."
+                  key="bookmarks"
                 />
-                <Button
-                  onClick={() => {
-                    if (taskInput?.trim() !== "") {
-                      setTasks((tasks: Task[]) => [
-                        ...tasks,
-                        {
-                          id: Date.now(),
-                          text: taskInput,
-                          completed: false,
-                        } as Task,
-                      ]);
-                      setTaskInput("");
-                    }
-                  }}
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="show-completed"
-                  checked={showCompleted}
-                  onCheckedChange={(checked) => {
-                    setShowCompleted(checked);
-                    localStorage.setItem(
-                      "showCompleted",
-                      JSON.stringify(checked),
-                    );
-                  }}
+                <Block
+                  title="Pomodoro"
+                  description="Use the pomodoro technique for an interval-based workflow."
+                  key="pomodoro"
                 />
-                <label
-                  htmlFor="show-completed"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  {chrome.i18n.getMessage("show_completed")}
-                </label>
-              </div>
-            </div>
-          </PopoverContent>
-        </Popover>
-      )}
-      {widgetPreferences?.soundscapes == "true" && (
-        <Popover>
-          <PopoverTrigger asChild className="fixed top-0 left-0 z-50 m-4">
-            <Button
-              variant="ghost"
-              aria-label={chrome.i18n.getMessage("soundscapes")}
-              className="select-none text-white"
-            >
-              <AudioLines className="h-5 w-5" />
-              {chrome.i18n.getMessage("soundscapes")}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent
-            className={cn(
-              "w-[300px] h-[300px] ml-4 relative overflow-y-auto scrollbar",
-              currentFont,
-            )}
-          >
-            <div>
-              <ul className="flex flex-col gap-2">
-                {soundscapes.map((sound, index) => (
-                  <li
-                    key={index}
-                    onClick={() =>
-                      playSound(
-                        sound.url,
-                        sound.volume,
-                        sound.name,
-                        sound.image,
-                        sound.index,
-                      )
-                    }
-                    className="select-none cursor-pointer"
-                  >
-                    <b className="text-lg">{sound.name}</b>
-                  </li>
-                ))}
-              </ul>
-              <br />
-              <a href="https://noisefill.com/credits">View sound attribution</a>
-            </div>
-          </PopoverContent>
-        </Popover>
-      )}
-      {widgetPreferences?.bookmarks == "true" && (
-        <Popover>
-          <PopoverTrigger asChild className="fixed top-0 right-0 z-50 m-4">
-            <Button
-              variant="ghost"
-              aria-label={chrome.i18n.getMessage("bookmarks")}
-              className="select-none text-white"
-            >
-              <Computer className="h-5 w-5" />
-              {chrome.i18n.getMessage("bookmarks")}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent
-            className={cn(
-              "w-[300px] h-[300px] mr-4 relative overflow-y-auto scrollbar",
-              currentFont,
-            )}
-          >
-            <div>
-              <ul className="flex flex-col gap-2">
-                {bookmarks.map((bookmark, index) => (
-                  <li
-                    key={index}
-                    onClick={() => {
-                      window.open(bookmark.url, "_blank");
-                    }}
-                    className="select-none cursor-pointer"
-                  >
-                    <b>{bookmark.name}</b>
-                    <br />
-                    <span className="text-sm text-gray-500 dark:text-gray-300 break-all">
-                      {bookmark.url}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </PopoverContent>
-        </Popover>
-      )}
-    </div>
+                <Block
+                  title="Nature"
+                  description="Listen to nature soundscapees with this widget."
+                  key="nature"
+                />
+                <Block
+                  title="Focus Sounds"
+                  description="Soundscapes to help you focus."
+                  key="focus"
+                />
+                <Block
+                  title="Ambience Sounds"
+                  description="Ambient soundscapes to help you relax."
+                  key="ambience"
+                />
+                <Block
+                  title="To-do list"
+                  description="Track your todos with an easy widget."
+                  key="todo"
+                />
+                <Block
+                  title="Stopwatch"
+                  description="Add a stopwatch widget to your start page."
+                  key="stopwatch"
+                />
+                <Block
+                  title="Clock"
+                  description="Adds a clock widget to your start page."
+                  key="clock"
+                />
+                <Block
+                  title="Date"
+                  description="A sleek date widget that shows you the current date."
+                  key="date"
+                />
+                <Block
+                  title="To-do list"
+                  description="Track your todos with an easy widget."
+                  key="todo"
+                />
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        )}
+        <CommandPalette />
+      </div>
+    </main>
   );
-}
+};
 
 export default App;
