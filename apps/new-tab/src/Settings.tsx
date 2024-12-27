@@ -21,7 +21,7 @@ import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { Button } from "./components/ui/button";
 
 function SettingsTrigger() {
-  const [open, setOpen] = createSignal(true);
+  const [open, setOpen] = createSignal(false);
   const [font, setFont] = createStoredSignal("font", "sans");
   const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
   const [background, setBackground] = createStoredSignal("background", "image");
