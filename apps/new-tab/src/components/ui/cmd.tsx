@@ -116,7 +116,7 @@ export function CommandPalette(props: any) {
   const [actions, setActions] = createSignal(initialActions);
   const [bookmarks, setBookmarks] = createSignal<Bookmark[]>([]);
   const [bookmarkFolders, setBookmarkFolders] = createSignal<BookmarkFolder[]>(
-    [],
+    []
   );
 
   const down = (e: KeyboardEvent) => {
@@ -221,7 +221,7 @@ export function CommandPalette(props: any) {
       <CommandList class="scrollbar">
         {result().result != null && (
           <div
-            class="text-center p-6 bg-neutral-800 hover:bg-neutral-900 rounded-lg m-3 select-none cursor-pointer"
+            class="m-3 cursor-pointer select-none rounded-lg bg-neutral-800 p-6 text-center hover:bg-neutral-900"
             onClick={() => {
               const copiedResult = result().result;
               setResult({

@@ -5,7 +5,7 @@ const subscribers: Record<string, Array<(value: any) => void>> = {};
 function createStoredSignal<T>(
   key: string,
   defaultValue: T,
-  storage = localStorage,
+  storage = localStorage
 ): Signal<T> {
   const initialValue =
     storage.getItem(key) != null
@@ -24,7 +24,7 @@ function createStoredSignal<T>(
       key,
       typeof defaultValue !== "string"
         ? JSON.stringify(defaultValue)
-        : defaultValue,
+        : defaultValue
     );
   }
 
@@ -32,7 +32,7 @@ function createStoredSignal<T>(
     const newValue = setValue(arg);
     storage.setItem(
       key,
-      typeof newValue !== "string" ? JSON.stringify(newValue) : newValue,
+      typeof newValue !== "string" ? JSON.stringify(newValue) : newValue
     );
 
     if (subscribers[key]) {
@@ -49,7 +49,7 @@ function createStoredSignal<T>(
 
   onCleanup(() => {
     subscribers[key] = subscribers[key].filter(
-      (callback) => callback !== setValue,
+      (callback) => callback !== setValue
     );
   });
 

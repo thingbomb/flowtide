@@ -18,7 +18,7 @@ type textFieldProps<T extends ValidComponent = "div"> =
   };
 
 export const TextFieldRoot = <T extends ValidComponent = "div">(
-  props: PolymorphicProps<T, textFieldProps<T>>,
+  props: PolymorphicProps<T, textFieldProps<T>>
 ) => {
   const [local, rest] = splitProps(props as textFieldProps, ["class"]);
 
@@ -42,7 +42,7 @@ export const textfieldLabel = cva(
     defaultVariants: {
       label: true,
     },
-  },
+  }
 );
 
 type textFieldLabelProps<T extends ValidComponent = "label"> =
@@ -51,7 +51,7 @@ type textFieldLabelProps<T extends ValidComponent = "label"> =
   };
 
 export const TextFieldLabel = <T extends ValidComponent = "label">(
-  props: PolymorphicProps<T, textFieldLabelProps<T>>,
+  props: PolymorphicProps<T, textFieldLabelProps<T>>
 ) => {
   const [local, rest] = splitProps(props as textFieldLabelProps, ["class"]);
 
@@ -69,7 +69,7 @@ type textFieldErrorMessageProps<T extends ValidComponent = "div"> =
   };
 
 export const TextFieldErrorMessage = <T extends ValidComponent = "div">(
-  props: PolymorphicProps<T, textFieldErrorMessageProps<T>>,
+  props: PolymorphicProps<T, textFieldErrorMessageProps<T>>
 ) => {
   const [local, rest] = splitProps(props as textFieldErrorMessageProps, [
     "class",
@@ -89,7 +89,7 @@ type textFieldDescriptionProps<T extends ValidComponent = "div"> =
   };
 
 export const TextFieldDescription = <T extends ValidComponent = "div">(
-  props: PolymorphicProps<T, textFieldDescriptionProps<T>>,
+  props: PolymorphicProps<T, textFieldDescriptionProps<T>>
 ) => {
   const [local, rest] = splitProps(props as textFieldDescriptionProps, [
     "class",
@@ -99,7 +99,7 @@ export const TextFieldDescription = <T extends ValidComponent = "div">(
     <TextFieldPrimitive.Description
       class={cn(
         textfieldLabel({ description: true, label: false }),
-        local.class,
+        local.class
       )}
       {...rest}
     />
@@ -113,15 +113,15 @@ type textFieldInputProps<T extends ValidComponent = "input"> = VoidProps<
 >;
 
 export const TextField = <T extends ValidComponent = "input">(
-  props: PolymorphicProps<T, textFieldInputProps<T>>,
+  props: PolymorphicProps<T, textFieldInputProps<T>>
 ) => {
   const [local, rest] = splitProps(props as textFieldInputProps, ["class"]);
 
   return (
     <TextFieldPrimitive.Input
       class={cn(
-        "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-shadow file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-        local.class,
+        "block w-full rounded-lg border-none bg-black/5 px-3 py-1.5 text-sm/6 text-black focus:outline-2 focus:-outline-offset-2 focus:outline-black/25 dark:bg-white/5 dark:text-white dark:shadow-inner dark:shadow-white/10 dark:focus:outline-white/25",
+        local.class
       )}
       {...rest}
     />

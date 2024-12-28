@@ -1,25 +1,25 @@
 h1 {
-  @apply text-4xl font-bold mb-3 mt-6;
+  @apply mb-3 mt-6 text-4xl font-bold;
 }
 
 h2 {
-  @apply text-3xl font-bold mb-3 mt-5;
+  @apply mb-3 mt-5 text-3xl font-bold;
 }
 
 h3 {
-  @apply text-2xl font-bold mb-3 mt-6;
+  @apply mb-3 mt-6 text-2xl font-bold;
 }
 
 h4 {
-  @apply text-xl font-bold mb-3 mt-6;
+  @apply mb-3 mt-6 text-xl font-bold;
 }
 
 h5 {
-  @apply text-lg font-bold mb-3 mt-6;
+  @apply mb-3 mt-6 text-lg font-bold;
 }
 
 h6 {
-  @apply text-base font-bold mb-3 mt-6;
+  @apply mb-3 mt-6 text-base font-bold;
 }
 
 p {

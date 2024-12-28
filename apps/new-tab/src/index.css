@@ -76,11 +76,11 @@
 }
 
 .widget {
-  @apply bg-gray-300 dark:bg-zinc-700 p-6 rounded-[20px] text-3xl relative h-[150px] w-[400px] shadow-lg dark:shadow-sm;
+  @apply relative h-[150px] w-[400px] rounded-[20px] bg-gray-300 p-6 text-3xl shadow-lg dark:bg-zinc-700 dark:shadow-sm;
 }
 
 .slot[data-swapy-highlighted] {
-  @apply bg-zinc-600 rounded-[20px] max-h-[150px] max-w-[400px];
+  @apply max-h-[150px] max-w-[400px] rounded-[20px] bg-zinc-600;
 }
 
 .blob-gradient {
@@ -97,8 +97,4 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
-}
-
-button:not(:disabled) {
-  cursor: pointer;
 }

@@ -2,8 +2,8 @@ import { createSignal, onMount } from "solid-js";
 import { Checkbox, CheckboxControl } from "./components/ui/checkbox";
 import { Button } from "./components/ui/button";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
-import soundscapes, { Category } from "./soundscapes";
-import { GripVertical, Pause, Play } from "lucide-solid";
+import soundscapes from "./soundscapes";
+import { Pause, Play } from "lucide-solid";
 import { createStoredSignal } from "./hooks/localStorage";
 import {
   Dialog,
@@ -31,7 +31,7 @@ function ClockWidget() {
     interval = setInterval(() => {
       try {
         document.getElementById("currentTime")!.textContent = createTime(
-          new Date(),
+          new Date()
         ).time;
       } catch (e) {
         clearInterval(interval);
@@ -39,13 +39,13 @@ function ClockWidget() {
     }, 1000);
   });
   return (
-    <div class="absolute inset-0 p-[10px] bg-white dark:bg-background rounded-[20px] !select-none">
-      <div class="bg-gray-200 dark:bg-zinc-900 rounded-[10px] w-full h-full flex justify-center items-center relative">
-        <div class="self-start absolute w-full text-gray-400 flex justify-between px-3.5 py-2.5 text-xs font-semibold">
+    <div class="dark:bg-background absolute inset-0 !select-none rounded-[20px] bg-white p-[10px]">
+      <div class="relative flex h-full w-full items-center justify-center rounded-[10px] bg-gray-200 dark:bg-zinc-900">
+        <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
           <div id="amPm">{createTime(new Date()).amPm}</div>
         </div>
         <div
-          class="text-center text-5xl text-black dark:text-white font-bold"
+          class="text-center text-5xl font-bold text-black dark:text-white"
           id="currentTime"
         >
           {createTime(new Date()).time}
@@ -84,12 +84,12 @@ function DateWidget() {
     interval = setInterval(() => {
       try {
         document.getElementById("day")!.textContent = String(
-          new Date().getDate(),
+          new Date().getDate()
         );
         document.getElementById("month")!.textContent =
           months[new Date().getMonth()];
         document.getElementById("year")!.textContent = String(
-          new Date().getFullYear(),
+          new Date().getFullYear()
         );
       } catch (e) {
         clearInterval(interval);
@@ -97,15 +97,15 @@ function DateWidget() {
     }, 1000);
   });
   return (
-    <div class="absolute inset-0 p-[10px] bg-white dark:bg-background rounded-[20px] !select-none">
-      <div class="bg-gray-200 dark:bg-zinc-900 rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-gray-200 dark:bg-zinc-900 rounded-[10px] flex items-center justify-center">
-          <div class="self-start absolute w-full text-gray-400 flex justify-between px-3.5 py-2.5 text-xs font-semibold">
+    <div class="dark:bg-background absolute inset-0 !select-none rounded-[20px] bg-white p-[10px]">
+      <div class="h-full w-full rounded-[10px] bg-gray-200 dark:bg-zinc-900">
+        <div class="relative flex h-full w-full items-center justify-center rounded-[10px] bg-gray-200 dark:bg-zinc-900">
+          <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
             <div id="month">{months[new Date().getMonth()]}</div>
             <div id="year">{new Date().getFullYear()}</div>
           </div>
           <div
-            class="text-center text-5xl text-black dark:text-white font-bold"
+            class="text-center text-5xl font-bold text-black dark:text-white"
             id="day"
           >
             {new Date().getDate()}
@@ -218,11 +218,11 @@ function TodoWidget() {
   };
 
   return (
-    <div class="absolute inset-0 p-[10px] bg-background rounded-[20px] overflow-hidden">
-      <div class="rounded-lg w-full h-full">
-        <div class="relative h-full w-full bg-background rounded-[20px] pt-2 text-foreground">
-          <div class="overflow-auto max-h-[76px] scrollbar-hidden">
-            <div id="tasks" class="px-4 mt-2">
+    <div class="bg-background absolute inset-0 overflow-hidden rounded-[20px] p-[10px]">
+      <div class="h-full w-full rounded-lg">
+        <div class="bg-background text-foreground relative h-full w-full rounded-[20px] pt-2">
+          <div class="scrollbar-hidden max-h-[76px] overflow-auto">
+            <div id="tasks" class="mt-2 px-4">
               {tasks()
                 .filter((task: Task) => !task.completed)
                 .map((task: Task, index: number) => (
@@ -232,7 +232,7 @@ function TodoWidget() {
                     onDragOver={handleDragOver}
                     onDragEnd={handleDragEnd}
                     onDrop={(e) => handleDrop(e, task.id)}
-                    class="flex gap-2 items-center task rounded cursor-move transition-colors"
+                    class="task flex cursor-move items-center gap-2 rounded transition-colors"
                   >
                     <Checkbox
                       id={task.id}
@@ -243,13 +243,13 @@ function TodoWidget() {
                               .map((t: Task) =>
                                 t.id === task.id
                                   ? { ...t, completed: checked }
-                                  : t,
+                                  : t
                               )
-                              .filter((t: Task) => !t.completed),
+                              .filter((t: Task) => !t.completed)
                           );
                           localStorage.setItem(
                             "tasks",
-                            JSON.stringify(tasks()),
+                            JSON.stringify(tasks())
                           );
                         } catch (error) {
                           console.error("Error updating task:", error);
@@ -258,7 +258,7 @@ function TodoWidget() {
                     >
                       <CheckboxControl class="dark:!border-white" />
                     </Checkbox>
-                    <label for={task.id} class="text-sm select-none">
+                    <label for={task.id} class="select-none text-sm">
                       {task.title}
                     </label>
                   </div>
@@ -266,7 +266,7 @@ function TodoWidget() {
               <br />
             </div>
           </div>
-          <div class="absolute bottom-0 right-0 left-0 pr-4 pl-2 pb-[10px] flex gap-4 bg-background">
+          <div class="bg-background absolute bottom-0 left-0 right-0 flex gap-2 pb-[10px] pl-2 pr-4">
             <TextFieldRoot class="flex-1">
               <TextField
                 placeholder="New task"
@@ -300,7 +300,7 @@ function StopwatchWidget() {
       .toString()
       .padStart(
         2,
-        "0",
+        "0"
       )}:${Math.floor(Number(seconds.toString())).toString().padStart(2, "0")}`;
   }
 
@@ -314,10 +314,10 @@ function StopwatchWidget() {
   });
 
   return (
-    <div class="absolute inset-0 p-[10px] pb-0 bg-background text-foreground rounded-[20px] overflow-hidden">
-      <div class="rounded-[10px] w-full h-full flex justify-center items-center flex-col gap-2 select-none">
+    <div class="bg-background text-foreground absolute inset-0 overflow-hidden rounded-[20px] p-[10px] pb-0">
+      <div class="flex h-full w-full select-none flex-col items-center justify-center gap-2 rounded-[10px]">
         {formatTime(time())}
-        <div class="text-sm text-gray-400 flex gap-2">
+        <div class="flex gap-2 text-sm text-gray-400">
           <Button
             variant={"outline"}
             onclick={() => {
@@ -364,28 +364,28 @@ function BookmarksWidget() {
     }
   });
   return (
-    <div class="absolute inset-0 p-[10px] pb-0 bg-white dark:bg-background rounded-[20px] overflow-hidden">
-      <div class="rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-white dark:bg-background rounded-[10px] pt-2">
-          <div class="overflow-auto scrollbar-hidden">
+    <div class="dark:bg-background absolute inset-0 overflow-hidden rounded-[20px] bg-white p-[10px] pb-0">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="dark:bg-background relative h-full w-full rounded-[10px] bg-white pt-2">
+          <div class="scrollbar-hidden overflow-auto">
             <div
-              class="text-left text-xl text-cyan-700 dark:text-white font-bold px-3.5 select-none"
+              class="select-none px-3.5 text-left text-xl font-bold text-cyan-700 dark:text-white"
               id="title"
             >
               Bookmarks
             </div>
             <div
               id="bookmarks"
-              class="px-3.5 mt-2 grid grid-cols-3 grid-rows-3 gap-2"
+              class="mt-2 grid grid-cols-3 grid-rows-3 gap-2 px-3.5"
             >
               {bookmarks()
                 .slice(0, 9)
                 .map((bookmark: Bookmark, index: number) => (
-                  <div class="flex gap-2 items-center bookmark">
+                  <div class="bookmark flex items-center gap-2">
                     <a
                       href={bookmark.url}
                       target="_blank"
-                      class="text-[17px] text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium"
+                      class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-[17px] font-medium"
                     >
                       {bookmark.name}
                     </a>
@@ -404,7 +404,7 @@ function NatureWidget() {
   function PlayButton({ key, index }: { key: string; index: number }) {
     return (
       <button
-        class="text-black font-bold !rounded-full size-[24px] flex justify-center items-center"
+        class="flex size-[24px] items-center justify-center !rounded-full font-bold text-black"
         onclick={() => {
           if (currentlyPlaying() == index) {
             setCurrentlyPlaying(null);
@@ -425,12 +425,12 @@ function NatureWidget() {
   }
 
   return (
-    <div class="absolute inset-0 p-[10px] bg-background rounded-[20px] overflow-hidden">
-      <div class="rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-background rounded-[10px] pt-2">
-          <div class="overflow-auto scrollbar-hidden">
+    <div class="bg-background absolute inset-0 overflow-hidden rounded-[20px] p-[10px]">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="bg-background relative h-full w-full rounded-[10px] pt-2">
+          <div class="scrollbar-hidden overflow-auto">
             <div
-              class="text-left text-xl text-green-700 dark:text-white font-bold px-3.5 select-none"
+              class="select-none px-3.5 text-left text-xl font-bold text-green-700 dark:text-white"
               id="title"
             >
               Nature
@@ -441,18 +441,18 @@ function NatureWidget() {
             >
               {soundscapes
                 .filter((soundscape) =>
-                  soundscape.categories.includes("nature"),
+                  soundscape.categories.includes("nature")
                 )
                 .map((soundscape, index: number) => (
-                  <div class="flex gap-2 items-center soundscape">
-                    <div class="flex gap-2 items-center">
-                      <div class="flex gap-2 items-center">
+                  <div class="soundscape flex items-center gap-2">
+                    <div class="flex items-center gap-2">
+                      <div class="flex items-center gap-2">
                         <div class="flex items-center gap-2">
                           <PlayButton
                             key={soundscape.name}
                             index={soundscape.index}
                           />
-                          <div class="text-sm text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium">
+                          <div class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
                             {soundscape.name}
                           </div>
                         </div>
@@ -463,7 +463,7 @@ function NatureWidget() {
             </div>
             <a
               href="https://noisefill.com/credits"
-              class="text-xs font-medium text-gray-500 dark:text-gray-400 m-0 pl-3.5 -mt-2"
+              class="m-0 -mt-2 pl-3.5 text-xs font-medium text-gray-500 dark:text-gray-400"
             >
               Sound attribution
             </a>
@@ -492,7 +492,7 @@ function PomodoroWidget() {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     return `${minutes.toString().padStart(2, "0")}:${Math.floor(
-      Number(seconds.toString()),
+      Number(seconds.toString())
     )
       .toString()
       .padStart(2, "0")}`;
@@ -504,7 +504,7 @@ function PomodoroWidget() {
       if (isRunning()) {
         setPomodoro(pomodoro() - 1);
         document.title = `${pomodoroSession() == "work" ? "Work" : "Break"} - ${formatTime(
-          pomodoro(),
+          pomodoro()
         )}`;
         if (pomodoro() <= 0) {
           if (pomodoroSession() == "work") {
@@ -522,12 +522,12 @@ function PomodoroWidget() {
   });
 
   return (
-    <div class="absolute inset-0 p-[10px] bg-white dark:bg-background rounded-[20px] overflow-hidden">
-      <div class="rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-white dark:bg-background rounded-[10px] pt-2">
-          <div class="overflow-auto scrollbar-hidden">
+    <div class="dark:bg-background absolute inset-0 overflow-hidden rounded-[20px] bg-white p-[10px]">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="dark:bg-background relative h-full w-full rounded-[10px] bg-white pt-2">
+          <div class="scrollbar-hidden overflow-auto">
             <div
-              class="text-left text-xl text-teal-700 dark:text-white font-bold px-3.5 select-none"
+              class="select-none px-3.5 text-left text-xl font-bold text-teal-700 dark:text-white"
               id="title"
             >
               {isRunning()
@@ -536,11 +536,11 @@ function PomodoroWidget() {
                   : "Break"
                 : "Pomodoro"}
             </div>
-            <div class="px-3.5 mt-2">
-              <h1 class="text-xl text-black dark:text-white font-bold">
+            <div class="mt-2 px-3.5">
+              <h1 class="text-xl font-bold text-black dark:text-white">
                 {formatTime(pomodoro())}
               </h1>
-              <div class="flex gap-4 items-center mt-3">
+              <div class="mt-3 flex items-center gap-2">
                 <Button
                   onclick={() => {
                     setIsRunning(!isRunning());
@@ -550,10 +550,10 @@ function PomodoroWidget() {
                 </Button>
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
-                    class="group text-sm flex justify-center items-center h-[36px] font-medium select-none"
+                    class="inline-flex items-center gap-2 rounded-md bg-gray-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 hover:bg-gray-600 focus:outline-none focus:outline-1 focus:outline-white dark:bg-gray-800"
                     aria-label="Add widget"
                   >
-                    Settings
+                    {chrome.i18n.getMessage("settings")}
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
@@ -599,7 +599,7 @@ function FocusSoundscapes() {
   function PlayButton({ key, index }: { key: string; index: number }) {
     return (
       <button
-        class="text-black font-bold !rounded-full size-[24px] flex justify-center items-center"
+        class="flex size-[24px] items-center justify-center !rounded-full font-bold text-black"
         onclick={() => {
           if (currentlyPlaying() == index) {
             setCurrentlyPlaying(null);
@@ -620,12 +620,12 @@ function FocusSoundscapes() {
   }
 
   return (
-    <div class="absolute inset-0 p-[10px] bg-background rounded-[20px] overflow-hidden">
-      <div class="rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-background rounded-[10px] pt-2">
-          <div class="overflow-auto scrollbar-hidden">
+    <div class="bg-background absolute inset-0 overflow-hidden rounded-[20px] p-[10px]">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="bg-background relative h-full w-full rounded-[10px] pt-2">
+          <div class="scrollbar-hidden overflow-auto">
             <div
-              class="text-left text-xl text-purple-700 dark:text-white font-bold px-3.5 select-none"
+              class="select-none px-3.5 text-left text-xl font-bold text-purple-700 dark:text-white"
               id="title"
             >
               Focus
@@ -637,15 +637,15 @@ function FocusSoundscapes() {
               {soundscapes
                 .filter((soundscape) => soundscape.categories.includes("focus"))
                 .map((soundscape, index: number) => (
-                  <div class="flex gap-2 items-center soundscape">
-                    <div class="flex gap-2 items-center">
-                      <div class="flex gap-2 items-center">
+                  <div class="soundscape flex items-center gap-2">
+                    <div class="flex items-center gap-2">
+                      <div class="flex items-center gap-2">
                         <div class="flex items-center gap-2">
                           <PlayButton
                             key={soundscape.name}
                             index={soundscape.index}
                           />
-                          <div class="text-sm text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium">
+                          <div class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
                             {soundscape.name}
                           </div>
                         </div>
@@ -656,7 +656,7 @@ function FocusSoundscapes() {
             </div>
             <a
               href="https://noisefill.com/credits"
-              class="text-xs font-medium text-gray-500 dark:text-gray-400 m-0 pl-3.5 -mt-2"
+              class="m-0 -mt-2 pl-3.5 text-xs font-medium text-gray-500 dark:text-gray-400"
             >
               Sound attribution
             </a>
@@ -678,7 +678,7 @@ function AmbienceSoundscapes() {
   function PlayButton({ key, index }: { key: string; index: number }) {
     return (
       <button
-        class="text-black font-bold !rounded-full size-[24px] flex justify-center items-center"
+        class="flex size-[24px] items-center justify-center !rounded-full font-bold text-black"
         onclick={() => {
           if (currentlyPlaying() == index) {
             setCurrentlyPlaying(null);
@@ -699,12 +699,12 @@ function AmbienceSoundscapes() {
   }
 
   return (
-    <div class="absolute inset-0 p-[10px] bg-background rounded-[20px] overflow-hidden">
-      <div class="rounded-[10px] w-full h-full">
-        <div class="relative h-full w-full bg-background rounded-[10px] pt-2">
-          <div class="overflow-auto scrollbar-hidden">
+    <div class="bg-background absolute inset-0 overflow-hidden rounded-[20px] p-[10px]">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="bg-background relative h-full w-full rounded-[10px] pt-2">
+          <div class="scrollbar-hidden overflow-auto">
             <div
-              class="text-left text-xl text-cyan-700 dark:text-white font-bold px-3.5 select-none"
+              class="select-none px-3.5 text-left text-xl font-bold text-cyan-700 dark:text-white"
               id="title"
             >
               Ambience
@@ -716,15 +716,15 @@ function AmbienceSoundscapes() {
               {soundscapes
                 .filter((soundscape) => soundscape.categories.includes("focus"))
                 .map((soundscape, index: number) => (
-                  <div class="flex gap-2 items-center soundscape">
-                    <div class="flex gap-2 items-center">
-                      <div class="flex gap-2 items-center">
+                  <div class="soundscape flex items-center gap-2">
+                    <div class="flex items-center gap-2">
+                      <div class="flex items-center gap-2">
                         <div class="flex items-center gap-2">
                           <PlayButton
                             key={soundscape.name}
                             index={soundscape.index}
                           />
-                          <div class="text-sm text-foreground whitespace-nowrap overflow-hidden text-ellipsis font-medium">
+                          <div class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
                             {soundscape.name}
                           </div>
                         </div>
@@ -735,7 +735,7 @@ function AmbienceSoundscapes() {
             </div>
             <a
               href="https://noisefill.com/credits"
-              class="text-xs font-medium text-gray-500 dark:text-gray-400 m-0 pl-3.5 -mt-2"
+              class="m-0 -mt-2 pl-3.5 text-xs font-medium text-gray-500 dark:text-gray-400"
             >
               Sound attribution
             </a>

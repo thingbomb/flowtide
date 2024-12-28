@@ -134,13 +134,13 @@ const App: Component = () => {
     };
   }
   const [needsOnboarding, setNeedsOnboarding] = createSignal(
-    localStorage.getItem("onboarding") !== "true",
+    localStorage.getItem("onboarding") !== "true"
   );
   const [onboardingScreen, setOnboardingScreen] = createSignal<number>(1);
   const [widgetOrder, setWidgetOrder] = createSignal<any[]>(
     localStorage.getItem("widgetPlacement")
       ? JSON.parse(localStorage.getItem("widgetPlacement") as string)
-      : {},
+      : {}
   );
   const [greetingNameValue, setGreetingNameValue] = createSignal("");
   const [imageLoaded, setImageLoaded] = createSignal(false);
@@ -149,7 +149,7 @@ const App: Component = () => {
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
   const [selectedImage, setSelectedImage] = createSignal<string>(
     localStorage.getItem("selectedImage") ||
-      images[Math.floor(Math.random() * images.length)],
+      images[Math.floor(Math.random() * images.length)]
   );
   const [layout, setLayout] = createStoredSignal("layout", "center");
   const [currentFont, setCurrentFont] = createStoredSignal("font", "sans");
@@ -188,7 +188,7 @@ const App: Component = () => {
         <Button class="group" onclick={() => setOnboardingScreen(2)}>
           {chrome.i18n.getMessage("get_started")}
           <ArrowRight
-            class="group-hover:translate-x-1 transition-transform"
+            class="transition-transform group-hover:translate-x-1"
             height={16}
           />
         </Button>
@@ -199,7 +199,7 @@ const App: Component = () => {
     return (
       <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
         <div>
-          <h1 class="text-5xl font-[600] mb-4">
+          <h1 class="mb-4 text-5xl font-[600]">
             {chrome.i18n.getMessage("greeting")}
           </h1>
           <TextFieldRoot class="flex-1">
@@ -222,7 +222,7 @@ const App: Component = () => {
               ? chrome.i18n.getMessage("set_greeting")
               : chrome.i18n.getMessage("skip")}
             <ArrowRight
-              class="group-hover:translate-x-1 transition-transform"
+              class="transition-transform group-hover:translate-x-1"
               height={16}
             />
           </Button>
@@ -234,13 +234,12 @@ const App: Component = () => {
     return (
       <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
         <div>
-          <h1 class="text-5xl font-[600] mb-4">
+          <h1 class="mb-4 text-5xl font-[600]">
             {chrome.i18n.getMessage("choose_mode")}
           </h1>
-          <div class="w-full grid grid-cols-1 gap-4 grid-rows-3 **:data-selected:!ring-primary">
+          <div class="**:data-selected:!ring-primary grid w-full grid-cols-1 grid-rows-3 gap-4">
             <button
-              class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
-              border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
+              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("widgets");
@@ -251,8 +250,7 @@ const App: Component = () => {
               <span class="text-xl">{chrome.i18n.getMessage("widgets")}</span>
             </button>
             <button
-              class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
-              border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
+              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "nightstand" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("nightstand");
@@ -265,8 +263,7 @@ const App: Component = () => {
               </span>
             </button>
             <button
-              class="card block not-prose font-normal group relative my-2 ring-2 ring-transparent rounded-xl h-[198px] dark:bg-background-dark border-1
-              border-gray-950/10 dark:border-white/10 overflow-hidden w-full cursor-pointer hover:!border-primary dark:hover:!border-primary-light text-left pl-8"
+              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "speeddial" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("speeddial");
@@ -290,7 +287,7 @@ const App: Component = () => {
           >
             {chrome.i18n.getMessage("complete")}
             <ArrowRight
-              class="group-hover:translate-x-1 transition-transform"
+              class="transition-transform group-hover:translate-x-1"
               height={16}
             />
           </Button>
@@ -301,7 +298,7 @@ const App: Component = () => {
 
   const OnboardingFlow: Component = () => {
     return (
-      <div class="absolute inset-0 bg-white dark:bg-[#2f2f2f] z-50">
+      <div class="absolute inset-0 z-50 bg-white dark:bg-[#2f2f2f]">
         {onboardingScreen() === 1 && <OnboardingScreen1 />}
         {onboardingScreen() === 2 && <OnboardingScreen2 />}
         {onboardingScreen() === 3 && <OnboardingScreen3 />}
@@ -324,7 +321,7 @@ const App: Component = () => {
   function updateFilteredWidgets() {
     const currentWidgets = widgets.filter(
       (item: any) =>
-        widgetOrder()[item] !== "" && widgetOrder()[item] !== undefined,
+        widgetOrder()[item] !== "" && widgetOrder()[item] !== undefined
     );
     setFilteredWidgets(currentWidgets);
   }
@@ -342,7 +339,7 @@ const App: Component = () => {
       swapy.onSwap((event) => {
         localStorage.setItem(
           "widgetPlacement",
-          JSON.stringify(event.newSlotItemMap.asObject),
+          JSON.stringify(event.newSlotItemMap.asObject)
         );
       });
 
@@ -379,17 +376,17 @@ const App: Component = () => {
 
   function getKeyByValue<T extends Record<string, any>>(
     obj: T,
-    value: T[keyof T],
+    value: T[keyof T]
   ): string | undefined {
     return Object.keys(obj).find((key) => obj[key] === value);
   }
 
   function Block(props: { title: string; description: string; key: Widget }) {
     return (
-      <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
         <div class="info">
           <h1>{props.title}</h1>
-          <p class="text-sm text-muted-foreground">{props.description}</p>
+          <p class="text-muted-foreground text-sm">{props.description}</p>
         </div>
         <div class="add">
           <Button
@@ -415,7 +412,7 @@ const App: Component = () => {
               setWidgetOrder(newWidgetOrder);
               localStorage.setItem(
                 "widgetPlacement",
-                JSON.stringify(newWidgetOrder),
+                JSON.stringify(newWidgetOrder)
               );
               updateFilteredWidgets();
               setDialogOpen(false);
@@ -442,7 +439,7 @@ const App: Component = () => {
         `font-serif`,
         `font-sans`,
         `font-${currentFont()}`,
-        imageLoaded() ? "bg-black dark:bg-none" : "",
+        imageLoaded() ? "bg-black dark:bg-none" : ""
       )}
     >
       {needsOnboarding() && <OnboardingFlow />}
@@ -450,7 +447,7 @@ const App: Component = () => {
         <img
           src={selectedImage()}
           alt=""
-          class="absolute inset-0 w-full h-full object-cover transition-all"
+          class="absolute inset-0 h-full w-full object-cover transition-all"
           style={{ opacity: 0 }}
           onLoad={(e: any) => {
             if (document.documentElement.style.colorScheme === "dark") {
@@ -465,8 +462,8 @@ const App: Component = () => {
       )}
       <div
         class={cn(
-          "fixed overflow-hidden p-4 inset-0",
-          imageLoaded() ? "" : "bg-white dark:bg-[#1f1f1f]",
+          "fixed inset-0 overflow-hidden p-4",
+          imageLoaded() ? "" : "bg-white dark:bg-[#1f1f1f]"
         )}
         style={{
           background:
@@ -479,15 +476,15 @@ const App: Component = () => {
       >
         <div
           class={cn(
-            "absolute top-0 w-full h-full blob-gradient opacity-50 dark:opacity-20 blob-gradient z-20 dark:hidden",
-            imageLoaded() ? "hidden" : "",
+            "blob-gradient blob-gradient absolute top-0 z-20 h-full w-full opacity-50 dark:hidden dark:opacity-20",
+            imageLoaded() ? "hidden" : ""
           )}
           style={{
             display: background() != "image" ? "none" : "",
           }}
         ></div>
         <div
-          class="h-screen gap-3 flex-wrap justify-center items-center z-30 absolute inset-0 p-4"
+          class="absolute inset-0 z-30 h-screen flex-wrap items-center justify-center gap-3 p-4"
           style={{
             "align-content": layout() == "center" ? "center" : "flex-start",
             "padding-top": layout() == "top" ? "2.5rem" : "0",
@@ -497,7 +494,7 @@ const App: Component = () => {
             <div>
               <h1
                 id="greeting"
-                class="mb-6 text-5xl font-bold inset-shadow-2xl [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
+                class="inset-shadow-2xl mb-6 text-5xl font-bold [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
                 style={{
                   "text-align": layout() == "center" ? "center" : "left",
                   "padding-left": layout() == "top" ? "2.5rem" : "0",
@@ -521,11 +518,11 @@ const App: Component = () => {
               </h1>
               <div
                 class={cn(
-                  "widgets m-0 grid [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)] gap-3 p-4",
+                  "widgets m-0 grid gap-3 p-4 [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)]",
                   layout() == "center" &&
                     "xl:[grid-template-columns:repeat(3,400px)]",
                   layout() == "center" && "justify-center",
-                  layout() == "top" && "!pl-8",
+                  layout() == "top" && "!pl-8"
                 )}
               >
                 {filteredWidgets().length > 0 ? (
@@ -558,7 +555,7 @@ const App: Component = () => {
                           <PomodoroWidget />
                         )}
                         <button
-                          class="absolute -top-2 -right-2 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full"
+                          class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
                           onclick={(e) => {
                             const newWidgetOrder = widgetOrder();
                             delete newWidgetOrder[item];
@@ -566,7 +563,7 @@ const App: Component = () => {
                             e.target.parentElement?.parentElement?.remove();
                             localStorage.setItem(
                               "widgetPlacement",
-                              JSON.stringify(newWidgetOrder),
+                              JSON.stringify(newWidgetOrder)
                             );
                             updateFilteredWidgets();
                           }}
@@ -575,7 +572,7 @@ const App: Component = () => {
                         </button>
                         {widgetOrder()[item] == "todo" && (
                           <button
-                            class="absolute -top-2 right-5 hidden group-hover:block bg-white hover:bg-white/90 shadow-sm size-[24px] justify-center items-center !rounded-full !cursor-move"
+                            class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
                             data-swapy-handle
                           >
                             <GripVertical height={16} class="text-black" />
@@ -591,12 +588,12 @@ const App: Component = () => {
             </div>
           )}
           {mode() === "nightstand" && (
-            <div class="flex justify-center items-center">
+            <div class="flex items-center justify-center">
               <div class="w-full max-w-lg select-none">
-                <h1 class="text-[200px] p-0 m-0 font-bold [line-height:1.2]">
+                <h1 class="m-0 p-0 text-[200px] font-bold [line-height:1.2]">
                   {time()}
                 </h1>
-                <p class="text-3xl pl-2 mt-3 font-medium">
+                <p class="mt-3 pl-2 text-3xl font-medium">
                   {
                     [
                       "Sunday",
@@ -631,25 +628,25 @@ const App: Component = () => {
             </div>
           )}
           {mode() === "speeddial" && (
-            <div class="flex justify-center items-center flex-col gap-2">
+            <div class="flex flex-col items-center justify-center gap-2">
               <div
                 id="bookmarks"
                 class={cn(
-                  "px-3.5 mt-2 grid gap-6",
+                  "mt-2 grid gap-6 px-3.5",
                   "grid-cols-4",
                   bookmarks().length % 2 == 0 && "grid-cols-2",
                   bookmarks().length % 3 == 0 && "grid-cols-3",
-                  bookmarks().length % 4 == 0 && "grid-cols-4",
+                  bookmarks().length % 4 == 0 && "grid-cols-4"
                 )}
               >
                 {bookmarks()
                   .slice(0, 12)
                   .map((bookmark: Bookmark, index: number) => (
-                    <div class="flex items-center bookmark gap-2">
+                    <div class="bookmark flex items-center gap-2">
                       <a
                         href={bookmark.url}
                         target="_blank"
-                        class="text-[28px] text-white whitespace-nowrap overflow-hidden text-ellipsis font-medium"
+                        class="overflow-hidden text-ellipsis whitespace-nowrap text-[28px] font-medium text-white"
                       >
                         {bookmark.name}
                       </a>
@@ -660,12 +657,12 @@ const App: Component = () => {
           )}
         </div>
       </div>
-      <div class="fixed top-2 right-2 text-white flex justify-center items-center rounded-full gap-2">
+      <div class="dark:bg-red/5 fixed right-2 top-2 flex items-center justify-center gap-2 rounded-full bg-gray-400 p-1 px-2 text-black shadow-inner shadow-white/10 dark:bg-gray-600/95 dark:text-white">
         <SettingsTrigger />
         {mode() === "widgets" && (
           <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
             <DialogTrigger class="group" aria-label="Add widget">
-              <Plus class="group-hover:rotate-45 transition-transform" />
+              <Plus class="transition-transform group-hover:rotate-45" />
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

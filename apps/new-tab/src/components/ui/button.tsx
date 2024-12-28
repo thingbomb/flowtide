@@ -8,16 +8,16 @@ import type { ValidComponent } from "solid-js";
 import { splitProps } from "solid-js";
 
 export const buttonVariants = cva(
-  "inline-flex !select-none	items-center justify-center rounded-md text-sm font-medium transition-[color,background-color,box-shadow] focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex !select-none !cursor-default	items-center justify-center rounded-md text-sm font-medium transition-[color,background-color,box-shadow] focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-teal-600 text-primary-foreground shadow hover:bg-teal-700/90 dark:bg-primary dark:hover:bg-primary/90",
+          "inline-flex items-center gap-2 rounded-md bg-gray-600 text-white shadow-inner dark:shadow-white/10 focus:outline-none hover:bg-gray-500 focus:outline-1 focus:outline-white",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "inline-flex items-center gap-2 rounded-md bg-gray-400 dark:bg-gray-800 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner dark:shadow-white/10 focus:outline-none hover:bg-gray-600 dark:hover:bg-gray-600 focus:outline-1 focus:outline-white",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
@@ -34,7 +34,7 @@ export const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  },
+  }
 );
 
 type buttonProps<T extends ValidComponent = "button"> = ButtonRootProps<T> &
@@ -43,7 +43,7 @@ type buttonProps<T extends ValidComponent = "button"> = ButtonRootProps<T> &
   };
 
 export const Button = <T extends ValidComponent = "button">(
-  props: PolymorphicProps<T, buttonProps<T>>,
+  props: PolymorphicProps<T, buttonProps<T>>
 ) => {
   const [local, rest] = splitProps(props as buttonProps, [
     "class",
@@ -58,7 +58,7 @@ export const Button = <T extends ValidComponent = "button">(
           size: local.size,
           variant: local.variant,
         }),
-        local.class,
+        local.class
       )}
       {...rest}
     />

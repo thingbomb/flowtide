@@ -15,7 +15,7 @@ type checkboxControlProps<T extends ValidComponent = "div"> = VoidProps<
 >;
 
 export const CheckboxControl = <T extends ValidComponent = "div">(
-  props: PolymorphicProps<T, checkboxControlProps<T>>,
+  props: PolymorphicProps<T, checkboxControlProps<T>>
 ) => {
   const [local, rest] = splitProps(props as checkboxControlProps, [
     "class",
@@ -24,11 +24,11 @@ export const CheckboxControl = <T extends ValidComponent = "div">(
 
   return (
     <>
-      <CheckboxPrimitive.Input class="[&:focus-visible+div]:outline-none [&:focus-visible+div]:ring-[1.5px] [&:focus-visible+div]:ring-ring [&:focus-visible+div]:ring-offset-2 [&:focus-visible+div]:ring-offset-background" />
+      <CheckboxPrimitive.Input class="[&:focus-visible+div]:ring-ring [&:focus-visible+div]:ring-offset-background [&:focus-visible+div]:outline-none [&:focus-visible+div]:ring-[1.5px] [&:focus-visible+div]:ring-offset-2" />
       <CheckboxPrimitive.Control
         class={cn(
-          "h-4 w-4 shrink-0 rounded-sm border border-sky-700 shadow transition-shadow focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring data-[disabled]:cursor-not-allowed data-[checked]:bg-sky-700 data-[checked]:text-white data-[disabled]:opacity-50",
-          local.class,
+          "size-4 !cursor-pointer rounded-md bg-white p-1 ring-1 ring-inset ring-black/35 data-[checked]:bg-white/25 dark:bg-white/10 dark:ring-white/15 dark:data-[checked]:bg-white",
+          local.class
         )}
         {...rest}
       >

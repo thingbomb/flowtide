@@ -11,7 +11,8 @@
     "build:lander": "turbo build:lander --filter=@flowtide/www"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.9",
     "turbo": "^2.3.3",
     "typescript": "5.5.4"
   },
