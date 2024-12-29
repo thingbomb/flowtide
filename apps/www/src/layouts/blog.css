@@ -30,6 +30,10 @@ img {
   border-radius: 12px;
 }
 
+a {
+  @apply text-blue-300;
+}
+
 a:hover {
   @apply underline;
 }
