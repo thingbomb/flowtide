@@ -1,39 +1,41 @@
-h1 {
-  @apply mb-3 mt-6 text-4xl font-bold;
-}
+article {
+  h1 {
+    @apply mb-3 mt-6 text-4xl font-bold;
+  }
 
-h2 {
-  @apply mb-3 mt-5 text-3xl font-bold;
-}
+  h2 {
+    @apply mb-3 mt-5 text-3xl font-bold;
+  }
 
-h3 {
-  @apply mb-3 mt-6 text-2xl font-bold;
-}
+  h3 {
+    @apply mb-3 mt-6 text-2xl font-bold;
+  }
 
-h4 {
-  @apply mb-3 mt-6 text-xl font-bold;
-}
+  h4 {
+    @apply mb-3 mt-6 text-xl font-bold;
+  }
 
-h5 {
-  @apply mb-3 mt-6 text-lg font-bold;
-}
+  h5 {
+    @apply mb-3 mt-6 text-lg font-bold;
+  }
 
-h6 {
-  @apply mb-3 mt-6 text-base font-bold;
-}
+  h6 {
+    @apply mb-3 mt-6 text-base font-bold;
+  }
 
-p {
-  @apply mb-4;
-}
+  p {
+    @apply mb-4;
+  }
 
-img {
-  border-radius: 12px;
-}
+  img {
+    border-radius: 12px;
+  }
 
-a {
-  @apply text-blue-300;
-}
+  a {
+    @apply text-blue-300;
+  }
 
-a:hover {
-  @apply underline;
+  a:hover {
+    @apply underline;
+  }
 }
