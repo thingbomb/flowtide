@@ -14,7 +14,7 @@ Features:
 - Change the font, layout, theme, and more
 - Be greeted on every New Tab
 
-![Screenshot](https://utfs.io/f/rY9f3xCqBWAKPdnBT85CnSYuHethWmJioz4IcG2bM5FX8TD3)
+<img src="https://github.com/user-attachments/assets/f47196ea-7c95-4ac4-ae19-8a894551c458" style="border-radius: 24px;">
 
 ## Install for your browser
 
