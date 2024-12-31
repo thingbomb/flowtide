@@ -286,7 +286,7 @@ function SettingsTrigger() {
             </a>
             <a
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 pt-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
-              href="https://flowtide.canny.io/feature-requests"
+              href="https://feedback.flowtide.app/feature-requests"
               target="_blank"
             >
               <Text class="size-[64px]" fill="none" />
