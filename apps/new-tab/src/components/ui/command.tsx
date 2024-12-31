@@ -19,7 +19,7 @@ export const Command = (props: CommandRootProps) => {
   return (
     <CommandPrimitive
       class={cn(
-        "bg-popover text-popover-foreground flex size-full flex-col overflow-hidden",
+        "text-popover-foreground flex size-full flex-col overflow-hidden bg-white/5",
         local.class
       )}
       {...rest}
@@ -45,7 +45,10 @@ export const CommandInput = (props: VoidProps<CommandInputProps>) => {
   const [local, rest] = splitProps(props, ["class"]);
 
   return (
-    <div class="flex items-center border-b px-3" cmdk-input-wrapper="">
+    <div
+      class="flex items-center border-b border-white/10 px-3"
+      cmdk-input-wrapper=""
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -78,7 +81,7 @@ export const CommandItem = (props: CommandItemProps) => {
   return (
     <CommandPrimitive.Item
       class={cn(
-        "aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        "aria-selected:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-selected:bg-white/10",
         local.class
       )}
       {...rest}

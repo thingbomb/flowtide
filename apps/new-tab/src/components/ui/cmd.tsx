@@ -115,6 +115,7 @@ export function CommandPalette(props: any) {
 
   const [actions, setActions] = createSignal(initialActions);
   const [bookmarks, setBookmarks] = createSignal<Bookmark[]>([]);
+  const [loadedBookmarks, setLoadedBookmarks] = createSignal(false);
   const [bookmarkFolders, setBookmarkFolders] = createSignal<BookmarkFolder[]>(
     []
   );
@@ -165,6 +166,7 @@ export function CommandPalette(props: any) {
         };
         displayBookmarks(bookmarks);
         setBookmarks(newBookmarks);
+        setLoadedBookmarks(true);
         setBookmarkFolders(newFolders);
       });
     };
@@ -246,14 +248,18 @@ export function CommandPalette(props: any) {
           {result().result == null ? chrome.i18n.getMessage("no_results") : ""}
         </CommandEmpty>
         <CommandGroup heading={chrome.i18n.getMessage("bookmarks")}>
-          {bookmarks().map((bookmark) => (
-            <CommandItem
-              onSelect={() => handleCommand(bookmark)}
-              class="flex items-center"
-            >
-              <span class="text-primary">{bookmark.name}</span>
-            </CommandItem>
-          ))}
+          {loadedBookmarks() ? (
+            <div>
+              {bookmarks().map((bookmark) => (
+                <CommandItem
+                  onSelect={() => handleCommand(bookmark)}
+                  class="flex items-center"
+                >
+                  <span class="text-primary">{bookmark.name}</span>
+                </CommandItem>
+              ))}
+            </div>
+          ) : null}
         </CommandGroup>
         <CommandGroup heading={chrome.i18n.getMessage("actions")}>
           {actions().map((action, index) => (
