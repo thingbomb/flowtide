@@ -33,7 +33,7 @@ function SettingsTrigger() {
 
   function SettingsPage() {
     return (
-      <div class="bg-background text-foreground fixed inset-0 z-10 flex justify-center overflow-y-auto">
+      <div class="text-foreground bg-background fixed inset-0 z-10 flex justify-center overflow-y-auto">
         <div class="h-full w-full max-w-lg py-20">
           <h1 class="text-5xl font-bold">
             {chrome.i18n.getMessage("settings")}
