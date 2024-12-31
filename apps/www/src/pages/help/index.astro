@@ -1,0 +1,50 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { SITE_TITLE } from "../../consts";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("articles")).sort(
+  (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Help Center - ${SITE_TITLE}`}
+      description={`Get support for Flowtide.`}
+    />
+  </head>
+  <body class="bg-black text-white">
+    <Header />
+    <div class="flex flex-col items-center justify-center p-6">
+      <h1 class="text-5xl font-black text-center p-6 pt-16">
+        Welcome to the Help Center!
+      </h1>
+      <br />
+      <hr class="h-1 w-full border-zinc-800" />
+      <div class="text-left w-full mt-3">
+        <h3 class="text-xl font-bold">Articles</h3>
+        <br />
+        <div class="flex flex-col gap-4 w-full">
+          {
+            (posts.length == 0 && <p>No posts yet.</p>) ||
+              posts.map((post: any) => (
+                <a href={`/help/articles/${post.slug}`}>
+                  <div class="flex flex-col gap-1 p-4 py-1 border-2 border-zinc-800 hover:bg-zinc-800 rounded-lg">
+                    <h4 class="text-lg font-bold">{post.data.title}</h4>
+                    <p class="text-sm">{post.data.description}</p>
+                  </div>
+                </a>
+              ))
+          }
+        </div>
+      </div>
+    </div>
+    <Footer />
+    <script src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  </body>
+</html>

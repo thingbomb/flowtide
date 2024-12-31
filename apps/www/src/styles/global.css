@@ -3,25 +3,53 @@
 @tailwind utilities;
 
 h1 {
-  @apply text-4xl font-bold;
+  @apply mt-2 text-3xl font-bold;
 }
 
 h2 {
-  @apply text-3xl font-bold;
+  @apply mt-4 text-2xl font-bold;
 }
 
 h3 {
-  @apply text-2xl font-bold;
+  @apply mt-4 text-xl font-bold;
 }
 
 h4 {
-  @apply text-xl font-bold;
+  @apply mt-2 text-lg font-bold;
 }
 
 h5 {
-  @apply text-lg font-bold;
+  @apply mt-2 text-base font-bold;
 }
 
 h6 {
-  @apply text-base font-bold;
+  @apply mt-2 text-sm font-bold;
+}
+
+p {
+  @apply mb-4 mt-1 text-base;
+}
+
+code {
+  @apply mx-1 rounded-sm bg-zinc-800 px-1 py-0.5 text-sm text-white;
+}
+
+blockquote {
+  @apply mb-4 mt-3 rounded-sm border-l-4 border-gray-400 bg-gray-800 p-4;
+
+  p {
+    @apply !mb-0 !mt-0;
+  }
+}
+
+ul {
+  @apply mb-2 ml-4 mt-1 list-disc marker:text-zinc-200;
+}
+
+ol {
+  @apply mb-2 ml-4 mt-1 list-decimal marker:text-zinc-200;
+}
+
+img {
+  @apply mt-4 rounded-md shadow-md;
 }

@@ -1,0 +1,39 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Header from "../../../components/Header.astro";
+import BaseHead from "../../../components/BaseHead.astro";
+import { SITE_TITLE } from "../../../consts";
+import Footer from "../../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("articles");
+  return posts.map((post: CollectionEntry<"articles">) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+type Props = CollectionEntry<"articles">;
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`${post.data.title}`}
+      description={`Get support for Flowtide.`}
+    />
+  </head>
+  <body class="bg-black text-white">
+    <Header />
+    <div class="w-full flex justify-center items-center mt-10 mb-10">
+      <div class="p-5 max-w-xl">
+        <Content />
+      </div>
+    </div>
+    <Footer />
+    <script src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  </body>
+</html>

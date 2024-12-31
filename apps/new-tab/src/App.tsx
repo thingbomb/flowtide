@@ -528,7 +528,7 @@ const App: Component = () => {
                 {filteredWidgets().length > 0 ? (
                   filteredWidgets().map((item: any) => (
                     <div
-                      class={`${uuidv4()} slot h-fit`}
+                      class={`${uuidv4()} slot group h-fit`}
                       data-swapy-slot={item}
                     >
                       <div
@@ -554,8 +554,16 @@ const App: Component = () => {
                         {widgetOrder()[item] === "pomodoro" && (
                           <PomodoroWidget />
                         )}
+                        {widgetOrder()[item] == "todo" && (
+                          <button
+                            class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
+                            data-swapy-handle
+                          >
+                            <GripVertical height={16} class="text-black" />
+                          </button>
+                        )}
                         <button
-                          class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
+                          class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
                           onclick={(e) => {
                             const newWidgetOrder = widgetOrder();
                             delete newWidgetOrder[item];
@@ -570,14 +578,6 @@ const App: Component = () => {
                         >
                           <X height={16} class="text-black" />
                         </button>
-                        {widgetOrder()[item] == "todo" && (
-                          <button
-                            class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
-                            data-swapy-handle
-                          >
-                            <GripVertical height={16} class="text-black" />
-                          </button>
-                        )}
                       </div>
                     </div>
                   ))
