@@ -1,5 +1,5 @@
 ---
-title: "Why I chose Solid to rewrite my app"
+title: "Why I chose SolidJS to rewrite my app"
 pubDate: 2024-12-28
 description: "This article goes over the reasons why I rewrote, technical decisions, and the future of Flowtide."
 heroImage: "/rewriting.jpg"
