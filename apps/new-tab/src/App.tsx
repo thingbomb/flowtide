@@ -147,6 +147,11 @@ const App: Component = () => {
   const [count, setCount] = createSignal(0);
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
+  const [pageIcon, setPageIcon] = createStoredSignal("pageIcon", "");
+  const [pageIconURL, setPageIconURL] = createStoredSignal(
+    "iconUrl",
+    "assets/logo.png"
+  );
   const [selectedImage, setSelectedImage] = createSignal<string>(
     localStorage.getItem("selectedImage") ||
       images[Math.floor(Math.random() * images.length)]
@@ -158,6 +163,7 @@ const App: Component = () => {
   const [mode, setMode] = createStoredSignal("mode", "widgets");
   const [time, setTime] = createSignal(`${createTime(new Date()).time}`);
   const [bookmarks, setBookmarks] = createSignal<any[]>([]);
+  const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   onMount(() => {
     if (chrome.bookmarks !== undefined) {
       chrome.bookmarks.getTree((bookmarkTreeNodes) => {
@@ -178,6 +184,15 @@ const App: Component = () => {
       });
     }
   });
+  createEffect(() => {
+    if (pageTitle()) {
+      document.title = pageTitle();
+    }
+  }, [pageTitle]);
+
+  createEffect(() => {
+    (document.getElementById("icon") as any).href = pageIconURL();
+  }, [pageIconURL]);
 
   const OnboardingScreen1: Component = () => {
     return (

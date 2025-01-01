@@ -202,5 +202,14 @@
   },
   "top": {
     "message": "Top"
+  },
+  "page_title": {
+    "message": "Page title"
+  },
+  "page": {
+    "message": "Page title and icon"
+  },
+  "save": {
+    "message": "Save"
   }
 }

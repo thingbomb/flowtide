@@ -98,3 +98,11 @@
     -ms-overflow-style: none;
   }
 }
+
+.card-style {
+  @apply dark:bg-background border-1 hover:!border-primary dark:hover:!border-primary relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10;
+}
+
+.card-group {
+  @apply **:data-selected:!ring-primary grid w-full gap-4;
+}

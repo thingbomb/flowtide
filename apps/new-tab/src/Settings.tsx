@@ -22,7 +22,37 @@ import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { Button } from "./components/ui/button";
 
 function SettingsTrigger() {
-  const [open, setOpen] = createSignal(false);
+  function textToImage(text: string) {
+    const canvas = document.createElement("canvas");
+    const ctx: any = canvas.getContext("2d");
+
+    canvas.width = 128;
+    canvas.height = 128;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let fontSize = 128;
+    ctx.font = `bold ${fontSize}px system-ui`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    while (ctx.measureText(text).width > canvas.width - 10 && fontSize > 10) {
+      fontSize -= 2;
+      ctx.font = `bold ${fontSize}px system-ui`;
+    }
+
+    if (document.documentElement.style.colorScheme === "dark") {
+      ctx.fillStyle = "white";
+    } else {
+      ctx.fillStyle = "black";
+    }
+
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+    return canvas.toDataURL();
+  }
+
+  const [open, setOpen] = createSignal(true);
   const [font, setFont] = createStoredSignal("font", "sans");
   const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
   const [background, setBackground] = createStoredSignal("background", "image");
@@ -30,6 +60,14 @@ function SettingsTrigger() {
   const [name, setName] = createStoredSignal("name", "");
   const [mode, setMode] = createStoredSignal("mode", "widgets");
   const [greetingNameValue, setGreetingNameValue] = createSignal(name());
+  const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
+  const [pageTitleValue, setPageTitleValue] = createSignal(pageTitle());
+  const [pageIcon, setPageIcon] = createStoredSignal("pageIcon", "");
+  const [pageIconValue, setPageIconValue] = createSignal(pageIcon());
+  const [pageIconURL, setPageIconURL] = createStoredSignal(
+    "iconUrl",
+    "assets/logo.png"
+  );
 
   function SettingsPage() {
     return (
@@ -41,9 +79,9 @@ function SettingsTrigger() {
           <br />
           <br />
           <h3 class="text-2xl font-[500]">{chrome.i18n.getMessage("mode")}</h3>
-          <div class="**:data-selected:!ring-primary grid w-full grid-cols-3 grid-rows-1 gap-4">
+          <div class="card-group grid-cols-3 grid-rows-1">
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("widgets");
@@ -54,7 +92,7 @@ function SettingsTrigger() {
               <span class="text-xl">{chrome.i18n.getMessage("widgets")}</span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(mode() === "nightstand" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("nightstand");
@@ -67,7 +105,7 @@ function SettingsTrigger() {
               </span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(mode() === "speeddial" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("speeddial");
@@ -87,9 +125,9 @@ function SettingsTrigger() {
               <h3 class="text-2xl font-[500]">
                 {chrome.i18n.getMessage("layout")}
               </h3>
-              <div class="**:data-selected:!ring-primary grid w-full grid-cols-1 grid-rows-2 gap-4">
+              <div class="card-group grid-cols-1 grid-rows-2">
                 <button
-                  class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+                  class="card-style"
                   {...(layout() === "center" ? { "data-selected": true } : {})}
                   onClick={() => {
                     setLayout("center");
@@ -102,7 +140,7 @@ function SettingsTrigger() {
                   </span>
                 </button>
                 <button
-                  class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+                  class="card-style"
                   {...(layout() === "top" ? { "data-selected": true } : {})}
                   onClick={() => {
                     setLayout("top");
@@ -121,9 +159,9 @@ function SettingsTrigger() {
             </div>
           )}
           <h3 class="text-2xl font-[500]">{chrome.i18n.getMessage("font")}</h3>
-          <div class="**:data-selected:!ring-primary grid w-full grid-cols-3 grid-rows-1 gap-4">
+          <div class="card-group grid-cols-3 grid-rows-1">
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block size-[132px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(font() === "sans" ? { "data-selected": true } : {})}
               onClick={() => {
                 setFont("sans");
@@ -134,7 +172,7 @@ function SettingsTrigger() {
               <span class="text-xl">{chrome.i18n.getMessage("sans")}</span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block size-[132px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(font() === "serif" ? { "data-selected": true } : {})}
               onClick={() => {
                 setFont("serif");
@@ -145,7 +183,7 @@ function SettingsTrigger() {
               <span class="text-xl">{chrome.i18n.getMessage("serif")}</span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block size-[132px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(font() === "mono" ? { "data-selected": true } : {})}
               onClick={() => {
                 setFont("mono");
@@ -159,9 +197,9 @@ function SettingsTrigger() {
           <br />
           <br />
           <h3 class="text-2xl font-[500]">{chrome.i18n.getMessage("theme")}</h3>
-          <div class="**:data-selected:!ring-primary grid w-full grid-cols-2 grid-rows-1 gap-4">
+          <div class="card-group grid-cols-2 grid-rows-1">
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(theme() === "light" ? { "data-selected": true } : {})}
               onClick={() => {
                 setTheme("light");
@@ -174,7 +212,7 @@ function SettingsTrigger() {
               <span class="text-xl">{chrome.i18n.getMessage("light")}</span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(theme() === "dark" ? { "data-selected": true } : {})}
               onClick={() => {
                 setTheme("dark");
@@ -192,9 +230,9 @@ function SettingsTrigger() {
           <h3 class="text-2xl font-[500]">
             {chrome.i18n.getMessage("background")}
           </h3>
-          <div class="**:data-selected:!ring-primary grid w-full grid-cols-2 grid-rows-1 gap-4">
+          <div class="card-group grid-cols-2 grid-rows-1">
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(background() === "image" ? { "data-selected": true } : {})}
               onClick={() => {
                 setBackground("image");
@@ -205,7 +243,7 @@ function SettingsTrigger() {
               <span class="text-xl">{chrome.i18n.getMessage("image")}</span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(background() === "solid-color"
                 ? { "data-selected": true }
                 : {})}
@@ -220,7 +258,7 @@ function SettingsTrigger() {
               </span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(background() === "gradient"
                 ? { "data-selected": true }
                 : {})}
@@ -233,7 +271,7 @@ function SettingsTrigger() {
               <span class="text-xl">{chrome.i18n.getMessage("gradient")}</span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style"
               {...(background() === "blank" ? { "data-selected": true } : {})}
               onClick={() => {
                 setBackground("blank");
@@ -272,11 +310,46 @@ function SettingsTrigger() {
           <br />
           <br />
           <h2 class="mb-3 text-2xl font-[500]">
+            {chrome.i18n.getMessage("page")}
+          </h2>
+          <div class="flex items-start gap-2">
+            <TextFieldRoot class="flex flex-1 gap-2">
+              <TextField
+                placeholder="Icon"
+                class="h-10 w-10"
+                value={pageIconValue()}
+                onInput={(e) => setPageIconValue(e.currentTarget.value)}
+              />
+              <TextField
+                placeholder="New Tab"
+                class="h-10"
+                value={pageTitleValue()}
+                onInput={(e) => setPageTitleValue(e.currentTarget.value)}
+              />
+            </TextFieldRoot>
+            <Button
+              onClick={() => {
+                setPageTitle(pageTitleValue());
+                setPageIcon(pageIconValue());
+                setPageIconURL(textToImage(pageIconValue()));
+              }}
+              disabled={
+                pageTitle() == pageTitleValue() && pageIcon() == pageIconValue()
+              }
+            >
+              {pageTitle() == pageTitleValue() && pageIcon() == pageIconValue()
+                ? chrome.i18n.getMessage("saved")
+                : chrome.i18n.getMessage("save")}
+            </Button>
+          </div>
+          <br />
+          <br />
+          <h2 class="mb-3 text-2xl font-[500]">
             {chrome.i18n.getMessage("more")}
           </h2>
-          <div class="**:data-selected:!ring-primary grid w-full grid-cols-2 grid-rows-1 gap-4">
+          <div class="card-group grid-cols-2 grid-rows-1">
             <a
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 pt-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style pt-10"
               href="https://github.com/thingbomb/flowtide/discussions"
               target="_blank"
             >
@@ -285,7 +358,7 @@ function SettingsTrigger() {
               <span class="text-xl">{chrome.i18n.getMessage("forum")}</span>
             </a>
             <a
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 pt-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card-style pt-10"
               href="https://feedback.flowtide.app/feature-requests"
               target="_blank"
             >
