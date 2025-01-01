@@ -164,6 +164,7 @@ const App: Component = () => {
   const [time, setTime] = createSignal(`${createTime(new Date()).time}`);
   const [bookmarks, setBookmarks] = createSignal<any[]>([]);
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
+  const [textStyle, setTextStyle] = createStoredSignal("textStyle", "normal");
   onMount(() => {
     if (chrome.bookmarks !== undefined) {
       chrome.bookmarks.getTree((bookmarkTreeNodes) => {
@@ -454,7 +455,9 @@ const App: Component = () => {
         `font-serif`,
         `font-sans`,
         `font-${currentFont()}`,
-        imageLoaded() ? "bg-black dark:bg-none" : ""
+        imageLoaded() ? "bg-black dark:bg-none" : "",
+        textStyle() == "uppercase" ? "**:!uppercase" : "",
+        textStyle() == "lowercase" ? "**:lowercase" : ""
       )}
     >
       {needsOnboarding() && <OnboardingFlow />}
@@ -679,7 +682,12 @@ const App: Component = () => {
             <DialogTrigger class="group" aria-label="Add widget">
               <Plus class="transition-transform group-hover:rotate-45" />
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent
+              class={cn(
+                textStyle() == "uppercase" ? "**:!uppercase" : "",
+                textStyle() == "lowercase" ? "**:lowercase" : ""
+              )}
+            >
               <DialogHeader>
                 <DialogTitle>{chrome.i18n.getMessage("blocks")}</DialogTitle>
                 <DialogDescription>

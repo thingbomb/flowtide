@@ -68,6 +68,7 @@ function SettingsTrigger() {
     "iconUrl",
     "assets/logo.png"
   );
+  const [textStyle, setTextStyle] = createStoredSignal("textStyle", "normal");
 
   function SettingsPage() {
     return (
@@ -280,6 +281,50 @@ function SettingsTrigger() {
               <Square class="size-[64px]" fill="none" />
               <br />
               <span class="text-xl">{chrome.i18n.getMessage("blank")}</span>
+            </button>
+          </div>
+          <br />
+          <br />
+          <h3 class="text-2xl font-[500]">
+            {chrome.i18n.getMessage("text_style")}
+          </h3>
+          <div class="card-group grid-cols-3 grid-rows-1">
+            <button
+              class="card-style"
+              {...(textStyle() === "uppercase"
+                ? { "data-selected": true }
+                : {})}
+              onClick={() => {
+                setTextStyle("uppercase");
+              }}
+            >
+              <span class="text-5xl font-bold !uppercase">aa</span>
+              <br />
+              <span class="text-xl">{chrome.i18n.getMessage("uppercase")}</span>
+            </button>
+            <button
+              class="card-style"
+              {...(textStyle() === "normal" ? { "data-selected": true } : {})}
+              onClick={() => {
+                setTextStyle("normal");
+              }}
+            >
+              <span class="text-5xl font-bold !normal-case">Aa</span>
+              <br />
+              <span class="text-xl">{chrome.i18n.getMessage("normal")}</span>
+            </button>
+            <button
+              class="card-style"
+              {...(textStyle() === "lowercase"
+                ? { "data-selected": true }
+                : {})}
+              onClick={() => {
+                setTextStyle("lowercase");
+              }}
+            >
+              <span class="text-5xl font-bold !lowercase">aa</span>
+              <br />
+              <span class="text-xl">{chrome.i18n.getMessage("lowercase")}</span>
             </button>
           </div>
           <br />

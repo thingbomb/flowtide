@@ -211,5 +211,17 @@
   },
   "save": {
     "message": "Save"
+  },
+  "lowercase": {
+    "message": "Lowercase"
+  },
+  "uppercase": {
+    "message": "Uppercase"
+  },
+  "normal": {
+    "message": "Normal"
+  },
+  "text_style": {
+    "message": "Text style"
   }
 }
