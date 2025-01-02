@@ -165,6 +165,11 @@ const App: Component = () => {
   const [bookmarks, setBookmarks] = createSignal<any[]>([]);
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   const [textStyle, setTextStyle] = createStoredSignal("textStyle", "normal");
+  const [opacity, setOpacity] = createStoredSignal("opacity", "0.8");
+  const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
+    "wallpaperBlur",
+    0
+  );
   onMount(() => {
     if (chrome.bookmarks !== undefined) {
       chrome.bookmarks.getTree((bookmarkTreeNodes) => {
@@ -190,6 +195,19 @@ const App: Component = () => {
       document.title = pageTitle();
     }
   }, [pageTitle]);
+
+  createEffect(() => {
+    if (wallpaperBlur() > 0) {
+      document.getElementById("wallpaper")!.style.filter =
+        `blur(${Number(wallpaperBlur()) / 10}px)`;
+    }
+  }, [wallpaperBlur]);
+
+  createEffect(() => {
+    if (opacity() > 0) {
+      document.getElementById("wallpaper")!.style.opacity = opacity();
+    }
+  }, [opacity]);
 
   createEffect(() => {
     (document.getElementById("icon") as any).href = pageIconURL();
@@ -465,14 +483,18 @@ const App: Component = () => {
         <img
           src={selectedImage()}
           alt=""
+          id="wallpaper"
           class="absolute inset-0 h-full w-full object-cover transition-all"
           style={{ opacity: 0 }}
           onLoad={(e: any) => {
             if (document.documentElement.style.colorScheme === "dark") {
-              e.target.style.opacity = 0.8;
+              e.target.style.opacity = opacity();
             } else {
               e.target.style.opacity = 1;
-              e.target.style.filter = "brightness(0.8)";
+              e.target.style.filter = `brightness(${opacity()})`;
+            }
+            if (wallpaperBlur() > 0) {
+              e.target.style.filter = `blur(${Number(wallpaperBlur()) / 10}px)`;
             }
             setImageLoaded(true);
           }}

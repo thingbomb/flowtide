@@ -106,3 +106,25 @@
 .card-group {
   @apply **:data-selected:!ring-primary grid w-full gap-4;
 }
+
+@layer components {
+  input[type="range"] {
+    @apply h-1.5 w-full appearance-none rounded-lg bg-zinc-600;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    @apply bg-zinc-600;
+    height: 2px;
+    border-radius: 8px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    @apply h-4 w-4 cursor-pointer rounded-full border-2 border-blue-700 bg-black shadow-inner shadow-white/10;
+    appearance: none;
+    margin-top: -6px;
+  }
+
+  input[type="range"]:focus::-webkit-slider-thumb {
+    border-color: #1d72b8;
+  }
+}

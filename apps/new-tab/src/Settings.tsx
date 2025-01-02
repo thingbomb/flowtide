@@ -64,6 +64,11 @@ function SettingsTrigger() {
   const [pageTitleValue, setPageTitleValue] = createSignal(pageTitle());
   const [pageIcon, setPageIcon] = createStoredSignal("pageIcon", "");
   const [pageIconValue, setPageIconValue] = createSignal(pageIcon());
+  const [opacity, setOpacity] = createStoredSignal<number>("opacity", 0.8);
+  const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
+    "wallpaperBlur",
+    0
+  );
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
     "assets/logo.png"
@@ -285,6 +290,34 @@ function SettingsTrigger() {
           </div>
           <br />
           <br />
+          <h2 class="mb-3 text-2xl font-[500]">
+            {chrome.i18n.getMessage("opacity")}
+          </h2>
+          <div class="flex items-start gap-2">
+            <input
+              type="range"
+              class="h-2 w-full appearance-none rounded-lg bg-zinc-600"
+              value={Number(opacity()) * 100}
+              onInput={(e) => setOpacity(Number(e.currentTarget.value) / 100)}
+            />
+          </div>
+          <br />
+          <br />
+          <h2 class="mb-3 text-2xl font-[500]">
+            {chrome.i18n.getMessage("wallpaper_blur")}
+          </h2>
+          <div class="flex items-start gap-2">
+            <input
+              type="range"
+              class="h-2 w-full appearance-none rounded-lg bg-zinc-600"
+              value={Number(wallpaperBlur() * 2)}
+              onInput={(e) =>
+                setWallpaperBlur(Number(e.currentTarget.value) / 2)
+              }
+            />
+          </div>
+          <br />
+          <br />
           <h3 class="text-2xl font-[500]">
             {chrome.i18n.getMessage("text_style")}
           </h3>
@@ -298,7 +331,7 @@ function SettingsTrigger() {
                 setTextStyle("uppercase");
               }}
             >
-              <span class="text-5xl font-bold !uppercase">aa</span>
+              <span class="text-5xl font-bold !uppercase">AA</span>
               <br />
               <span class="text-xl">{chrome.i18n.getMessage("uppercase")}</span>
             </button>

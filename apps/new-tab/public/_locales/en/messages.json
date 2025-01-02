@@ -223,5 +223,11 @@
   },
   "text_style": {
     "message": "Text style"
+  },
+  "opacity": {
+    "message": "Opacity"
+  },
+  "wallpaper_blur": {
+    "message": "Wallpaper blur"
   }
 }
