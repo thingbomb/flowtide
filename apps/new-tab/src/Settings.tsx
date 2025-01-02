@@ -21,7 +21,7 @@ import { cn } from "./libs/cn";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { Button } from "./components/ui/button";
 
-function SettingsTrigger() {
+function SettingsTrigger({ className }: { className?: string }) {
   function textToImage(text: string) {
     const canvas = document.createElement("canvas");
     const ctx: any = canvas.getContext("2d");
@@ -52,7 +52,7 @@ function SettingsTrigger() {
     return canvas.toDataURL();
   }
 
-  const [open, setOpen] = createSignal(true);
+  const [open, setOpen] = createSignal(false);
   const [font, setFont] = createStoredSignal("font", "sans");
   const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
   const [background, setBackground] = createStoredSignal("background", "image");
@@ -463,7 +463,7 @@ function SettingsTrigger() {
   }
 
   return (
-    <div class="h-[20px]">
+    <div class={cn("h-[20px]", className)}>
       <button class="group" onclick={() => setOpen(true)} aria-haspopup="true">
         <Settings class="hover:rotate-25 size-[20px] transition-transform" />
       </button>

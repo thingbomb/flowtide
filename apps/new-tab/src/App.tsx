@@ -6,9 +6,12 @@ import {
   Bookmark,
   Check,
   Clock,
+  Eye,
+  EyeOff,
   Grid,
   GripVertical,
   Key,
+  Menu,
   Plus,
   Settings,
   X,
@@ -169,6 +172,10 @@ const App: Component = () => {
   const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
     "wallpaperBlur",
     0
+  );
+  const [itemsHidden, setItemsHidden] = createStoredSignal<string>(
+    "itemsHidden",
+    "false"
   );
   onMount(() => {
     if (chrome.bookmarks !== undefined) {
@@ -528,6 +535,7 @@ const App: Component = () => {
           style={{
             "align-content": layout() == "center" ? "center" : "flex-start",
             "padding-top": layout() == "top" ? "2.5rem" : "0",
+            display: itemsHidden() == "true" ? "none" : "",
           }}
         >
           {mode() === "widgets" && (
@@ -697,79 +705,94 @@ const App: Component = () => {
           )}
         </div>
       </div>
-      <div class="dark:bg-red/5 fixed right-2 top-2 flex items-center justify-center gap-2 rounded-full bg-gray-400 p-1 px-2 text-black shadow-inner shadow-white/10 dark:bg-gray-600/95 dark:text-white">
-        <SettingsTrigger />
-        {mode() === "widgets" && (
-          <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
-            <DialogTrigger class="group" aria-label="Add widget">
-              <Plus class="transition-transform group-hover:rotate-45" />
-            </DialogTrigger>
-            <DialogContent
-              class={cn(
-                textStyle() == "uppercase" ? "**:!uppercase" : "",
-                textStyle() == "lowercase" ? "**:lowercase" : ""
-              )}
-            >
-              <DialogHeader>
-                <DialogTitle>{chrome.i18n.getMessage("blocks")}</DialogTitle>
-                <DialogDescription>
-                  {chrome.i18n.getMessage("blocks_description")}
-                </DialogDescription>
-                <br />
-                <Block
-                  title="Bookmarks"
-                  description="Easy access to your first 9 bookmarks with this widget."
-                  key="bookmarks"
-                />
-                <Block
-                  title="Pomodoro"
-                  description="Use the pomodoro technique for an interval-based workflow."
-                  key="pomodoro"
-                />
-                <Block
-                  title="Nature"
-                  description="Listen to nature soundscapees with this widget."
-                  key="nature"
-                />
-                <Block
-                  title="Focus Sounds"
-                  description="Soundscapes to help you focus."
-                  key="focus"
-                />
-                <Block
-                  title="Ambience Sounds"
-                  description="Ambient soundscapes to help you relax."
-                  key="ambience"
-                />
-                <Block
-                  title="To-do list"
-                  description="Track your todos with an easy widget."
-                  key="todo"
-                />
-                <Block
-                  title="Stopwatch"
-                  description="Add a stopwatch widget to your start page."
-                  key="stopwatch"
-                />
-                <Block
-                  title="Clock"
-                  description="Adds a clock widget to your start page."
-                  key="clock"
-                />
-                <Block
-                  title="Date"
-                  description="A sleek date widget that shows you the current date."
-                  key="date"
-                />
-                <Block
-                  title="To-do list"
-                  description="Track your todos with an easy widget."
-                  key="todo"
-                />
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
-        )}
+      <div class="dark:bg-red/5 group fixed right-2 top-2 flex flex-row-reverse items-center justify-center gap-2 rounded-full bg-gray-400 p-1 px-2 text-white shadow-inner shadow-white/10 transition-all dark:bg-gray-600/95">
+        <button class="peer group-hover:hidden">
+          <Menu />
+        </button>
+        <div class="hidden group-hover:flex peer-hover:!flex">
+          {mode() === "widgets" && (
+            <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
+              <DialogTrigger aria-label="Add widget">
+                <Plus class="transition-transform" />
+              </DialogTrigger>
+              <DialogContent
+                class={cn(
+                  textStyle() == "uppercase" ? "**:!uppercase" : "",
+                  textStyle() == "lowercase" ? "**:lowercase" : ""
+                )}
+              >
+                <DialogHeader>
+                  <DialogTitle>{chrome.i18n.getMessage("blocks")}</DialogTitle>
+                  <DialogDescription>
+                    {chrome.i18n.getMessage("blocks_description")}
+                  </DialogDescription>
+                  <br />
+                  <Block
+                    title="Bookmarks"
+                    description="Easy access to your first 9 bookmarks with this widget."
+                    key="bookmarks"
+                  />
+                  <Block
+                    title="Pomodoro"
+                    description="Use the pomodoro technique for an interval-based workflow."
+                    key="pomodoro"
+                  />
+                  <Block
+                    title="Nature"
+                    description="Listen to nature soundscapees with this widget."
+                    key="nature"
+                  />
+                  <Block
+                    title="Focus Sounds"
+                    description="Soundscapes to help you focus."
+                    key="focus"
+                  />
+                  <Block
+                    title="Ambience Sounds"
+                    description="Ambient soundscapes to help you relax."
+                    key="ambience"
+                  />
+                  <Block
+                    title="To-do list"
+                    description="Track your todos with an easy widget."
+                    key="todo"
+                  />
+                  <Block
+                    title="Stopwatch"
+                    description="Add a stopwatch widget to your start page."
+                    key="stopwatch"
+                  />
+                  <Block
+                    title="Clock"
+                    description="Adds a clock widget to your start page."
+                    key="clock"
+                  />
+                  <Block
+                    title="Date"
+                    description="A sleek date widget that shows you the current date."
+                    key="date"
+                  />
+                  <Block
+                    title="To-do list"
+                    description="Track your todos with an easy widget."
+                    key="todo"
+                  />
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+          )}
+        </div>
+        <div class="hidden w-0 group-hover:flex group-hover:w-[unset] peer-hover:!flex peer-hover:w-[unset]">
+          <SettingsTrigger />
+        </div>
+        <button
+          class="hidden group-hover:flex peer-hover:!flex"
+          onclick={() => {
+            setItemsHidden(itemsHidden() == "true" ? "false" : "true");
+          }}
+        >
+          {itemsHidden() == "true" ? <EyeOff /> : <Eye />}
+        </button>
         <CommandPalette />
       </div>
     </main>
