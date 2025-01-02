@@ -12,6 +12,8 @@ import {
   GripVertical,
   Key,
   Menu,
+  Pause,
+  Play,
   Plus,
   Settings,
   X,
@@ -172,6 +174,10 @@ const App: Component = () => {
   const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
     "wallpaperBlur",
     0
+  );
+  const [backgroundPaused, setBackgroundPaused] = createStoredSignal<string>(
+    "backgroundPaused",
+    "false"
   );
   const [itemsHidden, setItemsHidden] = createStoredSignal<string>(
     "itemsHidden",
@@ -397,14 +403,16 @@ const App: Component = () => {
       }
     }
 
-    let newImage = images[Math.floor(Math.random() * images.length)];
-    localStorage.setItem("selectedImage", newImage);
-    fetch(newImage, {
-      mode: "no-cors",
-      headers: {
-        "Cache-Control": "public, max-age=315360000, immutable",
-      },
-    });
+    if (backgroundPaused() == "false") {
+      let newImage = images[Math.floor(Math.random() * images.length)];
+      localStorage.setItem("selectedImage", newImage);
+      fetch(newImage, {
+        mode: "no-cors",
+        headers: {
+          "Cache-Control": "public, max-age=315360000, immutable",
+        },
+      });
+    }
 
     setInterval(() => {
       setTime(createTime(new Date()).time);
@@ -709,7 +717,10 @@ const App: Component = () => {
         <button class="peer group-hover:hidden">
           <Menu />
         </button>
-        <div class="hidden group-hover:flex peer-hover:!flex">
+        <div
+          class="hidden group-hover:flex peer-hover:!flex"
+          title="Add widget"
+        >
           {mode() === "widgets" && (
             <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
               <DialogTrigger aria-label="Add widget">
@@ -782,16 +793,45 @@ const App: Component = () => {
             </Dialog>
           )}
         </div>
-        <div class="hidden w-0 group-hover:flex group-hover:w-[unset] peer-hover:!flex peer-hover:w-[unset]">
+        <div
+          class="hidden w-0 group-hover:flex group-hover:w-[unset] peer-hover:!flex peer-hover:w-[unset]"
+          title="Settings"
+        >
           <SettingsTrigger />
         </div>
         <button
           class="hidden group-hover:flex peer-hover:!flex"
+          title={itemsHidden() == "true" ? "Show items" : "Hide items"}
           onclick={() => {
             setItemsHidden(itemsHidden() == "true" ? "false" : "true");
           }}
         >
           {itemsHidden() == "true" ? <EyeOff /> : <Eye />}
+        </button>
+        <button
+          class="hidden group-hover:flex peer-hover:!flex"
+          title={
+            backgroundPaused() == "true"
+              ? "Start background changes"
+              : "Pause background changes"
+          }
+          onclick={() => {
+            if (backgroundPaused() == "true") {
+              setBackgroundPaused("false");
+            } else {
+              localStorage.setItem(
+                "selectedImage",
+                (document.getElementById("wallpaper") as HTMLImageElement).src
+              );
+              setBackgroundPaused("true");
+            }
+          }}
+        >
+          {backgroundPaused() == "true" ? (
+            <Play fill="currentColor" />
+          ) : (
+            <Pause fill="currentColor" />
+          )}
         </button>
         <CommandPalette />
       </div>
