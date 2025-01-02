@@ -211,14 +211,18 @@ const App: Component = () => {
 
   createEffect(() => {
     if (Number(wallpaperBlur()) > 0) {
-      document.getElementById("wallpaper")!.style.filter =
-        `blur(${Number(wallpaperBlur()) / 10}px)`;
+      if (document.getElementById("wallpaper") !== null) {
+        document.getElementById("wallpaper")!.style.filter =
+          `blur(${Number(wallpaperBlur()) / 10}px)`;
+      }
     }
   }, [wallpaperBlur]);
 
   createEffect(() => {
     if (Number(opacity()) > 0) {
-      document.getElementById("wallpaper")!.style.opacity = opacity();
+      if (document.getElementById("wallpaper") !== null) {
+        document.getElementById("wallpaper")!.style.opacity = opacity();
+      }
     }
   }, [opacity]);
 
@@ -487,6 +491,7 @@ const App: Component = () => {
         `font-mono`,
         `font-serif`,
         `font-sans`,
+        `transition-all`,
         `font-${currentFont()}`,
         imageLoaded() ? "bg-black dark:bg-none" : "",
         textStyle() == "uppercase" ? "**:!uppercase" : "",
