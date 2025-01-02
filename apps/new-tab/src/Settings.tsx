@@ -15,7 +15,7 @@ import {
   Sunrise,
   Text,
 } from "lucide-solid";
-import { createSignal } from "solid-js";
+import { createSignal, on, onMount } from "solid-js";
 import { createStoredSignal } from "./hooks/localStorage";
 import { cn } from "./libs/cn";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
@@ -89,7 +89,16 @@ function SettingsTrigger({
     "assets/logo.png"
   );
   const [textStyle, setTextStyle] = createStoredSignal("textStyle", "normal");
-
+  onMount(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+      } else if ((e.ctrlKey || e.metaKey) && e.key === ",") {
+        e.preventDefault();
+        setOpen(true);
+      }
+    });
+  });
   function SettingsPage() {
     return (
       <div class="text-foreground bg-background fixed inset-0 z-10 flex justify-center overflow-y-auto">

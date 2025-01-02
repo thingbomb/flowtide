@@ -718,7 +718,7 @@ const App: Component = () => {
           )}
         </div>
       </div>
-      <div class="dark:bg-red/5 group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-gray-400 p-1 px-2 text-white shadow-inner shadow-white/10 transition-all focus-within:gap-2 hover:gap-2 dark:bg-gray-600/95">
+      <div class="inset-shadow group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-white p-1 px-2 text-black shadow-inner shadow-black/20 focus-within:gap-2 hover:gap-2 dark:bg-black/95 dark:text-white dark:shadow-white/10">
         <button class="peer group-hover:hidden">
           <Menu />
         </button>
