@@ -229,5 +229,11 @@
   },
   "wallpaper_blur": {
     "message": "Wallpaper blur"
+  },
+  "general": {
+    "message": "General"
+  },
+  "appearance": {
+    "message": "Appearance"
   }
 }
