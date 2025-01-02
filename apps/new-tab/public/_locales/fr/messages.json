@@ -202,5 +202,32 @@
   },
   "top": {
     "message": "Haut"
+  },
+  "page_title": {
+    "message": "Page title"
+  },
+  "page": {
+    "message": "Page title and icon"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "lowercase": {
+    "message": "Lowercase"
+  },
+  "uppercase": {
+    "message": "Uppercase"
+  },
+  "normal": {
+    "message": "Normal"
+  },
+  "text_style": {
+    "message": "Text style"
+  },
+  "opacity": {
+    "message": "Opacity"
+  },
+  "wallpaper_blur": {
+    "message": "Wallpaper blur"
   }
 }
