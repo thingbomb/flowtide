@@ -197,14 +197,14 @@ const App: Component = () => {
   }, [pageTitle]);
 
   createEffect(() => {
-    if (wallpaperBlur() > 0) {
+    if (Number(wallpaperBlur()) > 0) {
       document.getElementById("wallpaper")!.style.filter =
         `blur(${Number(wallpaperBlur()) / 10}px)`;
     }
   }, [wallpaperBlur]);
 
   createEffect(() => {
-    if (opacity() > 0) {
+    if (Number(opacity()) > 0) {
       document.getElementById("wallpaper")!.style.opacity = opacity();
     }
   }, [opacity]);
