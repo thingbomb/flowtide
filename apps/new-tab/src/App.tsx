@@ -713,7 +713,7 @@ const App: Component = () => {
           )}
         </div>
       </div>
-      <div class="dark:bg-red/5 group fixed right-2 top-2 flex flex-row-reverse items-center justify-center gap-2 rounded-full bg-gray-400 p-1 px-2 text-white shadow-inner shadow-white/10 transition-all dark:bg-gray-600/95">
+      <div class="dark:bg-red/5 group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-gray-400 p-1 px-2 text-white shadow-inner shadow-white/10 transition-all hover:gap-2 dark:bg-gray-600/95">
         <button class="peer group-hover:hidden">
           <Menu />
         </button>
@@ -793,11 +793,8 @@ const App: Component = () => {
             </Dialog>
           )}
         </div>
-        <div
-          class="hidden w-0 group-hover:flex group-hover:w-[unset] peer-hover:!flex peer-hover:w-[unset]"
-          title="Settings"
-        >
-          <SettingsTrigger />
+        <div title="Settings">
+          <SettingsTrigger triggerClass="hidden group-hover:flex peer-hover:!flex" />
         </div>
         <button
           class="hidden group-hover:flex peer-hover:!flex"

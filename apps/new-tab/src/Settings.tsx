@@ -21,7 +21,13 @@ import { cn } from "./libs/cn";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { Button } from "./components/ui/button";
 
-function SettingsTrigger({ className }: { className?: string }) {
+function SettingsTrigger({
+  className,
+  triggerClass,
+}: {
+  className?: string;
+  triggerClass?: string;
+}) {
   function textToImage(text: string) {
     const canvas = document.createElement("canvas");
     const ctx: any = canvas.getContext("2d");
@@ -464,7 +470,11 @@ function SettingsTrigger({ className }: { className?: string }) {
 
   return (
     <div class={cn("h-[20px]", className)}>
-      <button class="group" onclick={() => setOpen(true)} aria-haspopup="true">
+      <button
+        class={cn("group", triggerClass)}
+        onclick={() => setOpen(true)}
+        aria-haspopup="true"
+      >
         <Settings class="hover:rotate-25 size-[20px] transition-transform" />
       </button>
       <button
