@@ -21,6 +21,15 @@ import { cn } from "./libs/cn";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { Button } from "./components/ui/button";
 
+function BigButton(props: any) {
+  return (
+    <button class="card-style" {...props}>
+      <div class="icon">{props.icon}</div>
+      <span class="text-xl">{props.title}</span>
+    </button>
+  );
+}
+
 function SettingsTrigger({
   className,
   triggerClass,
@@ -58,7 +67,7 @@ function SettingsTrigger({
     return canvas.toDataURL();
   }
 
-  const [open, setOpen] = createSignal(false);
+  const [open, setOpen] = createSignal(true);
   const [font, setFont] = createStoredSignal("font", "sans");
   const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
   const [background, setBackground] = createStoredSignal("background", "image");
@@ -92,43 +101,30 @@ function SettingsTrigger({
           <br />
           <h3 class="text-2xl font-[500]">{chrome.i18n.getMessage("mode")}</h3>
           <div class="card-group grid-cols-3 grid-rows-1">
-            <button
-              class="card-style"
+            <BigButton
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("widgets");
               }}
-            >
-              <Grid class="size-[64px]" />
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("widgets")}</span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("widgets")}
+              icon={<Grid class="size-[64px]" />}
+            />
+            <BigButton
               {...(mode() === "nightstand" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("nightstand");
               }}
-            >
-              <Clock class="size-[64px]" />
-              <br />
-              <span class="text-xl">
-                {chrome.i18n.getMessage("nightstand")}
-              </span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("nightstand")}
+              icon={<Clock class="size-[64px]" />}
+            />
+            <BigButton
               {...(mode() === "speeddial" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("speeddial");
               }}
-            >
-              <Bookmark class="size-[64px]" />
-              <br />
-              <span class="text-xl">
-                {chrome.i18n.getMessage("speed_dial")}
-              </span>
-            </button>
+              title={chrome.i18n.getMessage("speed_dial")}
+              icon={<Bookmark class="size-[64px]" />}
+            />
           </div>
           <br />
           <br />
@@ -137,34 +133,28 @@ function SettingsTrigger({
               <h3 class="text-2xl font-[500]">
                 {chrome.i18n.getMessage("layout")}
               </h3>
-              <div class="card-group grid-cols-1 grid-rows-2">
-                <button
-                  class="card-style"
+              <div class="card-group grid-cols-2 grid-rows-1">
+                <BigButton
                   {...(layout() === "center" ? { "data-selected": true } : {})}
                   onClick={() => {
                     setLayout("center");
                   }}
-                >
-                  <AlignCenter class="size-[64px]" fill="currentColor" />
-                  <br />
-                  <span class="text-xl">
-                    {chrome.i18n.getMessage("center")}
-                  </span>
-                </button>
-                <button
-                  class="card-style"
+                  title={chrome.i18n.getMessage("center")}
+                  icon={<AlignCenter class="size-[64px]" fill="currentColor" />}
+                />
+                <BigButton
                   {...(layout() === "top" ? { "data-selected": true } : {})}
                   onClick={() => {
                     setLayout("top");
                   }}
-                >
-                  <AlignVerticalJustifyStart
-                    class="size-[64px]"
-                    fill="currentColor"
-                  />
-                  <br />
-                  <span class="text-xl">{chrome.i18n.getMessage("top")}</span>
-                </button>
+                  title={chrome.i18n.getMessage("top")}
+                  icon={
+                    <AlignVerticalJustifyStart
+                      class="size-[64px]"
+                      fill="currentColor"
+                    />
+                  }
+                />
               </div>
               <br />
               <br />
@@ -172,70 +162,55 @@ function SettingsTrigger({
           )}
           <h3 class="text-2xl font-[500]">{chrome.i18n.getMessage("font")}</h3>
           <div class="card-group grid-cols-3 grid-rows-1">
-            <button
-              class="card-style"
+            <BigButton
               {...(font() === "sans" ? { "data-selected": true } : {})}
               onClick={() => {
                 setFont("sans");
               }}
-            >
-              <span class="!font-sans text-5xl font-bold">Aa</span>
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("sans")}</span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("sans")}
+              icon={<span class="!font-sans !text-5xl font-bold">Aa</span>}
+            />
+            <BigButton
               {...(font() === "serif" ? { "data-selected": true } : {})}
               onClick={() => {
                 setFont("serif");
               }}
-            >
-              <span class="!font-serif text-5xl font-bold">Aa</span>
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("serif")}</span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("serif")}
+              icon={<span class="!font-serif !text-5xl font-bold">Aa</span>}
+            />
+            <BigButton
               {...(font() === "mono" ? { "data-selected": true } : {})}
               onClick={() => {
                 setFont("mono");
               }}
-            >
-              <span class="!font-mono text-5xl font-bold">Aa</span>
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("mono")}</span>
-            </button>
+              title={chrome.i18n.getMessage("mono")}
+              icon={<span class="!font-mono !text-5xl font-bold">Aa</span>}
+            />
           </div>
           <br />
           <br />
           <h3 class="text-2xl font-[500]">{chrome.i18n.getMessage("theme")}</h3>
           <div class="card-group grid-cols-2 grid-rows-1">
-            <button
-              class="card-style"
+            <BigButton
               {...(theme() === "light" ? { "data-selected": true } : {})}
               onClick={() => {
                 setTheme("light");
                 document.documentElement.setAttribute("data-kb-theme", "light");
                 document.documentElement.style.colorScheme = "light";
               }}
-            >
-              <Moon class="size-[64px]" fill="none" />
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("light")}</span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("light")}
+              icon={<Moon class="size-[64px]" fill="none" />}
+            />
+            <BigButton
               {...(theme() === "dark" ? { "data-selected": true } : {})}
               onClick={() => {
                 setTheme("dark");
                 document.documentElement.setAttribute("data-kb-theme", "dark");
                 document.documentElement.style.colorScheme = "dark";
               }}
-            >
-              <Moon class="size-[64px]" fill="currentColor" />
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("dark")}</span>
-            </button>
+              title={chrome.i18n.getMessage("dark")}
+              icon={<Moon class="size-[64px]" fill="currentColor" />}
+            />
           </div>
           <br />
           <br />
@@ -243,56 +218,42 @@ function SettingsTrigger({
             {chrome.i18n.getMessage("background")}
           </h3>
           <div class="card-group grid-cols-2 grid-rows-1">
-            <button
-              class="card-style"
+            <BigButton
               {...(background() === "image" ? { "data-selected": true } : {})}
               onClick={() => {
                 setBackground("image");
               }}
-            >
-              <Image class="size-[64px]" fill="none" />
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("image")}</span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("image")}
+              icon={<Image class="size-[64px]" fill="none" />}
+            />
+            <BigButton
               {...(background() === "solid-color"
                 ? { "data-selected": true }
                 : {})}
               onClick={() => {
                 setBackground("solid-color");
               }}
-            >
-              <PaintBucket class="size-[64px]" fill="none" />
-              <br />
-              <span class="text-xl">
-                {chrome.i18n.getMessage("solid_color")}
-              </span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("solid_color")}
+              icon={<PaintBucket class="size-[64px]" fill="none" />}
+            />
+            <BigButton
               {...(background() === "gradient"
                 ? { "data-selected": true }
                 : {})}
               onClick={() => {
                 setBackground("gradient");
               }}
-            >
-              <Sunrise class="size-[64px]" fill="none" />
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("gradient")}</span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("gradient")}
+              icon={<Sunrise class="size-[64px]" fill="none" />}
+            />
+            <BigButton
               {...(background() === "blank" ? { "data-selected": true } : {})}
               onClick={() => {
                 setBackground("blank");
               }}
-            >
-              <Square class="size-[64px]" fill="none" />
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("blank")}</span>
-            </button>
+              title={chrome.i18n.getMessage("blank")}
+              icon={<Square class="size-[64px]" fill="none" />}
+            />
           </div>
           <br />
           <br />
@@ -302,7 +263,7 @@ function SettingsTrigger({
           <div class="flex items-start gap-2">
             <input
               type="range"
-              class="h-2 w-full appearance-none rounded-lg bg-zinc-600"
+              class="h-2 w-full appearance-none rounded-lg bg-zinc-100 dark:bg-zinc-600"
               value={Number(opacity()) * 100}
               onInput={(e) => setOpacity(Number(e.currentTarget.value) / 100)}
             />
@@ -315,7 +276,7 @@ function SettingsTrigger({
           <div class="flex items-start gap-2">
             <input
               type="range"
-              class="h-2 w-full appearance-none rounded-lg bg-zinc-600"
+              class="h-2 w-full appearance-none rounded-lg bg-zinc-100 dark:bg-zinc-600"
               value={Number(wallpaperBlur() * 2)}
               onInput={(e) =>
                 setWallpaperBlur(Number(e.currentTarget.value) / 2)
@@ -328,43 +289,34 @@ function SettingsTrigger({
             {chrome.i18n.getMessage("text_style")}
           </h3>
           <div class="card-group grid-cols-3 grid-rows-1">
-            <button
-              class="card-style"
+            <BigButton
               {...(textStyle() === "uppercase"
                 ? { "data-selected": true }
                 : {})}
               onClick={() => {
                 setTextStyle("uppercase");
               }}
-            >
-              <span class="text-5xl font-bold !uppercase">AA</span>
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("uppercase")}</span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("uppercase")}
+              icon={<span class="!text-5xl font-bold !uppercase">AA</span>}
+            />
+            <BigButton
               {...(textStyle() === "normal" ? { "data-selected": true } : {})}
               onClick={() => {
                 setTextStyle("normal");
               }}
-            >
-              <span class="text-5xl font-bold !normal-case">Aa</span>
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("normal")}</span>
-            </button>
-            <button
-              class="card-style"
+              title={chrome.i18n.getMessage("normal")}
+              icon={<span class="!text-5xl font-bold !normal-case">Aa</span>}
+            />
+            <BigButton
               {...(textStyle() === "lowercase"
                 ? { "data-selected": true }
                 : {})}
               onClick={() => {
                 setTextStyle("lowercase");
               }}
-            >
-              <span class="text-5xl font-bold !lowercase">aa</span>
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("lowercase")}</span>
-            </button>
+              title={chrome.i18n.getMessage("lowercase")}
+              icon={<span class="!text-5xl font-bold !lowercase">aa</span>}
+            />
           </div>
           <br />
           <br />
@@ -431,26 +383,19 @@ function SettingsTrigger({
           <h2 class="mb-3 text-2xl font-[500]">
             {chrome.i18n.getMessage("more")}
           </h2>
-          <div class="card-group grid-cols-2 grid-rows-1">
+          <div class="flex gap-2">
             <a
-              class="card-style pt-10"
               href="https://github.com/thingbomb/flowtide/discussions"
-              target="_blank"
+              class="text-blue-400 hover:underline"
             >
-              <MessageCircle class="size-[64px]" fill="none" />
-              <br />
-              <span class="text-xl">{chrome.i18n.getMessage("forum")}</span>
+              Forum
             </a>
+            •
             <a
-              class="card-style pt-10"
               href="https://feedback.flowtide.app/feature-requests"
-              target="_blank"
+              class="text-blue-400 hover:underline"
             >
-              <Text class="size-[64px]" fill="none" />
-              <br />
-              <span class="text-xl">
-                {chrome.i18n.getMessage("feature_request")}
-              </span>
+              Feature request
             </a>
           </div>
           <br />
