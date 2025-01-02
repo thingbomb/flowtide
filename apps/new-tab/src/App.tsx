@@ -713,12 +713,12 @@ const App: Component = () => {
           )}
         </div>
       </div>
-      <div class="dark:bg-red/5 group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-gray-400 p-1 px-2 text-white shadow-inner shadow-white/10 transition-all hover:gap-2 dark:bg-gray-600/95">
+      <div class="dark:bg-red/5 group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-gray-400 p-1 px-2 text-white shadow-inner shadow-white/10 transition-all focus-within:gap-2 hover:gap-2 dark:bg-gray-600/95">
         <button class="peer group-hover:hidden">
           <Menu />
         </button>
         <div
-          class="hidden group-hover:flex peer-hover:!flex"
+          class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
           title="Add widget"
         >
           {mode() === "widgets" && (
@@ -794,7 +794,7 @@ const App: Component = () => {
           )}
         </div>
         <div title="Settings">
-          <SettingsTrigger triggerClass="hidden group-hover:flex peer-hover:!flex" />
+          <SettingsTrigger triggerClass="hidden group-hover:flex peer-hover:!flex peer-focus:!flex group-focus-within:flex" />
         </div>
         <button
           class="hidden group-hover:flex peer-hover:!flex"
@@ -806,7 +806,7 @@ const App: Component = () => {
           {itemsHidden() == "true" ? <EyeOff /> : <Eye />}
         </button>
         <button
-          class="hidden group-hover:flex peer-hover:!flex"
+          class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
           title={
             backgroundPaused() == "true"
               ? "Start background changes"
