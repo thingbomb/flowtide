@@ -250,5 +250,71 @@
   },
   "every_week": {
     "message": "Every week"
+  },
+  "sound_attribution": {
+    "message": "Sound attribution"
+  },
+  "ambience": {
+    "message": "Ambience"
+  },
+  "focus": {
+    "message": "Focus"
+  },
+  "nature": {
+    "message": "Nature"
+  },
+  "pomodoro_settings": {
+    "message": "Pomodoro Settings"
+  },
+  "edit_the_pomodoro_settings": {
+    "message": "Edit the pomodoro settings."
+  },
+  "work_minutes": {
+    "message": "Work minutes"
+  },
+  "break_minutes": {
+    "message": "Break minutes"
+  },
+  "you_may_need_to_refresh": {
+    "message": "You may need to refresh the page to see the changes."
+  },
+  "pomodoro": {
+    "message": "Pomodoro"
+  },
+  "pomodoro_timer": {
+    "message": "Pomodoro timer"
+  },
+  "reset": {
+    "message": "Reset"
+  },
+  "start": {
+    "message": "Start"
+  },
+  "stop": {
+    "message": "Stop"
+  },
+  "add_task": {
+    "message": "Add task"
+  },
+  "new_task": {
+    "message": "New task"
+  },
+  "focus_sounds": {
+    "message": "Focus Sounds"
+  },
+  "ambience_sounds": {
+    "message": "Ambience Sounds"
+  },
+  "todo_list": {
+    "message": "To-do list"
+  },
+  "stopwatch": {
+    "message": "Stopwatch"
+  },
+  "clock": {
+    "message": "Clock"
+  },
+  "date": {
+    "message": "Date"
   }
 }
