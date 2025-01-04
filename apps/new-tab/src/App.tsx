@@ -750,52 +750,52 @@ const App: Component = () => {
                   </DialogDescription>
                   <br />
                   <Block
-                    title="Bookmarks"
+                    title={chrome.i18n.getMessage("bookmarks")}
                     description="Easy access to your first 9 bookmarks with this widget."
                     key="bookmarks"
                   />
                   <Block
-                    title="Pomodoro"
+                    title={chrome.i18n.getMessage("pomodoro")}
                     description="Use the pomodoro technique for an interval-based workflow."
                     key="pomodoro"
                   />
                   <Block
-                    title="Nature"
+                    title={chrome.i18n.getMessage("nature")}
                     description="Listen to nature soundscapees with this widget."
                     key="nature"
                   />
                   <Block
-                    title="Focus Sounds"
+                    title={chrome.i18n.getMessage("focus_sounds")}
                     description="Soundscapes to help you focus."
                     key="focus"
                   />
                   <Block
-                    title="Ambience Sounds"
+                    title={chrome.i18n.getMessage("ambience_sounds")}
                     description="Ambient soundscapes to help you relax."
                     key="ambience"
                   />
                   <Block
-                    title="To-do list"
+                    title={chrome.i18n.getMessage("todo_list")}
                     description="Track your todos with an easy widget."
                     key="todo"
                   />
                   <Block
-                    title="Stopwatch"
+                    title={chrome.i18n.getMessage("stopwatch")}
                     description="Add a stopwatch widget to your start page."
                     key="stopwatch"
                   />
                   <Block
-                    title="Clock"
+                    title={chrome.i18n.getMessage("clock")}
                     description="Adds a clock widget to your start page."
                     key="clock"
                   />
                   <Block
-                    title="Date"
+                    title={chrome.i18n.getMessage("date")}
                     description="A sleek date widget that shows you the current date."
                     key="date"
                   />
                   <Block
-                    title="To-do list"
+                    title={chrome.i18n.getMessage("todo_list")}
                     description="Track your todos with an easy widget."
                     key="todo"
                   />
