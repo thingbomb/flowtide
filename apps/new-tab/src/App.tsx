@@ -438,7 +438,13 @@ const App: Component = () => {
     }
 
     if (backgroundPaused() == "false") {
-      if (Number(JSON.parse(selectedImage()).expiry) < Date.now()) {
+      if (
+        Number(
+          typeof selectedImage() === "object"
+            ? selectedImage().expiry
+            : JSON.parse(selectedImage()).expiry
+        ) < Date.now()
+      ) {
         let newImage = {
           url: images[Math.floor(Math.random() * images.length)],
           expiry: Date.now() + Number(wallpaperChangeTime()),
@@ -545,7 +551,11 @@ const App: Component = () => {
       {needsOnboarding() && <OnboardingFlow />}
       {background() === "image" && (
         <img
-          src={JSON.parse(selectedImage()).url}
+          src={
+            typeof selectedImage() === "object"
+              ? selectedImage().url
+              : JSON.parse(selectedImage()).url
+          }
           alt=""
           id="wallpaper"
           class="absolute inset-0 h-full w-full object-cover transition-all"
