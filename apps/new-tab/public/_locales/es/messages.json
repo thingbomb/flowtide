@@ -235,5 +235,20 @@
   },
   "appearance": {
     "message": "Appearance"
+  },
+  "new_wallpaper": {
+    "message": "New wallpaper"
+  },
+  "every_reload": {
+    "message": "Every reload"
+  },
+  "every_hour": {
+    "message": "Every hour"
+  },
+  "every_day": {
+    "message": "Every day"
+  },
+  "every_week": {
+    "message": "Every week"
   }
 }
