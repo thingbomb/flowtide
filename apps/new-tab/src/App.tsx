@@ -452,7 +452,8 @@ const App: Component = () => {
           localStorage.setItem("selectedImage", JSON.stringify(newImage));
         });
       } else {
-        setSelectedImage(
+        localStorage.setItem(
+          "selectedImage",
           JSON.stringify({
             url: images[Math.floor(Math.random() * images.length)],
             expiry: Date.now() + Number(wallpaperChangeTime()),
