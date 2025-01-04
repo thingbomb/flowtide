@@ -46,6 +46,7 @@ import {
 import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
+import { number } from "mathjs";
 
 type MessageKeys = keyof typeof data;
 
@@ -157,10 +158,6 @@ const App: Component = () => {
     "iconUrl",
     "assets/logo.png"
   );
-  const [selectedImage, setSelectedImage] = createSignal<string>(
-    localStorage.getItem("selectedImage") ||
-      images[Math.floor(Math.random() * images.length)]
-  );
   const [layout, setLayout] = createStoredSignal("layout", "center");
   const [currentFont, setCurrentFont] = createStoredSignal("font", "sans");
   const [background, setBackground] = createStoredSignal("background", "image");
@@ -174,6 +171,17 @@ const App: Component = () => {
   const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
     "wallpaperBlur",
     0
+  );
+  const [wallpaperChangeTime, setWallpaperChangeTime] =
+    createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
+  const [selectedImage, setSelectedImage] = createSignal<any>(
+    ((localStorage.getItem("selectedImage") as any) &&
+      typeof JSON.parse(localStorage.getItem("selectedImage") as string) ==
+        "object" &&
+      JSON.parse(localStorage.getItem("selectedImage") as string)) || {
+      url: images[Math.floor(Math.random() * images.length)],
+      expiry: Date.now() + Number(wallpaperChangeTime()),
+    }
   );
   const [backgroundPaused, setBackgroundPaused] = createStoredSignal<string>(
     "backgroundPaused",
@@ -408,14 +416,21 @@ const App: Component = () => {
     }
 
     if (backgroundPaused() == "false") {
-      let newImage = images[Math.floor(Math.random() * images.length)];
-      localStorage.setItem("selectedImage", newImage);
-      fetch(newImage, {
-        mode: "no-cors",
-        headers: {
-          "Cache-Control": "public, max-age=315360000, immutable",
-        },
-      });
+      console.log(selectedImage());
+      if (Number(selectedImage().expiry) < Date.now()) {
+        let newImage = {
+          url: images[Math.floor(Math.random() * images.length)],
+          expiry: Date.now() + Number(wallpaperChangeTime()),
+        };
+        fetch(newImage.url, {
+          mode: "no-cors",
+          headers: {
+            "Cache-Control": "public, max-age=315360000, immutable",
+          },
+        }).then((response) => {
+          localStorage.setItem("selectedImage", JSON.stringify(newImage));
+        });
+      }
     }
 
     setInterval(() => {
@@ -501,7 +516,7 @@ const App: Component = () => {
       {needsOnboarding() && <OnboardingFlow />}
       {background() === "image" && (
         <img
-          src={selectedImage()}
+          src={selectedImage().url}
           alt=""
           id="wallpaper"
           class="absolute inset-0 h-full w-full object-cover transition-all"
@@ -534,15 +549,6 @@ const App: Component = () => {
                 : "",
         }}
       >
-        <div
-          class={cn(
-            "blob-gradient blob-gradient absolute top-0 z-20 h-full w-full opacity-50 dark:hidden dark:opacity-20",
-            imageLoaded() ? "hidden" : ""
-          )}
-          style={{
-            display: background() != "image" ? "none" : "",
-          }}
-        ></div>
         <div
           class="absolute inset-0 z-30 h-screen flex-wrap items-center justify-center gap-3 p-4"
           style={{
@@ -718,7 +724,7 @@ const App: Component = () => {
           )}
         </div>
       </div>
-      <div class="inset-shadow group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-white p-1 px-2 text-black shadow-inner shadow-black/20 focus-within:gap-2 hover:gap-2 dark:bg-black/95 dark:text-white dark:shadow-white/10">
+      <div class="group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-white p-1 px-2 text-black shadow-inner shadow-black/20 focus-within:gap-2 hover:gap-2 dark:bg-black/95 dark:text-white dark:shadow-white/10">
         <button class="peer group-hover:hidden">
           <Menu />
         </button>

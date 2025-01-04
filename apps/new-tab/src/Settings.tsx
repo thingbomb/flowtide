@@ -3,14 +3,18 @@ import {
   AlignVerticalJustifyStart,
   ArrowLeft,
   Bookmark,
+  Calendar,
+  Calendar1,
   Clock,
   CloudLightningIcon,
   Grid,
+  Hourglass,
   Image,
   MessageCircle,
   Moon,
   PaintBucket,
   Palette,
+  RefreshCcw,
   Settings,
   Square,
   Sunrise,
@@ -68,7 +72,7 @@ function SettingsTrigger({
     return canvas.toDataURL();
   }
 
-  const [open, setOpen] = createSignal(true);
+  const [open, setOpen] = createSignal(false);
   const [font, setFont] = createStoredSignal("font", "sans");
   const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
   const [background, setBackground] = createStoredSignal("background", "image");
@@ -86,6 +90,8 @@ function SettingsTrigger({
     "wallpaperBlur",
     0
   );
+  const [wallpaperChangeTime, setWallpaperChangeTime] =
+    createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24);
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
     "assets/logo.png"
@@ -103,13 +109,22 @@ function SettingsTrigger({
   });
   function SettingsPage() {
     return (
-      <div class="text-foreground bg-background fixed inset-0 z-10 grid max-h-screen grid-cols-[300px_calc(100vw-300px)]">
+      <div
+        class={cn(
+          "text-foreground bg-background fixed inset-0 z-10 grid max-h-screen grid-cols-[300px_calc(100vw-300px)]",
+          {
+            "**:!font-sans": font() == "sans",
+            "**:!font-serif": font() == "serif",
+            "**:!font-mono": font() == "mono",
+          }
+        )}
+      >
         <div
           id="sidebar"
           class="border-r-[rgb(39, 39, 42)] flex h-full w-[300px] max-w-lg flex-col gap-2 border-r-2 bg-[hsl(var(--sidebar))] px-4 py-20"
         >
           <button
-            class="flex items-center gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800"
+            class="flex items-center gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
             {...(settingsMenu() == "general"
               ? { "data-selected": "true" }
               : "")}
@@ -119,7 +134,7 @@ function SettingsTrigger({
           >
             <Settings
               height={20}
-              class="size-6 justify-start rounded-lg bg-purple-700 p-0.5"
+              class="size-6 justify-start rounded-lg bg-purple-700 p-0.5 text-white"
             />
             {chrome.i18n.getMessage("general")}
           </button>
@@ -130,9 +145,12 @@ function SettingsTrigger({
             onClick={() => {
               setSettingsMenu("appearance");
             }}
-            class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800"
+            class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
           >
-            <Palette height={20} class="size-6 rounded-lg bg-pink-700 p-0.5" />
+            <Palette
+              height={20}
+              class="size-6 rounded-lg bg-pink-700 p-0.5 text-white"
+            />
             {chrome.i18n.getMessage("appearance")}
           </button>
           <button
@@ -142,9 +160,12 @@ function SettingsTrigger({
             onClick={() => {
               setSettingsMenu("background");
             }}
-            class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800"
+            class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
           >
-            <Image height={20} class="size-6 rounded-lg bg-teal-700 p-0.5" />
+            <Image
+              height={20}
+              class="size-6 rounded-lg bg-teal-700 p-0.5 text-white"
+            />
             {chrome.i18n.getMessage("background")}
           </button>
         </div>
@@ -290,14 +311,14 @@ function SettingsTrigger({
                   href="https://github.com/thingbomb/flowtide/discussions"
                   class="text-blue-400 hover:underline"
                 >
-                  Forum
+                  {chrome.i18n.getMessage("forum")}
                 </a>
                 •
                 <a
                   href="https://feedback.flowtide.app/feature-requests"
                   class="text-blue-400 hover:underline"
                 >
-                  Feature request
+                  {chrome.i18n.getMessage("feature_request")}
                 </a>
               </div>
             </>
@@ -452,6 +473,57 @@ function SettingsTrigger({
                   }}
                   title={chrome.i18n.getMessage("blank")}
                   icon={<Square class="size-[64px]" fill="none" />}
+                />
+              </div>
+              <br />
+              <br />
+              <h2 class="mb-3 text-2xl font-[500]">
+                {chrome.i18n.getMessage("new_wallpaper")}
+              </h2>
+              <div class="card-group grid-cols-2 grid-rows-1">
+                <BigButton
+                  {...(Number(wallpaperChangeTime()) === 1
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    localStorage.removeItem("selectedImage");
+                    setWallpaperChangeTime(1);
+                  }}
+                  title={chrome.i18n.getMessage("every_reload")}
+                  icon={<RefreshCcw class="size-[64px]" fill="none" />}
+                />
+                <BigButton
+                  {...(Number(wallpaperChangeTime()) === 1000 * 60 * 60
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    localStorage.removeItem("selectedImage");
+                    setWallpaperChangeTime(1000 * 60 * 60);
+                  }}
+                  title={chrome.i18n.getMessage("every_hour")}
+                  icon={<Hourglass class="size-[64px]" fill="none" />}
+                />
+                <BigButton
+                  {...(Number(wallpaperChangeTime()) === 1000 * 60 * 60 * 24
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    localStorage.removeItem("selectedImage");
+                    setWallpaperChangeTime(1000 * 60 * 60 * 24);
+                  }}
+                  title={chrome.i18n.getMessage("every_day")}
+                  icon={<Calendar1 class="size-[64px]" fill="none" />}
+                />
+                <BigButton
+                  {...(Number(wallpaperChangeTime()) === 1000 * 60 * 60 * 24 * 7
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    localStorage.removeItem("selectedImage");
+                    setWallpaperChangeTime(1000 * 60 * 60 * 24 * 7);
+                  }}
+                  title={chrome.i18n.getMessage("every_week")}
+                  icon={<Calendar class="size-[64px]" fill="none" />}
                 />
               </div>
               <br />

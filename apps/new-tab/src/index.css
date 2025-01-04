@@ -99,11 +99,6 @@
   @apply max-h-[150px] max-w-[400px] rounded-[20px] bg-zinc-600;
 }
 
-.blob-gradient {
-  background: radial-gradient(circle, #9a62f7, #8396d5 47%, #00d4ff00);
-  filter: blur(100px);
-}
-
 @layer utilities {
   .scrollbar-hidden::-webkit-scrollbar {
     display: none;
