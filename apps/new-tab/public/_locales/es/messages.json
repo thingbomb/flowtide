@@ -204,117 +204,117 @@
     "message": "Top"
   },
   "page_title": {
-    "message": "Page title"
+    "message": "Título de la página"
   },
   "page": {
-    "message": "Page title and icon"
+    "message": "Título de la página e icono"
   },
   "save": {
-    "message": "Save"
+    "message": "Guardar"
   },
   "lowercase": {
-    "message": "Lowercase"
+    "message": "Minúsculas"
   },
   "uppercase": {
-    "message": "Uppercase"
+    "message": "Mayúsculas"
   },
   "normal": {
     "message": "Normal"
   },
   "text_style": {
-    "message": "Text style"
+    "message": "Estilo de texto"
   },
   "opacity": {
-    "message": "Opacity"
+    "message": "Opacidad"
   },
   "wallpaper_blur": {
-    "message": "Wallpaper blur"
+    "message": "Desenfoque del papel pintado"
   },
   "general": {
     "message": "General"
   },
   "appearance": {
-    "message": "Appearance"
+    "message": "Apariencia"
   },
   "new_wallpaper": {
-    "message": "New wallpaper"
+    "message": "Nuevo papel pintado"
   },
   "every_reload": {
-    "message": "Every reload"
+    "message": "Cada recarga"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Cada hora"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Todos los días"
   },
   "every_week": {
-    "message": "Every week"
+    "message": "Cada semana"
   },
   "sound_attribution": {
-    "message": "Sound attribution"
+    "message": "Atribución del sonido"
   },
   "ambience": {
-    "message": "Ambience"
+    "message": "Ambiente"
   },
   "focus": {
-    "message": "Focus"
+    "message": "Enfoque"
   },
   "nature": {
-    "message": "Nature"
+    "message": "Naturaleza"
   },
   "pomodoro_settings": {
-    "message": "Pomodoro Settings"
+    "message": "Ajustes Pomodoro"
   },
   "edit_the_pomodoro_settings": {
-    "message": "Edit the pomodoro settings."
+    "message": "Edita los ajustes de pomodoro."
   },
   "work_minutes": {
-    "message": "Work minutes"
+    "message": "Minutos de trabajo"
   },
   "break_minutes": {
-    "message": "Break minutes"
+    "message": "Pausa minutos"
   },
   "you_may_need_to_refresh": {
-    "message": "You may need to refresh the page to see the changes."
+    "message": "Puede que tenga que actualizar la página para ver los cambios."
   },
   "pomodoro": {
     "message": "Pomodoro"
   },
   "pomodoro_timer": {
-    "message": "Pomodoro timer"
+    "message": "Temporizador Pomodoro"
   },
   "reset": {
-    "message": "Reset"
+    "message": "Restablecer"
   },
   "start": {
-    "message": "Start"
+    "message": "Inicio"
   },
   "stop": {
     "message": "Stop"
   },
   "add_task": {
-    "message": "Add task"
+    "message": "Añadir tarea"
   },
   "new_task": {
-    "message": "New task"
+    "message": "Nueva tarea"
   },
   "focus_sounds": {
-    "message": "Focus Sounds"
+    "message": "Sonidos Focus"
   },
   "ambience_sounds": {
-    "message": "Ambience Sounds"
+    "message": "Sonidos ambientales"
   },
   "todo_list": {
-    "message": "To-do list"
+    "message": "Lista de tareas pendientes"
   },
   "stopwatch": {
-    "message": "Stopwatch"
+    "message": "Cronómetro"
   },
   "clock": {
-    "message": "Clock"
+    "message": "Reloj"
   },
   "date": {
-    "message": "Date"
+    "message": "Fecha"
   }
 }
