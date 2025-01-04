@@ -174,15 +174,33 @@ const App: Component = () => {
   );
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
-  const [selectedImage, setSelectedImage] = createSignal<any>(
-    ((localStorage.getItem("selectedImage") as any) &&
-      typeof JSON.parse(localStorage.getItem("selectedImage") as string) ==
-        "object" &&
-      JSON.parse(localStorage.getItem("selectedImage") as string)) || {
-      url: images[Math.floor(Math.random() * images.length)],
-      expiry: Date.now() + Number(wallpaperChangeTime()),
+  const [selectedImage, setSelectedImage] = createSignal<any>(() => {
+    let parsedImage;
+
+    try {
+      const storedItem = localStorage.getItem("selectedImage");
+      if (storedItem) {
+        parsedImage = JSON.parse(storedItem);
+
+        if (typeof parsedImage !== "object" || parsedImage === null) {
+          throw new Error("parsed value is not a valid object");
+        }
+      }
+    } catch (error) {
+      console.error(
+        "failed to parse localStorage item 'selectedImage':",
+        error
+      );
     }
-  );
+
+    return (
+      parsedImage || {
+        url: images[Math.floor(Math.random() * images.length)],
+        expiry: Date.now() + Number(wallpaperChangeTime()),
+      }
+    );
+  });
+
   const [backgroundPaused, setBackgroundPaused] = createStoredSignal<string>(
     "backgroundPaused",
     "false"
