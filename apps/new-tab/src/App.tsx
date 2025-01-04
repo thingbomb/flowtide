@@ -174,16 +174,15 @@ const App: Component = () => {
   );
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
-  const [selectedImage, setSelectedImage] = createSignal<any>(() => {
-    let parsedImage;
-
+  function getInitialSelectedImage() {
     try {
       const storedItem = localStorage.getItem("selectedImage");
       if (storedItem) {
-        parsedImage = JSON.parse(storedItem);
+        const parsedItem = JSON.parse(storedItem);
 
-        if (typeof parsedImage !== "object" || parsedImage === null) {
-          throw new Error("parsed value is not a valid object");
+        // ensure the parsed value is a valid object
+        if (typeof parsedItem === "object" && parsedItem !== null) {
+          return parsedItem;
         }
       }
     } catch (error) {
@@ -193,13 +192,17 @@ const App: Component = () => {
       );
     }
 
-    return (
-      parsedImage || {
-        url: images[Math.floor(Math.random() * images.length)],
-        expiry: Date.now() + Number(wallpaperChangeTime()),
-      }
-    );
-  });
+    // fallback value
+    return {
+      url: images[Math.floor(Math.random() * images.length)],
+      expiry: Date.now() + Number(wallpaperChangeTime()),
+    };
+  }
+
+  const [selectedImage, setSelectedImage] = createStoredSignal<any>(
+    "selectedImage",
+    getInitialSelectedImage()
+  );
 
   const [backgroundPaused, setBackgroundPaused] = createStoredSignal<string>(
     "backgroundPaused",
@@ -434,8 +437,7 @@ const App: Component = () => {
     }
 
     if (backgroundPaused() == "false") {
-      console.log(selectedImage());
-      if (Number(selectedImage().expiry) < Date.now()) {
+      if (Number(JSON.parse(selectedImage()).expiry) < Date.now()) {
         let newImage = {
           url: images[Math.floor(Math.random() * images.length)],
           expiry: Date.now() + Number(wallpaperChangeTime()),
@@ -448,6 +450,13 @@ const App: Component = () => {
         }).then((response) => {
           localStorage.setItem("selectedImage", JSON.stringify(newImage));
         });
+      } else {
+        setSelectedImage(
+          JSON.stringify({
+            url: images[Math.floor(Math.random() * images.length)],
+            expiry: Date.now() + Number(wallpaperChangeTime()),
+          })
+        );
       }
     }
 
@@ -534,7 +543,7 @@ const App: Component = () => {
       {needsOnboarding() && <OnboardingFlow />}
       {background() === "image" && (
         <img
-          src={selectedImage().url}
+          src={JSON.parse(selectedImage()).url}
           alt=""
           id="wallpaper"
           class="absolute inset-0 h-full w-full object-cover transition-all"
