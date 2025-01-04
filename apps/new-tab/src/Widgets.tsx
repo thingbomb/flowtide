@@ -269,7 +269,7 @@ function TodoWidget() {
           <div class="bg-background absolute bottom-0 left-0 right-0 flex gap-2 pb-[10px] pl-2 pr-4">
             <TextFieldRoot class="flex-1">
               <TextField
-                placeholder="New task"
+                placeholder={chrome.i18n.getMessage("new_task")}
                 value={taskInputValue()}
                 onInput={(e) => setTaskInputValue(e.currentTarget.value)}
                 onKeyDown={(e: KeyboardEvent) => {
@@ -279,7 +279,9 @@ function TodoWidget() {
                 }}
               />
             </TextFieldRoot>
-            <Button onClick={addTask}>Add task</Button>
+            <Button onClick={addTask}>
+              {chrome.i18n.getMessage("add_task")}
+            </Button>
           </div>
         </div>
       </div>
@@ -325,10 +327,12 @@ function StopwatchWidget() {
               setTime(0);
             }}
           >
-            Reset
+            {chrome.i18n.getMessage("reset")}
           </Button>
           <Button onclick={() => setPlaying(!playing())}>
-            {playing() ? "Stop" : "Start"}
+            {playing()
+              ? chrome.i18n.getMessage("stop")
+              : chrome.i18n.getMessage("start")}
           </Button>
         </div>
       </div>
@@ -372,7 +376,7 @@ function BookmarksWidget() {
               class="select-none px-3.5 text-left text-xl font-bold text-cyan-700 dark:text-white"
               id="title"
             >
-              Bookmarks
+              {chrome.i18n.getMessage("bookmarks")}
             </div>
             <div
               id="bookmarks"
@@ -433,7 +437,7 @@ function NatureWidget() {
               class="select-none px-3.5 text-left text-xl font-bold text-green-700 dark:text-white"
               id="title"
             >
-              Nature
+              {chrome.i18n.getMessage("nature")}
             </div>
             <div
               id="soundscapes"
@@ -465,7 +469,7 @@ function NatureWidget() {
               href="https://noisefill.com/credits"
               class="m-0 -mt-2 pl-3.5 text-xs font-medium text-gray-500 dark:text-gray-400"
             >
-              Sound attribution
+              {chrome.i18n.getMessage("sound_attribution")}
             </a>
             <audio
               src={soundscapes[currentlyPlaying()]?.url}
@@ -546,7 +550,9 @@ function PomodoroWidget() {
                     setIsRunning(!isRunning());
                   }}
                 >
-                  {isRunning() ? "Stop" : "Start"}
+                  {isRunning()
+                    ? chrome.i18n.getMessage("stop")
+                    : chrome.i18n.getMessage("start")}
                 </Button>
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
@@ -557,23 +563,25 @@ function PomodoroWidget() {
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Pomodoro Settings</DialogTitle>
+                      <DialogTitle>
+                        {chrome.i18n.getMessage("pomodoro_settings")}
+                      </DialogTitle>
                       <DialogDescription>
-                        Edit the pomodoro settings.
+                        {chrome.i18n.getMessage("edit_the_pomodoro_settings")}
                       </DialogDescription>
                     </DialogHeader>
-                    <TextFieldRoot class="flex-1">
+                    <TextFieldRoot class="mt-1 flex-1">
                       <TextField
-                        placeholder="Work minutes"
+                        placeholder={chrome.i18n.getMessage("work_minutes")}
                         value={workMinutes()}
                         onInput={(e) =>
                           setWorkMinutes(Number(e.currentTarget.value))
                         }
                       />
                     </TextFieldRoot>
-                    <TextFieldRoot class="flex-1">
+                    <TextFieldRoot class="mt-2 flex-1">
                       <TextField
-                        placeholder="Break minutes"
+                        placeholder={chrome.i18n.getMessage("break_minutes")}
                         value={breakMinutes()}
                         onInput={(e) =>
                           setBreakMinutes(Number(e.currentTarget.value))
@@ -581,7 +589,7 @@ function PomodoroWidget() {
                       />
                     </TextFieldRoot>
                     <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      You may need to refresh the page to see the changes.
+                      {chrome.i18n.getMessage("you_may_need_to_refresh")}
                     </span>
                   </DialogContent>
                 </Dialog>
@@ -628,7 +636,7 @@ function FocusSoundscapes() {
               class="select-none px-3.5 text-left text-xl font-bold text-purple-700 dark:text-white"
               id="title"
             >
-              Focus
+              {chrome.i18n.getMessage("focus")}
             </div>
             <div
               id="soundscapes"
@@ -658,7 +666,7 @@ function FocusSoundscapes() {
               href="https://noisefill.com/credits"
               class="m-0 -mt-2 pl-3.5 text-xs font-medium text-gray-500 dark:text-gray-400"
             >
-              Sound attribution
+              {chrome.i18n.getMessage("sound_attribution")}
             </a>
             <audio
               src={soundscapes[currentlyPlaying()]?.url}
@@ -707,7 +715,7 @@ function AmbienceSoundscapes() {
               class="select-none px-3.5 text-left text-xl font-bold text-cyan-700 dark:text-white"
               id="title"
             >
-              Ambience
+              {chrome.i18n.getMessage("ambience")}
             </div>
             <div
               id="soundscapes"
@@ -737,7 +745,7 @@ function AmbienceSoundscapes() {
               href="https://noisefill.com/credits"
               class="m-0 -mt-2 pl-3.5 text-xs font-medium text-gray-500 dark:text-gray-400"
             >
-              Sound attribution
+              {chrome.i18n.getMessage("sound_attribution")}
             </a>
             <audio
               src={soundscapes[currentlyPlaying()]?.url}
