@@ -186,10 +186,11 @@ const App: Component = () => {
         }
       }
     } catch (error) {
-      console.error(
-        "failed to parse localStorage item 'selectedImage':",
-        error
-      );
+      localStorage.removeItem("selectedImage");
+      return JSON.stringify({
+        url: images[Math.floor(Math.random() * images.length)],
+        expiry: Date.now() + Number(wallpaperChangeTime()),
+      });
     }
 
     // fallback value
