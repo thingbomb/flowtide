@@ -470,7 +470,7 @@ const App: Component = () => {
                 if (newWidgetOrder[props.key]) {
                   for (const key in widgets) {
                     if (newWidgetOrder[key] == undefined) {
-                      newWidgetOrder[key] = key;
+                      newWidgetOrder[key] = widgets[key];
                     }
                   }
                 } else {
@@ -829,7 +829,12 @@ const App: Component = () => {
             } else {
               localStorage.setItem(
                 "selectedImage",
-                (document.getElementById("wallpaper") as HTMLImageElement).src
+                JSON.stringify({
+                  url: (
+                    document.getElementById("wallpaper") as HTMLImageElement
+                  ).src,
+                  expiry: Infinity,
+                })
               );
               setBackgroundPaused("true");
             }

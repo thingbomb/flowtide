@@ -39,15 +39,12 @@ function ClockWidget() {
     }, 1000);
   });
   return (
-    <div class="dark:bg-background absolute inset-0 !select-none rounded-[20px] bg-white p-[10px]">
-      <div class="relative flex h-full w-full items-center justify-center rounded-[10px] bg-gray-200 dark:bg-zinc-900">
+    <div class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="relative flex h-full w-full items-center justify-center rounded-[10px]">
         <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
           <div id="amPm">{createTime(new Date()).amPm}</div>
         </div>
-        <div
-          class="text-center text-5xl font-bold text-black dark:text-white"
-          id="currentTime"
-        >
+        <div class="text-center text-5xl font-bold text-white" id="currentTime">
           {createTime(new Date()).time}
         </div>
       </div>
@@ -97,17 +94,14 @@ function DateWidget() {
     }, 1000);
   });
   return (
-    <div class="dark:bg-background absolute inset-0 !select-none rounded-[20px] bg-white p-[10px]">
-      <div class="h-full w-full rounded-[10px] bg-gray-200 dark:bg-zinc-900">
-        <div class="relative flex h-full w-full items-center justify-center rounded-[10px] bg-gray-200 dark:bg-zinc-900">
+    <div class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="relative flex h-full w-full items-center justify-center rounded-[10px]">
           <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
             <div id="month">{months[new Date().getMonth()]}</div>
             <div id="year">{new Date().getFullYear()}</div>
           </div>
-          <div
-            class="text-center text-5xl font-bold text-black dark:text-white"
-            id="day"
-          >
+          <div class="text-center text-5xl font-bold text-white" id="day">
             {new Date().getDate()}
           </div>
         </div>
@@ -218,9 +212,9 @@ function TodoWidget() {
   };
 
   return (
-    <div class="bg-background absolute inset-0 overflow-hidden rounded-[20px] p-[10px]">
-      <div class="h-full w-full rounded-lg">
-        <div class="bg-background text-foreground relative h-full w-full rounded-[20px] pt-2">
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="**:text-white h-full w-full rounded-lg">
+        <div class="text-foreground relative h-full w-full rounded-[20px] pt-2">
           <div class="scrollbar-hidden max-h-[76px] overflow-auto">
             <div id="tasks" class="mt-2 px-4">
               {tasks()
@@ -256,7 +250,7 @@ function TodoWidget() {
                         }
                       }}
                     >
-                      <CheckboxControl class="dark:!border-white" />
+                      <CheckboxControl class="!border-white" />
                     </Checkbox>
                     <label for={task.id} class="select-none text-sm">
                       {task.title}
@@ -266,7 +260,7 @@ function TodoWidget() {
               <br />
             </div>
           </div>
-          <div class="bg-background absolute bottom-0 left-0 right-0 flex gap-2 pb-[10px] pl-2 pr-4">
+          <div class="absolute bottom-0 left-0 right-0 flex gap-2 bg-transparent pb-[10px] pl-2 pr-4">
             <TextFieldRoot class="flex-1">
               <TextField
                 placeholder={chrome.i18n.getMessage("new_task")}
@@ -277,6 +271,7 @@ function TodoWidget() {
                     addTask();
                   }
                 }}
+                class="!outline-white"
               />
             </TextFieldRoot>
             <Button onClick={addTask}>
@@ -316,8 +311,8 @@ function StopwatchWidget() {
   });
 
   return (
-    <div class="bg-background text-foreground absolute inset-0 overflow-hidden rounded-[20px] p-[10px] pb-0">
-      <div class="flex h-full w-full select-none flex-col items-center justify-center gap-2 rounded-[10px]">
+    <div class="text-foreground absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="flex h-full w-full select-none flex-col items-center justify-center gap-2 rounded-[10px] text-white">
         {formatTime(time())}
         <div class="flex gap-2 text-sm text-gray-400">
           <Button
@@ -368,12 +363,12 @@ function BookmarksWidget() {
     }
   });
   return (
-    <div class="dark:bg-background absolute inset-0 overflow-hidden rounded-[20px] bg-white p-[10px] pb-0">
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
       <div class="h-full w-full rounded-[10px]">
-        <div class="dark:bg-background relative h-full w-full rounded-[10px] bg-white pt-2">
-          <div class="scrollbar-hidden overflow-auto">
+        <div class="relative h-full w-full rounded-[10px] pt-2">
+          <div class="scrollbar-hidden **:text-white overflow-auto">
             <div
-              class="select-none px-3.5 text-left text-xl font-bold text-cyan-700 dark:text-white"
+              class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
             >
               {chrome.i18n.getMessage("bookmarks")}
@@ -429,12 +424,12 @@ function NatureWidget() {
   }
 
   return (
-    <div class="bg-background absolute inset-0 overflow-hidden rounded-[20px] p-[10px]">
+    <div class="**:text-white absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
       <div class="h-full w-full rounded-[10px]">
-        <div class="bg-background relative h-full w-full rounded-[10px] pt-2">
+        <div class="relative h-full w-full rounded-[10px] pt-2">
           <div class="scrollbar-hidden overflow-auto">
             <div
-              class="select-none px-3.5 text-left text-xl font-bold text-green-700 dark:text-white"
+              class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
             >
               {chrome.i18n.getMessage("nature")}
@@ -526,12 +521,12 @@ function PomodoroWidget() {
   });
 
   return (
-    <div class="dark:bg-background absolute inset-0 overflow-hidden rounded-[20px] bg-white p-[10px]">
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-transparent">
       <div class="h-full w-full rounded-[10px]">
-        <div class="dark:bg-background relative h-full w-full rounded-[10px] bg-white pt-2">
+        <div class="relative h-full w-full rounded-[10px] bg-black/30 p-[10px] pt-4 shadow-inner shadow-white/10 backdrop-blur-3xl">
           <div class="scrollbar-hidden overflow-auto">
             <div
-              class="select-none px-3.5 text-left text-xl font-bold text-teal-700 dark:text-white"
+              class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
             >
               {isRunning()
@@ -541,7 +536,7 @@ function PomodoroWidget() {
                 : "Pomodoro"}
             </div>
             <div class="mt-2 px-3.5">
-              <h1 class="text-xl font-bold text-black dark:text-white">
+              <h1 class="text-xl font-bold text-white">
                 {formatTime(pomodoro())}
               </h1>
               <div class="mt-3 flex items-center gap-2">
@@ -628,12 +623,12 @@ function FocusSoundscapes() {
   }
 
   return (
-    <div class="bg-background absolute inset-0 overflow-hidden rounded-[20px] p-[10px]">
-      <div class="h-full w-full rounded-[10px]">
-        <div class="bg-background relative h-full w-full rounded-[10px] pt-2">
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="**:text-white h-full w-full rounded-[10px]">
+        <div class="relative h-full w-full rounded-[10px] pt-2">
           <div class="scrollbar-hidden overflow-auto">
             <div
-              class="select-none px-3.5 text-left text-xl font-bold text-purple-700 dark:text-white"
+              class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
             >
               {chrome.i18n.getMessage("focus")}
@@ -686,7 +681,7 @@ function AmbienceSoundscapes() {
   function PlayButton({ key, index }: { key: string; index: number }) {
     return (
       <button
-        class="flex size-[24px] items-center justify-center !rounded-full font-bold text-black"
+        class="flex size-[24px] items-center justify-center !rounded-full font-bold text-white"
         onclick={() => {
           if (currentlyPlaying() == index) {
             setCurrentlyPlaying(null);
@@ -698,21 +693,21 @@ function AmbienceSoundscapes() {
         }}
       >
         {currentlyPlaying() == index ? (
-          <Pause height={16} fill="currentColor" class="text-foreground" />
+          <Pause height={16} fill="currentColor" class="text-white" />
         ) : (
-          <Play height={16} fill="currentColor" class="text-foreground" />
+          <Play height={16} fill="currentColor" class="text-white" />
         )}
       </button>
     );
   }
 
   return (
-    <div class="bg-background absolute inset-0 overflow-hidden rounded-[20px] p-[10px]">
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
       <div class="h-full w-full rounded-[10px]">
-        <div class="bg-background relative h-full w-full rounded-[10px] pt-2">
+        <div class="**:text-white relative h-full w-full rounded-[10px] pt-2">
           <div class="scrollbar-hidden overflow-auto">
             <div
-              class="select-none px-3.5 text-left text-xl font-bold text-cyan-700 dark:text-white"
+              class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
             >
               {chrome.i18n.getMessage("ambience")}

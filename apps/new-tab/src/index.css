@@ -92,7 +92,7 @@
 }
 
 .widget {
-  @apply relative h-[150px] w-[400px] rounded-[20px] bg-gray-300 p-6 text-3xl shadow-lg dark:bg-zinc-700 dark:shadow-sm;
+  @apply relative h-[150px] w-[400px] rounded-[20px] p-6 text-3xl shadow-lg dark:shadow-sm;
 }
 
 .slot[data-swapy-highlighted] {
