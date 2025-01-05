@@ -73,5 +73,7 @@ If you know Spanish, French, Korean, Chinese (simplified or traditional), German
 
 We welcome contributions! If you have suggestions or improvements, please:
 
+- **Create a feature request**: [Post a feature request](https://flowtide.canny.io/feature-requests)
 - **Open an Issue**: [Create an issue](https://github.com/Thingbomb/Flowtide/issues).
 - **Submit a Pull Request**: [Submit a pull request](https://github.com/Thingbomb/Flowtide/pulls).
+Or, you can discuss in our [discussions page](https://github.com/thingbomb/flowtide/discussions).
