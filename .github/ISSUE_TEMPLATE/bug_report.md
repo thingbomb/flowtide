@@ -15,9 +15,17 @@ body:
     id: what-happened
     attributes:
       label: What happened?
-      description: Also tell us, what did you expect to happen?
+      description: Describe the bug you encountered
       placeholder: Tell us what you see!
       value: ""
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+      placeholder: Describe the expected outcome
     validations:
       required: true
   - type: dropdown
