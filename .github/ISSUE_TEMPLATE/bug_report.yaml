@@ -12,9 +12,9 @@ body:
   - type: textarea
     id: what-happened
     attributes:
-      label: What happened?
-      description: Describe the bug you encountered
-      placeholder: Tell us what you see!
+      label: "What happened?"
+      description: "Describe the bug you encountered"
+      placeholder: "Tell us what you see!"
       value: ""
     validations:
       required: true
