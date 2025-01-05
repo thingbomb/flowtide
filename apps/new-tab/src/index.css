@@ -149,3 +149,12 @@
     @apply border-zinc-800;
   }
 }
+
+.customWidget {
+  h1 {
+    @apply text-xl font-bold;
+  }
+  button {
+    @apply focus-visible:ring-ring inline-flex h-9 !cursor-default !select-none items-center justify-center gap-2 rounded-md bg-gray-600 px-4 py-2 text-sm font-medium text-white shadow-inner transition-[color,background-color,box-shadow] hover:bg-gray-500 focus:outline-none focus:outline-1 focus:outline-white focus-visible:outline-none focus-visible:ring-[1.5px] disabled:pointer-events-none disabled:opacity-50 dark:shadow-white/10;
+  }
+}

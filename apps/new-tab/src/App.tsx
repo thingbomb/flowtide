@@ -47,12 +47,18 @@ import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
 import { number } from "mathjs";
-import { z } from "zod";
+import { any, z } from "zod";
 
 type MessageKeys = keyof typeof data;
 
 interface Data {
   [key: string]: { message: string };
+}
+
+interface CustomWidget {
+  id: string;
+  key: string;
+  html: string;
 }
 
 try {
@@ -97,6 +103,10 @@ declare global {
       ) => { success: boolean; error?: string; id?: string };
       bookmarks: {
         get: (id: string) => Promise<Bookmark[]>;
+      };
+      widgets: {
+        add: (id: string, key: string, html: string) => any;
+        update: (key: string, id: string, html: string) => any;
       };
     };
   }
@@ -205,6 +215,11 @@ const App: Component = () => {
     0
   );
   const [logs, setLogs] = createSignal<any[]>([]);
+  const [customWidgets, setCustomWidgets] = createSignal<object[]>(
+    localStorage.getItem("customWidgets")
+      ? JSON.parse(localStorage.getItem("customWidgets") as string)
+      : []
+  );
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
   function getInitialSelectedImage() {
@@ -517,6 +532,49 @@ const App: Component = () => {
             }
           },
         },
+        widgets: {
+          add: (id: string, key: string, html: string): any => {
+            let widgetOrder = JSON.parse(
+              localStorage.getItem("widgetPlacement")
+                ? (localStorage.getItem("widgetPlacement") as string)
+                : "{}"
+            );
+            if (widgetOrder[key]) {
+              return { success: false, error: "Widget already exists" };
+            } else {
+              widgetOrder[key] = key;
+              let newWidgets = customWidgets();
+              newWidgets.push({ id: id, key: key, html: html });
+              localStorage.setItem("customWidgets", JSON.stringify(newWidgets));
+              setCustomWidgets(newWidgets);
+            }
+            localStorage.setItem(
+              "widgetPlacement",
+              JSON.stringify(widgetOrder)
+            );
+            updateFilteredWidgets();
+          },
+          update: (key: string, id: string, html: string): any => {
+            if (customWidgets().find((w: any) => w.id === id)) {
+              return {
+                success: false,
+                error: "Can't update a widget from another plugin.",
+              };
+            } else {
+              let newWidgets = customWidgets();
+              const widget = newWidgets.find(
+                (w: any) => w.key === key
+              ) as CustomWidget;
+              if (widget) {
+                widget.html = html;
+              } else {
+                return { success: false, error: "Widget not found" };
+              }
+              localStorage.setItem("customWidgets", JSON.stringify(newWidgets));
+              setCustomWidgets(newWidgets);
+            }
+          },
+        },
       };
 
       swapy.enable(true);
@@ -757,6 +815,43 @@ const App: Component = () => {
                             <GripVertical height={16} class="text-black" />
                           </button>
                         )}
+                        {(() => {
+                          if (
+                            ![
+                              "bookmarks",
+                              "nature",
+                              "pomodoro",
+                              "todo",
+                              "stopwatch",
+                              "clock",
+                              "date",
+                              "focus",
+                              "ambience",
+                            ].includes(widgetOrder()[item])
+                          ) {
+                            const uniqueID = uuidv4();
+
+                            createEffect(() => {
+                              const element = document.getElementById(uniqueID);
+                              console.log(widgetOrder()[item]);
+                              const newHTML = customWidgets().find(
+                                (widget: any) =>
+                                  widget.key === widgetOrder()[item]
+                              ) as CustomWidget;
+                              console.log(newHTML);
+                              if (element && newHTML) {
+                                element.innerHTML = newHTML.html;
+                                console.log(element.innerHTML);
+                              }
+                            }, [customWidgets]);
+
+                            return (
+                              <div class="customWidget absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-6 pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
+                                <div id={uniqueID}></div>
+                              </div>
+                            );
+                          }
+                        })()}
                         <button
                           class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
                           onclick={(e) => {
