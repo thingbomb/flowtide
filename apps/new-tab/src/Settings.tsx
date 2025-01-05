@@ -550,9 +550,9 @@ function SettingsTrigger({
                 <input
                   type="range"
                   class="h-2 w-full appearance-none rounded-lg bg-zinc-100 dark:bg-zinc-600"
-                  value={Number(wallpaperBlur() * 2)}
+                  value={Number(wallpaperBlur() * 2.5)}
                   onInput={(e) =>
-                    setWallpaperBlur(Number(e.currentTarget.value) / 2)
+                    setWallpaperBlur(Number(e.currentTarget.value) / 2.5)
                   }
                 />
               </div>
