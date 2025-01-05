@@ -75,5 +75,5 @@ We welcome contributions! If you have suggestions or improvements, please:
 
 - **Create a feature request**: [Post a feature request](https://flowtide.canny.io/feature-requests)
 - **Open an Issue**: [Create an issue](https://github.com/Thingbomb/Flowtide/issues).
-- **Submit a Pull Request**: [Submit a pull request](https://github.com/Thingbomb/Flowtide/pulls).
+- **Submit a Pull Request**: [Submit a pull request](https://github.com/Thingbomb/Flowtide/pulls).<br/><br />
 Or, you can discuss in our [discussions page](https://github.com/thingbomb/flowtide/discussions).
