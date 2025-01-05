@@ -47,6 +47,7 @@ import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
 import { number } from "mathjs";
+import { z } from "zod";
 
 type MessageKeys = keyof typeof data;
 
@@ -68,6 +69,37 @@ try {
       }
     },
   } as any;
+}
+
+interface PluginResult {
+  success: boolean;
+  error?: string;
+  id: string;
+}
+
+interface PluginKey {
+  title: string;
+  description: string;
+  id: string;
+}
+
+interface PluginConfig {
+  title: string;
+  description: string;
+}
+
+declare global {
+  interface Window {
+    flowtide: {
+      createPlugin: (
+        config: PluginConfig,
+        fn: (result: PluginResult) => void
+      ) => { success: boolean; error?: string; id?: string };
+      bookmarks: {
+        get: (id: string) => Promise<Bookmark[]>;
+      };
+    };
+  }
 }
 
 const colorPalette = [
@@ -172,6 +204,7 @@ const App: Component = () => {
     "wallpaperBlur",
     0
   );
+  const [logs, setLogs] = createSignal<any[]>([]);
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
   function getInitialSelectedImage() {
@@ -213,26 +246,6 @@ const App: Component = () => {
     "itemsHidden",
     "false"
   );
-  onMount(() => {
-    if (chrome.bookmarks !== undefined) {
-      chrome.bookmarks.getTree((bookmarkTreeNodes) => {
-        const flattenBookmarks = (nodes: any[]): Bookmark[] => {
-          let bookmarks: Bookmark[] = [];
-          for (const node of nodes) {
-            if (node.url) {
-              bookmarks.push({ name: node.title, url: node.url });
-            }
-            if (node.children) {
-              bookmarks = bookmarks.concat(flattenBookmarks(node.children));
-            }
-          }
-          return bookmarks;
-        };
-        const allBookmarks = flattenBookmarks(bookmarkTreeNodes);
-        setBookmarks(allBookmarks);
-      });
-    }
-  });
   createEffect(() => {
     if (pageTitle()) {
       document.title = pageTitle();
@@ -429,6 +442,82 @@ const App: Component = () => {
           swapy.update();
         }
       });
+      async function getFlattedBookmarks(): Promise<Bookmark[]> {
+        return new Promise((resolve) => {
+          try {
+            chrome.bookmarks.getTree((bookmarkTreeNodes) => {
+              const flattenBookmarks = (nodes: any[]): Bookmark[] => {
+                let bookmarks: Bookmark[] = [];
+                for (const node of nodes) {
+                  if (node.url) {
+                    bookmarks.push({ name: node.title, url: node.url });
+                  }
+                  if (node.children) {
+                    bookmarks = bookmarks.concat(
+                      flattenBookmarks(node.children)
+                    );
+                  }
+                }
+                return bookmarks;
+              };
+              const allBookmarks = flattenBookmarks(bookmarkTreeNodes);
+              setBookmarks(allBookmarks);
+            });
+          } catch (error) {
+            resolve([]);
+          }
+        });
+      }
+      const pluginMap = new Map<string, any>();
+
+      window.flowtide = {
+        createPlugin: (
+          config: PluginConfig,
+          fn: (result: PluginResult) => void
+        ): PluginResult => {
+          try {
+            const schema = z.object({
+              title: z.string().min(3),
+              description: z.string().min(3),
+            });
+            schema.parse(config);
+            const id = uuidv4();
+            pluginMap.set(id, config);
+            fn({ success: true, id: id });
+            return {
+              success: true,
+              id: id,
+            };
+          } catch (error: any) {
+            fn({ success: false, error: error.message, id: "" });
+            return { success: false, error: error.message, id: "" };
+          }
+        },
+        bookmarks: {
+          get: async (id: string): Promise<Bookmark[]> => {
+            if (!pluginMap.has(id)) {
+              console.log(
+                `A script attempted to access bookmarks but no plugin with id ${id} was found.`
+              );
+              setLogs((logs) => [
+                ...logs,
+                `A script attempted to access bookmarks but no plugin with id ${id} was found.`,
+              ]);
+              return [];
+            } else {
+              console.log(
+                `Log: "${pluginMap.get(id).title}" accessed bookmarks.`
+              );
+              setLogs((logs) => [
+                ...logs,
+                `${pluginMap.get(id).title} accessed bookmarks.`,
+              ]);
+              const allBookmarks = await getFlattedBookmarks();
+              return allBookmarks;
+            }
+          },
+        },
+      };
 
       swapy.enable(true);
 
@@ -568,7 +657,7 @@ const App: Component = () => {
               e.target.style.filter = `brightness(${opacity()})`;
             }
             if (wallpaperBlur() > 0) {
-              e.target.style.filter = `blur(${Number(wallpaperBlur()) / 10}px)`;
+              e.target.style.filter = `blur(${Number(wallpaperBlur())}px)`;
             }
             setImageLoaded(true);
           }}
