@@ -21,10 +21,6 @@ Features:
 - [Chrome](https://chromewebstore.google.com/detail/flowtide-beautiful-new-ta/fpdjjjmglibdjocjpcchgkbakeelaghm)
 - [Vivaldi](https://docs.flowtide.app/install-guides/vivaldi)
 
-## License
-
-This project is licensed under the GPLv3 license.
-
 ## Developing the extension
 
 First, install the dependencies:
@@ -78,3 +74,7 @@ We welcome contributions! If you have suggestions or improvements, please:
 - **Submit a Pull Request**: [Submit a pull request](https://github.com/Thingbomb/Flowtide/pulls).<br/><br />
 
 Or, you can discuss in our [discussions page](https://github.com/thingbomb/flowtide/discussions).
+
+## License
+
+This project is licensed under the GPLv3 license.
