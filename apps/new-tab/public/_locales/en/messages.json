@@ -320,63 +320,6 @@
   "date": {
     "message": "Date"
   },
-  "monday": {
-    "message": "Monday"
-  },
-  "tuesday": {
-    "message": "Tuesday"
-  },
-  "wednesday": {
-    "message": "Wednesday"
-  },
-  "thursday": {
-    "message": "Thursday"
-  },
-  "friday": {
-    "message": "Friday"
-  },
-  "saturday": {
-    "message": "Saturday"
-  },
-  "sunday": {
-    "message": "Sunday"
-  },
-  "january": {
-    "message": "January"
-  },
-  "february": {
-    "message": "February"
-  },
-  "march": {
-    "message": "March"
-  },
-  "april": {
-    "message": "April"
-  },
-  "may": {
-    "message": "May"
-  },
-  "june": {
-    "message": "June"
-  },
-  "july": {
-    "message": "July"
-  },
-  "august": {
-    "message": "August"
-  },
-  "september": {
-    "message": "September"
-  },
-  "october": {
-    "message": "October"
-  },
-  "november": {
-    "message": "November"
-  },
-  "december": {
-    "message": "December"
-  },
   "bookmarks_description": {
     "message": "Easy access to your first 9 bookmarks with this widget."
   },

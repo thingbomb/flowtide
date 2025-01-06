@@ -320,63 +320,6 @@
   "date": {
     "message": "Date"
   },
-  "monday": {
-    "message": "Lundi"
-  },
-  "tuesday": {
-    "message": "Mardi"
-  },
-  "wednesday": {
-    "message": "Mercredi"
-  },
-  "thursday": {
-    "message": "Jeudi"
-  },
-  "friday": {
-    "message": "Vendredi"
-  },
-  "saturday": {
-    "message": "Samedi"
-  },
-  "sunday": {
-    "message": "Dimanche"
-  },
-  "january": {
-    "message": "Janvier"
-  },
-  "february": {
-    "message": "Février"
-  },
-  "march": {
-    "message": "Mars"
-  },
-  "april": {
-    "message": "Avril"
-  },
-  "may": {
-    "message": "Mai"
-  },
-  "june": {
-    "message": "Juin"
-  },
-  "july": {
-    "message": "Juillet"
-  },
-  "august": {
-    "message": "Août"
-  },
-  "september": {
-    "message": "Septembre"
-  },
-  "october": {
-    "message": "Octobre"
-  },
-  "november": {
-    "message": "Novembre"
-  },
-  "december": {
-    "message": "Décembre"
-  },
   "bookmarks_description": {
     "message": "Accédez facilement à vos 9 premiers marque-pages avec ce widget."
   },
