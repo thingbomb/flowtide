@@ -305,6 +305,9 @@
   "ambience_sounds": {
     "message": "Sons d'ambiance"
   },
+  "nature_sounds": {
+    "message": "Sons naturels"
+  },
   "todo_list": {
     "message": "Liste des tâches à accomplir"
   },
@@ -316,5 +319,68 @@
   },
   "date": {
     "message": "Date"
+  },
+  "bookmarks_description": {
+    "message": "Accédez facilement à vos 9 premiers marque-pages avec ce widget."
+  },
+  "pomodoro_description": {
+    "message": "Utilisez la technique Pomodoro pour gérer votre temps de travail."
+  },
+  "nature_description": {
+    "message": "Écoutez des paysages sonores naturels."
+  },
+  "focus_sounds_description": {
+    "message": "Écoutez des paysages sonores pour vous concentrer."
+  },
+  "ambience_sounds_description": {
+    "message": "Écoutez des ambiances sonores pour vous détendre."
+  },
+  "todo_list_description": {
+    "message": "Suivez vos tâches avec ce widget simple."
+  },
+  "stopwatch_description": {
+    "message": "Ajoutez un chronomètre à votre page d'accueil."
+  },
+  "clock_description": {
+    "message": "Ajoutez une horloge à votre page d'accueil."
+  },
+  "date_description": {
+    "message": "Affichez la date du jour sur votre page d'accueil."
+  },
+  "show_items": {
+    "message": "Afficher"
+  },
+  "hide_items": {
+    "message": "Cacher"
+  },
+  "start_background_changes": {
+    "message": "Reprendre le changement d'arrière-plan"
+  },
+  "pause_background_changes": {
+    "message": "Mettre en pause le changement d'arrière-plan"
+  },
+  "work": {
+    "message": "Travail"
+  },
+  "break": {
+    "message": "Pause"
+  },
+  "add_widget": {
+    "message": "Ajouter un widget"
+  },
+  "icon": {
+    "message": "Icône"
+  },
+  "new_tab": {
+    "message": "Nouvel onglet"
+  },
+  "enter_greeting": {
+    "message": "Saisir le message d'accueil"
+  },
+  "close": {
+    "message": "Fermer"
+  },
+  "search": {
+    "message": "Chercher"
   }
 }

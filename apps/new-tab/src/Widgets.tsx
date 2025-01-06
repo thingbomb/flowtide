@@ -531,9 +531,9 @@ function PomodoroWidget() {
             >
               {isRunning()
                 ? pomodoroSession() == "work"
-                  ? "Work"
-                  : "Break"
-                : "Pomodoro"}
+                  ? chrome.i18n.getMessage("work")
+                  : chrome.i18n.getMessage("break")
+                : chrome.i18n.getMessage("pomodoro")}
             </div>
             <div class="mt-2 px-3.5">
               <h1 class="text-xl font-bold text-white">
@@ -552,7 +552,7 @@ function PomodoroWidget() {
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
                     class="inline-flex items-center gap-2 rounded-md bg-gray-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 hover:bg-gray-600 focus:outline-none focus:outline-1 focus:outline-white dark:bg-gray-800"
-                    aria-label="Add widget"
+                    aria-label={chrome.i18n.getMessage("add_widget")}
                   >
                     {chrome.i18n.getMessage("settings")}
                   </DialogTrigger>
