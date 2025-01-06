@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   ""welcome_message": {"message": "Bienvenue à Flowtide"
 },
 "get_started": {
@@ -377,5 +378,386 @@
 },
 "search": {
 "message": "Chercher"
+=======
+  "welcome_message": {
+    "message": "Bienvenue à Flowtide"
+  },
+  "get_started": {
+    "message": "Commencer"
+  },
+  "resources": {
+    "message": "Ressources"
+  },
+  "start_using": {
+    "message": "Commencer à utiliser Flowtide"
+  },
+  "blocks": {
+    "message": "Blocs"
+  },
+  "blocks_description": {
+    "message": "Améliorez votre page Nouvel onglet avec des blocs magnifiquement conçus par Flowtide. Vous pouvez en ajouter autant que vous le souhaitez à votre page d'accueil."
+  },
+  "add": {
+    "message": "Ajouter"
+  },
+  "added": {
+    "message": "Ajouté"
+  },
+  "settings": {
+    "message": "Réglages"
+  },
+  "greeting": {
+    "message": "Créer un message d'accueil"
+  },
+  "enter_name": {
+    "message": "Entrez votre nom"
+  },
+  "skip": {
+    "message": "Sauter"
+  },
+  "copied_to_clipboard": {
+    "message": "Copié dans le presse-papiers"
+  },
+  "create_google_document": {
+    "message": "Créer un document Google"
+  },
+  "create_word_document": {
+    "message": "Créer un document Word"
+  },
+  "create_notion_page": {
+    "message": "Créer une page de Notion"
+  },
+  "create_google_sheet": {
+    "message": "Créer Google Sheet"
+  },
+  "compose_gmail_message": {
+    "message": "Écrire un message Gmail"
+  },
+  "create_google_slide": {
+    "message": "Créer un slide Google"
+  },
+  "create_google_calendar_event": {
+    "message": "Créer un événement Google Agenda"
+  },
+  "create_excel_workbook": {
+    "message": "Créer un classeur Excel"
+  },
+  "create_powerpoint_presentation": {
+    "message": "Créer une présentation PowerPoint"
+  },
+  "create_paper_document": {
+    "message": "Créer un document papier"
+  },
+  "create_todoist_task": {
+    "message": "Créer une tâche Todoist"
+  },
+  "create_github_repository": {
+    "message": "Créer un dépôt GitHub"
+  },
+  "create_github_gist": {
+    "message": "Créer une Gist GitHub"
+  },
+  "create_figma_file": {
+    "message": "Créer un fichier Figma"
+  },
+  "create_zoom_meeting": {
+    "message": "Créer une réunion Zoom"
+  },
+  "create_bitly_link": {
+    "message": "Créer un lien Bitly"
+  },
+  "create_canva_design": {
+    "message": "Créer un design Canva"
+  },
+  "create_canva_video": {
+    "message": "Créer une vidéo Canva"
+  },
+  "type_command": {
+    "message": "Tapez une commande"
+  },
+  "no_results": {
+    "message": "Aucun résultat trouvé"
+  },
+  "actions": {
+    "message": "Actions"
+  },
+  "bookmarks": {
+    "message": "Signets"
+  },
+  "bookmark_folders": {
+    "message": "Dossiers de marque-pages"
+  },
+  "good_morning": {
+    "message": "Bonjour"
+  },
+  "good_night": {
+    "message": "Bonne nuit"
+  },
+  "good_afternoon": {
+    "message": "Bonjour à tous"
+  },
+  "good_evening": {
+    "message": "Bonsoir à tous"
+  },
+  "widgets": {
+    "message": "Widgets"
+  },
+  "nightstand": {
+    "message": "Table de nuit"
+  },
+  "speed_dial": {
+    "message": "Numérotation rapide"
+  },
+  "choose_mode": {
+    "message": "Choisir un mode"
+  },
+  "complete": {
+    "message": "Compléter"
+  },
+  "mode": {
+    "message": "Mode"
+  },
+  "layout": {
+    "message": "Mise en page"
+  },
+  "font": {
+    "message": "Font"
+  },
+  "sans": {
+    "message": "Sans"
+  },
+  "serif": {
+    "message": "Serif"
+  },
+  "mono": {
+    "message": "Mono"
+  },
+  "theme": {
+    "message": "Thème"
+  },
+  "light": {
+    "message": "Lumière"
+  },
+  "dark": {
+    "message": "Sombre"
+  },
+  "background": {
+    "message": "Arrière-plan"
+  },
+  "image": {
+    "message": "Image"
+  },
+  "gradient": {
+    "message": "Dégradé"
+  },
+  "blank": {
+    "message": "Vide"
+  },
+  "solid_color": {
+    "message": "Couleur unie"
+  },
+  "leave_blank_to_disable": {
+    "message": "Laisser en blanc pour désactiver."
+  },
+  "set_greeting": {
+    "message": "Définir un message d'accueil."
+  },
+  "more": {
+    "message": "En savoir plus"
+  },
+  "go_back": {
+    "message": "Retourner"
+  },
+  "forum": {
+    "message": "Forum"
+  },
+  "feature_request": {
+    "message": "Demande de fonctionnalité"
+  },
+  "saved": {
+    "message": "Sauvegardé"
+  },
+  "center": {
+    "message": "Centre"
+  },
+  "top": {
+    "message": "Haut"
+  },
+  "page_title": {
+    "message": "Titre de la page"
+  },
+  "page": {
+    "message": "Titre et icône de la page"
+  },
+  "save": {
+    "message": "Économiser"
+  },
+  "lowercase": {
+    "message": "Minuscules"
+  },
+  "uppercase": {
+    "message": "Majuscules"
+  },
+  "normal": {
+    "message": "Normal"
+  },
+  "text_style": {
+    "message": "Style de texte"
+  },
+  "opacity": {
+    "message": "Opacité"
+  },
+  "wallpaper_blur": {
+    "message": "Papier peint flou"
+  },
+  "general": {
+    "message": "Général"
+  },
+  "appearance": {
+    "message": "Apparence"
+  },
+  "new_wallpaper": {
+    "message": "Nouveau papier peint"
+  },
+  "every_reload": {
+    "message": "Chaque recharge"
+  },
+  "every_hour": {
+    "message": "Toutes les heures"
+  },
+  "every_day": {
+    "message": "Tous les jours"
+  },
+  "every_week": {
+    "message": "Chaque semaine"
+  },
+  "sound_attribution": {
+    "message": "Attribution du son"
+  },
+  "ambience": {
+    "message": "Ambiance"
+  },
+  "focus": {
+    "message": "Focus"
+  },
+  "nature": {
+    "message": "Nature"
+  },
+  "pomodoro_settings": {
+    "message": "Paramètres Pomodoro"
+  },
+  "edit_the_pomodoro_settings": {
+    "message": "Modifier les paramètres pomodoro."
+  },
+  "work_minutes": {
+    "message": "Minutes de travail"
+  },
+  "break_minutes": {
+    "message": "Pause minutes"
+  },
+  "you_may_need_to_refresh": {
+    "message": "Il se peut que vous deviez actualiser la page pour voir les changements."
+  },
+  "pomodoro": {
+    "message": "Pomodoro"
+  },
+  "pomodoro_timer": {
+    "message": "Minuteur Pomodoro"
+  },
+  "reset": {
+    "message": "Remise à zéro"
+  },
+  "start": {
+    "message": "Démarrage"
+  },
+  "stop": {
+    "message": "Arrêter"
+  },
+  "add_task": {
+    "message": "Ajouter une tâche"
+  },
+  "new_task": {
+    "message": "Nouvelle tâche"
+  },
+  "focus_sounds": {
+    "message": "Focus Sounds"
+  },
+  "ambience_sounds": {
+    "message": "Sons d'ambiance"
+  },
+  "todo_list": {
+    "message": "Liste des tâches à accomplir"
+  },
+  "stopwatch": {
+    "message": "Chronomètre"
+  },
+  "clock": {
+    "message": "Horloge"
+  },
+  "date": {
+    "message": "Date"
+  },
+  bookmarks_description": {"message": "Accédez facilement à vos 9 premiers marque-pages avec ce widget."
+},
+"pomodoro_description": {
+  "message": "Utilisez la technique Pomodoro pour gérer votre temps de travail."
+},
+"nature_description": {
+  "message": "Écoutez des paysages sonores naturels."
+},
+"focus_sounds_description": {
+  "message": "Écoutez des paysages sonores pour vous concentrer."
+},
+"ambience_sounds_description": {
+  "message": "Écoutez des ambiances sonores pour vous détendre."
+},
+"todo_list_description": {
+  "message": "Suivez vos tâches avec ce widget simple."
+},
+"stopwatch_description": {
+  "message": "Ajoutez un chronomètre à votre page d'accueil."
+},
+"clock_description": {
+  "message": "Ajoutez une horloge à votre page d'accueil."
+},
+"date_description": {
+  "message": "Affichez la date du jour sur votre page d'accueil."
+},
+"show_items": {
+  "message": "Afficher"
+},
+"hide_items": {
+  "message": "Cacher"
+},
+"start_background_changes": {
+  "message": "Reprendre le changement d'arrière-plan"
+},
+"pause_background_changes": {
+  "message": "Mettre en pause le changement d'arrière-plan"
+},
+"work": {
+  "message": "Travail"
+},
+"break": {
+  "message": "Pause"
+},
+"add_widget": {
+  "message": "Ajouter un widget"
+},
+"icon": {
+  "message": "Icône"
+},
+"new_tab": {
+  "message": "Nouvel onglet"
+},
+"enter_greeting": {
+  "message": "Saisir le message d'accueil"
+},
+"close": {
+  "message": "Fermer"
+},
+"search": {
+  "message": "Chercher"
+>>>>>>> 8cf5879 (Reverted french translations)
 }
 }
