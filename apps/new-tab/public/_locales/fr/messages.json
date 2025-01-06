@@ -24,13 +24,13 @@
     "message": "Ajouté"
   },
   "settings": {
-    "message": "Réglages"
+    "message": "Paramètres"
   },
   "greeting": {
     "message": "Créer un message d'accueil"
   },
   "enter_name": {
-    "message": "Entrez votre nom"
+    "message": "Saisissez votre nom"
   },
   "skip": {
     "message": "Sauter"
@@ -39,22 +39,22 @@
     "message": "Copié dans le presse-papiers"
   },
   "create_google_document": {
-    "message": "Créer un document Google"
+    "message": "Créer un Google Doc"
   },
   "create_word_document": {
     "message": "Créer un document Word"
   },
   "create_notion_page": {
-    "message": "Créer une page de Notion"
+    "message": "Créer une page Notion"
   },
   "create_google_sheet": {
-    "message": "Créer Google Sheet"
+    "message": "Créer un Google Sheet"
   },
   "compose_gmail_message": {
     "message": "Écrire un message Gmail"
   },
   "create_google_slide": {
-    "message": "Créer un slide Google"
+    "message": "Créer un Google Slide"
   },
   "create_google_calendar_event": {
     "message": "Créer un événement Google Agenda"
@@ -102,10 +102,10 @@
     "message": "Actions"
   },
   "bookmarks": {
-    "message": "Signets"
+    "message": "Favoris"
   },
   "bookmark_folders": {
-    "message": "Dossiers de marque-pages"
+    "message": "Dossiers de Favoris"
   },
   "good_morning": {
     "message": "Bonjour"
@@ -114,10 +114,10 @@
     "message": "Bonne nuit"
   },
   "good_afternoon": {
-    "message": "Bonjour à tous"
+    "message": "Bon après-midi"
   },
   "good_evening": {
-    "message": "Bonsoir à tous"
+    "message": "Bonne soirée"
   },
   "widgets": {
     "message": "Widgets"
@@ -126,13 +126,13 @@
     "message": "Table de nuit"
   },
   "speed_dial": {
-    "message": "Numérotation rapide"
+    "message": "Favoris"
   },
   "choose_mode": {
     "message": "Choisir un mode"
   },
   "complete": {
-    "message": "Compléter"
+    "message": "Terminer"
   },
   "mode": {
     "message": "Mode"
@@ -141,7 +141,7 @@
     "message": "Mise en page"
   },
   "font": {
-    "message": "Font"
+    "message": "Police"
   },
   "sans": {
     "message": "Sans"
@@ -156,7 +156,7 @@
     "message": "Thème"
   },
   "light": {
-    "message": "Lumière"
+    "message": "Clair"
   },
   "dark": {
     "message": "Sombre"
@@ -171,28 +171,28 @@
     "message": "Dégradé"
   },
   "blank": {
-    "message": "Vide"
+    "message": "Blanc"
   },
   "solid_color": {
     "message": "Couleur unie"
   },
   "leave_blank_to_disable": {
-    "message": "Laisser en blanc pour désactiver."
+    "message": "Laisser vide pour désactiver."
   },
   "set_greeting": {
-    "message": "Définir un message d'accueil."
+    "message": "Créer le message d'accueil"
   },
   "more": {
     "message": "En savoir plus"
   },
   "go_back": {
-    "message": "Retourner"
+    "message": "Retour"
   },
   "forum": {
     "message": "Forum"
   },
   "feature_request": {
-    "message": "Demande de fonctionnalité"
+    "message": "Demande de fonctionnalités"
   },
   "saved": {
     "message": "Sauvegardé"
@@ -210,7 +210,7 @@
     "message": "Titre et icône de la page"
   },
   "save": {
-    "message": "Économiser"
+    "message": "Sauvegarder"
   },
   "lowercase": {
     "message": "Minuscules"
@@ -228,7 +228,7 @@
     "message": "Opacité"
   },
   "wallpaper_blur": {
-    "message": "Papier peint flou"
+    "message": "Fond d'écran flou"
   },
   "general": {
     "message": "Général"
@@ -237,10 +237,10 @@
     "message": "Apparence"
   },
   "new_wallpaper": {
-    "message": "Nouveau papier peint"
+    "message": "Nouveau fond d'écran"
   },
   "every_reload": {
-    "message": "Chaque recharge"
+    "message": "Chaque actualisation"
   },
   "every_hour": {
     "message": "Toutes les heures"
@@ -249,7 +249,7 @@
     "message": "Tous les jours"
   },
   "every_week": {
-    "message": "Chaque semaine"
+    "message": "Toutes les semaines"
   },
   "sound_attribution": {
     "message": "Attribution du son"
@@ -258,7 +258,7 @@
     "message": "Ambiance"
   },
   "focus": {
-    "message": "Focus"
+    "message": "Concentration"
   },
   "nature": {
     "message": "Nature"
@@ -267,13 +267,13 @@
     "message": "Paramètres Pomodoro"
   },
   "edit_the_pomodoro_settings": {
-    "message": "Modifier les paramètres pomodoro."
+    "message": "Modifier les paramètres de Pomodoro."
   },
   "work_minutes": {
-    "message": "Minutes de travail"
+    "message": "Temps de travail (min)"
   },
   "break_minutes": {
-    "message": "Pause minutes"
+    "message": "Temps de pause (min)"
   },
   "you_may_need_to_refresh": {
     "message": "Il se peut que vous deviez actualiser la page pour voir les changements."
@@ -285,10 +285,10 @@
     "message": "Minuteur Pomodoro"
   },
   "reset": {
-    "message": "Remise à zéro"
+    "message": "Réinitialiser"
   },
   "start": {
-    "message": "Démarrage"
+    "message": "Démarrer"
   },
   "stop": {
     "message": "Arrêter"
@@ -300,7 +300,7 @@
     "message": "Nouvelle tâche"
   },
   "focus_sounds": {
-    "message": "Focus Sounds"
+    "message": "Sons de concentration"
   },
   "ambience_sounds": {
     "message": "Sons d'ambiance"
