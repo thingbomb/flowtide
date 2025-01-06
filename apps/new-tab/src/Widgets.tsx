@@ -54,27 +54,27 @@ function ClockWidget() {
 
 function DateWidget() {
   const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    chrome.i18n.getMessage("sunday"),
+    chrome.i18n.getMessage("monday"),
+    chrome.i18n.getMessage("tuesday"),
+    chrome.i18n.getMessage("wednesday"),
+    chrome.i18n.getMessage("thursday"),
+    chrome.i18n.getMessage("friday"),
+    chrome.i18n.getMessage("saturday"),
   ];
   const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    chrome.i18n.getMessage("january"),
+    chrome.i18n.getMessage("february"),
+    chrome.i18n.getMessage("march"),
+    chrome.i18n.getMessage("april"),
+    chrome.i18n.getMessage("may"),
+    chrome.i18n.getMessage("june"),
+    chrome.i18n.getMessage("july"),
+    chrome.i18n.getMessage("august"),
+    chrome.i18n.getMessage("september"),
+    chrome.i18n.getMessage("october"),
+    chrome.i18n.getMessage("november"),
+    chrome.i18n.getMessage("december"),
   ];
   onMount(() => {
     let interval: any;
@@ -531,9 +531,9 @@ function PomodoroWidget() {
             >
               {isRunning()
                 ? pomodoroSession() == "work"
-                  ? "Work"
-                  : "Break"
-                : "Pomodoro"}
+                  ? chrome.i18n.getMessage("work")
+                  : chrome.i18n.getMessage("break")
+                : chrome.i18n.getMessage("pomodoro")}
             </div>
             <div class="mt-2 px-3.5">
               <h1 class="text-xl font-bold text-white">
@@ -552,7 +552,7 @@ function PomodoroWidget() {
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
                     class="inline-flex items-center gap-2 rounded-md bg-gray-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 hover:bg-gray-600 focus:outline-none focus:outline-1 focus:outline-white dark:bg-gray-800"
-                    aria-label="Add widget"
+                    aria-label={chrome.i18n.getMessage("add_widget")}
                   >
                     {chrome.i18n.getMessage("settings")}
                   </DialogTrigger>

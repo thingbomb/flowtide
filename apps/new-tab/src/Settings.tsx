@@ -247,7 +247,7 @@ function SettingsTrigger({
               <div class="flex items-start gap-2">
                 <TextFieldRoot class="flex-1">
                   <TextField
-                    placeholder="Enter greeting"
+                    placeholder={chrome.i18n.getMessage("enter_greeting")}
                     value={greetingNameValue()}
                     onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
                   />
@@ -272,13 +272,13 @@ function SettingsTrigger({
               <div class="flex items-start gap-2">
                 <TextFieldRoot class="flex flex-1 gap-2">
                   <TextField
-                    placeholder="Icon"
+                    placeholder={chrome.i18n.getMessage("icon")}
                     class="h-10 w-10"
                     value={pageIconValue()}
                     onInput={(e) => setPageIconValue(e.currentTarget.value)}
                   />
                   <TextField
-                    placeholder="New Tab"
+                    placeholder={chrome.i18n.getMessage("new_tab")}
                     class="h-10"
                     value={pageTitleValue()}
                     onInput={(e) => setPageTitleValue(e.currentTarget.value)}
@@ -296,7 +296,7 @@ function SettingsTrigger({
                   }
                 >
                   {pageTitle() == pageTitleValue() &&
-                  pageIcon() == pageIconValue()
+                    pageIcon() == pageIconValue()
                     ? chrome.i18n.getMessage("saved")
                     : chrome.i18n.getMessage("save")}
                 </Button>
