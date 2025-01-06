@@ -46,7 +46,7 @@ import {
 import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
-import { number } from "mathjs";
+import { number, string } from "mathjs";
 import { any, z } from "zod";
 
 type MessageKeys = keyof typeof data;
@@ -582,6 +582,22 @@ const App: Component = () => {
       if (localStorage.getItem("widgetPlacement") === null) {
         localStorage.setItem("widgetPlacement", JSON.stringify({}));
       }
+
+      if (localStorage.getItem("customWidgets") === null) {
+        localStorage.setItem("customWidgets", JSON.stringify([]));
+      }
+
+      if (localStorage.getItem("customWidgets") !== null) {
+        const parsed = JSON.parse(
+          localStorage.getItem("customWidgets") as string
+        );
+        setCustomWidgets(parsed);
+        parsed.forEach((widget: CustomWidget) => {
+          if (widgetOrder()[widget.key as any] === undefined) {
+            widgetOrder()[widget.key as any] = widget.key;
+          }
+        });
+      }
     }
 
     if (backgroundPaused() == "false") {
@@ -779,98 +795,96 @@ const App: Component = () => {
                 )}
               >
                 {filteredWidgets().length > 0 ? (
-                  filteredWidgets().map((item: any) => (
-                    <div
-                      class={`${uuidv4()} slot group h-fit`}
-                      data-swapy-slot={item}
-                    >
-                      <div
-                        class="widget group"
-                        data-swapy-item={widgetOrder()[item]}
-                      >
-                        {widgetOrder()[item] === "clock" && <ClockWidget />}
-                        {widgetOrder()[item] === "date" && <DateWidget />}
-                        {widgetOrder()[item] === "todo" && <TodoWidget />}
-                        {widgetOrder()[item] === "focus" && (
-                          <FocusSoundscapes />
-                        )}
-                        {widgetOrder()[item] === "ambience" && (
-                          <AmbienceSoundscapes />
-                        )}
-                        {widgetOrder()[item] === "stopwatch" && (
-                          <StopwatchWidget />
-                        )}
-                        {widgetOrder()[item] === "bookmarks" && (
-                          <BookmarksWidget />
-                        )}
-                        {widgetOrder()[item] === "nature" && <NatureWidget />}
-                        {widgetOrder()[item] === "pomodoro" && (
-                          <PomodoroWidget />
-                        )}
-                        {widgetOrder()[item] == "todo" && (
-                          <button
-                            class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
-                            data-swapy-handle
-                          >
-                            <GripVertical height={16} class="text-black" />
-                          </button>
-                        )}
-                        {(() => {
-                          if (
-                            ![
-                              "bookmarks",
-                              "nature",
-                              "pomodoro",
-                              "todo",
-                              "stopwatch",
-                              "clock",
-                              "date",
-                              "focus",
-                              "ambience",
-                            ].includes(widgetOrder()[item])
-                          ) {
-                            const uniqueID = uuidv4();
+                  Object.entries(widgetOrder()).map(
+                    ([item, value]: [any, string]) => {
+                      const widgetType = widgetOrder()[item];
 
-                            createEffect(() => {
-                              const element = document.getElementById(uniqueID);
-                              console.log(widgetOrder()[item]);
-                              const newHTML = customWidgets().find(
-                                (widget: any) =>
-                                  widget.key === widgetOrder()[item]
-                              ) as CustomWidget;
-                              console.log(newHTML);
-                              if (element && newHTML) {
-                                element.innerHTML = newHTML.html;
-                                console.log(element.innerHTML);
-                              }
-                            }, [customWidgets]);
-
-                            return (
-                              <div class="customWidget absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-6 pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
-                                <div id={uniqueID}></div>
-                              </div>
-                            );
-                          }
-                        })()}
-                        <button
-                          class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
-                          onclick={(e) => {
-                            const newWidgetOrder = widgetOrder();
-                            delete newWidgetOrder[item];
-                            setWidgetOrder(newWidgetOrder);
-                            e.target.parentElement?.parentElement?.remove();
-                            localStorage.setItem(
-                              "widgetPlacement",
-                              JSON.stringify(newWidgetOrder)
-                            );
-                            updateFilteredWidgets();
-                          }}
+                      return (
+                        <div
+                          class={`${uuidv4()} slot group h-fit`}
+                          data-swapy-slot={item}
                         >
-                          <X height={16} class="text-black" />
-                        </button>
-                      </div>
-                    </div>
-                  ))
+                          <div
+                            class="widget group"
+                            data-swapy-item={widgetType}
+                          >
+                            {widgetType === "clock" && <ClockWidget />}
+                            {widgetType === "date" && <DateWidget />}
+                            {widgetType === "todo" && <TodoWidget />}
+                            {widgetType === "focus" && <FocusSoundscapes />}
+                            {widgetType === "ambience" && (
+                              <AmbienceSoundscapes />
+                            )}
+                            {widgetType === "stopwatch" && <StopwatchWidget />}
+                            {widgetType === "bookmarks" && <BookmarksWidget />}
+                            {widgetType === "nature" && <NatureWidget />}
+                            {widgetType === "pomodoro" && <PomodoroWidget />}
+
+                            {widgetType === "todo" && (
+                              <button
+                                class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
+                                data-swapy-handle
+                              >
+                                <GripVertical height={16} class="text-black" />
+                              </button>
+                            )}
+
+                            {(() => {
+                              if (
+                                ![
+                                  "bookmarks",
+                                  "nature",
+                                  "pomodoro",
+                                  "todo",
+                                  "stopwatch",
+                                  "clock",
+                                  "date",
+                                  "focus",
+                                  "ambience",
+                                ].includes(widgetType)
+                              ) {
+                                const uniqueID = uuidv4();
+
+                                createEffect(() => {
+                                  const element =
+                                    document.getElementById(uniqueID);
+                                  const newHTML: any = customWidgets().find(
+                                    (widget: any) => widget.key === widgetType
+                                  );
+                                  if (element && newHTML) {
+                                    element.innerHTML = newHTML.html;
+                                  }
+                                });
+
+                                return (
+                                  <div class="customWidget absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-6 pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
+                                    <div id={uniqueID}></div>
+                                  </div>
+                                );
+                              }
+                            })()}
+
+                            <button
+                              class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
+                              onclick={(e) => {
+                                const newWidgetOrder = { ...widgetOrder() };
+                                delete newWidgetOrder[item];
+                                setWidgetOrder(newWidgetOrder);
+                                e.target.parentElement?.parentElement?.remove();
+                                localStorage.setItem(
+                                  "widgetPlacement",
+                                  JSON.stringify(newWidgetOrder)
+                                );
+                                updateFilteredWidgets();
+                              }}
+                            >
+                              <X height={16} class="text-black" />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    }
+                  )
                 ) : (
                   <section></section>
                 )}
