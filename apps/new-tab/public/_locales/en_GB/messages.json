@@ -305,6 +305,9 @@
   "ambience_sounds": {
     "message": "Ambience Sounds"
   },
+  "nature_sounds": {
+    "message": "Nature Sounds"
+  },
   "todo_list": {
     "message": "To-do list"
   },

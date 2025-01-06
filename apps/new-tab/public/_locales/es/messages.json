@@ -308,6 +308,9 @@
   "todo_list": {
     "message": "Lista de tareas pendientes"
   },
+  "nature_sounds": {
+    "message": "Nature Sounds"
+  },
   "stopwatch": {
     "message": "Cronómetro"
   },

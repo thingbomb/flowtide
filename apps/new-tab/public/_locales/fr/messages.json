@@ -305,6 +305,9 @@
   "ambience_sounds": {
     "message": "Sons d'ambiance"
   },
+  "nature_sounds": {
+    "message": "Sons naturels"
+  },
   "todo_list": {
     "message": "Liste des tâches à accomplir"
   },
