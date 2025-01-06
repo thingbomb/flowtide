@@ -27,9 +27,10 @@ function formattedClock() {
     }
   }
   onMount(() => {
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       setCurrentClock(createClock(new Date()));
     }, 1000);
+    onCleanup(() => clearInterval(intervalId));
   });
 
   return currentClock;
