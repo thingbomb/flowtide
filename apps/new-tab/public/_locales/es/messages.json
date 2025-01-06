@@ -305,11 +305,11 @@
   "ambience_sounds": {
     "message": "Sonidos ambientales"
   },
-  "todo_list": {
-    "message": "Lista de tareas pendientes"
-  },
   "nature_sounds": {
     "message": "Nature Sounds"
+  },
+  "todo_list": {
+    "message": "Lista de tareas pendientes"
   },
   "stopwatch": {
     "message": "Cronómetro"
