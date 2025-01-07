@@ -77,6 +77,10 @@ function SettingsTrigger({
   const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
   const [background, setBackground] = createStoredSignal("background", "image");
   const [layout, setLayout] = createStoredSignal("layout", "center");
+  const [clockFormat, setClockFormat] = createStoredSignal(
+    "clockFormat",
+    "12h"
+  );
   const [name, setName] = createStoredSignal("name", "");
   const [mode, setMode] = createStoredSignal("mode", "widgets");
   const [greetingNameValue, setGreetingNameValue] = createSignal(name());
@@ -424,6 +428,31 @@ function SettingsTrigger({
                   }}
                   title={chrome.i18n.getMessage("lowercase")}
                   icon={<span class="!text-5xl font-bold !lowercase">aa</span>}
+                />
+              </div>
+              <br />
+              <br />
+              <h3 class="text-2xl font-[500]">
+                {chrome.i18n.getMessage("clock_format")}
+              </h3>
+              <div class="card-group grid-cols-2 grid-rows-1">
+                <BigButton
+                  {...(clockFormat() === "12h"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setClockFormat("12h");
+                  }}
+                  icon={<span class="!text-5xl font-bold">12h</span>}
+                />
+                <BigButton
+                  {...(clockFormat() === "24h"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setClockFormat("24h");
+                  }}
+                  icon={<span class="!text-5xl font-bold">24h</span>}
                 />
               </div>
             </>
