@@ -382,5 +382,8 @@
   },
   "search": {
     "message": "Search"
+  },
+  "clock_format": {
+    "message": "Clock format"
   }
 }
