@@ -435,7 +435,7 @@ function SettingsTrigger({
               <h3 class="text-2xl font-[500]">
                 {chrome.i18n.getMessage("clock_format")}
               </h3>
-              <div class="card-group grid-cols-3 grid-rows-1">
+              <div class="card-group grid-cols-2 grid-rows-1">
                 <BigButton
                   {...(clockFormat() === "12h"
                     ? { "data-selected": true }
@@ -453,15 +453,6 @@ function SettingsTrigger({
                     setClockFormat("24h");
                   }}
                   icon={<span class="!text-5xl font-bold">24h</span>}
-                />
-                <BigButton
-                  {...(clockFormat() === "AM/PM"
-                    ? { "data-selected": true }
-                    : {})}
-                  onClick={() => {
-                    setClockFormat("AM/PM");
-                  }}
-                  icon={<span class="!text-5xl font-bold">AM/PM</span>}
                 />
               </div>
             </>

@@ -1,5 +1,6 @@
 import { createSignal, onMount } from "solid-js";
 import { createStoredSignal } from "./localStorage";
+import { onCleanup } from "solid-js";
 
 function formattedClock() {
   const [clockFormat, setClockFormat] = createStoredSignal("clockFormat", "");
