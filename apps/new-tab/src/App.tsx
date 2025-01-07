@@ -47,6 +47,7 @@ import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
 import { number } from "mathjs";
+import { formattedClock } from "./hooks/clockFormatter";
 
 type MessageKeys = keyof typeof data;
 
@@ -128,17 +129,6 @@ type Bookmark = {
 };
 
 const App: Component = () => {
-  function createTime(date: Date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const amPm = hours >= 12 ? "PM" : "AM";
-    const formattedHours = hours % 12 || 12;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    return {
-      time: `${formattedHours}:${formattedMinutes}`,
-      amPm: amPm,
-    };
-  }
   const [needsOnboarding, setNeedsOnboarding] = createSignal(
     localStorage.getItem("onboarding") !== "true"
   );
@@ -163,7 +153,6 @@ const App: Component = () => {
   const [background, setBackground] = createStoredSignal("background", "image");
   const [name, setName] = createStoredSignal("name", "");
   const [mode, setMode] = createStoredSignal("mode", "widgets");
-  const [time, setTime] = createSignal(`${createTime(new Date()).time}`);
   const [bookmarks, setBookmarks] = createSignal<any[]>([]);
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   const [textStyle, setTextStyle] = createStoredSignal("textStyle", "normal");
@@ -174,6 +163,7 @@ const App: Component = () => {
   );
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
+  const clock = formattedClock();
   function getInitialSelectedImage() {
     try {
       const storedItem = localStorage.getItem("selectedImage");
@@ -467,10 +457,6 @@ const App: Component = () => {
         );
       }
     }
-
-    setInterval(() => {
-      setTime(createTime(new Date()).time);
-    }, 1000);
   });
 
   function getKeyForValue(obj: any, value: any) {
@@ -697,7 +683,7 @@ const App: Component = () => {
             <div class="flex items-center justify-center">
               <div class="w-full max-w-lg select-none">
                 <h1 class="m-0 p-0 text-[200px] font-bold [line-height:1.2]">
-                  {time()}
+                  {clock().time + clock().amPm}
                 </h1>
                 <p class="mt-3 pl-2 text-3xl font-medium">
                   {

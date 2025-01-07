@@ -13,39 +13,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
+import { formattedClock } from "./hooks/clockFormatter";
 
 function ClockWidget() {
-  function createTime(date: Date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const amPm = hours >= 12 ? "PM" : "AM";
-    const formattedHours = hours % 12 || 12;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    return {
-      time: `${formattedHours}:${formattedMinutes}`,
-      amPm: amPm,
-    };
-  }
-  onMount(() => {
-    let interval: any;
-    interval = setInterval(() => {
-      try {
-        document.getElementById("currentTime")!.textContent = createTime(
-          new Date()
-        ).time;
-      } catch (e) {
-        clearInterval(interval);
-      }
-    }, 1000);
-  });
+  const clock = formattedClock();
   return (
     <div class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
       <div class="relative flex h-full w-full items-center justify-center rounded-[10px]">
         <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
-          <div id="amPm">{createTime(new Date()).amPm}</div>
+          <div id="amPm">{clock().amPm}</div>
         </div>
         <div class="text-center text-5xl font-bold text-white" id="currentTime">
-          {createTime(new Date()).time}
+          {clock().time}
         </div>
       </div>
     </div>
