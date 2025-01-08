@@ -8,6 +8,7 @@ import {
   Clock,
   CloudLightningIcon,
   Grid,
+  Hammer,
   Hourglass,
   Image,
   MessageCircle,
@@ -20,7 +21,7 @@ import {
   Sunrise,
   Text,
 } from "lucide-solid";
-import { createSignal, on, onMount } from "solid-js";
+import { createEffect, createSignal, on, onMount } from "solid-js";
 import { createStoredSignal } from "./hooks/localStorage";
 import { cn } from "./libs/cn";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
@@ -33,6 +34,11 @@ function BigButton(props: any) {
       <span class="text-xl">{props.title}</span>
     </button>
   );
+}
+
+interface PluginItem {
+  fileName: string;
+  dataURI: string;
 }
 
 function SettingsTrigger({
@@ -72,6 +78,25 @@ function SettingsTrigger({
     return canvas.toDataURL();
   }
 
+  function handleFileChange(e: Event) {
+    const file = (e.target as any).files[0];
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      if (e.target?.result) {
+        const text = e.target?.result as string;
+        const base64String = btoa(text);
+        const dataURI = `data:text/javascript;base64,${base64String}`;
+        const newPlugins =
+          typeof activePlugins() == "object"
+            ? activePlugins()
+            : JSON.parse(activePlugins().toString());
+        newPlugins.push({ fileName: file.name, dataURI: dataURI });
+        setActivePlugins(newPlugins);
+      }
+    };
+    reader.readAsText((e.target as any).files[0]);
+  }
+
   const [open, setOpen] = createSignal(false);
   const [font, setFont] = createStoredSignal("font", "sans");
   const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
@@ -90,12 +115,18 @@ function SettingsTrigger({
     "wallpaperBlur",
     0
   );
+  const [activePlugins, setActivePlugins] = createStoredSignal<PluginItem[]>(
+    "activePlugins",
+    []
+  );
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24);
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
     "assets/logo.png"
   );
+  const [agreedPluginDisclaimer, setAgreedPluginDisclaimer] =
+    createStoredSignal<boolean>("agreedPluginDisclaimer", false);
   const [textStyle, setTextStyle] = createStoredSignal("textStyle", "normal");
   onMount(() => {
     document.addEventListener("keydown", (e) => {
@@ -107,6 +138,17 @@ function SettingsTrigger({
       }
     });
   });
+  function removePlugin(plugin: PluginItem) {
+    const parsedPlugins =
+      typeof activePlugins() == "object"
+        ? activePlugins()
+        : JSON.parse(activePlugins().toString());
+    setActivePlugins(
+      parsedPlugins.filter(
+        (plugin: PluginItem) => plugin.fileName !== plugin.fileName
+      )
+    );
+  }
   function SettingsPage() {
     return (
       <div
@@ -167,6 +209,19 @@ function SettingsTrigger({
               class="size-6 rounded-lg bg-teal-700 p-0.5 text-white"
             />
             {chrome.i18n.getMessage("background")}
+          </button>
+          <button
+            {...(settingsMenu() === "plugins" ? { "data-selected": true } : {})}
+            onClick={() => {
+              setSettingsMenu("plugins");
+            }}
+            class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
+          >
+            <Hammer
+              height={20}
+              class="size-6 rounded-lg bg-gray-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("plugins")}
           </button>
         </div>
         <div class="h-full w-[calc(100vw-300px)] overflow-y-auto p-10 pt-14">
@@ -556,6 +611,68 @@ function SettingsTrigger({
                   }
                 />
               </div>
+              <br />
+            </>
+          )}
+          {settingsMenu() === "plugins" && (
+            <>
+              {agreedPluginDisclaimer().toString() === "true" ? (
+                <>
+                  <h3 class="text-2xl font-[500]">
+                    {chrome.i18n.getMessage("plugins")}
+                  </h3>
+                  <p class="text-[17px] font-medium">
+                    {chrome.i18n.getMessage("plugins_description")}
+                  </p>
+                  <br />
+                  <form class="max-w-sm">
+                    <label for="file-input" class="sr-only">
+                      Choose file
+                    </label>
+                    <input
+                      type="file"
+                      name="file-input"
+                      accept=".js"
+                      onChange={handleFileChange}
+                      id="file-input"
+                      class="block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-50 file:px-4 file:py-3 focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:file:bg-neutral-700 dark:file:text-neutral-400"
+                    />
+                  </form>
+                  <br />
+                  {(typeof activePlugins() == "object"
+                    ? activePlugins()
+                    : JSON.parse(activePlugins().toString())
+                  ).map((plugin: PluginItem) => (
+                    <div class="flex w-full items-center justify-between gap-2">
+                      <span class="text-sm">{plugin.fileName}</span>
+                      <Button onClick={() => removePlugin(plugin)}>
+                        {chrome.i18n.getMessage("remove")}
+                      </Button>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div>
+                  <h3 class="mb-3 text-2xl font-bold">
+                    {chrome.i18n.getMessage("before_you_continue")}
+                  </h3>
+                  <p>{chrome.i18n.getMessage("warning")}</p>
+                  <br />
+                  <ul class="list-inside list-disc">
+                    <li>{chrome.i18n.getMessage("warning_security")}</li>
+                    <li>{chrome.i18n.getMessage("warning_author")}</li>
+                    <li>{chrome.i18n.getMessage("warning_flowtide")}</li>
+                    <li>{chrome.i18n.getMessage("warning_beta")}</li>
+                    <li>{chrome.i18n.getMessage("warning_conclusion")}</li>
+                  </ul>
+                  <Button
+                    onClick={() => setAgreedPluginDisclaimer(true)}
+                    class="mt-4"
+                  >
+                    {chrome.i18n.getMessage("continue")}
+                  </Button>
+                </div>
+              )}
             </>
           )}
           <br />

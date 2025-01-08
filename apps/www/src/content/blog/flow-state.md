@@ -12,7 +12,7 @@ However, after much trial and error, I have discovered the key principles for
 
 In this article, I will dive into the three key principles to enter and stay in your flow state.
 
-> **Disclaimer**: The advice in this article is based on my personal experiences and observations. I am not a psychologist, and these tips are not intended as professional or medical advice. Results may vary, and I cannot guarantee that these strategies will work for everyone.
+> **Disclaimer**: The advice in this article is based on my personal experiences, observations, and research. I am not a psychologist, and these tips are not intended as professional or medical advice. Results may vary, and I cannot guarantee that these strategies will work for everyone.
 
 <br />
 

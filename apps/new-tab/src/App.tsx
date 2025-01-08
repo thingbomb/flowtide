@@ -48,6 +48,7 @@ import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
 import { number, string } from "mathjs";
 import { any, z } from "zod";
+import { merge } from "omnos";
 
 type MessageKeys = keyof typeof data;
 
@@ -110,6 +111,11 @@ declare global {
       };
     };
   }
+}
+
+interface PluginItem {
+  fileName: string;
+  dataURI: string;
 }
 
 const colorPalette = [
@@ -199,6 +205,10 @@ const App: Component = () => {
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
     "assets/logo.png"
+  );
+  const [activePlugins, setActivePlugins] = createStoredSignal<PluginItem[]>(
+    "activePlugins",
+    []
   );
   const [layout, setLayout] = createStoredSignal("layout", "center");
   const [currentFont, setCurrentFont] = createStoredSignal("font", "sans");
@@ -427,7 +437,20 @@ const App: Component = () => {
     "ambience",
   ];
 
+  function initCustomWidgets() {
+    const parsed = JSON.parse(localStorage.getItem("customWidgets") as string);
+    setCustomWidgets(parsed);
+    parsed.forEach((widget: CustomWidget) => {
+      if (widgetOrder()[widget.key as any] === undefined) {
+        widgetOrder()[widget.key as any] = widget.key;
+      }
+    });
+  }
+
   function updateFilteredWidgets() {
+    for (let i = 0; i < customWidgets().length; i++) {
+      widgets.push((customWidgets()[i] as any).key);
+    }
     const currentWidgets = widgets.filter(
       (item: any) =>
         widgetOrder()[item] !== "" && widgetOrder()[item] !== undefined
@@ -540,7 +563,9 @@ const App: Component = () => {
                 : "{}"
             );
             if (widgetOrder[key]) {
-              return { success: false, error: "Widget already exists" };
+              window.flowtide.widgets.update(key, id, html);
+              initCustomWidgets();
+              updateFilteredWidgets();
             } else {
               widgetOrder[key] = key;
               let newWidgets = customWidgets();
@@ -587,16 +612,31 @@ const App: Component = () => {
         localStorage.setItem("customWidgets", JSON.stringify([]));
       }
 
-      if (localStorage.getItem("customWidgets") !== null) {
-        const parsed = JSON.parse(
-          localStorage.getItem("customWidgets") as string
-        );
-        setCustomWidgets(parsed);
-        parsed.forEach((widget: CustomWidget) => {
-          if (widgetOrder()[widget.key as any] === undefined) {
-            widgetOrder()[widget.key as any] = widget.key;
+      if (
+        typeof activePlugins() == "object"
+          ? activePlugins()
+          : JSON.parse(activePlugins().toString())
+      ) {
+        const parsedPlugins =
+          typeof activePlugins() == "object"
+            ? activePlugins()
+            : JSON.parse(activePlugins().toString());
+        parsedPlugins.forEach((plugin: PluginItem, index: number) => {
+          if (
+            plugin.fileName.endsWith(".js") &&
+            !document.getElementById(`plugin-${index}`)
+          ) {
+            const script = document.createElement("script");
+            script.src = plugin.dataURI;
+            script.id = `plugin-${index}`;
+            script.type = "text/javascript";
+            document.head.appendChild(script);
           }
         });
+      }
+
+      if (localStorage.getItem("customWidgets") !== null) {
+        initCustomWidgets();
       }
     }
 
@@ -806,6 +846,11 @@ const App: Component = () => {
                         >
                           <div
                             class="widget group"
+                            {...(customWidgets().find(
+                              (w: any) => w.key === value
+                            ) != null
+                              ? { "data-custom": "true" }
+                              : {})}
                             data-swapy-item={widgetType}
                           >
                             {widgetType === "clock" && <ClockWidget />}
@@ -844,6 +889,7 @@ const App: Component = () => {
                                 ].includes(widgetType)
                               ) {
                                 const uniqueID = uuidv4();
+                                let wroteFrame = false;
 
                                 createEffect(() => {
                                   const element =
@@ -852,14 +898,50 @@ const App: Component = () => {
                                     (widget: any) => widget.key === widgetType
                                   );
                                   if (element && newHTML) {
-                                    element.innerHTML = newHTML.html;
+                                    if (!wroteFrame) {
+                                      wroteFrame = true;
+                                      const iframe =
+                                        element as HTMLIFrameElement;
+                                      const iframeDoc =
+                                        iframe.contentDocument ||
+                                        iframe.contentWindow?.document;
+
+                                      iframeDoc?.open();
+                                      iframeDoc?.write(newHTML.html);
+                                      iframeDoc?.write(
+                                        `<style>
+                                          body {
+                                              button { -webkit-user-select: none; -moz-user-select: none; user-select: none; border:none; cursor: default; display: inline-flex; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 500; transition: color 0.3s, background-color 0.3s, box-shadow 0.3s; outline: none; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1); background-color: #4b5563; color: white; border-radius: 0.375rem; height: 2.25rem; padding: 0.5rem 1rem; } button:focus-visible { outline: 1px solid white; box-shadow: 0 0 0 1.5px white; } button:hover { background-color: #6b7280; } button:disabled { pointer-events: none; opacity: 0.5; } button:focus { outline: 1px solid white; }
+                                          }
+
+                                          body, input, button, select, textarea {
+                                              font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                                          }
+                                      </style>`
+                                      );
+                                      iframeDoc?.close();
+                                    }
                                   }
                                 });
 
                                 return (
-                                  <div class="customWidget absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-6 pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
-                                    <div id={uniqueID}></div>
-                                  </div>
+                                  <>
+                                    <div class="customWidget relative h-full w-full overflow-hidden rounded-[20px] bg-black/30 pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
+                                      <iframe
+                                        class="absolute inset-0 h-full w-full bg-transparent"
+                                        id={uniqueID}
+                                      ></iframe>
+                                    </div>
+                                    <button
+                                      class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
+                                      data-swapy-handle
+                                    >
+                                      <GripVertical
+                                        height={16}
+                                        class="text-black"
+                                      />
+                                    </button>
+                                  </>
                                 );
                               }
                             })()}

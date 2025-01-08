@@ -6,9 +6,9 @@ import { SITE_TITLE } from "../consts";
   <div
     class="flex flex-col gap-4 sm:grid sm:grid-cols-[1fr_1fr_1fr] text-gray-300 text-sm"
   >
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-4">
       <a
-        class="text-white text-lg font-semibold flex gap-3 items-center !no-underline w-fit"
+        class="text-white text-lg font-semibold flex gap-3 items-center !no-underline w-fit pl-2"
         href="/"
       >
         <svg
@@ -142,6 +142,16 @@ import { SITE_TITLE } from "../consts";
         </svg>
         <span>{SITE_TITLE}</span>
       </a>
+      <iframe
+        src="https://status.flowtide.app/embed-badges/live-status?align=start&background-light=f5f5f5&background-dark=000000"
+        width="190"
+        height="30"
+        loading="lazy"
+        frameborder="0"
+        scrolling="no"
+        style="color-scheme: light dark"
+      >
+      </iframe>
     </div><div class="flex flex-col gap-2">
       <b>About</b><a href="/website-privacy">Privacy policy</a><a
         href="https://github.com/thingbomb/flowtide"

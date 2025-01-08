@@ -316,5 +316,38 @@
   },
   "date": {
     "message": "Date"
+  },
+  "plugins": {
+    "message": "Plugins"
+  },
+  "plugins_description": {
+    "message": "Extend Flowtide with plugins. Plugins can add new widgets to your New Tab page."
+  },
+  "warning": {
+    "message": "Please acknowledge the following risks before using plugins:"
+  },
+  "warning_security": {
+    "message": "Not all plugins are reviewed or tested by Flowtide, and some may pose security risks. Use plugins at your own risk."
+  },
+  "warning_author": {
+    "message": "The plugin author is solely responsible for the content, functionality, and any damage, loss of data, or other issues that may arise from using the plugin."
+  },
+  "warning_flowtide": {
+    "message": "Flowtide cannot be held responsible for any damage, loss of data, security breaches, or any other issues that may arise from using third-party plugins."
+  },
+  "warning_beta": {
+    "message": "Plugins are experimental. They may not work as expected, and they may cause unexpected issues. Use plugins at your own risk."
+  },
+  "warning_conclusion": {
+    "message": "Please be aware of the above risks before using plugins. If you do not accept these risks, you should not use plugins."
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "before_you_continue": {
+    "message": "Before you continue"
+  },
+  "continue": {
+    "message": "Continue"
   }
 }

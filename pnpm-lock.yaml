@@ -44,6 +44,9 @@ importers:
       mathjs:
         specifier: ^14.0.1
         version: 14.0.1
+      omnos:
+        specifier: ^2.0.1
+        version: 2.0.1
       solid-js:
         specifier: ^1.9.3
         version: 1.9.3
@@ -2127,6 +2130,9 @@ packages:
   object-hash@3.0.0:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
     engines: {node: '>= 6'}
+
+  omnos@2.0.1:
+    resolution: {integrity: sha512-xYIoLG4ZJMn95zIQZOXy9kXYQi9LaIVqC2wTwj1OLvfmXIY1T6W/9AwAy9ejfyKMFcmwoo0PskIG8B/0CDxdaw==}
 
   onetime@7.0.0:
     resolution: {integrity: sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ==}
@@ -5249,6 +5255,8 @@ snapshots:
   object-assign@4.1.1: {}
 
   object-hash@3.0.0: {}
+
+  omnos@2.0.1: {}
 
   onetime@7.0.0:
     dependencies:
