@@ -102,6 +102,10 @@ function SettingsTrigger({
   const [theme, setTheme] = createStoredSignal("kb-color-mode", "system");
   const [background, setBackground] = createStoredSignal("background", "image");
   const [layout, setLayout] = createStoredSignal("layout", "center");
+  const [clockFormat, setClockFormat] = createStoredSignal(
+    "clockFormat",
+    "12h"
+  );
   const [name, setName] = createStoredSignal("name", "");
   const [mode, setMode] = createStoredSignal("mode", "widgets");
   const [greetingNameValue, setGreetingNameValue] = createSignal(name());
@@ -302,7 +306,7 @@ function SettingsTrigger({
               <div class="flex items-start gap-2">
                 <TextFieldRoot class="flex-1">
                   <TextField
-                    placeholder="Enter greeting"
+                    placeholder={chrome.i18n.getMessage("enter_greeting")}
                     value={greetingNameValue()}
                     onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
                   />
@@ -327,13 +331,13 @@ function SettingsTrigger({
               <div class="flex items-start gap-2">
                 <TextFieldRoot class="flex flex-1 gap-2">
                   <TextField
-                    placeholder="Icon"
+                    placeholder={chrome.i18n.getMessage("icon")}
                     class="h-10 w-10"
                     value={pageIconValue()}
                     onInput={(e) => setPageIconValue(e.currentTarget.value)}
                   />
                   <TextField
-                    placeholder="New Tab"
+                    placeholder={chrome.i18n.getMessage("new_tab")}
                     class="h-10"
                     value={pageTitleValue()}
                     onInput={(e) => setPageTitleValue(e.currentTarget.value)}
@@ -351,7 +355,7 @@ function SettingsTrigger({
                   }
                 >
                   {pageTitle() == pageTitleValue() &&
-                  pageIcon() == pageIconValue()
+                    pageIcon() == pageIconValue()
                     ? chrome.i18n.getMessage("saved")
                     : chrome.i18n.getMessage("save")}
                 </Button>
@@ -479,6 +483,31 @@ function SettingsTrigger({
                   }}
                   title={chrome.i18n.getMessage("lowercase")}
                   icon={<span class="!text-5xl font-bold !lowercase">aa</span>}
+                />
+              </div>
+              <br />
+              <br />
+              <h3 class="text-2xl font-[500]">
+                {chrome.i18n.getMessage("clock_format")}
+              </h3>
+              <div class="card-group grid-cols-2 grid-rows-1">
+                <BigButton
+                  {...(clockFormat() === "12h"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setClockFormat("12h");
+                  }}
+                  icon={<span class="!text-5xl font-bold">12h</span>}
+                />
+                <BigButton
+                  {...(clockFormat() === "24h"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setClockFormat("24h");
+                  }}
+                  icon={<span class="!text-5xl font-bold">24h</span>}
                 />
               </div>
             </>

@@ -305,6 +305,9 @@
   "ambience_sounds": {
     "message": "Ambience Sounds"
   },
+  "nature_sounds": {
+    "message": "Nature Sounds"
+  },
   "todo_list": {
     "message": "To-do list"
   },
@@ -349,5 +352,71 @@
   },
   "continue": {
     "message": "Continue"
+  },
+  "bookmarks_description": {
+    "message": "Easy access to your first 9 bookmarks with this widget."
+  },
+  "pomodoro_description": {
+    "message": "Use the pomodoro technique for an interval-based workflow."
+  },
+  "nature_description": {
+    "message": "Listen to nature soundscapes with this widget."
+  },
+  "focus_sounds_description": {
+    "message": "Soundscapes to help you focus."
+  },
+  "ambience_sounds_description": {
+    "message": "Ambient soundscapes to help you relax."
+  },
+  "todo_list_description": {
+    "message": "Track your todos with an easy widget."
+  },
+  "stopwatch_description": {
+    "message": "Add a stopwatch widget to your start page."
+  },
+  "clock_description": {
+    "message": "Adds a clock widget to your start page."
+  },
+  "date_description": {
+    "message": "A sleek date widget that shows you the current date."
+  },
+  "show_items": {
+    "message": "Show items"
+  },
+  "hide_items": {
+    "message": "Hide items"
+  },
+  "start_background_changes": {
+    "message": "Start background changes"
+  },
+  "pause_background_changes": {
+    "message": "Pause background changes"
+  },
+  "work": {
+    "message": "Work"
+  },
+  "break": {
+    "message": "Break"
+  },
+  "add_widget": {
+    "message": "Add widget"
+  },
+  "icon": {
+    "message": "Icon"
+  },
+  "new_tab": {
+    "message": "New Tab"
+  },
+  "enter_greeting": {
+    "message": "Enter greeting"
+  },
+  "close": {
+    "message": "Close"
+  },
+  "search": {
+    "message": "Search"
+  },
+  "clock_format": {
+    "message": "Clock format"
   }
 }

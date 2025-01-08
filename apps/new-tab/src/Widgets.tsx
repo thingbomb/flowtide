@@ -13,39 +13,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
+import { formattedClock } from "./hooks/clockFormatter";
 
 function ClockWidget() {
-  function createTime(date: Date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const amPm = hours >= 12 ? "PM" : "AM";
-    const formattedHours = hours % 12 || 12;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    return {
-      time: `${formattedHours}:${formattedMinutes}`,
-      amPm: amPm,
-    };
-  }
-  onMount(() => {
-    let interval: any;
-    interval = setInterval(() => {
-      try {
-        document.getElementById("currentTime")!.textContent = createTime(
-          new Date()
-        ).time;
-      } catch (e) {
-        clearInterval(interval);
-      }
-    }, 1000);
-  });
+  const clock = formattedClock();
   return (
     <div class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
       <div class="relative flex h-full w-full items-center justify-center rounded-[10px]">
         <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
-          <div id="amPm">{createTime(new Date()).amPm}</div>
+          <div id="amPm">{clock().amPm}</div>
         </div>
         <div class="text-center text-5xl font-bold text-white" id="currentTime">
-          {createTime(new Date()).time}
+          {clock().time}
         </div>
       </div>
     </div>
@@ -531,9 +510,9 @@ function PomodoroWidget() {
             >
               {isRunning()
                 ? pomodoroSession() == "work"
-                  ? "Work"
-                  : "Break"
-                : "Pomodoro"}
+                  ? chrome.i18n.getMessage("work")
+                  : chrome.i18n.getMessage("break")
+                : chrome.i18n.getMessage("pomodoro")}
             </div>
             <div class="mt-2 px-3.5">
               <h1 class="text-xl font-bold text-white">
@@ -552,7 +531,7 @@ function PomodoroWidget() {
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
                     class="inline-flex items-center gap-2 rounded-md bg-gray-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 hover:bg-gray-600 focus:outline-none focus:outline-1 focus:outline-white dark:bg-gray-800"
-                    aria-label="Add widget"
+                    aria-label={chrome.i18n.getMessage("add_widget")}
                   >
                     {chrome.i18n.getMessage("settings")}
                   </DialogTrigger>
@@ -717,7 +696,7 @@ function AmbienceSoundscapes() {
               class="grid grid-cols-3 grid-rows-2 gap-2 p-1.5 pb-0"
             >
               {soundscapes
-                .filter((soundscape) => soundscape.categories.includes("focus"))
+                .filter((soundscape) => soundscape.categories.includes("ambience"))
                 .map((soundscape, index: number) => (
                   <div class="soundscape flex items-center gap-2">
                     <div class="flex items-center gap-2">

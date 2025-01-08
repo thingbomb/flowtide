@@ -57,7 +57,7 @@ export const DialogContent = <T extends ValidComponent = "div">(
                 stroke-width="2"
                 d="M18 6L6 18M6 6l12 12"
               />
-              <title>Close</title>
+              <title>{chrome.i18n.getMessage("close")}</title>
             </svg>
           </DialogPrimitive.CloseButton>
         </DialogPrimitive.Content>
