@@ -142,14 +142,14 @@ function SettingsTrigger({
       }
     });
   });
-  function removePlugin(plugin: PluginItem) {
+  function removePlugin(targetPlugin: PluginItem) {
     const parsedPlugins =
       typeof activePlugins() == "object"
         ? activePlugins()
         : JSON.parse(activePlugins().toString());
     setActivePlugins(
       parsedPlugins.filter(
-        (plugin: PluginItem) => plugin.fileName !== plugin.fileName
+        (plugin: PluginItem) => plugin.fileName !== targetPlugin.fileName
       )
     );
   }
