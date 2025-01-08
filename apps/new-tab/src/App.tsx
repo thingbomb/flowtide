@@ -81,12 +81,6 @@ interface PluginResult {
   id: string;
 }
 
-interface PluginKey {
-  title: string;
-  description: string;
-  id: string;
-}
-
 interface PluginConfig {
   title: string;
   description: string;
@@ -98,7 +92,7 @@ declare global {
       createPlugin: (
         config: PluginConfig,
         fn: (result: PluginResult) => void
-      ) => { success: boolean; error?: string; id?: string };
+      ) => { success: boolean; error?: string };
       bookmarks: {
         get: (id: string) => Promise<Bookmark[]>;
       };
@@ -172,6 +166,152 @@ type Bookmark = {
   url: string;
 };
 
+type PluginData = {
+  title: string;
+  description: string;
+};
+
+const injectPluginScript = (pluginScriptUrl: string): void => {
+  const iframe = document.createElement("iframe");
+  iframe.style.width = "1px";
+  iframe.style.height = "1px";
+  iframe.style.opacity = "0";
+  iframe.style.overflow = "hidden";
+  iframe.style.pointerEvents = "none";
+  iframe.style.border = "none";
+  iframe.style.position = "absolute";
+
+  iframe.srcdoc = /*html*/ `
+  <html>
+  <head>
+  </head>
+  <body>
+  <script type="text/javascript">
+    window.callbacks = {};
+    window.flowtide = {
+      createPlugin: function (config, callback) {
+        const requestId = Date.now().toString();
+        window.callbacks[requestId] = callback;
+
+        const data = {
+          type: "createPlugin",
+          config: config,
+          requestId: requestId
+        };
+
+        window.parent.postMessage(data, "*");
+      },
+
+      bookmarks: {
+        get: function (id) {
+          const requestId = Date.now().toString();
+          return new Promise((resolve) => {
+            window.callbacks[requestId] = resolve;
+            window.parent.postMessage(
+              { type: "bookmarks_get", params: [id], requestId },
+              "*"
+            );
+          });
+        }
+      },
+
+      widgets: {
+        add: function (id, key, html) {
+          const requestId = Date.now().toString();
+          return new Promise((resolve) => {
+            window.callbacks[requestId] = resolve;
+            window.parent.postMessage(
+              { type: "widgets_add", params: [id, key, html], requestId },
+              "*"
+            );
+          });
+        },
+
+        update: function (key, id, html) {
+          const requestId = Date.now().toString();
+          return new Promise((resolve) => {
+            window.callbacks[requestId] = resolve;
+            window.parent.postMessage(
+              { type: "widgets_update", params: [key, id, html], requestId },
+              "*"
+            );
+          });
+        }
+      }
+    };
+
+    window.addEventListener("message", (event) => {
+      const { requestId, result } = event.data || {};
+      if (requestId && window.callbacks[requestId]) {
+        window.callbacks[requestId](result);
+        delete window.callbacks[requestId];
+      }
+    });
+  </script>
+  <script src='${pluginScriptUrl}'></script>
+  </body>
+  </html>
+  `;
+
+  interface Message extends MessageEvent {
+    origin: any;
+  }
+
+  const handleIframeMessages = (event: Message) => {
+    const { type, requestId, config, params } = event.data || {};
+
+    let result: any;
+
+    switch (type) {
+      case "createPlugin":
+        try {
+          result = window.flowtide.createPlugin(config, (response) => {
+            event.source?.postMessage(
+              { requestId, result: response },
+              event.origin
+            );
+          });
+        } catch (error: any) {
+          result = { success: false, error: error.message };
+        }
+        break;
+
+      case "bookmarks_get":
+        result = window.flowtide.bookmarks.get(params[0]).then((res) => {
+          event.source?.postMessage({ requestId, result: res }, event.origin);
+        });
+        return;
+
+      case "widgets_add":
+        result = window.flowtide.widgets
+          .add(params[0], params[1], params[2])
+          .then((res: any) => {
+            event.source?.postMessage({ requestId, result: res }, event.origin);
+          });
+        return;
+
+      case "widgets_update":
+        result = window.flowtide.widgets
+          .update(params[0], params[1], params[2])
+          .then((res: any) => {
+            event.source?.postMessage({ requestId, result: res }, event.origin);
+          });
+        return;
+
+      default:
+        result = { success: false, error: "Unknown method" };
+    }
+
+    if (result !== undefined) {
+      event.source?.postMessage({ requestId, result }, event.origin);
+    }
+  };
+
+  window.addEventListener("message", handleIframeMessages);
+
+  document.body.appendChild(iframe);
+};
+
 const App: Component = () => {
   const [needsOnboarding, setNeedsOnboarding] = createSignal(
     localStorage.getItem("onboarding") !== "true"
@@ -229,7 +369,6 @@ const App: Component = () => {
       if (storedItem) {
         const parsedItem = JSON.parse(storedItem);
 
-        // ensure the parsed value is a valid object
         if (typeof parsedItem === "object" && parsedItem !== null) {
           return parsedItem;
         }
@@ -242,7 +381,6 @@ const App: Component = () => {
       });
     }
 
-    // fallback value
     return {
       url: images[Math.floor(Math.random() * images.length)],
       expiry: Date.now() + Number(wallpaperChangeTime()),
@@ -470,9 +608,10 @@ const App: Component = () => {
         if (swapy && filteredWidgets() && widgets && widgetOrder()) {
           swapy.update();
         }
-      });
+      }, [filteredWidgets, widgetOrder]);
+
       async function getFlattedBookmarks(): Promise<Bookmark[]> {
-        return new Promise((resolve) => {
+        return await new Promise((resolve) => {
           try {
             chrome.bookmarks.getTree((bookmarkTreeNodes) => {
               const flattenBookmarks = (nodes: any[]): Bookmark[] => {
@@ -489,14 +628,16 @@ const App: Component = () => {
                 }
                 return bookmarks;
               };
+
               const allBookmarks = flattenBookmarks(bookmarkTreeNodes);
-              setBookmarks(allBookmarks);
+              resolve(allBookmarks);
             });
           } catch (error) {
             resolve([]);
           }
         });
       }
+
       const pluginMap = new Map<string, any>();
 
       window.flowtide = {
@@ -617,11 +758,7 @@ const App: Component = () => {
             plugin.fileName.endsWith(".js") &&
             !document.getElementById(`plugin-${index}`)
           ) {
-            const script = document.createElement("script");
-            script.src = plugin.dataURI;
-            script.id = `plugin-${index}`;
-            script.type = "text/javascript";
-            document.head.appendChild(script);
+            injectPluginScript(plugin.dataURI);
           }
         });
       }
