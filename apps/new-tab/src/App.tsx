@@ -210,11 +210,16 @@ const App: Component = () => {
     0
   );
   const [logs, setLogs] = createSignal<any[]>([]);
-  const [customWidgets, setCustomWidgets] = createSignal<object[]>(
-    localStorage.getItem("customWidgets")
+  let initialCustomWidgets = [];
+  try {
+    initialCustomWidgets = localStorage.getItem("customWidgets")
       ? JSON.parse(localStorage.getItem("customWidgets") as string)
-      : []
-  );
+      : [];
+  } catch (error) {
+    console.error("Failed to parse customWidgets from localStorage:", error);
+    initialCustomWidgets = [];
+  }
+  const [customWidgets, setCustomWidgets] = createSignal<object[]>(initialCustomWidgets);
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
   const clock = formattedClock();
