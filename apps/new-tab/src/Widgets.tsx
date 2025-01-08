@@ -32,15 +32,6 @@ function ClockWidget() {
 }
 
 function DateWidget() {
-  const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
   const months = [
     "January",
     "February",
@@ -379,7 +370,7 @@ function BookmarksWidget() {
 
 function NatureWidget() {
   const [currentlyPlaying, setCurrentlyPlaying] = createSignal<any>(null);
-  function PlayButton({ key, index }: { key: string; index: number }) {
+  function PlayButton({ index }: { index: number }) {
     return (
       <button
         class="flex size-[24px] items-center justify-center !rounded-full font-bold text-black"
@@ -426,10 +417,7 @@ function NatureWidget() {
                     <div class="flex items-center gap-2">
                       <div class="flex items-center gap-2">
                         <div class="flex items-center gap-2">
-                          <PlayButton
-                            key={soundscape.name}
-                            index={soundscape.index}
-                          />
+                          <PlayButton index={soundscape.index} />
                           <div class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
                             {soundscape.name}
                           </div>
@@ -696,8 +684,10 @@ function AmbienceSoundscapes() {
               class="grid grid-cols-3 grid-rows-2 gap-2 p-1.5 pb-0"
             >
               {soundscapes
-                .filter((soundscape) => soundscape.categories.includes("ambience"))
-                .map((soundscape, index: number) => (
+                .filter((soundscape) =>
+                  soundscape.categories.includes("ambience")
+                )
+                .map((soundscape) => (
                   <div class="soundscape flex items-center gap-2">
                     <div class="flex items-center gap-2">
                       <div class="flex items-center gap-2">

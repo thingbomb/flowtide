@@ -1,4 +1,4 @@
-import { createEffect, createSignal, createUniqueId, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import type { Component } from "solid-js";
 import { Button } from "./components/ui/button";
 import {
@@ -10,12 +10,10 @@ import {
   EyeOff,
   Grid,
   GripVertical,
-  Key,
   Menu,
   Pause,
   Play,
   Plus,
-  Settings,
   X,
 } from "lucide-solid";
 import { createSwapy } from "swapy";
@@ -46,10 +44,7 @@ import {
 import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
-import { number, string } from "mathjs";
-import { any, z } from "zod";
-import { merge } from "omnos";
-import { number } from "mathjs";
+import { z } from "zod";
 import { formattedClock } from "./hooks/clockFormatter";
 
 type MessageKeys = keyof typeof data;
@@ -797,8 +792,8 @@ const App: Component = () => {
                   display: name() == "" ? "none" : "block",
                   color:
                     background() == "image" &&
-                      !imageLoaded() &&
-                      document.documentElement.style.colorScheme != "dark"
+                    !imageLoaded() &&
+                    document.documentElement.style.colorScheme != "dark"
                       ? ""
                       : "#fff",
                 }}
@@ -816,7 +811,7 @@ const App: Component = () => {
                 class={cn(
                   "widgets m-0 grid gap-3 p-4 [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)]",
                   layout() == "center" &&
-                  "xl:[grid-template-columns:repeat(3,400px)]",
+                    "xl:[grid-template-columns:repeat(3,400px)]",
                   layout() == "center" && "justify-center",
                   layout() == "top" && "!pl-8"
                 )}

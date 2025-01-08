@@ -6,12 +6,10 @@ import {
   Calendar,
   Calendar1,
   Clock,
-  CloudLightningIcon,
   Grid,
   Hammer,
   Hourglass,
   Image,
-  MessageCircle,
   Moon,
   PaintBucket,
   Palette,
@@ -19,9 +17,8 @@ import {
   Settings,
   Square,
   Sunrise,
-  Text,
 } from "lucide-solid";
-import { createEffect, createSignal, on, onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { createStoredSignal } from "./hooks/localStorage";
 import { cn } from "./libs/cn";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
@@ -355,7 +352,7 @@ function SettingsTrigger({
                   }
                 >
                   {pageTitle() == pageTitleValue() &&
-                    pageIcon() == pageIconValue()
+                  pageIcon() == pageIconValue()
                     ? chrome.i18n.getMessage("saved")
                     : chrome.i18n.getMessage("save")}
                 </Button>
