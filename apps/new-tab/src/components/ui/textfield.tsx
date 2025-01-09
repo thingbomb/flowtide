@@ -1,4 +1,3 @@
-import { cn } from "../../libs/cn";
 import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import type {
   TextFieldDescriptionProps,
@@ -11,6 +10,7 @@ import { TextField as TextFieldPrimitive } from "@kobalte/core/text-field";
 import { cva } from "class-variance-authority";
 import type { ValidComponent, VoidProps } from "solid-js";
 import { splitProps } from "solid-js";
+import { cn } from "../../libs/cn";
 
 type textFieldProps<T extends ValidComponent = "div"> =
   TextFieldRootProps<T> & {

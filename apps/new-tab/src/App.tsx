@@ -253,63 +253,69 @@ const injectPluginScript = (pluginScriptUrl: string): void => {
   </html>
   `;
 
-  interface Message extends MessageEvent {
-    origin: any;
-  }
-
-  const handleIframeMessages = (event: Message) => {
-    const { type, requestId, config, params } = event.data || {};
-
-    let result: any;
-
-    switch (type) {
-      case "createPlugin":
-        try {
-          result = window.flowtide.createPlugin(config, (response) => {
-            event.source?.postMessage(
-              { requestId, result: response },
-              event.origin
-            );
-          });
-        } catch (error: any) {
-          result = { success: false, error: error.message };
-        }
-        break;
-
-      case "bookmarks_get":
-        result = window.flowtide.bookmarks.get(params[0]).then((res) => {
-          event.source?.postMessage({ requestId, result: res }, event.origin);
-        });
-        return;
-
-      case "widgets_add":
-        result = window.flowtide.widgets
-          .add(params[0], params[1], params[2])
-          .then((res: any) => {
-            event.source?.postMessage({ requestId, result: res }, event.origin);
-          });
-        return;
-
-      case "widgets_update":
-        result = window.flowtide.widgets
-          .update(params[0], params[1], params[2])
-          .then((res: any) => {
-            event.source?.postMessage({ requestId, result: res }, event.origin);
-          });
-        return;
-
-      default:
-        result = { success: false, error: "Unknown method" };
-    }
-
-    if (result !== undefined) {
-      event.source?.postMessage({ requestId, result }, event.origin);
-    }
-  };
-
-  window.addEventListener("message", handleIframeMessages);
-
   document.body.appendChild(iframe);
+};
+
+interface Message extends MessageEvent {
+  origin: any;
+}
+
+const handleIframeMessages = async (event: Message) => {
+  const { type, requestId, config, params } = event.data || {};
+
+  let result: any;
+
+  switch (type) {
+    case "createPlugin":
+      try {
+        result = await window.flowtide.createPlugin(config, (result) => {
+          event.source?.postMessage({ requestId, result }, event.origin);
+        });
+      } catch (error: any) {
+        result = { success: false, error: error.message };
+        event.source?.postMessage({ requestId, result }, event.origin);
+      }
+      break;
+
+    case "bookmarks_get":
+      try {
+        result = await window.flowtide.bookmarks.get(params[0]);
+        event.source?.postMessage({ requestId, result }, event.origin);
+      } catch (error: any) {
+        result = { success: false, error: error.message };
+        event.source?.postMessage({ requestId, result }, event.origin);
+      }
+      break;
+
+    case "widgets_add":
+      try {
+        result = window.flowtide.widgets.add(params[0], params[1], params[2]);
+        event.source?.postMessage({ requestId, result }, event.origin);
+      } catch (error: any) {
+        result = { success: false, error: error.message };
+        event.source?.postMessage({ requestId, result }, event.origin);
+      }
+      break;
+
+    case "widgets_update":
+      try {
+        result = await window.flowtide.widgets.update(
+          params[0],
+          params[1],
+          params[2]
+        );
+        event.source?.postMessage({ requestId, result }, event.origin);
+      } catch (error: any) {
+        result = { success: false, error: error.message };
+        event.source?.postMessage({ requestId, result }, event.origin);
+      }
+      break;
+
+    default:
+      result = { success: false, error: "Unknown method" };
+      event.source?.postMessage({ requestId, result }, event.origin);
+      break;
+  }
 };
 
 const App: Component = () => {
@@ -359,7 +365,8 @@ const App: Component = () => {
     console.error("Failed to parse customWidgets from localStorage:", error);
     initialCustomWidgets = [];
   }
-  const [customWidgets, setCustomWidgets] = createSignal<object[]>(initialCustomWidgets);
+  const [customWidgets, setCustomWidgets] =
+    createSignal<object[]>(initialCustomWidgets);
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
   const clock = formattedClock();
@@ -766,6 +773,8 @@ const App: Component = () => {
       if (localStorage.getItem("customWidgets") !== null) {
         initCustomWidgets();
       }
+
+      window.addEventListener("message", handleIframeMessages);
     }
 
     if (backgroundPaused() == "false") {
@@ -1024,26 +1033,23 @@ const App: Component = () => {
                                   if (element && newHTML) {
                                     if (!wroteFrame) {
                                       wroteFrame = true;
-                                      const iframe =
-                                        element as HTMLIFrameElement;
-                                      const iframeDoc =
-                                        iframe.contentDocument ||
-                                        iframe.contentWindow?.document;
+                                      document
+                                        .getElementById(uniqueID)
+                                        ?.setAttribute(
+                                          "srcdoc",
+                                          `
+                                      ${newHTML.html}
+                                      <style>
+                                        body {
+                                          button { -webkit-user-select: none; -moz-user-select: none; user-select: none; border:none; cursor: default; display: inline-flex; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 500; transition: color 0.3s, background-color 0.3s, box-shadow 0.3s; outline: none; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1); background-color: #4b5563; color: white; border-radius: 0.375rem; height: 2.25rem; padding: 0.5rem 1rem; } button:focus-visible { outline: 1px solid white; box-shadow: 0 0 0 1.5px white; } button:hover { background-color: #6b7280; } button:disabled { pointer-events: none; opacity: 0.5; } button:focus { outline: 1px solid white; }
+                                        }
 
-                                      iframeDoc?.open();
-                                      iframeDoc?.write(newHTML.html);
-                                      iframeDoc?.write(
-                                        `<style>
-                                          body {
-                                              button { -webkit-user-select: none; -moz-user-select: none; user-select: none; border:none; cursor: default; display: inline-flex; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 500; transition: color 0.3s, background-color 0.3s, box-shadow 0.3s; outline: none; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1); background-color: #4b5563; color: white; border-radius: 0.375rem; height: 2.25rem; padding: 0.5rem 1rem; } button:focus-visible { outline: 1px solid white; box-shadow: 0 0 0 1.5px white; } button:hover { background-color: #6b7280; } button:disabled { pointer-events: none; opacity: 0.5; } button:focus { outline: 1px solid white; }
-                                          }
-
-                                          body, input, button, select, textarea {
-                                              font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-                                          }
-                                      </style>`
-                                      );
-                                      iframeDoc?.close();
+                                        body, input, button, select, textarea {
+                                            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                                        }
+                                      </style>
+                                      `
+                                        );
                                     }
                                   }
                                 });
@@ -1054,6 +1060,7 @@ const App: Component = () => {
                                       <iframe
                                         class="absolute inset-0 h-full w-full bg-transparent"
                                         id={uniqueID}
+                                        sandbox="allow-scripts"
                                       ></iframe>
                                     </div>
                                     <button

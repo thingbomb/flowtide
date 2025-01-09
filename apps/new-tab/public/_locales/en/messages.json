@@ -330,7 +330,7 @@
     "message": "Please acknowledge the following risks before using plugins:"
   },
   "warning_security": {
-    "message": "Not all plugins are reviewed or tested by Flowtide, and some may pose security risks. Use plugins at your own risk."
+    "message": "Flowtide is dedicated to making plugins secure by default by implementing strict security measures. However, there may be instances where a plugin may pose security risks. Use plugins at your own risk."
   },
   "warning_author": {
     "message": "The plugin author is solely responsible for the content, functionality, and any damage, loss of data, or other issues that may arise from using the plugin."
