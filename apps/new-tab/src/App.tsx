@@ -318,39 +318,39 @@ const App: Component = () => {
           <h1 class="mb-4 text-5xl font-[600]">
             {chrome.i18n.getMessage("choose_mode")}
           </h1>
-          <div class="**:data-selected:!ring-primary grid w-full grid-cols-1 grid-rows-3 gap-4">
+          <div class="**:data-selected:!ring-primary grid w-full grid-cols-1 grid-rows-3 gap-2">
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("widgets");
               }}
             >
-              <Grid class="size-[64px]" />
+              <Grid class="size-[32px]" />
               <br />
               <span class="text-xl">{chrome.i18n.getMessage("widgets")}</span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "nightstand" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("nightstand");
               }}
             >
-              <Clock class="size-[64px]" />
+              <Clock class="size-[32px]" />
               <br />
               <span class="text-xl">
                 {chrome.i18n.getMessage("nightstand")}
               </span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 block h-[198px] w-full cursor-pointer overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "speeddial" ? { "data-selected": true } : {})}
               onClick={() => {
                 setMode("speeddial");
               }}
             >
-              <Bookmark class="size-[64px]" />
+              <Bookmark class="size-[32px]" />
               <br />
               <span class="text-xl">
                 {chrome.i18n.getMessage("speed_dial")}
