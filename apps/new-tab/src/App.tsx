@@ -652,12 +652,18 @@ const App: Component = () => {
                         )}
                         {widgetOrder()[item] === "notepad" && <NotepadWidget />}
                         {widgetOrder()[item] == "todo" && (
-                          <button
-                            class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
+                          <GripVertical
                             data-swapy-handle
-                          >
-                            <GripVertical height={16} class="text-black" />
-                          </button>
+                            height={16}
+                            class="p-0.2 absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white text-black shadow-sm hover:bg-white/90 group-hover:block"
+                          />
+                        )}
+                        {widgetOrder()[item] == "notepad" && (
+                          <GripVertical
+                            data-swapy-handle
+                            height={16}
+                            class="p-0.2 absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white text-black shadow-sm hover:bg-white/90 group-hover:block"
+                          />
                         )}
                         <button
                           class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"

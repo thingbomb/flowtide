@@ -763,8 +763,7 @@ function NotepadWidget() {
               onInput={(e) => setNotepad(e.currentTarget.value)}
             ></textarea>
             <p class="-mt-1 p-0 text-[11px] font-medium text-gray-400">
-              Notes are stored in your browser's local storage, which may be
-              unreliable and result in data loss.
+              {chrome.i18n.getMessage("notepad_disclaimer")}
             </p>
           </div>
         </div>

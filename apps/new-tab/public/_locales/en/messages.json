@@ -394,5 +394,8 @@
   },
   "notepad_description": {
     "message": "A simple notepad widget."
+  },
+  "notepad_disclaimer": {
+    "message": "Notes are stored in your browser's local storage, which may be unreliable and could result in data loss."
   }
 }
