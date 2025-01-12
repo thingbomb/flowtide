@@ -341,6 +341,10 @@ function BookmarksWidget() {
       });
     }
   });
+  function getDomain(url: string) {
+    const domain = new URL(url).hostname;
+    return domain;
+  }
   return (
     <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
       <div class="h-full w-full rounded-[10px]">
@@ -363,8 +367,12 @@ function BookmarksWidget() {
                     <a
                       href={bookmark.url}
                       target="_blank"
-                      class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-[17px] font-medium"
+                      class="text-foreground flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap text-[17px] font-medium"
                     >
+                      <img
+                        src={`https://www.google.com/s2/favicons?domain=${getDomain(bookmark.url)}&sz=64`}
+                        class="size-6 rounded-full"
+                      />
                       {bookmark.name}
                     </a>
                   </div>
