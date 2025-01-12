@@ -388,5 +388,11 @@
   },
   "comic_sans": {
     "message": "Comic Sans"
+  },
+  "notepad": {
+    "message": "Notepad"
+  },
+  "notepad_description": {
+    "message": "A simple notepad widget."
   }
 }

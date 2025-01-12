@@ -27,6 +27,7 @@ import {
   DateWidget,
   FocusSoundscapes,
   NatureWidget,
+  NotepadWidget,
   PomodoroWidget,
   StopwatchWidget,
   TodoWidget,
@@ -121,7 +122,8 @@ type Widget =
   | "nature"
   | "pomodoro"
   | "focus"
-  | "ambience";
+  | "ambience"
+  | "notepad";
 
 type Bookmark = {
   name: string;
@@ -387,6 +389,7 @@ const App: Component = () => {
     "pomodoro",
     "focus",
     "ambience",
+    "notepad",
   ];
 
   function updateFilteredWidgets() {
@@ -594,8 +597,8 @@ const App: Component = () => {
                   display: name() == "" ? "none" : "block",
                   color:
                     background() == "image" &&
-                      !imageLoaded() &&
-                      document.documentElement.style.colorScheme != "dark"
+                    !imageLoaded() &&
+                    document.documentElement.style.colorScheme != "dark"
                       ? ""
                       : "#fff",
                 }}
@@ -613,7 +616,7 @@ const App: Component = () => {
                 class={cn(
                   "widgets m-0 grid gap-3 p-4 [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)]",
                   layout() == "center" &&
-                  "xl:[grid-template-columns:repeat(3,400px)]",
+                    "xl:[grid-template-columns:repeat(3,400px)]",
                   layout() == "center" && "justify-center",
                   layout() == "top" && "!pl-8"
                 )}
@@ -647,6 +650,7 @@ const App: Component = () => {
                         {widgetOrder()[item] === "pomodoro" && (
                           <PomodoroWidget />
                         )}
+                        {widgetOrder()[item] === "notepad" && <NotepadWidget />}
                         {widgetOrder()[item] == "todo" && (
                           <button
                             class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
@@ -839,6 +843,11 @@ const App: Component = () => {
                       "todo_list_description"
                     )}
                     key="todo"
+                  />
+                  <Block
+                    title={chrome.i18n.getMessage("notepad")}
+                    description={chrome.i18n.getMessage("notepad_description")}
+                    key="notepad"
                   />
                 </DialogHeader>
               </DialogContent>

@@ -704,7 +704,9 @@ function AmbienceSoundscapes() {
               class="grid grid-cols-3 grid-rows-2 gap-2 p-1.5 pb-0"
             >
               {soundscapes
-                .filter((soundscape) => soundscape.categories.includes("ambience"))
+                .filter((soundscape) =>
+                  soundscape.categories.includes("ambience")
+                )
                 .map((soundscape, index: number) => (
                   <div class="soundscape flex items-center gap-2">
                     <div class="flex items-center gap-2">
@@ -742,6 +744,35 @@ function AmbienceSoundscapes() {
   );
 }
 
+function NotepadWidget() {
+  const [notepad, setNotepad] = createStoredSignal<string>("notepad", "");
+  return (
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="relative h-full w-full rounded-[10px]">
+          <div class="scrollbar-hidden p-1">
+            <div
+              class="select-none px-3.5 text-left text-xl font-bold text-white"
+              id="title"
+            >
+              {chrome.i18n.getMessage("notepad")}
+            </div>
+            <textarea
+              class="mt-2 h-full w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white shadow-inner shadow-white/10 outline-none backdrop-blur-2xl focus:ring-2"
+              value={notepad()}
+              onInput={(e) => setNotepad(e.currentTarget.value)}
+            ></textarea>
+            <p class="-mt-1 p-0 text-[11px] font-medium text-gray-400">
+              Notes are stored in your browser's local storage, which may be
+              unreliable and result in data loss.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export {
   ClockWidget,
   DateWidget,
@@ -752,4 +783,5 @@ export {
   PomodoroWidget,
   FocusSoundscapes,
   AmbienceSoundscapes,
+  NotepadWidget,
 };
