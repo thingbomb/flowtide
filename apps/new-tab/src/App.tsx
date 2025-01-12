@@ -150,6 +150,10 @@ const App: Component = () => {
     "iconUrl",
     "assets/logo.png"
   );
+  const [dateFormat, setDateFormat] = createStoredSignal(
+    "dateFormat",
+    "normal"
+  );
   const [layout, setLayout] = createStoredSignal("layout", "center");
   const [currentFont, setCurrentFont] = createStoredSignal("font", "sans");
   const [background, setBackground] = createStoredSignal("background", "image");
@@ -460,6 +464,48 @@ const App: Component = () => {
         );
       }
     }
+
+    if (mode() === "nightstand") {
+      setInterval(() => {
+        if (document.getElementById("twelve-clock") !== null) {
+          document.getElementById("twelve-clock")!.textContent =
+            dateFormat() == "normal"
+              ? [
+                  "Sunday",
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                ][new Date().getDay()]
+              : [
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December",
+                ][new Date().getMonth()]
+                  .concat(" ")
+                  .concat(new Date().getDate().toString().padStart(2, "0"));
+        }
+
+        if (document.getElementById("day") !== null) {
+          document.getElementById("day")!.textContent = String(
+            dateFormat() == "normal"
+              ? new Date().getDate()
+              : new Date().toISOString().split("T")[0]
+          );
+        }
+      }, 1000);
+    }
   });
 
   function getKeyForValue(obj: any, value: any) {
@@ -697,35 +743,43 @@ const App: Component = () => {
                   {clock().time + clock().amPm}
                 </h1>
                 <p class="mt-3 pl-2 text-3xl font-medium">
-                  {
-                    [
-                      "Sunday",
-                      "Monday",
-                      "Tuesday",
-                      "Wednesday",
-                      "Thursday",
-                      "Friday",
-                      "Saturday",
-                    ][new Date().getDay()]
-                  }
-                  ,{" "}
-                  {
-                    [
-                      "January",
-                      "February",
-                      "March",
-                      "April",
-                      "May",
-                      "June",
-                      "July",
-                      "August",
-                      "September",
-                      "October",
-                      "November",
-                      "December",
-                    ][new Date().getMonth()]
-                  }{" "}
-                  {new Date().getDate()}
+                  {dateFormat() == "normal" ? (
+                    <span id="twelve-clock">
+                      {
+                        [
+                          "Sunday",
+                          "Monday",
+                          "Tuesday",
+                          "Wednesday",
+                          "Thursday",
+                          "Friday",
+                          "Saturday",
+                        ][new Date().getDay()]
+                      }
+                      ,{" "}
+                      {
+                        [
+                          "January",
+                          "February",
+                          "March",
+                          "April",
+                          "May",
+                          "June",
+                          "July",
+                          "August",
+                          "September",
+                          "October",
+                          "November",
+                          "December",
+                        ][new Date().getMonth()]
+                      }{" "}
+                      {new Date().getDate()}
+                    </span>
+                  ) : (
+                    <span id="day">
+                      {new Date().toISOString().split("T")[0]}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>

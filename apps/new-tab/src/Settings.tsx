@@ -94,6 +94,10 @@ function SettingsTrigger({
     "wallpaperBlur",
     0
   );
+  const [dateFormat, setDateFormat] = createStoredSignal(
+    "dateFormat",
+    "normal"
+  );
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24);
   const [pageIconURL, setPageIconURL] = createStoredSignal(
@@ -301,7 +305,7 @@ function SettingsTrigger({
                   }
                 >
                   {pageTitle() == pageTitleValue() &&
-                    pageIcon() == pageIconValue()
+                  pageIcon() == pageIconValue()
                     ? chrome.i18n.getMessage("saved")
                     : chrome.i18n.getMessage("save")}
                 </Button>
@@ -466,6 +470,31 @@ function SettingsTrigger({
                     setClockFormat("24h");
                   }}
                   icon={<span class="!text-5xl font-bold">24h</span>}
+                />
+              </div>
+              <br />
+              <br />
+              <h3 class="text-2xl font-[500]">
+                {chrome.i18n.getMessage("date_format")}
+              </h3>
+              <div class="card-group grid-cols-2 grid-rows-1">
+                <BigButton
+                  {...(dateFormat() === "normal"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setDateFormat("normal");
+                  }}
+                  icon={<span class="!text-5xl font-bold">Normal</span>}
+                />
+                <BigButton
+                  {...(dateFormat() === "iso-8601"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setDateFormat("iso-8601");
+                  }}
+                  icon={<span class="!text-5xl font-bold">ISO-8601</span>}
                 />
               </div>
             </>
