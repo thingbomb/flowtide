@@ -1,0 +1,75 @@
+---
+title: 'Tutorial'
+description: 'Build your first Flowtide plugin.'
+---
+
+In `v3.2`, support for plugins will be out. This tutorial will go over what you can do and how.
+
+This tutorial will teach you how to make a clicker game.
+
+## Initialize the plugin
+
+First, you'll want to initialize the plugin. Here is the snippet:
+
+```javascript
+window.flowtide.createPlugin(
+  {
+    title: "Clicker",
+    description: "Fun little game",
+  },
+  (result) => {
+    if (result.success) {
+      // plugin init worked
+    }
+  }
+);
+```
+
+## Available methods
+
+After that, you can call a few methods to implement functionality.
+
+### Widgets
+
+If you want to add or update your existing widget, you can now easily do that. In the context of the clicker game, you can create a widget (which also updates the widget if it exists):
+
+```javascript
+window.flowtide.widgets.add(
+        result.id,
+        "clicker",
+        /*html*/ `
+        <div>
+            <h1 id="clicks">0</h1>
+            <button id="clicker">Click me</button>
+        </div>
+        <script>
+          let clicks = 0;
+          document.getElementById("clicker").addEventListener("click", () => {
+            document.getElementById("clicks").innerHTML = ++clicks;
+          });
+        </script>
+        <style>
+          body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+          }
+          
+          h1 {
+            margin: 0;
+            margin-bottom: 1rem;
+          }
+        </style>
+        `
+      );
+```
+
+### Bookmarks
+
+You can also retrieve the user's bookmarks as JSON by calling `window.flowtide.bookmarks.get` with the parameter `id` which is the `result.id`from initializing the plugin.

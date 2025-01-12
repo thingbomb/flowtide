@@ -37,6 +37,10 @@
     {
       "group": "Magic Search",
       "pages": ["magic-search/overview"]
+    },
+    {
+      "group": "Build your first plugin",
+      "pages": ["building-plugins/tutorial"]
     }
   ],
   "footerSocials": {

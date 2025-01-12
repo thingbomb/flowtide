@@ -47,6 +47,7 @@ import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
 import { number } from "mathjs";
+import { formattedClock } from "./hooks/clockFormatter";
 
 type MessageKeys = keyof typeof data;
 
@@ -128,17 +129,6 @@ type Bookmark = {
 };
 
 const App: Component = () => {
-  function createTime(date: Date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const amPm = hours >= 12 ? "PM" : "AM";
-    const formattedHours = hours % 12 || 12;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    return {
-      time: `${formattedHours}:${formattedMinutes}`,
-      amPm: amPm,
-    };
-  }
   const [needsOnboarding, setNeedsOnboarding] = createSignal(
     localStorage.getItem("onboarding") !== "true"
   );
@@ -163,7 +153,6 @@ const App: Component = () => {
   const [background, setBackground] = createStoredSignal("background", "image");
   const [name, setName] = createStoredSignal("name", "");
   const [mode, setMode] = createStoredSignal("mode", "widgets");
-  const [time, setTime] = createSignal(`${createTime(new Date()).time}`);
   const [bookmarks, setBookmarks] = createSignal<any[]>([]);
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   const [textStyle, setTextStyle] = createStoredSignal("textStyle", "normal");
@@ -174,6 +163,7 @@ const App: Component = () => {
   );
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
+  const clock = formattedClock();
   function getInitialSelectedImage() {
     try {
       const storedItem = localStorage.getItem("selectedImage");
@@ -467,10 +457,6 @@ const App: Component = () => {
         );
       }
     }
-
-    setInterval(() => {
-      setTime(createTime(new Date()).time);
-    }, 1000);
   });
 
   function getKeyForValue(obj: any, value: any) {
@@ -608,8 +594,8 @@ const App: Component = () => {
                   display: name() == "" ? "none" : "block",
                   color:
                     background() == "image" &&
-                    !imageLoaded() &&
-                    document.documentElement.style.colorScheme != "dark"
+                      !imageLoaded() &&
+                      document.documentElement.style.colorScheme != "dark"
                       ? ""
                       : "#fff",
                 }}
@@ -627,7 +613,7 @@ const App: Component = () => {
                 class={cn(
                   "widgets m-0 grid gap-3 p-4 [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)]",
                   layout() == "center" &&
-                    "xl:[grid-template-columns:repeat(3,400px)]",
+                  "xl:[grid-template-columns:repeat(3,400px)]",
                   layout() == "center" && "justify-center",
                   layout() == "top" && "!pl-8"
                 )}
@@ -698,7 +684,7 @@ const App: Component = () => {
             <div class="flex items-center justify-center">
               <div class="w-full max-w-lg select-none">
                 <h1 class="m-0 p-0 text-[200px] font-bold [line-height:1.2]">
-                  {time()}
+                  {clock().time + clock().amPm}
                 </h1>
                 <p class="mt-3 pl-2 text-3xl font-medium">
                   {
@@ -765,16 +751,19 @@ const App: Component = () => {
         </div>
       </div>
       <div class="group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-white p-1 px-2 text-black shadow-inner shadow-black/20 focus-within:gap-2 hover:gap-2 dark:bg-black/95 dark:text-white dark:shadow-white/10">
-        <button class="peer group-hover:hidden">
+        <button
+          class="peer group-hover:hidden"
+          title={chrome.i18n.getMessage("settings")}
+        >
           <Menu />
         </button>
         <div
           class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
-          title="Add widget"
+          title={chrome.i18n.getMessage("add_widget")}
         >
           {mode() === "widgets" && (
             <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
-              <DialogTrigger aria-label="Add widget">
+              <DialogTrigger aria-label={chrome.i18n.getMessage("add_widget")}>
                 <Plus class="transition-transform" />
               </DialogTrigger>
               <DialogContent
@@ -791,52 +780,64 @@ const App: Component = () => {
                   <br />
                   <Block
                     title={chrome.i18n.getMessage("bookmarks")}
-                    description="Easy access to your first 9 bookmarks with this widget."
+                    description={chrome.i18n.getMessage(
+                      "bookmarks_description"
+                    )}
                     key="bookmarks"
                   />
                   <Block
                     title={chrome.i18n.getMessage("pomodoro")}
-                    description="Use the pomodoro technique for an interval-based workflow."
+                    description={chrome.i18n.getMessage("pomodoro_description")}
                     key="pomodoro"
                   />
                   <Block
-                    title={chrome.i18n.getMessage("nature")}
-                    description="Listen to nature soundscapees with this widget."
+                    title={chrome.i18n.getMessage("nature_sounds")}
+                    description={chrome.i18n.getMessage("nature_description")}
                     key="nature"
                   />
                   <Block
                     title={chrome.i18n.getMessage("focus_sounds")}
-                    description="Soundscapes to help you focus."
+                    description={chrome.i18n.getMessage(
+                      "focus_sounds_description"
+                    )}
                     key="focus"
                   />
                   <Block
                     title={chrome.i18n.getMessage("ambience_sounds")}
-                    description="Ambient soundscapes to help you relax."
+                    description={chrome.i18n.getMessage(
+                      "ambience_sounds_description"
+                    )}
                     key="ambience"
                   />
                   <Block
                     title={chrome.i18n.getMessage("todo_list")}
-                    description="Track your todos with an easy widget."
+                    description={chrome.i18n.getMessage(
+                      "todo_list_description"
+                    )}
                     key="todo"
                   />
                   <Block
                     title={chrome.i18n.getMessage("stopwatch")}
-                    description="Add a stopwatch widget to your start page."
+                    description={chrome.i18n.getMessage(
+                      "stopwatch_description"
+                    )}
                     key="stopwatch"
                   />
                   <Block
                     title={chrome.i18n.getMessage("clock")}
-                    description="Adds a clock widget to your start page."
+                    description={chrome.i18n.getMessage("clock_description")}
                     key="clock"
                   />
                   <Block
                     title={chrome.i18n.getMessage("date")}
-                    description="A sleek date widget that shows you the current date."
+                    description={chrome.i18n.getMessage("date_description")}
                     key="date"
                   />
                   <Block
                     title={chrome.i18n.getMessage("todo_list")}
-                    description="Track your todos with an easy widget."
+                    description={chrome.i18n.getMessage(
+                      "todo_list_description"
+                    )}
                     key="todo"
                   />
                 </DialogHeader>
@@ -844,12 +845,16 @@ const App: Component = () => {
             </Dialog>
           )}
         </div>
-        <div title="Settings">
+        <div title={chrome.i18n.getMessage("settings")}>
           <SettingsTrigger triggerClass="hidden group-hover:flex peer-hover:!flex peer-focus:!flex group-focus-within:flex" />
         </div>
         <button
           class="hidden group-hover:flex peer-hover:!flex"
-          title={itemsHidden() == "true" ? "Show items" : "Hide items"}
+          title={
+            itemsHidden() == "true"
+              ? chrome.i18n.getMessage("show_items")
+              : chrome.i18n.getMessage("hide_items")
+          }
           onclick={() => {
             setItemsHidden(itemsHidden() == "true" ? "false" : "true");
           }}
@@ -860,8 +865,8 @@ const App: Component = () => {
           class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
           title={
             backgroundPaused() == "true"
-              ? "Start background changes"
-              : "Pause background changes"
+              ? chrome.i18n.getMessage("start_background_changes")
+              : chrome.i18n.getMessage("pause_background_changes")
           }
           onclick={() => {
             if (backgroundPaused() == "true") {
