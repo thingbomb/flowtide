@@ -187,6 +187,19 @@ export function CommandPalette(props: any) {
     });
   };
 
+  const settingsHandler = (setting: string) => {
+    setOpen(false);
+    document.getElementById("settingsButton")!.click();
+    setInputValue("");
+    if (setting === "general") {
+      document.getElementById("generalButton")!.click();
+    } else if (setting === "appearance") {
+      document.getElementById("appearanceButton")!.click();
+    } else if (setting === "background") {
+      document.getElementById("backgroundButton")!.click();
+    }
+  };
+
   const handleMathInput = (value: string) => {
     setInputValue(value);
     try {
@@ -280,6 +293,55 @@ export function CommandPalette(props: any) {
               <span class="text-primary">{folder.name}</span>
             </CommandItem>
           ))}
+        </CommandGroup>
+        <CommandGroup heading={chrome.i18n.getMessage("settings")}>
+          <CommandItem
+            onSelect={() => settingsHandler("general")}
+            class="flex items-center"
+          >
+            <span class="text-primary">
+              {chrome.i18n.getMessage("general")}
+            </span>
+          </CommandItem>
+          <CommandItem
+            onSelect={() => settingsHandler("appearance")}
+            class="flex items-center"
+          >
+            <span class="text-primary">
+              {chrome.i18n.getMessage("appearance")}
+            </span>
+          </CommandItem>
+          <CommandItem
+            onSelect={() => settingsHandler("background")}
+            class="flex items-center"
+          >
+            <span class="text-primary">
+              {chrome.i18n.getMessage("background")}
+            </span>
+          </CommandItem>
+          <CommandItem
+            onSelect={() => {
+              setOpen(false);
+              setInputValue("");
+              let currentTheme =
+                document.documentElement.getAttribute("data-kb-theme");
+              if (currentTheme === "dark") {
+                document.documentElement.setAttribute("data-kb-theme", "light");
+              } else if (currentTheme === "light") {
+                document.documentElement.setAttribute("data-kb-theme", "dark");
+              } else if (currentTheme === "system") {
+                document.documentElement.setAttribute(
+                  "data-kb-theme",
+                  "system"
+                );
+              }
+            }}
+            class="flex items-center"
+          >
+            <span class="text-primary">
+              {chrome.i18n.getMessage("toggle_theme")}
+            </span>
+          </CommandItem>
         </CommandGroup>
       </CommandList>
     </CommandDialog>

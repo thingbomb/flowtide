@@ -457,5 +457,8 @@
   },
   "mantras_description": {
     "message": "Inspirational mantras on every new tab."
+  },
+  "toggle_theme": {
+    "message": "Toggle theme"
   }
 }

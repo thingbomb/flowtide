@@ -137,6 +137,7 @@ function SettingsTrigger({
             {...(settingsMenu() == "general"
               ? { "data-selected": "true" }
               : "")}
+            id="generalButton"
             onClick={() => {
               setSettingsMenu("general");
             }}
@@ -154,6 +155,7 @@ function SettingsTrigger({
             onClick={() => {
               setSettingsMenu("appearance");
             }}
+            id="appearanceButton"
             class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
           >
             <Palette
@@ -169,6 +171,7 @@ function SettingsTrigger({
             onClick={() => {
               setSettingsMenu("background");
             }}
+            id="backgroundButton"
             class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
           >
             <Image
@@ -649,6 +652,7 @@ function SettingsTrigger({
         class={cn("group", triggerClass)}
         onclick={() => setOpen(true)}
         aria-haspopup="true"
+        id="settingsButton"
       >
         <Settings class="hover:rotate-25 size-[20px] transition-transform" />
       </button>

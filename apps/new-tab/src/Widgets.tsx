@@ -834,7 +834,7 @@ function Mantras() {
     <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
       <div class="h-full w-full rounded-[10px]">
         <div class="relative flex h-full w-full items-center justify-center rounded-[10px] px-4">
-          <h2 class="select-none text-3xl font-semibold">
+          <h2 class="select-none text-3xl font-semibold text-white">
             {chrome.i18n.getMessage(
               mantras[Math.floor(Math.random() * mantras.length)]
             )}
