@@ -400,5 +400,11 @@
   },
   "date_format": {
     "message": "Date format"
+  },
+  "counter": {
+    "message": "Counter"
+  },
+  "counter_description": {
+    "message": "Count things easily."
   }
 }

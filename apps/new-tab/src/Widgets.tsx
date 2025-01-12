@@ -772,6 +772,45 @@ function NotepadWidget() {
   );
 }
 
+function CounterWidget() {
+  const [counter, setCounter] = createStoredSignal("counter", 0);
+  return (
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="relative h-full w-full rounded-[10px]">
+          <div class="scrollbar-hidden p-1">
+            <div class="mt-2 px-3.5">
+              <h1 class="select-none text-center text-6xl font-bold text-white">
+                {counter()}
+              </h1>
+              <div class="mt-3 flex items-center justify-between gap-2">
+                <Button
+                  onclick={() => {
+                    setCounter(Number(counter()) - 1);
+                  }}
+                  class="rounded-full text-3xl"
+                  aria-label={chrome.i18n.getMessage("decrease")}
+                >
+                  -
+                </Button>
+                <Button
+                  onclick={() => {
+                    setCounter(Number(counter()) + 1);
+                  }}
+                  class="rounded-full text-3xl"
+                  aria-label={chrome.i18n.getMessage("increase")}
+                >
+                  +
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export {
   ClockWidget,
   DateWidget,
@@ -783,4 +822,5 @@ export {
   FocusSoundscapes,
   AmbienceSoundscapes,
   NotepadWidget,
+  CounterWidget,
 };

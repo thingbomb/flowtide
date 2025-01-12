@@ -24,6 +24,7 @@ import {
   AmbienceSoundscapes,
   BookmarksWidget,
   ClockWidget,
+  CounterWidget,
   DateWidget,
   FocusSoundscapes,
   NatureWidget,
@@ -123,7 +124,8 @@ type Widget =
   | "pomodoro"
   | "focus"
   | "ambience"
-  | "notepad";
+  | "notepad"
+  | "counter";
 
 type Bookmark = {
   name: string;
@@ -394,6 +396,7 @@ const App: Component = () => {
     "focus",
     "ambience",
     "notepad",
+    "counter",
   ];
 
   function updateFilteredWidgets() {
@@ -668,68 +671,83 @@ const App: Component = () => {
                 )}
               >
                 {filteredWidgets().length > 0 ? (
-                  filteredWidgets().map((item: any) => (
-                    <div
-                      class={`${uuidv4()} slot group h-fit`}
-                      data-swapy-slot={item}
-                    >
+                  filteredWidgets().map((item: any) => {
+                    console.log(item);
+                    return (
                       <div
-                        class="widget group"
-                        data-swapy-item={widgetOrder()[item]}
+                        class={`${uuidv4()} slot group h-fit`}
+                        data-swapy-slot={item}
                       >
-                        {widgetOrder()[item] === "clock" && <ClockWidget />}
-                        {widgetOrder()[item] === "date" && <DateWidget />}
-                        {widgetOrder()[item] === "todo" && <TodoWidget />}
-                        {widgetOrder()[item] === "focus" && (
-                          <FocusSoundscapes />
-                        )}
-                        {widgetOrder()[item] === "ambience" && (
-                          <AmbienceSoundscapes />
-                        )}
-                        {widgetOrder()[item] === "stopwatch" && (
-                          <StopwatchWidget />
-                        )}
-                        {widgetOrder()[item] === "bookmarks" && (
-                          <BookmarksWidget />
-                        )}
-                        {widgetOrder()[item] === "nature" && <NatureWidget />}
-                        {widgetOrder()[item] === "pomodoro" && (
-                          <PomodoroWidget />
-                        )}
-                        {widgetOrder()[item] === "notepad" && <NotepadWidget />}
-                        {widgetOrder()[item] == "todo" && (
-                          <GripVertical
-                            data-swapy-handle
-                            height={16}
-                            class="p-0.2 absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white text-black shadow-sm hover:bg-white/90 group-hover:block"
-                          />
-                        )}
-                        {widgetOrder()[item] == "notepad" && (
-                          <GripVertical
-                            data-swapy-handle
-                            height={16}
-                            class="p-0.2 absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white text-black shadow-sm hover:bg-white/90 group-hover:block"
-                          />
-                        )}
-                        <button
-                          class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
-                          onclick={(e) => {
-                            const newWidgetOrder = widgetOrder();
-                            delete newWidgetOrder[item];
-                            setWidgetOrder(newWidgetOrder);
-                            e.target.parentElement?.parentElement?.remove();
-                            localStorage.setItem(
-                              "widgetPlacement",
-                              JSON.stringify(newWidgetOrder)
-                            );
-                            updateFilteredWidgets();
-                          }}
+                        <div
+                          class="widget group"
+                          data-swapy-item={widgetOrder()[item]}
                         >
-                          <X height={16} class="text-black" />
-                        </button>
+                          {widgetOrder()[item] === "clock" && <ClockWidget />}
+                          {widgetOrder()[item] === "date" && <DateWidget />}
+                          {widgetOrder()[item] === "todo" && <TodoWidget />}
+                          {widgetOrder()[item] === "focus" && (
+                            <FocusSoundscapes />
+                          )}
+                          {widgetOrder()[item] === "counter" && (
+                            <CounterWidget />
+                          )}
+                          {widgetOrder()[item] === "ambience" && (
+                            <AmbienceSoundscapes />
+                          )}
+                          {widgetOrder()[item] === "stopwatch" && (
+                            <StopwatchWidget />
+                          )}
+                          {widgetOrder()[item] === "bookmarks" && (
+                            <BookmarksWidget />
+                          )}
+                          {widgetOrder()[item] === "nature" && <NatureWidget />}
+                          {widgetOrder()[item] === "pomodoro" && (
+                            <PomodoroWidget />
+                          )}
+                          {widgetOrder()[item] === "notepad" && (
+                            <NotepadWidget />
+                          )}
+                          {widgetOrder()[item] == "todo" && (
+                            <GripVertical
+                              data-swapy-handle
+                              height={16}
+                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white p-0.5 text-black shadow-sm hover:bg-white/90 group-hover:block"
+                            />
+                          )}
+                          {widgetOrder()[item] == "notepad" && (
+                            <GripVertical
+                              data-swapy-handle
+                              height={16}
+                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white p-0.5 text-black shadow-sm hover:bg-white/90 group-hover:block"
+                            />
+                          )}
+                          {widgetOrder()[item] == "counter" && (
+                            <GripVertical
+                              data-swapy-handle
+                              height={16}
+                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white p-0.5 text-black shadow-sm hover:bg-white/90 group-hover:block"
+                            />
+                          )}
+                          <button
+                            class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
+                            onclick={(e) => {
+                              const newWidgetOrder = widgetOrder();
+                              delete newWidgetOrder[item];
+                              setWidgetOrder(newWidgetOrder);
+                              e.target.parentElement?.parentElement?.remove();
+                              localStorage.setItem(
+                                "widgetPlacement",
+                                JSON.stringify(newWidgetOrder)
+                              );
+                              updateFilteredWidgets();
+                            }}
+                          >
+                            <X height={16} class="text-black" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
                   <section></section>
                 )}
@@ -908,6 +926,11 @@ const App: Component = () => {
                     title={chrome.i18n.getMessage("notepad")}
                     description={chrome.i18n.getMessage("notepad_description")}
                     key="notepad"
+                  />
+                  <Block
+                    title={chrome.i18n.getMessage("counter")}
+                    description={chrome.i18n.getMessage("counter_description")}
+                    key="counter"
                   />
                 </DialogHeader>
               </DialogContent>
