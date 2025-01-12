@@ -27,6 +27,7 @@ import {
   CounterWidget,
   DateWidget,
   FocusSoundscapes,
+  Mantras,
   NatureWidget,
   NotepadWidget,
   PomodoroWidget,
@@ -125,7 +126,8 @@ type Widget =
   | "focus"
   | "ambience"
   | "notepad"
-  | "counter";
+  | "counter"
+  | "mantras";
 
 type Bookmark = {
   name: string;
@@ -397,6 +399,7 @@ const App: Component = () => {
     "ambience",
     "notepad",
     "counter",
+    "mantras",
   ];
 
   function updateFilteredWidgets() {
@@ -685,6 +688,7 @@ const App: Component = () => {
                           {widgetOrder()[item] === "clock" && <ClockWidget />}
                           {widgetOrder()[item] === "date" && <DateWidget />}
                           {widgetOrder()[item] === "todo" && <TodoWidget />}
+                          {widgetOrder()[item] === "mantras" && <Mantras />}
                           {widgetOrder()[item] === "focus" && (
                             <FocusSoundscapes />
                           )}
@@ -876,6 +880,11 @@ const App: Component = () => {
                     title={chrome.i18n.getMessage("nature_sounds")}
                     description={chrome.i18n.getMessage("nature_description")}
                     key="nature"
+                  />
+                  <Block
+                    title={chrome.i18n.getMessage("mantras")}
+                    description={chrome.i18n.getMessage("mantras_description")}
+                    key="mantras"
                   />
                   <Block
                     title={chrome.i18n.getMessage("focus_sounds")}

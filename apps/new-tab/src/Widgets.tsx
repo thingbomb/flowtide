@@ -15,6 +15,24 @@ import {
 } from "./components/ui/dialog";
 import { formattedClock } from "./hooks/clockFormatter";
 
+const mantras: string[] = [
+  "mantra_1",
+  "mantra_2",
+  "mantra_3",
+  "mantra_4",
+  "mantra_5",
+  "mantra_6",
+  "mantra_7",
+  "mantra_8",
+  "mantra_9",
+  "mantra_10",
+  "mantra_11",
+  "mantra_12",
+  "mantra_13",
+  "mantra_14",
+  "mantra_15",
+];
+
 function ClockWidget() {
   const clock = formattedClock();
   return (
@@ -811,6 +829,22 @@ function CounterWidget() {
   );
 }
 
+function Mantras() {
+  return (
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="relative flex h-full w-full items-center justify-center rounded-[10px] px-4">
+          <h2 class="select-none text-3xl font-semibold">
+            {chrome.i18n.getMessage(
+              mantras[Math.floor(Math.random() * mantras.length)]
+            )}
+          </h2>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export {
   ClockWidget,
   DateWidget,
@@ -823,4 +857,5 @@ export {
   AmbienceSoundscapes,
   NotepadWidget,
   CounterWidget,
+  Mantras,
 };
