@@ -113,9 +113,10 @@ function SettingsTrigger({
         class={cn(
           "text-foreground bg-background fixed inset-0 z-10 grid max-h-screen grid-cols-[300px_calc(100vw-300px)]",
           {
-            "**:!font-sans": font() == "sans",
-            "**:!font-serif": font() == "serif",
-            "**:!font-mono": font() == "mono",
+            "**:font-sans": font() == "sans",
+            "**:font-serif": font() == "serif",
+            "**:font-mono": font() == "mono",
+            "**:font-comic-sans": font() == "comic-sans",
           }
         )}
       >
@@ -328,7 +329,7 @@ function SettingsTrigger({
               <h3 class="text-2xl font-[500]">
                 {chrome.i18n.getMessage("font")}
               </h3>
-              <div class="card-group grid-cols-3 grid-rows-1">
+              <div class="card-group grid-cols-2 grid-rows-2">
                 <BigButton
                   {...(font() === "sans" ? { "data-selected": true } : {})}
                   onClick={() => {
@@ -352,6 +353,18 @@ function SettingsTrigger({
                   }}
                   title={chrome.i18n.getMessage("mono")}
                   icon={<span class="!font-mono !text-5xl font-bold">Aa</span>}
+                />
+                <BigButton
+                  {...(font() === "comic-sans"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setFont("comic-sans");
+                  }}
+                  title={chrome.i18n.getMessage("comic_sans")}
+                  icon={
+                    <span class="!font-comic-sans !text-5xl font-bold">Aa</span>
+                  }
                 />
               </div>
               <br />

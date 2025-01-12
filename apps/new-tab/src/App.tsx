@@ -541,6 +541,7 @@ const App: Component = () => {
         `font-mono`,
         `font-serif`,
         `font-sans`,
+        `font-comic-sans`,
         `transition-all`,
         `font-${currentFont()}`,
         imageLoaded() ? "bg-black dark:bg-none" : "",

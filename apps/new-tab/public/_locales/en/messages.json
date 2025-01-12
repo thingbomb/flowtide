@@ -316,5 +316,8 @@
   },
   "date": {
     "message": "Date"
+  },
+  "comic_sans": {
+    "message": "Comic Sans"
   }
 }
