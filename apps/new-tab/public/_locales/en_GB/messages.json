@@ -385,5 +385,8 @@
   },
   "clock_format": {
     "message": "Clock format"
+  },
+  "comic_sans": {
+    "message": "Comic Sans"
   }
 }
