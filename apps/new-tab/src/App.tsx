@@ -602,7 +602,7 @@ const App: Component = () => {
         <img
           src={
             background() === "image"
-              ? selectedImage()
+              ? selectedImage().url
               : background() === "local-file"
                 ? localFileImage()
                 : customUrl()
