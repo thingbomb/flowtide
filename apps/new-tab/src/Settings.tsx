@@ -607,11 +607,16 @@ function SettingsTrigger({
                     </label>
                     <input
                       type="file"
+                      accept="image/*"
                       name="file-input"
                       id="file-input"
                       onChange={(e) => {
                         const files: FileList | null = e.target?.files;
                         if (files && files[0]) {
+                          if (!files[0].type.startsWith('image/')) {
+                            alert(chrome.i18n.getMessage("invalid_file_type"));
+                            return;
+                          }
                           const reader = new FileReader();
 
                           reader.onload = (e) => {
@@ -620,11 +625,15 @@ function SettingsTrigger({
                                 e.target.result.toString().length >
                                 2.5 * 1024 * 1024
                               ) {
-                                alert("File is over 2.5MB");
+                                alert(chrome.i18n.getMessage("file_too_large"));
                                 return;
                               }
                               setLocalFileImage(e.target.result.toString());
                             }
+                          };
+
+                          reader.onerror = () => {
+                            alert(chrome.i18n.getMessage("file_read_error"));
                           };
 
                           reader.readAsDataURL(files[0]);
