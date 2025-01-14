@@ -388,5 +388,83 @@
   },
   "comic_sans": {
     "message": "Comic Sans"
+  },
+  "notepad": {
+    "message": "Notepad"
+  },
+  "notepad_description": {
+    "message": "A simple notepad widget."
+  },
+  "notepad_disclaimer": {
+    "message": "Notes are stored in your browser's local storage, which may be unreliable and could result in data loss."
+  },
+  "date_format": {
+    "message": "Date format"
+  },
+  "counter": {
+    "message": "Counter"
+  },
+  "counter_description": {
+    "message": "Count things easily."
+  },
+  "mantra_1": {
+    "message": "Every day is a chance to grow."
+  },
+  "mantra_2": {
+    "message": "Progress, not perfection."
+  },
+  "mantra_3": {
+    "message": "Small steps lead to big changes."
+  },
+  "mantra_4": {
+    "message": "Setbacks are setups for comebacks."
+  },
+  "mantra_5": {
+    "message": "You are stronger than you think."
+  },
+  "mantra_6": {
+    "message": "Challenges build your strength."
+  },
+  "mantra_7": {
+    "message": "Good things are coming your way."
+  },
+  "mantra_8": {
+    "message": "See the good in every situation."
+  },
+  "mantra_9": {
+    "message": "A hopeful heart sees endless possibilities."
+  },
+  "mantra_10": {
+    "message": "Be here, in this moment."
+  },
+  "mantra_11": {
+    "message": "Each breath is a fresh start."
+  },
+  "mantra_12": {
+    "message": "The now is all we truly have."
+  },
+  "mantra_13": {
+    "message": "Dream big, start small."
+  },
+  "mantra_14": {
+    "message": "Focus on what you can control."
+  },
+  "mantra_15": {
+    "message": "Greatness begins with the first step."
+  },
+  "mantras": {
+    "message": "Mantras"
+  },
+  "mantras_description": {
+    "message": "Inspirational mantras on every new tab."
+  },
+  "toggle_theme": {
+    "message": "Toggle theme"
+  },
+  "custom_url": {
+    "message": "Custom URL"
+  },
+  "local_file": {
+    "message": "Local file"
   }
 }
