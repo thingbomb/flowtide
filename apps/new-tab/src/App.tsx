@@ -1,4 +1,10 @@
-import { createEffect, createSignal, createUniqueId, onMount } from "solid-js";
+import {
+  createEffect,
+  createSignal,
+  createUniqueId,
+  onCleanup,
+  onMount,
+} from "solid-js";
 import type { Component } from "solid-js";
 import { Button } from "./components/ui/button";
 import {
@@ -24,9 +30,12 @@ import {
   AmbienceSoundscapes,
   BookmarksWidget,
   ClockWidget,
+  CounterWidget,
   DateWidget,
   FocusSoundscapes,
+  Mantras,
   NatureWidget,
+  NotepadWidget,
   PomodoroWidget,
   StopwatchWidget,
   TodoWidget,
@@ -121,7 +130,10 @@ type Widget =
   | "nature"
   | "pomodoro"
   | "focus"
-  | "ambience";
+  | "ambience"
+  | "notepad"
+  | "counter"
+  | "mantras";
 
 type Bookmark = {
   name: string;
@@ -144,9 +156,14 @@ const App: Component = () => {
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
   const [pageIcon, setPageIcon] = createStoredSignal("pageIcon", "");
+  const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
     "assets/logo.png"
+  );
+  const [dateFormat, setDateFormat] = createStoredSignal(
+    "dateFormat",
+    "normal"
   );
   const [layout, setLayout] = createStoredSignal("layout", "center");
   const [currentFont, setCurrentFont] = createStoredSignal("font", "sans");
@@ -164,6 +181,10 @@ const App: Component = () => {
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
   const clock = formattedClock();
+  const [localFileImage, setLocalFileImage] = createStoredSignal(
+    "localFile",
+    ""
+  );
   function getInitialSelectedImage() {
     try {
       const storedItem = localStorage.getItem("selectedImage");
@@ -387,6 +408,9 @@ const App: Component = () => {
     "pomodoro",
     "focus",
     "ambience",
+    "notepad",
+    "counter",
+    "mantras",
   ];
 
   function updateFilteredWidgets() {
@@ -456,6 +480,52 @@ const App: Component = () => {
           })
         );
       }
+    }
+
+    if (mode() === "nightstand") {
+      const intervalId = setInterval(() => {
+        if (document.getElementById("twelve-clock") !== null) {
+          document.getElementById("twelve-clock")!.textContent =
+            dateFormat() == "normal"
+              ? [
+                  "Sunday",
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                ][new Date().getDay()]
+              : [
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December",
+                ][new Date().getMonth()]
+                  .concat(" ")
+                  .concat(new Date().getDate().toString().padStart(2, "0"));
+        }
+
+        if (document.getElementById("day") !== null) {
+          document.getElementById("day")!.textContent = String(
+            dateFormat() == "normal"
+              ? new Date().getDate()
+              : new Date().toISOString().split("T")[0]
+          );
+        }
+      }, 1000);
+
+      onCleanup(() => {
+        clearInterval(intervalId);
+      });
     }
   });
 
@@ -536,12 +606,16 @@ const App: Component = () => {
       )}
     >
       {needsOnboarding() && <OnboardingFlow />}
-      {background() === "image" && (
+      {(background() === "image" ||
+        background() === "custom-url" ||
+        background() === "local-file") && (
         <img
           src={
-            typeof selectedImage() === "object"
+            background() === "image"
               ? selectedImage().url
-              : JSON.parse(selectedImage()).url
+              : background() === "local-file"
+                ? localFileImage()
+                : customUrl()
           }
           alt=""
           id="wallpaper"
@@ -594,8 +668,8 @@ const App: Component = () => {
                   display: name() == "" ? "none" : "block",
                   color:
                     background() == "image" &&
-                      !imageLoaded() &&
-                      document.documentElement.style.colorScheme != "dark"
+                    !imageLoaded() &&
+                    document.documentElement.style.colorScheme != "dark"
                       ? ""
                       : "#fff",
                 }}
@@ -613,67 +687,89 @@ const App: Component = () => {
                 class={cn(
                   "widgets m-0 grid gap-3 p-4 [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)]",
                   layout() == "center" &&
-                  "xl:[grid-template-columns:repeat(3,400px)]",
+                    "xl:[grid-template-columns:repeat(3,400px)]",
                   layout() == "center" && "justify-center",
                   layout() == "top" && "!pl-8"
                 )}
               >
                 {filteredWidgets().length > 0 ? (
-                  filteredWidgets().map((item: any) => (
-                    <div
-                      class={`${uuidv4()} slot group h-fit`}
-                      data-swapy-slot={item}
-                    >
+                  filteredWidgets().map((item: any) => {
+                    return (
                       <div
-                        class="widget group"
-                        data-swapy-item={widgetOrder()[item]}
+                        class={`${uuidv4()} slot group h-fit`}
+                        data-swapy-slot={item}
                       >
-                        {widgetOrder()[item] === "clock" && <ClockWidget />}
-                        {widgetOrder()[item] === "date" && <DateWidget />}
-                        {widgetOrder()[item] === "todo" && <TodoWidget />}
-                        {widgetOrder()[item] === "focus" && (
-                          <FocusSoundscapes />
-                        )}
-                        {widgetOrder()[item] === "ambience" && (
-                          <AmbienceSoundscapes />
-                        )}
-                        {widgetOrder()[item] === "stopwatch" && (
-                          <StopwatchWidget />
-                        )}
-                        {widgetOrder()[item] === "bookmarks" && (
-                          <BookmarksWidget />
-                        )}
-                        {widgetOrder()[item] === "nature" && <NatureWidget />}
-                        {widgetOrder()[item] === "pomodoro" && (
-                          <PomodoroWidget />
-                        )}
-                        {widgetOrder()[item] == "todo" && (
-                          <button
-                            class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-hover:block"
-                            data-swapy-handle
-                          >
-                            <GripVertical height={16} class="text-black" />
-                          </button>
-                        )}
-                        <button
-                          class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
-                          onclick={(e) => {
-                            const newWidgetOrder = widgetOrder();
-                            delete newWidgetOrder[item];
-                            setWidgetOrder(newWidgetOrder);
-                            e.target.parentElement?.parentElement?.remove();
-                            localStorage.setItem(
-                              "widgetPlacement",
-                              JSON.stringify(newWidgetOrder)
-                            );
-                            updateFilteredWidgets();
-                          }}
+                        <div
+                          class="widget group"
+                          data-swapy-item={widgetOrder()[item]}
                         >
-                          <X height={16} class="text-black" />
-                        </button>
+                          {widgetOrder()[item] === "clock" && <ClockWidget />}
+                          {widgetOrder()[item] === "date" && <DateWidget />}
+                          {widgetOrder()[item] === "todo" && <TodoWidget />}
+                          {widgetOrder()[item] === "mantras" && <Mantras />}
+                          {widgetOrder()[item] === "focus" && (
+                            <FocusSoundscapes />
+                          )}
+                          {widgetOrder()[item] === "counter" && (
+                            <CounterWidget />
+                          )}
+                          {widgetOrder()[item] === "ambience" && (
+                            <AmbienceSoundscapes />
+                          )}
+                          {widgetOrder()[item] === "stopwatch" && (
+                            <StopwatchWidget />
+                          )}
+                          {widgetOrder()[item] === "bookmarks" && (
+                            <BookmarksWidget />
+                          )}
+                          {widgetOrder()[item] === "nature" && <NatureWidget />}
+                          {widgetOrder()[item] === "pomodoro" && (
+                            <PomodoroWidget />
+                          )}
+                          {widgetOrder()[item] === "notepad" && (
+                            <NotepadWidget />
+                          )}
+                          {widgetOrder()[item] == "todo" && (
+                            <GripVertical
+                              data-swapy-handle
+                              height={16}
+                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white p-0.5 text-black shadow-sm hover:bg-white/90 group-hover:block"
+                            />
+                          )}
+                          {widgetOrder()[item] == "notepad" && (
+                            <GripVertical
+                              data-swapy-handle
+                              height={16}
+                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white p-0.5 text-black shadow-sm hover:bg-white/90 group-hover:block"
+                            />
+                          )}
+                          {widgetOrder()[item] == "counter" && (
+                            <GripVertical
+                              data-swapy-handle
+                              height={16}
+                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white p-0.5 text-black shadow-sm hover:bg-white/90 group-hover:block"
+                            />
+                          )}
+                          <button
+                            class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
+                            onclick={(e) => {
+                              const newWidgetOrder = widgetOrder();
+                              delete newWidgetOrder[item];
+                              setWidgetOrder(newWidgetOrder);
+                              e.target.parentElement?.parentElement?.remove();
+                              localStorage.setItem(
+                                "widgetPlacement",
+                                JSON.stringify(newWidgetOrder)
+                              );
+                              updateFilteredWidgets();
+                            }}
+                          >
+                            <X height={16} class="text-black" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
                   <section></section>
                 )}
@@ -687,35 +783,43 @@ const App: Component = () => {
                   {clock().time + clock().amPm}
                 </h1>
                 <p class="mt-3 pl-2 text-3xl font-medium">
-                  {
-                    [
-                      "Sunday",
-                      "Monday",
-                      "Tuesday",
-                      "Wednesday",
-                      "Thursday",
-                      "Friday",
-                      "Saturday",
-                    ][new Date().getDay()]
-                  }
-                  ,{" "}
-                  {
-                    [
-                      "January",
-                      "February",
-                      "March",
-                      "April",
-                      "May",
-                      "June",
-                      "July",
-                      "August",
-                      "September",
-                      "October",
-                      "November",
-                      "December",
-                    ][new Date().getMonth()]
-                  }{" "}
-                  {new Date().getDate()}
+                  {dateFormat() == "normal" ? (
+                    <span id="twelve-clock">
+                      {
+                        [
+                          "Sunday",
+                          "Monday",
+                          "Tuesday",
+                          "Wednesday",
+                          "Thursday",
+                          "Friday",
+                          "Saturday",
+                        ][new Date().getDay()]
+                      }
+                      ,{" "}
+                      {
+                        [
+                          "January",
+                          "February",
+                          "March",
+                          "April",
+                          "May",
+                          "June",
+                          "July",
+                          "August",
+                          "September",
+                          "October",
+                          "November",
+                          "December",
+                        ][new Date().getMonth()]
+                      }{" "}
+                      {new Date().getDate()}
+                    </span>
+                  ) : (
+                    <span id="day">
+                      {new Date().toISOString().split("T")[0]}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
@@ -796,6 +900,11 @@ const App: Component = () => {
                     key="nature"
                   />
                   <Block
+                    title={chrome.i18n.getMessage("mantras")}
+                    description={chrome.i18n.getMessage("mantras_description")}
+                    key="mantras"
+                  />
+                  <Block
                     title={chrome.i18n.getMessage("focus_sounds")}
                     description={chrome.i18n.getMessage(
                       "focus_sounds_description"
@@ -839,6 +948,16 @@ const App: Component = () => {
                       "todo_list_description"
                     )}
                     key="todo"
+                  />
+                  <Block
+                    title={chrome.i18n.getMessage("notepad")}
+                    description={chrome.i18n.getMessage("notepad_description")}
+                    key="notepad"
+                  />
+                  <Block
+                    title={chrome.i18n.getMessage("counter")}
+                    description={chrome.i18n.getMessage("counter_description")}
+                    key="counter"
                   />
                 </DialogHeader>
               </DialogContent>

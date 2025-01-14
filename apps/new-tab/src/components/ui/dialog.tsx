@@ -37,7 +37,7 @@ export const DialogContent = <T extends ValidComponent = "div">(
       <div class="z-100 fixed inset-0 flex items-center justify-center p-4">
         <DialogPrimitive.Content
           class={cn(
-            "data-[closed]:transform-[scale(95%)] z-50 grid w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0",
+            "data-[closed]:transform-[scale(95%)] z-50 grid max-h-[60vh] w-full max-w-md overflow-y-auto rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0",
             local.class
           )}
           {...rest}

@@ -7,9 +7,11 @@ import {
   Calendar1,
   Clock,
   CloudLightningIcon,
+  File,
   Grid,
   Hourglass,
   Image,
+  Link,
   MessageCircle,
   Moon,
   PaintBucket,
@@ -94,6 +96,15 @@ function SettingsTrigger({
     "wallpaperBlur",
     0
   );
+  const [localFileImage, setLocalFileImage] = createStoredSignal(
+    "localFile",
+    ""
+  );
+  const [dateFormat, setDateFormat] = createStoredSignal(
+    "dateFormat",
+    "normal"
+  );
+  const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24);
   const [pageIconURL, setPageIconURL] = createStoredSignal(
@@ -133,6 +144,7 @@ function SettingsTrigger({
             {...(settingsMenu() == "general"
               ? { "data-selected": "true" }
               : "")}
+            id="generalButton"
             onClick={() => {
               setSettingsMenu("general");
             }}
@@ -150,6 +162,7 @@ function SettingsTrigger({
             onClick={() => {
               setSettingsMenu("appearance");
             }}
+            id="appearanceButton"
             class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
           >
             <Palette
@@ -165,6 +178,7 @@ function SettingsTrigger({
             onClick={() => {
               setSettingsMenu("background");
             }}
+            id="backgroundButton"
             class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
           >
             <Image
@@ -468,6 +482,31 @@ function SettingsTrigger({
                   icon={<span class="!text-5xl font-bold">24h</span>}
                 />
               </div>
+              <br />
+              <br />
+              <h3 class="text-2xl font-[500]">
+                {chrome.i18n.getMessage("date_format")}
+              </h3>
+              <div class="card-group grid-cols-2 grid-rows-1">
+                <BigButton
+                  {...(dateFormat() === "normal"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setDateFormat("normal");
+                  }}
+                  icon={<span class="!text-5xl font-bold">Normal</span>}
+                />
+                <BigButton
+                  {...(dateFormat() === "iso-8601"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setDateFormat("iso-8601");
+                  }}
+                  icon={<span class="!text-5xl font-bold">ISO-8601</span>}
+                />
+              </div>
             </>
           )}
           {settingsMenu() === "background" && (
@@ -516,7 +555,95 @@ function SettingsTrigger({
                   title={chrome.i18n.getMessage("blank")}
                   icon={<Square class="size-[64px]" fill="none" />}
                 />
+                <BigButton
+                  {...(background() === "custom-url"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setBackground("custom-url");
+                  }}
+                  title={chrome.i18n.getMessage("custom_url")}
+                  icon={<Link class="size-[64px]" fill="none" />}
+                />
+                <BigButton
+                  {...(background() === "local-file"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setBackground("local-file");
+                  }}
+                  title={chrome.i18n.getMessage("local_file")}
+                  icon={<File class="size-[64px]" fill="none" />}
+                />
               </div>
+              {background() === "custom-url" && (
+                <>
+                  <br />
+                  <br />
+                  <h2 class="mb-3 text-2xl font-[500]">
+                    {chrome.i18n.getMessage("custom_url")}
+                  </h2>
+                  <TextFieldRoot class="flex-1">
+                    <TextField
+                      placeholder={chrome.i18n.getMessage("custom_url")}
+                      value={customUrl()}
+                      onInput={(e) =>
+                        setCustomUrl(e.currentTarget.value.trim())
+                      }
+                    />
+                  </TextFieldRoot>
+                </>
+              )}
+              {background() === "local-file" && (
+                <>
+                  <br />
+                  <br />
+                  <h2 class="mb-3 text-2xl font-[500]">
+                    {chrome.i18n.getMessage("local_file")}
+                  </h2>
+                  <form class="max-w-sm">
+                    <label for="file-input" class="sr-only">
+                      Choose file
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      name="file-input"
+                      id="file-input"
+                      onChange={(e) => {
+                        const files: FileList | null = e.target?.files;
+                        if (files && files[0]) {
+                          if (!files[0].type.startsWith('image/')) {
+                            alert(chrome.i18n.getMessage("invalid_file_type"));
+                            return;
+                          }
+                          const reader = new FileReader();
+
+                          reader.onload = (e) => {
+                            if (e.target && e.target.result) {
+                              if (
+                                e.target.result.toString().length >
+                                2.5 * 1024 * 1024
+                              ) {
+                                alert(chrome.i18n.getMessage("file_too_large"));
+                                return;
+                              }
+                              setLocalFileImage(e.target.result.toString());
+                            }
+                          };
+
+                          reader.onerror = () => {
+                            alert(chrome.i18n.getMessage("file_read_error"));
+                          };
+
+                          reader.readAsDataURL(files[0]);
+                        }
+                      }}
+                      class="block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-50 file:px-4 file:py-3 focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:file:bg-neutral-700 dark:file:text-neutral-400"
+                    />
+                  </form>
+                </>
+              )}
               <br />
               <br />
               <h2 class="mb-3 text-2xl font-[500]">
@@ -620,6 +747,7 @@ function SettingsTrigger({
         class={cn("group", triggerClass)}
         onclick={() => setOpen(true)}
         aria-haspopup="true"
+        id="settingsButton"
       >
         <Settings class="hover:rotate-25 size-[20px] transition-transform" />
       </button>

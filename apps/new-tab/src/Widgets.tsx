@@ -15,6 +15,24 @@ import {
 } from "./components/ui/dialog";
 import { formattedClock } from "./hooks/clockFormatter";
 
+const mantras: string[] = [
+  "mantra_1",
+  "mantra_2",
+  "mantra_3",
+  "mantra_4",
+  "mantra_5",
+  "mantra_6",
+  "mantra_7",
+  "mantra_8",
+  "mantra_9",
+  "mantra_10",
+  "mantra_11",
+  "mantra_12",
+  "mantra_13",
+  "mantra_14",
+  "mantra_15",
+];
+
 function ClockWidget() {
   const clock = formattedClock();
   return (
@@ -742,6 +760,89 @@ function AmbienceSoundscapes() {
   );
 }
 
+function NotepadWidget() {
+  const [notepad, setNotepad] = createStoredSignal<string>("notepad", "");
+  return (
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="relative h-full w-full rounded-[10px]">
+          <div class="scrollbar-hidden p-1">
+            <div
+              class="select-none px-3.5 text-left text-xl font-bold text-white"
+              id="title"
+            >
+              {chrome.i18n.getMessage("notepad")}
+            </div>
+            <textarea
+              class="mt-2 h-full w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white shadow-inner shadow-white/10 outline-none backdrop-blur-2xl focus:ring-2"
+              value={notepad()}
+              onInput={(e) => setNotepad(e.currentTarget.value)}
+            ></textarea>
+            <p class="-mt-1 p-0 text-[11px] font-medium text-gray-400">
+              {chrome.i18n.getMessage("notepad_disclaimer")}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CounterWidget() {
+  const [counter, setCounter] = createStoredSignal("counter", 0);
+  return (
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="relative h-full w-full rounded-[10px]">
+          <div class="scrollbar-hidden p-1">
+            <div class="mt-2 px-3.5">
+              <h1 class="select-none text-center text-6xl font-bold text-white">
+                {counter()}
+              </h1>
+              <div class="mt-3 flex items-center justify-between gap-2">
+                <Button
+                  onclick={() => {
+                    setCounter(Number(counter()) - 1);
+                  }}
+                  class="rounded-full text-3xl"
+                  aria-label={chrome.i18n.getMessage("decrease")}
+                >
+                  -
+                </Button>
+                <Button
+                  onclick={() => {
+                    setCounter(Number(counter()) + 1);
+                  }}
+                  class="rounded-full text-3xl"
+                  aria-label={chrome.i18n.getMessage("increase")}
+                >
+                  +
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Mantras() {
+  return (
+    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+      <div class="h-full w-full rounded-[10px]">
+        <div class="relative flex h-full w-full items-center justify-center rounded-[10px] px-4">
+          <h2 class="select-none text-3xl font-semibold text-white">
+            {chrome.i18n.getMessage(
+              mantras[Math.floor(Math.random() * mantras.length)]
+            )}
+          </h2>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export {
   ClockWidget,
   DateWidget,
@@ -752,4 +853,7 @@ export {
   PomodoroWidget,
   FocusSoundscapes,
   AmbienceSoundscapes,
+  NotepadWidget,
+  CounterWidget,
+  Mantras,
 };
