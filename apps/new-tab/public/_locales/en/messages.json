@@ -460,5 +460,11 @@
   },
   "toggle_theme": {
     "message": "Toggle theme"
+  },
+  "custom_url": {
+    "message": "Custom URL"
+  },
+  "local_file": {
+    "message": "Local file"
   }
 }

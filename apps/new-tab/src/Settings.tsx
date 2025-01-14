@@ -7,9 +7,11 @@ import {
   Calendar1,
   Clock,
   CloudLightningIcon,
+  File,
   Grid,
   Hourglass,
   Image,
+  Link,
   MessageCircle,
   Moon,
   PaintBucket,
@@ -94,10 +96,15 @@ function SettingsTrigger({
     "wallpaperBlur",
     0
   );
+  const [localFileImage, setLocalFileImage] = createStoredSignal(
+    "localFile",
+    ""
+  );
   const [dateFormat, setDateFormat] = createStoredSignal(
     "dateFormat",
     "normal"
   );
+  const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24);
   const [pageIconURL, setPageIconURL] = createStoredSignal(
@@ -548,7 +555,86 @@ function SettingsTrigger({
                   title={chrome.i18n.getMessage("blank")}
                   icon={<Square class="size-[64px]" fill="none" />}
                 />
+                <BigButton
+                  {...(background() === "custom-url"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setBackground("custom-url");
+                  }}
+                  title={chrome.i18n.getMessage("custom_url")}
+                  icon={<Link class="size-[64px]" fill="none" />}
+                />
+                <BigButton
+                  {...(background() === "local-file"
+                    ? { "data-selected": true }
+                    : {})}
+                  onClick={() => {
+                    setBackground("local-file");
+                  }}
+                  title={chrome.i18n.getMessage("local_file")}
+                  icon={<File class="size-[64px]" fill="none" />}
+                />
               </div>
+              {background() === "custom-url" && (
+                <>
+                  <br />
+                  <br />
+                  <h2 class="mb-3 text-2xl font-[500]">
+                    {chrome.i18n.getMessage("custom_url")}
+                  </h2>
+                  <TextFieldRoot class="flex-1">
+                    <TextField
+                      placeholder={chrome.i18n.getMessage("custom_url")}
+                      value={customUrl()}
+                      onInput={(e) =>
+                        setCustomUrl(e.currentTarget.value.trim())
+                      }
+                    />
+                  </TextFieldRoot>
+                </>
+              )}
+              {background() === "local-file" && (
+                <>
+                  <br />
+                  <br />
+                  <h2 class="mb-3 text-2xl font-[500]">
+                    {chrome.i18n.getMessage("local_file")}
+                  </h2>
+                  <form class="max-w-sm">
+                    <label for="file-input" class="sr-only">
+                      Choose file
+                    </label>
+                    <input
+                      type="file"
+                      name="file-input"
+                      id="file-input"
+                      onChange={(e) => {
+                        const files: FileList | null = e.target?.files;
+                        if (files && files[0]) {
+                          const reader = new FileReader();
+
+                          reader.onload = (e) => {
+                            if (e.target && e.target.result) {
+                              if (
+                                e.target.result.toString().length >
+                                2.5 * 1024 * 1024
+                              ) {
+                                alert("File is over 2.5MB");
+                                return;
+                              }
+                              setLocalFileImage(e.target.result.toString());
+                            }
+                          };
+
+                          reader.readAsDataURL(files[0]);
+                        }
+                      }}
+                      class="block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-50 file:px-4 file:py-3 focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:file:bg-neutral-700 dark:file:text-neutral-400"
+                    />
+                  </form>
+                </>
+              )}
               <br />
               <br />
               <h2 class="mb-3 text-2xl font-[500]">

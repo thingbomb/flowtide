@@ -150,6 +150,7 @@ const App: Component = () => {
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
   const [pageIcon, setPageIcon] = createStoredSignal("pageIcon", "");
+  const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
     "assets/logo.png"
@@ -174,6 +175,10 @@ const App: Component = () => {
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
   const clock = formattedClock();
+  const [localFileImage, setLocalFileImage] = createStoredSignal(
+    "localFile",
+    ""
+  );
   function getInitialSelectedImage() {
     try {
       const storedItem = localStorage.getItem("selectedImage");
@@ -591,12 +596,16 @@ const App: Component = () => {
       )}
     >
       {needsOnboarding() && <OnboardingFlow />}
-      {background() === "image" && (
+      {(background() === "image" ||
+        background() === "custom-url" ||
+        background() === "local-file") && (
         <img
           src={
-            typeof selectedImage() === "object"
-              ? selectedImage().url
-              : JSON.parse(selectedImage()).url
+            background() === "image"
+              ? selectedImage()
+              : background() === "local-file"
+                ? localFileImage()
+                : customUrl()
           }
           alt=""
           id="wallpaper"
