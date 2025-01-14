@@ -477,7 +477,7 @@ const App: Component = () => {
     }
 
     if (mode() === "nightstand") {
-      setInterval(() => {
+      const intervalId = setInterval(() => {
         if (document.getElementById("twelve-clock") !== null) {
           document.getElementById("twelve-clock")!.textContent =
             dateFormat() == "normal"
@@ -516,6 +516,10 @@ const App: Component = () => {
           );
         }
       }, 1000);
+      
+      onCleanup(() => {
+        clearInterval(intervalId);
+      });
     }
   });
 
