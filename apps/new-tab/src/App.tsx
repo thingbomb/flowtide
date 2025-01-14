@@ -688,7 +688,7 @@ const App: Component = () => {
               >
                 {filteredWidgets().length > 0 ? (
                   filteredWidgets().map((item: any) => {
-                    console.log(item);
+                  filteredWidgets().map((item: any) => {
                     return (
                       <div
                         class={`${uuidv4()} slot group h-fit`}
