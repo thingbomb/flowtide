@@ -1,4 +1,10 @@
-import { createEffect, createSignal, createUniqueId, onMount } from "solid-js";
+import {
+  createEffect,
+  createSignal,
+  createUniqueId,
+  onCleanup,
+  onMount,
+} from "solid-js";
 import type { Component } from "solid-js";
 import { Button } from "./components/ui/button";
 import {
@@ -516,7 +522,7 @@ const App: Component = () => {
           );
         }
       }, 1000);
-      
+
       onCleanup(() => {
         clearInterval(intervalId);
       });
@@ -662,8 +668,8 @@ const App: Component = () => {
                   display: name() == "" ? "none" : "block",
                   color:
                     background() == "image" &&
-                      !imageLoaded() &&
-                      document.documentElement.style.colorScheme != "dark"
+                    !imageLoaded() &&
+                    document.documentElement.style.colorScheme != "dark"
                       ? ""
                       : "#fff",
                 }}
@@ -681,13 +687,12 @@ const App: Component = () => {
                 class={cn(
                   "widgets m-0 grid gap-3 p-4 [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)]",
                   layout() == "center" &&
-                  "xl:[grid-template-columns:repeat(3,400px)]",
+                    "xl:[grid-template-columns:repeat(3,400px)]",
                   layout() == "center" && "justify-center",
                   layout() == "top" && "!pl-8"
                 )}
               >
                 {filteredWidgets().length > 0 ? (
-                  filteredWidgets().map((item: any) => {
                   filteredWidgets().map((item: any) => {
                     return (
                       <div
