@@ -128,6 +128,16 @@ export function CommandPalette(props: any) {
       e.preventDefault();
       setOpen(!open());
     }
+
+    if (e.key == "Enter") {
+      document
+        .querySelectorAll('[data-type="command-item"]')
+        .forEach((item) => {
+          if (item.getAttribute("aria-selected") == "true") {
+            (item as HTMLDivElement).click();
+          }
+        });
+    }
   };
 
   onCleanup(() => {
@@ -187,23 +197,23 @@ export function CommandPalette(props: any) {
     });
   };
 
-const settingsHandler = (setting: string) => {
-  setOpen(false);
-  const settingsButton = document.getElementById("settingsButton");
-  if (!settingsButton) {
-    console.error("Settings button not found");
-    return;
-  }
-  settingsButton.click();
-  setInputValue("");
-  if (setting === "general") {
-    document.getElementById("generalButton")?.click();
-  } else if (setting === "appearance") {
-    document.getElementById("appearanceButton")?.click();
-  } else if (setting === "background") {
-    document.getElementById("backgroundButton")?.click();
-  }
-};
+  const settingsHandler = (setting: string) => {
+    setOpen(false);
+    const settingsButton = document.getElementById("settingsButton");
+    if (!settingsButton) {
+      console.error("Settings button not found");
+      return;
+    }
+    settingsButton.click();
+    setInputValue("");
+    if (setting === "general") {
+      document.getElementById("generalButton")?.click();
+    } else if (setting === "appearance") {
+      document.getElementById("appearanceButton")?.click();
+    } else if (setting === "background") {
+      document.getElementById("backgroundButton")?.click();
+    }
+  };
 
   const handleMathInput = (value: string) => {
     setInputValue(value);
