@@ -848,9 +848,12 @@ const App: Component = () => {
           )}
         </div>
       </div>
-      <div class="group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-white p-1 px-2 text-black shadow-inner shadow-black/20 focus-within:gap-2 hover:gap-2 dark:bg-black/95 dark:text-white dark:shadow-white/10">
+      <div
+        class="group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-black/30 p-1 px-2 text-white shadow-inner shadow-white/10 focus-within:gap-2 hover:gap-2 dark:text-white"
+        id="action-bar"
+      >
         <button
-          class="peer group-hover:hidden"
+          class="peer group-focus-within:hidden group-hover:hidden"
           title={chrome.i18n.getMessage("settings")}
         >
           <Menu />
@@ -962,7 +965,7 @@ const App: Component = () => {
           <SettingsTrigger triggerClass="hidden group-hover:flex peer-hover:!flex peer-focus:!flex group-focus-within:flex" />
         </div>
         <button
-          class="hidden group-hover:flex peer-hover:!flex"
+          class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex"
           title={
             itemsHidden() == "true"
               ? chrome.i18n.getMessage("show_items")
