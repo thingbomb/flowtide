@@ -10,7 +10,7 @@ import type {
 } from "cmdk-solid";
 import { Command as CommandPrimitive } from "cmdk-solid";
 import type { ComponentProps, VoidProps } from "solid-js";
-import { splitProps } from "solid-js";
+import { createUniqueId, splitProps } from "solid-js";
 import { Dialog, DialogContent } from "./dialog";
 
 export const Command = (props: CommandRootProps) => {
@@ -84,6 +84,7 @@ export const CommandItem = (props: CommandItemProps) => {
         "aria-selected:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-selected:bg-black/10 dark:aria-selected:bg-white/10",
         local.class
       )}
+      data-type="command-item"
       {...rest}
     />
   );
