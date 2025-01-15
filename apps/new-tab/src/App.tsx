@@ -204,7 +204,6 @@ const App: Component = () => {
       });
     }
 
-    // fallback value
     return {
       url: images[Math.floor(Math.random() * images.length)],
       expiry: Date.now() + Number(wallpaperChangeTime()),
@@ -472,13 +471,6 @@ const App: Component = () => {
           localStorage.setItem("selectedImage", JSON.stringify(newImage));
         });
       } else {
-        localStorage.setItem(
-          "selectedImage",
-          JSON.stringify({
-            url: images[Math.floor(Math.random() * images.length)],
-            expiry: Date.now() + Number(wallpaperChangeTime()),
-          })
-        );
       }
     }
 
@@ -612,7 +604,9 @@ const App: Component = () => {
         <img
           src={
             background() === "image"
-              ? selectedImage().url
+              ? typeof selectedImage() === "object"
+                ? selectedImage().url
+                : JSON.parse(selectedImage()).url
               : background() === "local-file"
                 ? localFileImage()
                 : customUrl()
