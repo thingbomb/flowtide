@@ -722,7 +722,9 @@ function AmbienceSoundscapes() {
               class="grid grid-cols-3 grid-rows-2 gap-2 p-1.5 pb-0"
             >
               {soundscapes
-                .filter((soundscape) => soundscape.categories.includes("ambience"))
+                .filter((soundscape) =>
+                  soundscape.categories.includes("ambience")
+                )
                 .map((soundscape, index: number) => (
                   <div class="soundscape flex items-center gap-2">
                     <div class="flex items-center gap-2">

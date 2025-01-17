@@ -199,12 +199,14 @@ export function CommandPalette(props: any) {
 
   const settingsHandler = (setting: string) => {
     setOpen(false);
-    const settingsButton = document.getElementById("settingsButton");
-    if (!settingsButton) {
-      console.error("Settings button not found");
-      return;
+    if (!document.getElementById("sidebar")) {
+      const settingsButton = document.getElementById("settingsButton");
+      if (!settingsButton) {
+        console.error("Settings button not found");
+        return;
+      }
+      settingsButton.click();
     }
-    settingsButton.click();
     setInputValue("");
     if (setting === "general") {
       document.getElementById("generalButton")?.click();
@@ -245,6 +247,7 @@ export function CommandPalette(props: any) {
     <CommandDialog open={open()} onOpenChange={setOpen}>
       <CommandInput
         placeholder={chrome.i18n.getMessage("type_command")}
+        class="border-none pl-0 outline-none ring-0"
         value={inputValue()}
         onValueChange={(value) => handleMathInput(value)}
       />
