@@ -476,38 +476,13 @@ const App: Component = () => {
 
     if (mode() === "nightstand") {
       const intervalId = setInterval(() => {
-        if (document.getElementById("twelve-clock") !== null) {
-          document.getElementById("twelve-clock")!.textContent =
-            dateFormat() == "normal"
-              ? [
-                  "Sunday",
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                ][new Date().getDay()]
-              : [
-                  "January",
-                  "February",
-                  "March",
-                  "April",
-                  "May",
-                  "June",
-                  "July",
-                  "August",
-                  "September",
-                  "October",
-                  "November",
-                  "December",
-                ][new Date().getMonth()]
-                  .concat(" ")
-                  .concat(new Date().getDate().toString().padStart(2, "0"));
+        if (document.getElementById("nightstandClock") !== null) {
+          document.getElementById("nightstandClock")!.textContent =
+            clock().time;
         }
 
-        if (document.getElementById("day") !== null) {
-          document.getElementById("day")!.textContent = String(
+        if (document.getElementById("nightstandDay") !== null) {
+          document.getElementById("nightstandDay")!.textContent = String(
             dateFormat() == "normal"
               ? new Date().getDate()
               : new Date().toISOString().split("T")[0]
@@ -775,12 +750,15 @@ const App: Component = () => {
           {mode() === "nightstand" && (
             <div class="flex items-center justify-center">
               <div class="w-full max-w-lg select-none">
-                <h1 class="m-0 p-0 text-[200px] font-bold [line-height:1.2]">
-                  {clock().time + clock().amPm}
+                <h1
+                  class="m-0 p-0 text-[200px] font-bold [line-height:1.2]"
+                  id="nightstandClock"
+                >
+                  {clock().time}
                 </h1>
                 <p class="mt-3 pl-2 text-3xl font-medium">
                   {dateFormat() == "normal" ? (
-                    <span id="twelve-clock">
+                    <span id="nightstandDay">
                       {
                         [
                           "Sunday",
@@ -812,7 +790,7 @@ const App: Component = () => {
                       {new Date().getDate()}
                     </span>
                   ) : (
-                    <span id="day">
+                    <span id="nightstandDay">
                       {new Date().toISOString().split("T")[0]}
                     </span>
                   )}
