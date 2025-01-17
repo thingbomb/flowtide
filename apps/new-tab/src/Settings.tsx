@@ -100,7 +100,7 @@ function SettingsTrigger({
   const [pageIconValue, setPageIconValue] = createSignal(pageIcon());
   const [opacity, setOpacity] = createStoredSignal<number>("opacity", 0.8);
   const [settingsMenu, setSettingsMenu] = createSignal<string>("general");
-  const [dialogOpen, setDialogOpen] = createSignal(true);
+  const [dialogOpen, setDialogOpen] = createSignal(false);
   const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
     "wallpaperBlur",
     0
