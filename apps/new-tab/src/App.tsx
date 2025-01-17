@@ -484,7 +484,7 @@ const App: Component = () => {
         if (document.getElementById("nightstandDay") !== null) {
           document.getElementById("nightstandDay")!.textContent = String(
             dateFormat() == "normal"
-              ? new Date().getDate()
+              ? `${["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()]}, ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][new Date().getMonth()]} ${new Date().getDate()}`
               : new Date().toISOString().split("T")[0]
           );
         }
