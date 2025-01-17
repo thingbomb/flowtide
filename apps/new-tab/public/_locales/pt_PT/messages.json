@@ -466,5 +466,8 @@
   },
   "local_file": {
     "message": "Local file"
+  },
+  "choose_file": {
+    "message": "Choose file"
   }
 }
