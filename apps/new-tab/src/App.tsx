@@ -537,7 +537,9 @@ const App: Component = () => {
       <div class="flex items-center justify-between">
         <div class="info">
           <h1>{props.title}</h1>
-          <p class="text-muted-foreground text-sm">{props.description}</p>
+          <p class="dark:text-muted-foreground text-sm text-gray-600">
+            {props.description}
+          </p>
         </div>
         <div class="add">
           <Button
@@ -849,7 +851,7 @@ const App: Component = () => {
         </div>
       </div>
       <div
-        class="group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-black/30 p-1 px-2 text-white shadow-inner shadow-white/10 focus-within:gap-2 hover:gap-2 dark:text-white"
+        class="group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-black/30 p-1 px-2 text-white shadow-inner shadow-white/10 backdrop-blur-3xl focus-within:gap-2 hover:gap-2 dark:text-white"
         id="action-bar"
       >
         <button

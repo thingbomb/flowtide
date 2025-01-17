@@ -30,14 +30,14 @@ export const DialogContent = <T extends ValidComponent = "div">(
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay
         class={cn(
-          "bg-background/80 data-[expanded]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[expanded]:fade-in-0 fixed inset-0 z-50"
+          "dark:bg-background/80 data-[expanded]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[expanded]:fade-in-0 fixed inset-0 z-50 bg-black/80"
         )}
         {...rest}
       />
       <div class="z-100 fixed inset-0 flex items-center justify-center p-4">
         <DialogPrimitive.Content
           class={cn(
-            "data-[closed]:transform-[scale(95%)] z-50 grid max-h-[60vh] w-full max-w-md overflow-y-auto rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0",
+            "data-[closed]:transform-[scale(95%)] z-50 grid max-h-[60vh] w-full max-w-md overflow-y-auto rounded-xl bg-white/60 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0 dark:bg-white/5",
             local.class
           )}
           {...rest}
@@ -95,7 +95,10 @@ export const DialogDescription = <T extends ValidComponent = "p">(
 
   return (
     <DialogPrimitive.Description
-      class={cn("text-muted-foreground text-sm", local.class)}
+      class={cn(
+        "dark:text-muted-foreground text-sm text-gray-600",
+        local.class
+      )}
       {...rest}
     />
   );

@@ -27,6 +27,14 @@ import { createStoredSignal } from "./hooks/localStorage";
 import { cn } from "./libs/cn";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { Button } from "./components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./components/ui/dialog";
 
 function BigButton(props: any) {
   return (
@@ -92,6 +100,7 @@ function SettingsTrigger({
   const [pageIconValue, setPageIconValue] = createSignal(pageIcon());
   const [opacity, setOpacity] = createStoredSignal<number>("opacity", 0.8);
   const [settingsMenu, setSettingsMenu] = createSignal<string>("general");
+  const [dialogOpen, setDialogOpen] = createSignal(true);
   const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
     "wallpaperBlur",
     0
@@ -125,22 +134,19 @@ function SettingsTrigger({
   function SettingsPage() {
     return (
       <div
-        class={cn(
-          "text-foreground bg-background fixed inset-0 z-10 grid max-h-screen grid-cols-[300px_calc(100vw-300px)]",
-          {
-            "**:font-sans": font() == "sans",
-            "**:font-serif": font() == "serif",
-            "**:font-mono": font() == "mono",
-            "**:font-comic-sans": font() == "comic-sans",
-          }
-        )}
+        class={cn("text-foreground flex flex-col sm:flex-row", {
+          "**:font-sans": font() == "sans",
+          "**:font-serif": font() == "serif",
+          "**:font-mono": font() == "mono",
+          "**:font-comic-sans": font() == "comic-sans",
+        })}
       >
         <div
           id="sidebar"
-          class="border-r-[rgb(39, 39, 42)] flex h-full w-[300px] max-w-lg flex-col gap-2 border-r-2 bg-[hsl(var(--sidebar))] px-4 py-20"
+          class="sm:max-w-50 sticky top-0 flex h-[140px] w-full max-w-full flex-col gap-2 sm:h-full"
         >
           <button
-            class="flex items-center gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
+            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10 data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5 dark:data-[selected]:bg-white/10"
             {...(settingsMenu() == "general"
               ? { "data-selected": "true" }
               : "")}
@@ -163,7 +169,7 @@ function SettingsTrigger({
               setSettingsMenu("appearance");
             }}
             id="appearanceButton"
-            class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
+            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10 data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5 dark:data-[selected]:bg-white/10"
           >
             <Palette
               height={20}
@@ -179,7 +185,7 @@ function SettingsTrigger({
               setSettingsMenu("background");
             }}
             id="backgroundButton"
-            class="flex items-center justify-start gap-2 rounded-lg border-2 px-4 py-2 text-left text-sm active:opacity-80 data-[selected]:border-blue-800 data-[selected]:bg-blue-800 data-[selected]:text-white"
+            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10 data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5 dark:data-[selected]:bg-white/10"
           >
             <Image
               height={20}
@@ -188,10 +194,10 @@ function SettingsTrigger({
             {chrome.i18n.getMessage("background")}
           </button>
         </div>
-        <div class="h-full w-[calc(100vw-300px)] overflow-y-auto p-10 pt-14">
+        <div class="h-full w-full overflow-y-auto p-10 pt-0">
           {settingsMenu() === "general" && (
             <>
-              <h3 class="text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("mode")}
               </h3>
               <div class="card-group grid-cols-3 grid-rows-1">
@@ -226,7 +232,7 @@ function SettingsTrigger({
               <br />
               {mode() === "widgets" && (
                 <div>
-                  <h3 class="text-2xl font-[500]">
+                  <h3 class="text-lg font-[600]">
                     {chrome.i18n.getMessage("layout")}
                   </h3>
                   <div class="card-group grid-cols-2 grid-rows-1">
@@ -260,10 +266,10 @@ function SettingsTrigger({
               )}
               <br />
               <br />
-              <h2 class="mb-3 text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("greeting")}
-              </h2>
-              <div class="flex items-start gap-2">
+              </h3>
+              <div class="flex max-w-full items-start gap-2">
                 <TextFieldRoot class="flex-1">
                   <TextField
                     placeholder={chrome.i18n.getMessage("enter_greeting")}
@@ -285,9 +291,9 @@ function SettingsTrigger({
               </div>
               <br />
               <br />
-              <h2 class="mb-3 text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("page")}
-              </h2>
+              </h3>
               <div class="flex items-start gap-2">
                 <TextFieldRoot class="flex flex-1 gap-2">
                   <TextField
@@ -315,27 +321,27 @@ function SettingsTrigger({
                   }
                 >
                   {pageTitle() == pageTitleValue() &&
-                    pageIcon() == pageIconValue()
+                  pageIcon() == pageIconValue()
                     ? chrome.i18n.getMessage("saved")
                     : chrome.i18n.getMessage("save")}
                 </Button>
               </div>
               <br />
               <br />
-              <h2 class="mb-3 text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("more")}
-              </h2>
+              </h3>
               <div class="flex gap-2">
                 <a
                   href="https://github.com/thingbomb/flowtide/discussions"
-                  class="text-blue-400 hover:underline"
+                  class="text-gray-800 dark:text-white"
                 >
                   {chrome.i18n.getMessage("forum")}
                 </a>
                 •
                 <a
                   href="https://feedback.flowtide.app/feature-requests"
-                  class="text-blue-400 hover:underline"
+                  class="text-gray-800 dark:text-white"
                 >
                   {chrome.i18n.getMessage("feature_request")}
                 </a>
@@ -344,7 +350,7 @@ function SettingsTrigger({
           )}
           {settingsMenu() === "appearance" && (
             <>
-              <h3 class="text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("font")}
               </h3>
               <div class="card-group grid-cols-2 grid-rows-2">
@@ -387,7 +393,7 @@ function SettingsTrigger({
               </div>
               <br />
               <br />
-              <h3 class="text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("theme")}
               </h3>
               <div class="card-group grid-cols-2 grid-rows-1">
@@ -420,7 +426,7 @@ function SettingsTrigger({
               </div>
               <br />
               <br />
-              <h3 class="text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("text_style")}
               </h3>
               <div class="card-group grid-cols-3 grid-rows-1">
@@ -459,7 +465,7 @@ function SettingsTrigger({
               </div>
               <br />
               <br />
-              <h3 class="text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("clock_format")}
               </h3>
               <div class="card-group grid-cols-2 grid-rows-1">
@@ -484,7 +490,7 @@ function SettingsTrigger({
               </div>
               <br />
               <br />
-              <h3 class="text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("date_format")}
               </h3>
               <div class="card-group grid-cols-2 grid-rows-1">
@@ -511,7 +517,7 @@ function SettingsTrigger({
           )}
           {settingsMenu() === "background" && (
             <>
-              <h3 class="text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("background")}
               </h3>
               <div class="card-group grid-cols-2 grid-rows-1">
@@ -580,9 +586,9 @@ function SettingsTrigger({
                 <>
                   <br />
                   <br />
-                  <h2 class="mb-3 text-2xl font-[500]">
+                  <h3 class="text-lg font-[600]">
                     {chrome.i18n.getMessage("custom_url")}
-                  </h2>
+                  </h3>
                   <TextFieldRoot class="flex-1">
                     <TextField
                       placeholder={chrome.i18n.getMessage("custom_url")}
@@ -598,12 +604,12 @@ function SettingsTrigger({
                 <>
                   <br />
                   <br />
-                  <h2 class="mb-3 text-2xl font-[500]">
+                  <h3 class="text-lg font-[600]">
                     {chrome.i18n.getMessage("local_file")}
-                  </h2>
+                  </h3>
                   <form class="max-w-sm">
                     <label for="file-input" class="sr-only">
-                      Choose file
+                      {chrome.i18n.getMessage("choose_file")}
                     </label>
                     <input
                       type="file"
@@ -613,7 +619,7 @@ function SettingsTrigger({
                       onChange={(e) => {
                         const files: FileList | null = e.target?.files;
                         if (files && files[0]) {
-                          if (!files[0].type.startsWith('image/')) {
+                          if (!files[0].type.startsWith("image/")) {
                             alert(chrome.i18n.getMessage("invalid_file_type"));
                             return;
                           }
@@ -639,16 +645,16 @@ function SettingsTrigger({
                           reader.readAsDataURL(files[0]);
                         }
                       }}
-                      class="block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-50 file:px-4 file:py-3 focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:file:bg-neutral-700 dark:file:text-neutral-400"
+                      class="block w-full rounded-lg border-none bg-neutral-500 text-sm text-white backdrop-blur-3xl file:me-4 file:border-0 file:bg-neutral-600 file:px-4 file:py-3 file:text-white focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-black/5 dark:text-neutral-400 dark:file:bg-white/10 dark:file:text-neutral-400"
                     />
                   </form>
                 </>
               )}
               <br />
               <br />
-              <h2 class="mb-3 text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("new_wallpaper")}
-              </h2>
+              </h3>
               <div class="card-group grid-cols-2 grid-rows-1">
                 <BigButton
                   {...(Number(wallpaperChangeTime()) === 1
@@ -697,9 +703,9 @@ function SettingsTrigger({
               </div>
               <br />
               <br />
-              <h2 class="mb-3 text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("opacity")}
-              </h2>
+              </h3>
               <div class="flex items-start gap-2">
                 <input
                   type="range"
@@ -712,9 +718,9 @@ function SettingsTrigger({
               </div>
               <br />
               <br />
-              <h2 class="mb-3 text-2xl font-[500]">
+              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("wallpaper_blur")}
-              </h2>
+              </h3>
               <div class="flex items-start gap-2">
                 <input
                   type="range"
@@ -742,27 +748,29 @@ function SettingsTrigger({
   }
 
   return (
-    <div class={cn("h-[20px]", className)}>
-      <button
-        class={cn("group", triggerClass)}
-        onclick={() => setOpen(true)}
-        aria-haspopup="true"
+    <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
+      <DialogTrigger
         id="settingsButton"
+        class={triggerClass}
+        aria-label={chrome.i18n.getMessage("add_widget")}
       >
-        <Settings class="hover:rotate-25 size-[20px] transition-transform" />
-      </button>
-      <button
+        <Settings class="transition-transform" />
+      </DialogTrigger>
+      <DialogContent
         class={cn(
-          "!text-foreground fixed left-0 top-0 z-20 flex cursor-pointer items-center gap-2 p-4 text-[16px]",
-          open() ? "" : "hidden"
+          "max-w-3xl",
+          textStyle() == "uppercase" ? "**:!uppercase" : "",
+          textStyle() == "lowercase" ? "**:lowercase" : ""
         )}
-        onClick={() => setOpen(false)}
       >
-        <ArrowLeft />
-        {chrome.i18n.getMessage("go_back")}
-      </button>
-      {open() && <SettingsPage />}
-    </div>
+        <DialogHeader>
+          <DialogTitle class="mb-4 pl-4">
+            {chrome.i18n.getMessage("settings")}
+          </DialogTitle>
+          <SettingsPage />
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }
 
