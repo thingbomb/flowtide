@@ -1,0 +1,23 @@
+---
+import PluginItem from "../../../layouts/PluginItem.astro";
+import plugins from "../plugins";
+
+export async function getStaticPaths() {
+  return Object.keys(plugins).map((pluginId) => ({
+    params: { pluginId },
+  }));
+}
+---
+
+{
+  plugins[Astro.params.pluginId].url.startsWith("data:text/css;base64,") ? (
+    <PluginItem
+      title={plugins[Astro.params.pluginId].title}
+      description={plugins[Astro.params.pluginId].description}
+      url={plugins[Astro.params.pluginId].url}
+      author={plugins[Astro.params.pluginId].author}
+    />
+  ) : (
+    <div>Invalid file</div>
+  )
+}

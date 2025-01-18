@@ -1,0 +1,39 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Button from "../components/Button.astro";
+import Header from "../components/Header.astro";
+
+const { title, description, url, author } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`${title} - Flowtide Plugins`} description={description} />
+  </head>
+  <body class="bg-black">
+    <Header />
+    <div class="grid grid-cols-[200px_1fr] gap-8 p-8 max-w-screen-sm m-auto">
+      <div>
+        <h1 class="text-white text-2xl font-bold mb-2">{title}</h1>
+        <p class="text-white text-lg mb-4">
+          Made by <a href={author.url} class="text-blue-300 hover:underline">
+            {author.name}
+          </a>
+        </p>
+        <Button disabled data-url={url} full-width>Add to Flowtide</Button>
+      </div>
+      <div>
+        <p class="text-white text-lg mt-3">{description}</p>
+        <a
+          class="font-medium text-sm text-slate-400 flex items-center gap-2"
+          href={url}
+          target="_blank"
+          download="source.css"
+        >
+          Download source code
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
