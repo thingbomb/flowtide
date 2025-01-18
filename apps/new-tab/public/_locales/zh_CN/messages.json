@@ -24,7 +24,7 @@
     "message": "Added"
   },
   "settings": {
-    "message": "Settings"
+    "message": "设置"
   },
   "greeting": {
     "message": "Set up a greeting"
@@ -144,10 +144,10 @@
     "message": "Font"
   },
   "sans": {
-    "message": "Sans"
+    "message": "桑斯"
   },
   "serif": {
-    "message": "Serif"
+    "message": "序列号"
   },
   "mono": {
     "message": "Mono"
@@ -162,13 +162,13 @@
     "message": "Dark"
   },
   "background": {
-    "message": "Background"
+    "message": "二. 背景"
   },
   "image": {
     "message": "Image"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "渐变"
   },
   "blank": {
     "message": "Blank"
@@ -183,7 +183,7 @@
     "message": "Set greeting"
   },
   "more": {
-    "message": "More"
+    "message": "更多"
   },
   "go_back": {
     "message": "Go back"
@@ -243,10 +243,10 @@
     "message": "Every reload"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "每小时"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "每天一次"
   },
   "every_week": {
     "message": "Every week"
@@ -309,7 +309,7 @@
     "message": "Nature Sounds"
   },
   "todo_list": {
-    "message": "To-do list"
+    "message": "待办事项列表"
   },
   "stopwatch": {
     "message": "Stopwatch"
@@ -384,7 +384,7 @@
     "message": "Search"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "时钟格式"
   },
   "comic_sans": {
     "message": "Comic Sans"
