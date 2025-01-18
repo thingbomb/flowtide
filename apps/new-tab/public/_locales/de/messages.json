@@ -24,7 +24,7 @@
     "message": "Added"
   },
   "settings": {
-    "message": "Settings"
+    "message": "Einstellungen"
   },
   "greeting": {
     "message": "Set up a greeting"
@@ -162,13 +162,13 @@
     "message": "Dark"
   },
   "background": {
-    "message": "Background"
+    "message": "Hintergrund"
   },
   "image": {
     "message": "Image"
   },
   "gradient": {
-    "message": "Gradient"
+    "message": "Farbverlauf"
   },
   "blank": {
     "message": "Blank"
@@ -183,7 +183,7 @@
     "message": "Set greeting"
   },
   "more": {
-    "message": "More"
+    "message": "Mehr"
   },
   "go_back": {
     "message": "Go back"
@@ -243,10 +243,10 @@
     "message": "Every reload"
   },
   "every_hour": {
-    "message": "Every hour"
+    "message": "Stündlich"
   },
   "every_day": {
-    "message": "Every day"
+    "message": "Jeden Tag"
   },
   "every_week": {
     "message": "Every week"
@@ -309,7 +309,7 @@
     "message": "Nature Sounds"
   },
   "todo_list": {
-    "message": "To-do list"
+    "message": "To-do-Liste"
   },
   "stopwatch": {
     "message": "Stopwatch"
@@ -384,7 +384,7 @@
     "message": "Search"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Uhr-Format"
   },
   "comic_sans": {
     "message": "Comic Sans"
