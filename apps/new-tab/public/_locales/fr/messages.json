@@ -306,7 +306,7 @@
     "message": "Sons d'ambiance"
   },
   "nature_sounds": {
-    "message": "Nature Sounds"
+    "message": "Sons de la nature"
   },
   "todo_list": {
     "message": "Liste des tâches à accomplir"
@@ -321,153 +321,153 @@
     "message": "Date"
   },
   "bookmarks_description": {
-    "message": "Easy access to your first 9 bookmarks with this widget."
+    "message": "Accédez facilement à vos 9 premiers signets grâce à ce widget."
   },
   "pomodoro_description": {
-    "message": "Use the pomodoro technique for an interval-based workflow."
+    "message": "Utilisez la technique pomodoro pour un flux de travail basé sur les intervalles."
   },
   "nature_description": {
-    "message": "Listen to nature soundscapes with this widget."
+    "message": "Écoutez des paysages sonores de la nature avec ce widget."
   },
   "focus_sounds_description": {
-    "message": "Soundscapes to help you focus."
+    "message": "Des paysages sonores pour vous aider à vous concentrer."
   },
   "ambience_sounds_description": {
-    "message": "Ambient soundscapes to help you relax."
+    "message": "Des ambiances sonores pour vous aider à vous détendre."
   },
   "todo_list_description": {
-    "message": "Track your todos with an easy widget."
+    "message": "Suivez vos tâches grâce à un widget facile à utiliser."
   },
   "stopwatch_description": {
-    "message": "Add a stopwatch widget to your start page."
+    "message": "Ajoutez un widget chronomètre à votre page d'accueil."
   },
   "clock_description": {
-    "message": "Adds a clock widget to your start page."
+    "message": "Ajoutez un widget horloge à votre page d'accueil."
   },
   "date_description": {
-    "message": "A sleek date widget that shows you the current date."
+    "message": "Un widget élégant qui affiche la date du jour."
   },
   "show_items": {
-    "message": "Show items"
+    "message": "Afficher les articles"
   },
   "hide_items": {
-    "message": "Hide items"
+    "message": "Masquer les éléments"
   },
   "start_background_changes": {
-    "message": "Start background changes"
+    "message": "Commencer les changements d'arrière-plan"
   },
   "pause_background_changes": {
-    "message": "Pause background changes"
+    "message": "Mettre en pause les modifications de l'arrière-plan"
   },
   "work": {
-    "message": "Work"
+    "message": "Travail"
   },
   "break": {
-    "message": "Break"
+    "message": "Pause"
   },
   "add_widget": {
-    "message": "Add widget"
+    "message": "Ajouter un widget"
   },
   "icon": {
-    "message": "Icon"
+    "message": "Icône"
   },
   "new_tab": {
-    "message": "New Tab"
+    "message": "Nouvel onglet"
   },
   "enter_greeting": {
-    "message": "Enter greeting"
+    "message": "Saisir le message d'accueil"
   },
   "close": {
-    "message": "Close"
+    "message": "Fermer"
   },
   "search": {
-    "message": "Search"
+    "message": "Recherche"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Format horloge"
   },
   "comic_sans": {
     "message": "Comic Sans"
   },
   "notepad": {
-    "message": "Notepad"
+    "message": "Bloc-notes"
   },
   "notepad_description": {
-    "message": "A simple notepad widget."
+    "message": "Un simple widget de bloc-notes."
   },
   "notepad_disclaimer": {
-    "message": "Notes are stored in your browser's local storage, which may be unreliable and could result in data loss."
+    "message": "Les notes sont stockées dans la mémoire locale de votre navigateur, ce qui peut être peu fiable et entraîner une perte de données."
   },
   "date_format": {
-    "message": "Date format"
+    "message": "Format de la date"
   },
   "counter": {
-    "message": "Counter"
+    "message": "Compteur"
   },
   "counter_description": {
-    "message": "Count things easily."
+    "message": "Compter facilement les choses."
   },
   "mantra_1": {
-    "message": "Every day is a chance to grow."
+    "message": "Chaque jour est une chance de grandir."
   },
   "mantra_2": {
-    "message": "Progress, not perfection."
+    "message": "Progress, pas la perfection."
   },
   "mantra_3": {
-    "message": "Small steps lead to big changes."
+    "message": "De petites étapes mènent à de grands changements."
   },
   "mantra_4": {
-    "message": "Setbacks are setups for comebacks."
+    "message": "Les retours sont des configurations pour les retours."
   },
   "mantra_5": {
-    "message": "You are stronger than you think."
+    "message": "Vous êtes plus fort que vous ne le pensez."
   },
   "mantra_6": {
-    "message": "Challenges build your strength."
+    "message": "Les défis construisent votre force."
   },
   "mantra_7": {
-    "message": "Good things are coming your way."
+    "message": "Les bonnes choses vous attendent."
   },
   "mantra_8": {
-    "message": "See the good in every situation."
+    "message": "Voyez le bien dans toutes les situations."
   },
   "mantra_9": {
-    "message": "A hopeful heart sees endless possibilities."
+    "message": "Un cœur plein d'espoir voit des possibilités infinies."
   },
   "mantra_10": {
-    "message": "Be here, in this moment."
+    "message": "Soyez ici, en ce moment."
   },
   "mantra_11": {
-    "message": "Each breath is a fresh start."
+    "message": "Chaque souffle est un nouveau départ."
   },
   "mantra_12": {
-    "message": "The now is all we truly have."
+    "message": "Le présent est tout ce que nous avons vraiment."
   },
   "mantra_13": {
-    "message": "Dream big, start small."
+    "message": "Rêvez grand, commencez petit."
   },
   "mantra_14": {
-    "message": "Focus on what you can control."
+    "message": "Concentrez-vous sur ce que vous pouvez contrôler."
   },
   "mantra_15": {
-    "message": "Greatness begins with the first step."
+    "message": "La grandeur commence par la première étape."
   },
   "mantras": {
     "message": "Mantras"
   },
   "mantras_description": {
-    "message": "Inspirational mantras on every new tab."
+    "message": "Des mantras inspirants dans chaque nouvel onglet."
   },
   "toggle_theme": {
-    "message": "Toggle theme"
+    "message": "Totale theme"
   },
   "custom_url": {
-    "message": "Custom URL"
+    "message": "URL personnalisée"
   },
   "local_file": {
-    "message": "Local file"
+    "message": "Fichier local"
   },
   "choose_file": {
-    "message": "Choose file"
+    "message": "Choisir le fichier"
   }
 }

@@ -306,7 +306,7 @@
     "message": "Sonidos ambientales"
   },
   "nature_sounds": {
-    "message": "Nature Sounds"
+    "message": "Sonidos de la naturaleza"
   },
   "todo_list": {
     "message": "Lista de tareas pendientes"
@@ -321,153 +321,153 @@
     "message": "Fecha"
   },
   "bookmarks_description": {
-    "message": "Easy access to your first 9 bookmarks with this widget."
+    "message": "Accede fácilmente a tus 9 primeros favoritos con este widget."
   },
   "pomodoro_description": {
-    "message": "Use the pomodoro technique for an interval-based workflow."
+    "message": "Utilice la técnica pomodoro para un flujo de trabajo basado en intervalos."
   },
   "nature_description": {
-    "message": "Listen to nature soundscapes with this widget."
+    "message": "Escucha paisajes sonoros de la naturaleza con este widget."
   },
   "focus_sounds_description": {
-    "message": "Soundscapes to help you focus."
+    "message": "Paisajes sonoros para ayudarle a concentrarse."
   },
   "ambience_sounds_description": {
-    "message": "Ambient soundscapes to help you relax."
+    "message": "Paisajes sonoros ambientales que le ayudarán a relajarse."
   },
   "todo_list_description": {
-    "message": "Track your todos with an easy widget."
+    "message": "Controla tus tareas pendientes con un sencillo widget."
   },
   "stopwatch_description": {
-    "message": "Add a stopwatch widget to your start page."
+    "message": "Añade un widget de cronómetro a tu página de inicio."
   },
   "clock_description": {
-    "message": "Adds a clock widget to your start page."
+    "message": "Añade un widget de reloj a tu página de inicio."
   },
   "date_description": {
-    "message": "A sleek date widget that shows you the current date."
+    "message": "Un elegante widget de fecha que te muestra la fecha actual."
   },
   "show_items": {
-    "message": "Show items"
+    "message": "Mostrar artículos"
   },
   "hide_items": {
-    "message": "Hide items"
+    "message": "Ocultar artículos"
   },
   "start_background_changes": {
-    "message": "Start background changes"
+    "message": "Iniciar cambios de fondo"
   },
   "pause_background_changes": {
-    "message": "Pause background changes"
+    "message": "Pausar los cambios de fondo"
   },
   "work": {
-    "message": "Work"
+    "message": "Trabajo"
   },
   "break": {
-    "message": "Break"
+    "message": "Pausa"
   },
   "add_widget": {
-    "message": "Add widget"
+    "message": "Añadir widget"
   },
   "icon": {
-    "message": "Icon"
+    "message": "Icono"
   },
   "new_tab": {
-    "message": "New Tab"
+    "message": "Nueva pestaña"
   },
   "enter_greeting": {
-    "message": "Enter greeting"
+    "message": "Introducir saludo"
   },
   "close": {
-    "message": "Close"
+    "message": "Cerrar"
   },
   "search": {
-    "message": "Search"
+    "message": "Buscar en"
   },
   "clock_format": {
-    "message": "Clock format"
+    "message": "Formato del reloj"
   },
   "comic_sans": {
     "message": "Comic Sans"
   },
   "notepad": {
-    "message": "Notepad"
+    "message": "Bloc de notas"
   },
   "notepad_description": {
-    "message": "A simple notepad widget."
+    "message": "Un sencillo widget de bloc de notas."
   },
   "notepad_disclaimer": {
-    "message": "Notes are stored in your browser's local storage, which may be unreliable and could result in data loss."
+    "message": "Las notas se guardan en el almacenamiento local de tu navegador, que puede ser poco fiable y provocar la pérdida de datos."
   },
   "date_format": {
-    "message": "Date format"
+    "message": "Formato de fecha"
   },
   "counter": {
-    "message": "Counter"
+    "message": "Contador"
   },
   "counter_description": {
-    "message": "Count things easily."
+    "message": "Cuenta las cosas con facilidad."
   },
   "mantra_1": {
-    "message": "Every day is a chance to grow."
+    "message": "Cada día es una oportunidad de crecer."
   },
   "mantra_2": {
-    "message": "Progress, not perfection."
+    "message": "Progreso, no perfección."
   },
   "mantra_3": {
-    "message": "Small steps lead to big changes."
+    "message": "Los pequeños pasos conducen a grandes cambios."
   },
   "mantra_4": {
-    "message": "Setbacks are setups for comebacks."
+    "message": "Los ajustes son configuraciones para los regresos."
   },
   "mantra_5": {
-    "message": "You are stronger than you think."
+    "message": "Usted es más fuerte de lo que piensa."
   },
   "mantra_6": {
-    "message": "Challenges build your strength."
+    "message": "Los desafíos construyen su fuerza."
   },
   "mantra_7": {
-    "message": "Good things are coming your way."
+    "message": "Las cosas buenas vienen a tu manera."
   },
   "mantra_8": {
-    "message": "See the good in every situation."
+    "message": "Ve lo bueno en cada situación."
   },
   "mantra_9": {
-    "message": "A hopeful heart sees endless possibilities."
+    "message": "Un corazón esperanzador ve posibilidades infinitas."
   },
   "mantra_10": {
-    "message": "Be here, in this moment."
+    "message": "Esté aquí, en este momento."
   },
   "mantra_11": {
-    "message": "Each breath is a fresh start."
+    "message": "Cada aliento es un nuevo comienzo."
   },
   "mantra_12": {
-    "message": "The now is all we truly have."
+    "message": "Ahora es todo lo que realmente tenemos."
   },
   "mantra_13": {
-    "message": "Dream big, start small."
+    "message": "Sueño grande, empezar pequeño."
   },
   "mantra_14": {
-    "message": "Focus on what you can control."
+    "message": "Concéntrate en lo que puedes controlar."
   },
   "mantra_15": {
-    "message": "Greatness begins with the first step."
+    "message": "La grandeza comienza con el primer paso."
   },
   "mantras": {
     "message": "Mantras"
   },
   "mantras_description": {
-    "message": "Inspirational mantras on every new tab."
+    "message": "Mantras inspiradores en cada nueva pestaña."
   },
   "toggle_theme": {
-    "message": "Toggle theme"
+    "message": "Alternar tema"
   },
   "custom_url": {
-    "message": "Custom URL"
+    "message": "URL personalizada"
   },
   "local_file": {
-    "message": "Local file"
+    "message": "Archivo local"
   },
   "choose_file": {
-    "message": "Choose file"
+    "message": "Elegir archivo"
   }
 }
