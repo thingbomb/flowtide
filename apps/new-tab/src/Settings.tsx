@@ -333,6 +333,13 @@ function SettingsTrigger({
               </h3>
               <div class="flex gap-2">
                 <a
+                  href="https://discord.gg/QEPd4MA3zF"
+                  class="text-gray-800 dark:text-white"
+                >
+                  Discord
+                </a>
+                •
+                <a
                   href="https://github.com/thingbomb/flowtide/discussions"
                   class="text-gray-800 dark:text-white"
                 >
