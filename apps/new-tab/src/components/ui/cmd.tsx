@@ -111,6 +111,10 @@ export function CommandPalette(props: any) {
       name: chrome.i18n.getMessage("create_canva_video"),
       url: "https://canva.new/video",
     },
+    {
+      name: chrome.i18n.getMessage("create_vercel_project"),
+      url: "https://deploy.new",
+    },
   ];
 
   const [actions, setActions] = createSignal(initialActions);

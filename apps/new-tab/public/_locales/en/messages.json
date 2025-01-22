@@ -469,5 +469,8 @@
   },
   "choose_file": {
     "message": "Choose file"
+  },
+  "create_vercel_project": {
+    "message": "Create Vercel Project"
   }
 }
