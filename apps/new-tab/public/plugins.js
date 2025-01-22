@@ -1,4 +1,4 @@
-if (typeof chrome !== "undefined") {
+if (typeof chrome !== "undefined" && chrome.storage?.local) {
   chrome.storage.local.get({ dataUrls: [] }, (result) => {
     console.log(result);
     const dataUrls = result.dataUrls;

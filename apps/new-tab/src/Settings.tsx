@@ -313,7 +313,11 @@ function SettingsTrigger({
                   onClick={() => {
                     setPageTitle(pageTitleValue());
                     setPageIcon(pageIconValue());
-                    setPageIconURL(textToImage(pageIconValue()));
+                    setPageIconURL(
+                      pageIconValue() == ""
+                        ? "assets/logo.png"
+                        : textToImage(pageIconValue())
+                    );
                   }}
                   disabled={
                     pageTitle() == pageTitleValue() &&
