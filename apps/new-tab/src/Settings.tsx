@@ -91,6 +91,10 @@ function SettingsTrigger({
     "clockFormat",
     "12h"
   );
+  const [squareWidgets, setSquareWidgets] = createStoredSignal(
+    "squareWidgets",
+    false
+  );
   const [name, setName] = createStoredSignal("name", "");
   const [mode, setMode] = createStoredSignal("mode", "widgets");
   const [greetingNameValue, setGreetingNameValue] = createSignal(name());
@@ -524,6 +528,26 @@ function SettingsTrigger({
                   }}
                   icon={<span class="!text-5xl font-bold">ISO-8601</span>}
                 />
+              </div>
+              <br />
+              <br />
+              <h3 class="mb-2 text-lg font-[600]">
+                {chrome.i18n.getMessage("square_widgets")}
+              </h3>
+              <div class="flex">
+                <input
+                  type="checkbox"
+                  class="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-blue-500 dark:checked:bg-blue-500 dark:focus:ring-offset-gray-800"
+                  id="hs-checked-checkbox"
+                  onChange={(e) => setSquareWidgets(e.currentTarget.checked)}
+                  checked={squareWidgets()}
+                />
+                <label
+                  for="hs-checked-checkbox"
+                  class="ms-3 text-sm text-gray-500 dark:text-neutral-400"
+                >
+                  {chrome.i18n.getMessage("square_widgets_description")}
+                </label>
               </div>
             </>
           )}

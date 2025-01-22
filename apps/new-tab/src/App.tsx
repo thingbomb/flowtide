@@ -157,6 +157,10 @@ const App: Component = () => {
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
   const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
+  const [squareWidgets, setSquareWidgets] = createStoredSignal(
+    "squareWidgets",
+    false
+  );
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
     "assets/logo.png"
@@ -670,14 +674,22 @@ const App: Component = () => {
                 )}
               >
                 {filteredWidgets().length > 0 ? (
-                  filteredWidgets().map((item: any) => {
+                  filteredWidgets().map((item: any, index: number) => {
                     return (
                       <div
                         class={`${uuidv4()} slot group h-fit`}
                         data-swapy-slot={item}
                       >
                         <div
-                          class="widget group"
+                          class={cn(
+                            "widget group",
+                            squareWidgets()
+                              ? widgetOrder()[item] === "clock" ||
+                                widgetOrder()[item] === "date"
+                                ? "widget-square"
+                                : ""
+                              : ""
+                          )}
                           data-swapy-item={widgetOrder()[item]}
                         >
                           {widgetOrder()[item] === "clock" && <ClockWidget />}
