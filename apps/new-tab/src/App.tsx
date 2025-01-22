@@ -173,6 +173,7 @@ const App: Component = () => {
   const [bookmarks, setBookmarks] = createSignal<any[]>([]);
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   const [textStyle, setTextStyle] = createStoredSignal("textStyle", "normal");
+  const [color, setColor] = createStoredSignal("color", "unset");
   const [opacity, setOpacity] = createStoredSignal("opacity", "0.8");
   const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
     "wallpaperBlur",
@@ -617,7 +618,9 @@ const App: Component = () => {
         style={{
           background:
             background() === "solid-color"
-              ? colorPalette[Math.floor(Math.random() * colorPalette.length)]
+              ? color() != "unset"
+                ? color()
+                : colorPalette[Math.floor(Math.random() * colorPalette.length)]
               : background() == "gradient"
                 ? gradients[Math.floor(Math.random() * gradients.length)]
                 : "",

@@ -97,6 +97,7 @@ function SettingsTrigger({
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   const [pageTitleValue, setPageTitleValue] = createSignal(pageTitle());
   const [pageIcon, setPageIcon] = createStoredSignal("pageIcon", "");
+  const [color, setColor] = createStoredSignal("color", "unset");
   const [pageIconValue, setPageIconValue] = createSignal(pageIcon());
   const [opacity, setOpacity] = createStoredSignal<number>("opacity", 0.8);
   const [settingsMenu, setSettingsMenu] = createSignal<string>("general");
@@ -609,6 +610,23 @@ function SettingsTrigger({
                       }
                     />
                   </TextFieldRoot>
+                </>
+              )}
+              {background() === "solid-color" && (
+                <>
+                  <br />
+                  <br />
+                  <h3 class="text-lg font-[600]">
+                    {chrome.i18n.getMessage("custom_color")}
+                  </h3>
+                  <input
+                    type="color"
+                    class="block h-10 w-14 cursor-pointer rounded-lg border border-gray-200 bg-white p-1 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900"
+                    id="hs-color-input"
+                    value={color()}
+                    onInput={(e) => setColor(e.currentTarget.value)}
+                    title="Choose your color"
+                  />
                 </>
               )}
               {background() === "local-file" && (

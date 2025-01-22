@@ -472,5 +472,8 @@
   },
   "create_vercel_project": {
     "message": "Create Vercel Project"
+  },
+  "custom_color": {
+    "message": "Custom color"
   }
 }
