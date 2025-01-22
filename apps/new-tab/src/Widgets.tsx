@@ -780,7 +780,7 @@ function NotepadWidget() {
               value={notepad()}
               onInput={(e) => setNotepad(e.currentTarget.value)}
             ></textarea>
-            <p class="-mt-1 p-0 text-[11px] font-medium text-gray-400">
+            <p class="-mt-0.5 p-0 text-[11px] font-medium text-gray-400">
               {chrome.i18n.getMessage("notepad_disclaimer")}
             </p>
           </div>
