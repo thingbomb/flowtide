@@ -519,7 +519,7 @@ const App: Component = () => {
     return (
       <div class="flex items-center justify-between">
         <div class="info">
-          <h1>{props.title}</h1>
+          <h1 class="text-sm font-medium">{props.title}</h1>
           <p class="dark:text-muted-foreground text-sm text-gray-600">
             {props.description}
           </p>
