@@ -666,9 +666,7 @@ const App: Component = () => {
               </h1>
               <div
                 class={cn(
-                  "widgets m-0 grid gap-3 p-4 [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)]",
-                  layout() == "center" &&
-                    "xl:[grid-template-columns:repeat(3,400px)]",
+                  "widgets m-0 flex flex-wrap gap-3 p-4",
                   layout() == "center" && "justify-center",
                   layout() == "top" && "!pl-8"
                 )}
