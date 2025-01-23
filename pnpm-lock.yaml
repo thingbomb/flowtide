@@ -55,14 +55,14 @@ importers:
         version: 2.5.5
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@4.0.0-beta.8)
+        version: 1.0.7(tailwindcss@4.0.0)
       uuid:
         specifier: ^11.0.3
         version: 11.0.3
     devDependencies:
       '@tailwindcss/forms':
         specifier: ^0.5.10
-        version: 0.5.10(tailwindcss@4.0.0-beta.8)
+        version: 0.5.10(tailwindcss@4.0.0)
       '@types/chrome':
         specifier: ^0.0.287
         version: 0.0.287
@@ -70,8 +70,8 @@ importers:
         specifier: ^0.15.3
         version: 0.15.3
       tailwindcss:
-        specifier: 4.0.0-beta.8
-        version: 4.0.0-beta.8
+        specifier: 4.0.0
+        version: 4.0.0
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -2614,6 +2614,9 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
+  tailwindcss@4.0.0:
+    resolution: {integrity: sha512-ULRPI3A+e39T7pSaf1xoi58AqqJxVCLg8F/uM5A3FadUbnyDTgltVnXJvdkTjwCOGA6NazqHVcwPJC5h2vRYVQ==}
+
   tailwindcss@4.0.0-beta.8:
     resolution: {integrity: sha512-21HmdRq9tHDLJZavb2cRBGJxBvRODpwb0/t3tRbMOl65hJE6zG6K6lD6lLS3IOC35u4SOjKjdZiJJi9AuWCf+Q==}
 
@@ -3732,10 +3735,10 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tailwindcss/forms@0.5.10(tailwindcss@4.0.0-beta.8)':
+  '@tailwindcss/forms@0.5.10(tailwindcss@4.0.0)':
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 4.0.0-beta.8
+      tailwindcss: 4.0.0
 
   '@tailwindcss/node@4.0.0-beta.8':
     dependencies:
@@ -5814,9 +5817,9 @@ snapshots:
     dependencies:
       tailwindcss: 3.4.16(ts-node@10.9.2(@types/node@20.17.6)(typescript@5.7.2))
 
-  tailwindcss-animate@1.0.7(tailwindcss@4.0.0-beta.8):
+  tailwindcss-animate@1.0.7(tailwindcss@4.0.0):
     dependencies:
-      tailwindcss: 4.0.0-beta.8
+      tailwindcss: 4.0.0
 
   tailwindcss@3.4.16(ts-node@10.9.2(@types/node@20.17.6)(typescript@5.7.2)):
     dependencies:
@@ -5844,6 +5847,8 @@ snapshots:
       sucrase: 3.35.0
     transitivePeerDependencies:
       - ts-node
+
+  tailwindcss@4.0.0: {}
 
   tailwindcss@4.0.0-beta.8: {}
 
