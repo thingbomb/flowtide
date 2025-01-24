@@ -1,6 +1,5 @@
 /* @refresh reload */
 import { render } from "solid-js/web";
-import { ColorModeProvider, ColorModeScript } from "@kobalte/core";
 
 import "./index.css";
 import App from "./App";
@@ -13,12 +12,28 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
+const scheme =
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+
+const rootElement = document.documentElement;
+rootElement.setAttribute("data-kb-theme", scheme);
+rootElement.style.colorScheme = scheme;
+
+setInterval(() => {
+  const prefersDark =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const rootElement = document.documentElement;
+  rootElement.setAttribute("data-kb-theme", prefersDark ? "dark" : "light");
+  rootElement.style.colorScheme = prefersDark ? "dark" : "light";
+}, 500);
+
 render(
   () => (
     <div>
       <App />
-      <ColorModeProvider />
-      <ColorModeScript />
     </div>
   ),
   root!
