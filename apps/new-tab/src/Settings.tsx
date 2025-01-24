@@ -410,39 +410,6 @@ function SettingsTrigger({
               <br />
               <br />
               <h3 class="text-lg font-[600]">
-                {chrome.i18n.getMessage("theme")}
-              </h3>
-              <div class="card-group grid-cols-2 grid-rows-1">
-                <BigButton
-                  {...(theme() === "light" ? { "data-selected": true } : {})}
-                  onmousedown={() => {
-                    setTheme("light");
-                    document.documentElement.setAttribute(
-                      "data-kb-theme",
-                      "light"
-                    );
-                    document.documentElement.style.colorScheme = "light";
-                  }}
-                  title={chrome.i18n.getMessage("light")}
-                  icon={<Moon class="size-[64px]" fill="none" />}
-                />
-                <BigButton
-                  {...(theme() === "dark" ? { "data-selected": true } : {})}
-                  onmousedown={() => {
-                    setTheme("dark");
-                    document.documentElement.setAttribute(
-                      "data-kb-theme",
-                      "dark"
-                    );
-                    document.documentElement.style.colorScheme = "dark";
-                  }}
-                  title={chrome.i18n.getMessage("dark")}
-                  icon={<Moon class="size-[64px]" fill="currentColor" />}
-                />
-              </div>
-              <br />
-              <br />
-              <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("text_style")}
               </h3>
               <div class="card-group grid-cols-3 grid-rows-1">
