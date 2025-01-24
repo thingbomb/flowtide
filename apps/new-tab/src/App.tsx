@@ -282,7 +282,7 @@ const App: Component = () => {
         <h1 class="text-7xl font-[600]">
           {chrome.i18n.getMessage("welcome_message")}
         </h1>
-        <Button class="group" onclick={() => setOnboardingScreen(2)}>
+        <Button class="group" onmousedown={() => setOnboardingScreen(2)}>
           {chrome.i18n.getMessage("get_started")}
           <ArrowRight
             class="transition-transform group-hover:translate-x-1"
@@ -310,7 +310,7 @@ const App: Component = () => {
           <br />
           <Button
             class="group"
-            onclick={() => {
+            onmousedown={() => {
               setOnboardingScreen(3);
               setName(greetingNameValue());
             }}
@@ -338,7 +338,7 @@ const App: Component = () => {
             <button
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
-              onClick={() => {
+              onmousedown={() => {
                 setMode("widgets");
               }}
             >
@@ -349,7 +349,7 @@ const App: Component = () => {
             <button
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "nightstand" ? { "data-selected": true } : {})}
-              onClick={() => {
+              onmousedown={() => {
                 setMode("nightstand");
               }}
             >
@@ -362,7 +362,7 @@ const App: Component = () => {
             <button
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "speeddial" ? { "data-selected": true } : {})}
-              onClick={() => {
+              onmousedown={() => {
                 setMode("speeddial");
               }}
             >
@@ -376,8 +376,8 @@ const App: Component = () => {
           <br />
           <Button
             class="group"
-            onclick={() => {
-              setNeedsOnboarding(false);
+            onmousedown={() => {
+              setNeedsOnboarding(true);
               setName(greetingNameValue());
             }}
           >
@@ -527,7 +527,7 @@ const App: Component = () => {
         <div class="add">
           <Button
             class="group w-[100px]"
-            onclick={() => {
+            onmousedown={() => {
               const newWidgetOrder: any = widgetOrder();
               if (
                 newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`]
@@ -739,7 +739,7 @@ const App: Component = () => {
                           )}
                           <button
                             class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
-                            onclick={(e) => {
+                            onmousedown={(e) => {
                               const newWidgetOrder = widgetOrder();
                               delete newWidgetOrder[item];
                               setWidgetOrder(newWidgetOrder);
@@ -967,7 +967,7 @@ const App: Component = () => {
               ? chrome.i18n.getMessage("show_items")
               : chrome.i18n.getMessage("hide_items")
           }
-          onclick={() => {
+          onmousedown={() => {
             setItemsHidden(itemsHidden() == "true" ? "false" : "true");
           }}
         >
@@ -980,7 +980,7 @@ const App: Component = () => {
               ? chrome.i18n.getMessage("start_background_changes")
               : chrome.i18n.getMessage("pause_background_changes")
           }
-          onclick={() => {
+          onmousedown={() => {
             if (backgroundPaused() == "true") {
               setBackgroundPaused("false");
             } else {

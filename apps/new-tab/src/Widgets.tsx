@@ -271,7 +271,7 @@ function TodoWidget() {
                 class="!outline-white"
               />
             </TextFieldRoot>
-            <Button onClick={addTask}>
+            <Button onmousedown={addTask}>
               {chrome.i18n.getMessage("add_task")}
             </Button>
           </div>
@@ -314,14 +314,14 @@ function StopwatchWidget() {
         <div class="flex gap-2 text-sm text-gray-400">
           <Button
             variant={"outline"}
-            onclick={() => {
+            onmousedown={() => {
               setPlaying(false);
               setTime(0);
             }}
           >
             {chrome.i18n.getMessage("reset")}
           </Button>
-          <Button onclick={() => setPlaying(!playing())}>
+          <Button onmousedown={() => setPlaying(!playing())}>
             {playing()
               ? chrome.i18n.getMessage("stop")
               : chrome.i18n.getMessage("start")}
@@ -409,7 +409,7 @@ function NatureWidget() {
     return (
       <button
         class="flex size-[24px] items-center justify-center !rounded-full font-bold text-black"
-        onclick={() => {
+        onmousedown={() => {
           if (currentlyPlaying() == index) {
             setCurrentlyPlaying(null);
             (document.getElementById("audio") as HTMLAudioElement)?.load();
@@ -546,7 +546,7 @@ function PomodoroWidget() {
               </h1>
               <div class="mt-3 flex items-center gap-2">
                 <Button
-                  onclick={() => {
+                  onmousedown={() => {
                     setIsRunning(!isRunning());
                   }}
                 >
@@ -608,7 +608,7 @@ function FocusSoundscapes() {
     return (
       <button
         class="flex size-[24px] items-center justify-center !rounded-full font-bold text-black"
-        onclick={() => {
+        onmousedown={() => {
           if (currentlyPlaying() == index) {
             setCurrentlyPlaying(null);
             (document.getElementById("audio-1") as HTMLAudioElement)?.load();
@@ -687,7 +687,7 @@ function AmbienceSoundscapes() {
     return (
       <button
         class="flex size-[24px] items-center justify-center !rounded-full font-bold text-white"
-        onclick={() => {
+        onmousedown={() => {
           if (currentlyPlaying() == index) {
             setCurrentlyPlaying(null);
             (document.getElementById("audio-2") as HTMLAudioElement)?.load();
@@ -778,11 +778,9 @@ function NotepadWidget() {
             <textarea
               class="mt-2 h-full w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white shadow-inner shadow-white/10 outline-none backdrop-blur-2xl focus:ring-2"
               value={notepad()}
+              placeholder={chrome.i18n.getMessage("notepad_disclaimer")}
               onInput={(e) => setNotepad(e.currentTarget.value)}
             ></textarea>
-            <p class="-mt-0.5 p-0 text-[11px] font-medium text-gray-400">
-              {chrome.i18n.getMessage("notepad_disclaimer")}
-            </p>
           </div>
         </div>
       </div>
@@ -803,7 +801,7 @@ function CounterWidget() {
               </h1>
               <div class="mt-3 flex items-center justify-between gap-2">
                 <Button
-                  onclick={() => {
+                  onmousedown={() => {
                     setCounter(Number(counter()) - 1);
                   }}
                   class="rounded-full text-3xl"
@@ -812,7 +810,7 @@ function CounterWidget() {
                   -
                 </Button>
                 <Button
-                  onclick={() => {
+                  onmousedown={() => {
                     setCounter(Number(counter()) + 1);
                   }}
                   class="rounded-full text-3xl"
