@@ -36,7 +36,10 @@ const mantras: string[] = [
 function ClockWidget() {
   const clock = formattedClock();
   return (
-    <div class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      id="clock-widget"
+    >
       <div class="relative flex h-full w-full items-center justify-center rounded-[10px]">
         <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
           <div id="amPm">{clock().amPm}</div>
@@ -91,7 +94,10 @@ function DateWidget() {
     }, 1000);
   });
   return (
-    <div class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      id="date-widget"
+    >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative flex h-full w-full items-center justify-center rounded-[10px]">
           <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
@@ -209,7 +215,10 @@ function TodoWidget() {
   };
 
   return (
-    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      id="todo-widget"
+    >
       <div class="**:text-white h-full w-full rounded-lg">
         <div class="text-foreground relative h-full w-full rounded-[20px] pt-2">
           <div class="scrollbar-hidden max-h-[76px] overflow-auto">
@@ -308,7 +317,10 @@ function StopwatchWidget() {
   });
 
   return (
-    <div class="text-foreground absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      id="stopwatch-widget"
+      class="text-foreground absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl"
+    >
       <div class="flex h-full w-full select-none flex-col items-center justify-center gap-2 rounded-[10px] text-white">
         {formatTime(time())}
         <div class="flex gap-2 text-sm text-gray-400">
@@ -364,7 +376,10 @@ function BookmarksWidget() {
     return domain;
   }
   return (
-    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      id="bookmarks-widget"
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl"
+    >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] pt-2">
           <div class="scrollbar-hidden **:text-white overflow-auto">
@@ -429,7 +444,10 @@ function NatureWidget() {
   }
 
   return (
-    <div class="**:text-white absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      id="nature-widget"
+      class="**:text-white absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+    >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] pt-2">
           <div class="scrollbar-hidden overflow-auto">
@@ -526,7 +544,10 @@ function PomodoroWidget() {
   });
 
   return (
-    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-transparent">
+    <div
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-transparent"
+      id="pomodoro-widget"
+    >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] bg-black/30 p-[10px] pt-4 shadow-inner shadow-white/10 backdrop-blur-3xl">
           <div class="scrollbar-hidden overflow-auto">
@@ -765,7 +786,10 @@ function AmbienceSoundscapes() {
 function NotepadWidget() {
   const [notepad, setNotepad] = createStoredSignal<string>("notepad", "");
   return (
-    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      id="notepad-widget"
+    >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px]">
           <div class="scrollbar-hidden p-1">
@@ -791,7 +815,10 @@ function NotepadWidget() {
 function CounterWidget() {
   const [counter, setCounter] = createStoredSignal("counter", 0);
   return (
-    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      id="counter-widget"
+    >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px]">
           <div class="scrollbar-hidden p-1">

@@ -581,6 +581,7 @@ const App: Component = () => {
         textStyle() == "uppercase" ? "**:!uppercase" : "",
         textStyle() == "lowercase" ? "**:lowercase" : ""
       )}
+      id="main-container"
     >
       {!needsOnboarding() && <OnboardingFlow />}
       {(background() === "image" ||
@@ -619,6 +620,7 @@ const App: Component = () => {
           "fixed inset-0 overflow-hidden p-4",
           imageLoaded() ? "" : "bg-white dark:bg-[#1f1f1f]"
         )}
+        id="background-container"
         style={{
           background:
             background() === "solid-color"
@@ -637,9 +639,10 @@ const App: Component = () => {
             "padding-top": layout() == "top" ? "2.5rem" : "0",
             display: itemsHidden() == "true" ? "none" : "",
           }}
+          id="content-container"
         >
           {mode() === "widgets" && (
-            <div>
+            <div id="widgets-container">
               <h1
                 id="greeting"
                 class="inset-shadow-2xl mb-6 text-5xl font-bold [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
@@ -670,6 +673,7 @@ const App: Component = () => {
                   layout() == "center" && "justify-center",
                   layout() == "top" && "!pl-8"
                 )}
+                id="widgets"
               >
                 {filteredWidgets().length > 0 ? (
                   filteredWidgets().map((item: any, index: number) => {
@@ -764,7 +768,10 @@ const App: Component = () => {
             </div>
           )}
           {mode() === "nightstand" && (
-            <div class="flex items-center justify-center">
+            <div
+              class="flex items-center justify-center"
+              id="nightstand-container"
+            >
               <div class="w-full max-w-lg select-none">
                 <h1
                   class="m-0 p-0 text-[200px] font-bold [line-height:1.2]"
@@ -815,7 +822,10 @@ const App: Component = () => {
             </div>
           )}
           {mode() === "speeddial" && (
-            <div class="flex flex-col items-center justify-center gap-2">
+            <div
+              class="flex flex-col items-center justify-center gap-2"
+              id="speeddial-container"
+            >
               <div
                 id="bookmarks"
                 class={cn(
@@ -851,6 +861,7 @@ const App: Component = () => {
         <button
           class="peer group-focus-within:hidden group-hover:hidden"
           title={chrome.i18n.getMessage("settings")}
+          id="settings-button"
         >
           <Menu />
         </button>
