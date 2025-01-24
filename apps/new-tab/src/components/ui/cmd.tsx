@@ -111,6 +111,10 @@ export function CommandPalette(props: any) {
       name: chrome.i18n.getMessage("create_canva_video"),
       url: "https://canva.new/video",
     },
+    {
+      name: chrome.i18n.getMessage("create_vercel_project"),
+      url: "https://deploy.new",
+    },
   ];
 
   const [actions, setActions] = createSignal(initialActions);
@@ -255,7 +259,7 @@ export function CommandPalette(props: any) {
         {result().result != null && (
           <div
             class="m-3 cursor-pointer select-none rounded-lg bg-neutral-800 p-6 text-center hover:bg-neutral-900"
-            onClick={() => {
+            onmousedown={() => {
               const copiedResult = result().result;
               setResult({
                 result: chrome.i18n.getMessage("copied_to_clipboard"),

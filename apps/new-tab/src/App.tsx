@@ -141,8 +141,9 @@ type Bookmark = {
 };
 
 const App: Component = () => {
-  const [needsOnboarding, setNeedsOnboarding] = createSignal(
-    localStorage.getItem("onboarding") !== "true"
+  const [needsOnboarding, setNeedsOnboarding] = createStoredSignal(
+    "onboarding",
+    false
   );
   const [onboardingScreen, setOnboardingScreen] = createSignal<number>(1);
   const [widgetOrder, setWidgetOrder] = createSignal<any[]>(
@@ -155,8 +156,11 @@ const App: Component = () => {
   const [count, setCount] = createSignal(0);
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
-  const [pageIcon, setPageIcon] = createStoredSignal("pageIcon", "");
   const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
+  const [squareWidgets, setSquareWidgets] = createStoredSignal(
+    "squareWidgets",
+    false
+  );
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
     "assets/logo.png"
@@ -173,11 +177,13 @@ const App: Component = () => {
   const [bookmarks, setBookmarks] = createSignal<any[]>([]);
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   const [textStyle, setTextStyle] = createStoredSignal("textStyle", "normal");
+  const [color, setColor] = createStoredSignal("color", "unset");
   const [opacity, setOpacity] = createStoredSignal("opacity", "0.8");
   const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
     "wallpaperBlur",
     0
   );
+
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
   const clock = formattedClock();
@@ -276,7 +282,7 @@ const App: Component = () => {
         <h1 class="text-7xl font-[600]">
           {chrome.i18n.getMessage("welcome_message")}
         </h1>
-        <Button class="group" onclick={() => setOnboardingScreen(2)}>
+        <Button class="group" onmousedown={() => setOnboardingScreen(2)}>
           {chrome.i18n.getMessage("get_started")}
           <ArrowRight
             class="transition-transform group-hover:translate-x-1"
@@ -304,7 +310,7 @@ const App: Component = () => {
           <br />
           <Button
             class="group"
-            onclick={() => {
+            onmousedown={() => {
               setOnboardingScreen(3);
               setName(greetingNameValue());
             }}
@@ -332,7 +338,7 @@ const App: Component = () => {
             <button
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
-              onClick={() => {
+              onmousedown={() => {
                 setMode("widgets");
               }}
             >
@@ -343,7 +349,7 @@ const App: Component = () => {
             <button
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "nightstand" ? { "data-selected": true } : {})}
-              onClick={() => {
+              onmousedown={() => {
                 setMode("nightstand");
               }}
             >
@@ -356,7 +362,7 @@ const App: Component = () => {
             <button
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "speeddial" ? { "data-selected": true } : {})}
-              onClick={() => {
+              onmousedown={() => {
                 setMode("speeddial");
               }}
             >
@@ -370,9 +376,8 @@ const App: Component = () => {
           <br />
           <Button
             class="group"
-            onclick={() => {
-              localStorage.setItem("onboarding", "true");
-              setNeedsOnboarding(false);
+            onmousedown={() => {
+              setNeedsOnboarding(true);
               setName(greetingNameValue());
             }}
           >
@@ -389,7 +394,10 @@ const App: Component = () => {
 
   const OnboardingFlow: Component = () => {
     return (
-      <div class="absolute inset-0 z-50 bg-white dark:bg-[#2f2f2f]">
+      <div
+        class="absolute inset-0 z-50 bg-white dark:bg-[#2f2f2f]"
+        id="onboarding"
+      >
         {onboardingScreen() === 1 && <OnboardingScreen1 />}
         {onboardingScreen() === 2 && <OnboardingScreen2 />}
         {onboardingScreen() === 3 && <OnboardingScreen3 />}
@@ -511,7 +519,7 @@ const App: Component = () => {
     return (
       <div class="flex items-center justify-between">
         <div class="info">
-          <h1>{props.title}</h1>
+          <h1 class="text-sm font-medium">{props.title}</h1>
           <p class="dark:text-muted-foreground text-sm text-gray-600">
             {props.description}
           </p>
@@ -519,7 +527,7 @@ const App: Component = () => {
         <div class="add">
           <Button
             class="group w-[100px]"
-            onclick={() => {
+            onmousedown={() => {
               const newWidgetOrder: any = widgetOrder();
               if (
                 newWidgetOrder[`${getKeyByValue(widgetOrder(), props.key)}`]
@@ -573,8 +581,9 @@ const App: Component = () => {
         textStyle() == "uppercase" ? "**:!uppercase" : "",
         textStyle() == "lowercase" ? "**:lowercase" : ""
       )}
+      id="main-container"
     >
-      {needsOnboarding() && <OnboardingFlow />}
+      {!needsOnboarding() && <OnboardingFlow />}
       {(background() === "image" ||
         background() === "custom-url" ||
         background() === "local-file") && (
@@ -611,10 +620,13 @@ const App: Component = () => {
           "fixed inset-0 overflow-hidden p-4",
           imageLoaded() ? "" : "bg-white dark:bg-[#1f1f1f]"
         )}
+        id="background-container"
         style={{
           background:
             background() === "solid-color"
-              ? colorPalette[Math.floor(Math.random() * colorPalette.length)]
+              ? color() != "unset"
+                ? color()
+                : colorPalette[Math.floor(Math.random() * colorPalette.length)]
               : background() == "gradient"
                 ? gradients[Math.floor(Math.random() * gradients.length)]
                 : "",
@@ -627,9 +639,10 @@ const App: Component = () => {
             "padding-top": layout() == "top" ? "2.5rem" : "0",
             display: itemsHidden() == "true" ? "none" : "",
           }}
+          id="content-container"
         >
           {mode() === "widgets" && (
-            <div>
+            <div id="widgets-container">
               <h1
                 id="greeting"
                 class="inset-shadow-2xl mb-6 text-5xl font-bold [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
@@ -656,22 +669,29 @@ const App: Component = () => {
               </h1>
               <div
                 class={cn(
-                  "widgets m-0 grid gap-3 p-4 [grid-template-columns:repeat(auto-fill,400px)] [grid-template-rows:repeat(auto-fill,150px)]",
-                  layout() == "center" &&
-                    "xl:[grid-template-columns:repeat(3,400px)]",
+                  "widgets m-0 flex flex-wrap gap-3 p-4",
                   layout() == "center" && "justify-center",
                   layout() == "top" && "!pl-8"
                 )}
+                id="widgets"
               >
                 {filteredWidgets().length > 0 ? (
-                  filteredWidgets().map((item: any) => {
+                  filteredWidgets().map((item: any, index: number) => {
                     return (
                       <div
                         class={`${uuidv4()} slot group h-fit`}
                         data-swapy-slot={item}
                       >
                         <div
-                          class="widget group"
+                          class={cn(
+                            "widget group",
+                            squareWidgets()
+                              ? widgetOrder()[item] === "clock" ||
+                                widgetOrder()[item] === "date"
+                                ? "widget-square"
+                                : ""
+                              : ""
+                          )}
                           data-swapy-item={widgetOrder()[item]}
                         >
                           {widgetOrder()[item] === "clock" && <ClockWidget />}
@@ -723,7 +743,7 @@ const App: Component = () => {
                           )}
                           <button
                             class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
-                            onclick={(e) => {
+                            onmousedown={(e) => {
                               const newWidgetOrder = widgetOrder();
                               delete newWidgetOrder[item];
                               setWidgetOrder(newWidgetOrder);
@@ -748,7 +768,10 @@ const App: Component = () => {
             </div>
           )}
           {mode() === "nightstand" && (
-            <div class="flex items-center justify-center">
+            <div
+              class="flex items-center justify-center"
+              id="nightstand-container"
+            >
               <div class="w-full max-w-lg select-none">
                 <h1
                   class="m-0 p-0 text-[200px] font-bold [line-height:1.2]"
@@ -799,7 +822,10 @@ const App: Component = () => {
             </div>
           )}
           {mode() === "speeddial" && (
-            <div class="flex flex-col items-center justify-center gap-2">
+            <div
+              class="flex flex-col items-center justify-center gap-2"
+              id="speeddial-container"
+            >
               <div
                 id="bookmarks"
                 class={cn(
@@ -835,6 +861,7 @@ const App: Component = () => {
         <button
           class="peer group-focus-within:hidden group-hover:hidden"
           title={chrome.i18n.getMessage("settings")}
+          id="settings-button"
         >
           <Menu />
         </button>
@@ -951,7 +978,7 @@ const App: Component = () => {
               ? chrome.i18n.getMessage("show_items")
               : chrome.i18n.getMessage("hide_items")
           }
-          onclick={() => {
+          onmousedown={() => {
             setItemsHidden(itemsHidden() == "true" ? "false" : "true");
           }}
         >
@@ -964,12 +991,11 @@ const App: Component = () => {
               ? chrome.i18n.getMessage("start_background_changes")
               : chrome.i18n.getMessage("pause_background_changes")
           }
-          onclick={() => {
+          onmousedown={() => {
             if (backgroundPaused() == "true") {
               setBackgroundPaused("false");
             } else {
-              localStorage.setItem(
-                "selectedImage",
+              setSelectedImage(
                 JSON.stringify({
                   url: (
                     document.getElementById("wallpaper") as HTMLImageElement

@@ -91,12 +91,17 @@ function SettingsTrigger({
     "clockFormat",
     "12h"
   );
+  const [squareWidgets, setSquareWidgets] = createStoredSignal(
+    "squareWidgets",
+    false
+  );
   const [name, setName] = createStoredSignal("name", "");
   const [mode, setMode] = createStoredSignal("mode", "widgets");
   const [greetingNameValue, setGreetingNameValue] = createSignal(name());
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   const [pageTitleValue, setPageTitleValue] = createSignal(pageTitle());
   const [pageIcon, setPageIcon] = createStoredSignal("pageIcon", "");
+  const [color, setColor] = createStoredSignal("color", "unset");
   const [pageIconValue, setPageIconValue] = createSignal(pageIcon());
   const [opacity, setOpacity] = createStoredSignal<number>("opacity", 0.8);
   const [settingsMenu, setSettingsMenu] = createSignal<string>("general");
@@ -151,7 +156,7 @@ function SettingsTrigger({
               ? { "data-selected": "true" }
               : "")}
             id="generalButton"
-            onClick={() => {
+            onmousedown={() => {
               setSettingsMenu("general");
             }}
           >
@@ -165,7 +170,7 @@ function SettingsTrigger({
             {...(settingsMenu() == "appearance"
               ? { "data-selected": "true" }
               : "")}
-            onClick={() => {
+            onmousedown={() => {
               setSettingsMenu("appearance");
             }}
             id="appearanceButton"
@@ -181,7 +186,7 @@ function SettingsTrigger({
             {...(settingsMenu() == "background"
               ? { "data-selected": "true" }
               : "")}
-            onClick={() => {
+            onmousedown={() => {
               setSettingsMenu("background");
             }}
             id="backgroundButton"
@@ -203,7 +208,7 @@ function SettingsTrigger({
               <div class="card-group grid-cols-3 grid-rows-1">
                 <BigButton
                   {...(mode() === "widgets" ? { "data-selected": true } : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setMode("widgets");
                   }}
                   title={chrome.i18n.getMessage("widgets")}
@@ -213,7 +218,7 @@ function SettingsTrigger({
                   {...(mode() === "nightstand"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setMode("nightstand");
                   }}
                   title={chrome.i18n.getMessage("nightstand")}
@@ -221,7 +226,7 @@ function SettingsTrigger({
                 />
                 <BigButton
                   {...(mode() === "speeddial" ? { "data-selected": true } : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setMode("speeddial");
                   }}
                   title={chrome.i18n.getMessage("speed_dial")}
@@ -240,7 +245,7 @@ function SettingsTrigger({
                       {...(layout() === "center"
                         ? { "data-selected": true }
                         : {})}
-                      onClick={() => {
+                      onmousedown={() => {
                         setLayout("center");
                       }}
                       title={chrome.i18n.getMessage("center")}
@@ -250,7 +255,7 @@ function SettingsTrigger({
                     />
                     <BigButton
                       {...(layout() === "top" ? { "data-selected": true } : {})}
-                      onClick={() => {
+                      onmousedown={() => {
                         setLayout("top");
                       }}
                       title={chrome.i18n.getMessage("top")}
@@ -281,7 +286,7 @@ function SettingsTrigger({
                   </span>
                 </TextFieldRoot>
                 <Button
-                  onClick={() => setName(greetingNameValue())}
+                  onmousedown={() => setName(greetingNameValue())}
                   disabled={name() == greetingNameValue()}
                 >
                   {name() == greetingNameValue()
@@ -310,10 +315,14 @@ function SettingsTrigger({
                   />
                 </TextFieldRoot>
                 <Button
-                  onClick={() => {
+                  onmousedown={() => {
                     setPageTitle(pageTitleValue());
                     setPageIcon(pageIconValue());
-                    setPageIconURL(textToImage(pageIconValue()));
+                    setPageIconURL(
+                      pageIconValue() == ""
+                        ? "assets/logo.png"
+                        : textToImage(pageIconValue())
+                    );
                   }}
                   disabled={
                     pageTitle() == pageTitleValue() &&
@@ -363,7 +372,7 @@ function SettingsTrigger({
               <div class="card-group grid-cols-2 grid-rows-2">
                 <BigButton
                   {...(font() === "sans" ? { "data-selected": true } : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setFont("sans");
                   }}
                   title={chrome.i18n.getMessage("sans")}
@@ -371,7 +380,7 @@ function SettingsTrigger({
                 />
                 <BigButton
                   {...(font() === "serif" ? { "data-selected": true } : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setFont("serif");
                   }}
                   title={chrome.i18n.getMessage("serif")}
@@ -379,7 +388,7 @@ function SettingsTrigger({
                 />
                 <BigButton
                   {...(font() === "mono" ? { "data-selected": true } : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setFont("mono");
                   }}
                   title={chrome.i18n.getMessage("mono")}
@@ -389,7 +398,7 @@ function SettingsTrigger({
                   {...(font() === "comic-sans"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setFont("comic-sans");
                   }}
                   title={chrome.i18n.getMessage("comic_sans")}
@@ -406,7 +415,7 @@ function SettingsTrigger({
               <div class="card-group grid-cols-2 grid-rows-1">
                 <BigButton
                   {...(theme() === "light" ? { "data-selected": true } : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setTheme("light");
                     document.documentElement.setAttribute(
                       "data-kb-theme",
@@ -419,7 +428,7 @@ function SettingsTrigger({
                 />
                 <BigButton
                   {...(theme() === "dark" ? { "data-selected": true } : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setTheme("dark");
                     document.documentElement.setAttribute(
                       "data-kb-theme",
@@ -441,7 +450,7 @@ function SettingsTrigger({
                   {...(textStyle() === "uppercase"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setTextStyle("uppercase");
                   }}
                   title={chrome.i18n.getMessage("uppercase")}
@@ -451,7 +460,7 @@ function SettingsTrigger({
                   {...(textStyle() === "normal"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setTextStyle("normal");
                   }}
                   title={chrome.i18n.getMessage("normal")}
@@ -463,7 +472,7 @@ function SettingsTrigger({
                   {...(textStyle() === "lowercase"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setTextStyle("lowercase");
                   }}
                   title={chrome.i18n.getMessage("lowercase")}
@@ -480,7 +489,7 @@ function SettingsTrigger({
                   {...(clockFormat() === "12h"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setClockFormat("12h");
                   }}
                   icon={<span class="!text-5xl font-bold">12h</span>}
@@ -489,7 +498,7 @@ function SettingsTrigger({
                   {...(clockFormat() === "24h"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setClockFormat("24h");
                   }}
                   icon={<span class="!text-5xl font-bold">24h</span>}
@@ -505,7 +514,7 @@ function SettingsTrigger({
                   {...(dateFormat() === "normal"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setDateFormat("normal");
                   }}
                   icon={<span class="!text-5xl font-bold">Normal</span>}
@@ -514,11 +523,31 @@ function SettingsTrigger({
                   {...(dateFormat() === "iso-8601"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setDateFormat("iso-8601");
                   }}
                   icon={<span class="!text-5xl font-bold">ISO-8601</span>}
                 />
+              </div>
+              <br />
+              <br />
+              <h3 class="mb-2 text-lg font-[600]">
+                {chrome.i18n.getMessage("square_widgets")}
+              </h3>
+              <div class="flex">
+                <input
+                  type="checkbox"
+                  class="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-blue-500 dark:checked:bg-blue-500 dark:focus:ring-offset-gray-800"
+                  id="hs-checked-checkbox"
+                  onChange={(e) => setSquareWidgets(e.currentTarget.checked)}
+                  checked={squareWidgets()}
+                />
+                <label
+                  for="hs-checked-checkbox"
+                  class="ms-3 text-sm text-gray-500 dark:text-neutral-400"
+                >
+                  {chrome.i18n.getMessage("square_widgets_description")}
+                </label>
               </div>
             </>
           )}
@@ -532,7 +561,7 @@ function SettingsTrigger({
                   {...(background() === "image"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setBackground("image");
                   }}
                   title={chrome.i18n.getMessage("image")}
@@ -542,7 +571,7 @@ function SettingsTrigger({
                   {...(background() === "solid-color"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setBackground("solid-color");
                   }}
                   title={chrome.i18n.getMessage("solid_color")}
@@ -552,7 +581,7 @@ function SettingsTrigger({
                   {...(background() === "gradient"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setBackground("gradient");
                   }}
                   title={chrome.i18n.getMessage("gradient")}
@@ -562,7 +591,7 @@ function SettingsTrigger({
                   {...(background() === "blank"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setBackground("blank");
                   }}
                   title={chrome.i18n.getMessage("blank")}
@@ -572,7 +601,7 @@ function SettingsTrigger({
                   {...(background() === "custom-url"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setBackground("custom-url");
                   }}
                   title={chrome.i18n.getMessage("custom_url")}
@@ -582,7 +611,7 @@ function SettingsTrigger({
                   {...(background() === "local-file"
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     setBackground("local-file");
                   }}
                   title={chrome.i18n.getMessage("local_file")}
@@ -605,6 +634,23 @@ function SettingsTrigger({
                       }
                     />
                   </TextFieldRoot>
+                </>
+              )}
+              {background() === "solid-color" && (
+                <>
+                  <br />
+                  <br />
+                  <h3 class="text-lg font-[600]">
+                    {chrome.i18n.getMessage("custom_color")}
+                  </h3>
+                  <input
+                    type="color"
+                    class="block h-10 w-14 cursor-pointer rounded-lg border border-gray-200 bg-white p-1 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900"
+                    id="hs-color-input"
+                    value={color()}
+                    onInput={(e) => setColor(e.currentTarget.value)}
+                    title="Choose your color"
+                  />
                 </>
               )}
               {background() === "local-file" && (
@@ -667,7 +713,7 @@ function SettingsTrigger({
                   {...(Number(wallpaperChangeTime()) === 1
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     localStorage.removeItem("selectedImage");
                     setWallpaperChangeTime(1);
                   }}
@@ -678,7 +724,7 @@ function SettingsTrigger({
                   {...(Number(wallpaperChangeTime()) === 1000 * 60 * 60
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     localStorage.removeItem("selectedImage");
                     setWallpaperChangeTime(1000 * 60 * 60);
                   }}
@@ -689,7 +735,7 @@ function SettingsTrigger({
                   {...(Number(wallpaperChangeTime()) === 1000 * 60 * 60 * 24
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     localStorage.removeItem("selectedImage");
                     setWallpaperChangeTime(1000 * 60 * 60 * 24);
                   }}
@@ -700,7 +746,7 @@ function SettingsTrigger({
                   {...(Number(wallpaperChangeTime()) === 1000 * 60 * 60 * 24 * 7
                     ? { "data-selected": true }
                     : {})}
-                  onClick={() => {
+                  onmousedown={() => {
                     localStorage.removeItem("selectedImage");
                     setWallpaperChangeTime(1000 * 60 * 60 * 24 * 7);
                   }}

@@ -95,6 +95,10 @@
   @apply relative h-[150px] w-[400px] rounded-[20px] p-6 text-3xl shadow-lg dark:shadow-sm;
 }
 
+.widget-square {
+  @apply w-[150px];
+}
+
 .slot[data-swapy-highlighted] {
   @apply max-h-[150px] max-w-[400px] rounded-[20px] bg-zinc-600;
 }
