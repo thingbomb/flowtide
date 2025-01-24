@@ -469,5 +469,17 @@
   },
   "choose_file": {
     "message": "Choisir le fichier"
+  },
+  "create_vercel_project": {
+    "message": "Create Vercel Project"
+  },
+  "custom_color": {
+    "message": "Custom color"
+  },
+  "square_widgets": {
+    "message": "Square widgets (very experimental)"
+  },
+  "square_widgets_description": {
+    "message": "Allow the clock and date widgets to be square"
   }
 }
