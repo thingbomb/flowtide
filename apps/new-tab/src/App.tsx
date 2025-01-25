@@ -157,6 +157,10 @@ const App: Component = () => {
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
   const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
+  const [hideSettings, setHideSettings] = createStoredSignal(
+    "hideSettings",
+    false
+  );
   const [squareWidgets, setSquareWidgets] = createStoredSignal(
     "squareWidgets",
     false
@@ -772,7 +776,7 @@ const App: Component = () => {
               class="flex items-center justify-center"
               id="nightstand-container"
             >
-              <div class="w-full max-w-lg select-none">
+              <div class="w-fit max-w-lg select-none">
                 <h1
                   class="m-0 p-0 text-[200px] font-bold [line-height:1.2]"
                   id="nightstandClock"
@@ -855,7 +859,10 @@ const App: Component = () => {
         </div>
       </div>
       <div
-        class="group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-black/30 p-1 px-2 text-white shadow-inner shadow-white/10 backdrop-blur-3xl focus-within:gap-2 hover:gap-2 dark:text-white"
+        class={cn(
+          "group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-black/30 p-1 px-2 text-white shadow-inner shadow-white/10 backdrop-blur-3xl focus-within:gap-2 hover:gap-2 dark:text-white",
+          hideSettings() ? "opacity-0 hover:opacity-100" : ""
+        )}
         id="action-bar"
       >
         <button
