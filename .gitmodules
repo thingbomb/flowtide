@@ -1,0 +1,3 @@
+[submodule "apps/www/src/pages/plugins/plugins"]
+	path = apps/www/src/pages/plugins/plugins
+	url = git@github.com:flowtide-app/plugins
