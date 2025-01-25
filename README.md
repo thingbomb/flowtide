@@ -13,6 +13,7 @@ Features:
 - Beautiful background images, solid colors, gradients, all up to you
 - Change the font, layout, theme, and more
 - Be greeted on every New Tab
+- Install CSS mods with one-click at [flowtide.app/plugins](https://flowtide.app/plugins) and even make your own [here](https://github.com/flowtide-app/plugins).
 
 <img src="https://github.com/user-attachments/assets/f47196ea-7c95-4ac4-ae19-8a894551c458" style="border-radius: 24px;">
 
