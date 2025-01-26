@@ -481,5 +481,11 @@
   },
   "square_widgets_description": {
     "message": "Allow the clock and date widgets to be square"
+  },
+  "hide_settings": {
+    "message": "Hide settings button"
+  },
+  "hide_settings_description": {
+    "message": "Hide the settings button except on hover"
   }
 }
