@@ -332,6 +332,18 @@ const App: Component = () => {
   }, [pageTitle]);
 
   createEffect(() => {
+    if (pomodoro().playing) {
+      document.title = `${formatTime(pomodoro().time)} - ${
+        pomodoro().session == "Work"
+          ? chrome.i18n.getMessage("work")
+          : chrome.i18n.getMessage("break")
+      } - Flowtide`;
+    } else {
+      document.title = "New Tab";
+    }
+  }, [pomodoro]);
+
+  createEffect(() => {
     if (Number(wallpaperBlur()) > 0) {
       if (document.getElementById("wallpaper") !== null) {
         document.getElementById("wallpaper")!.style.filter =
@@ -809,7 +821,9 @@ const App: Component = () => {
                           {formatTime(pomodoro().time)}
                         </h1>
                         <p class="m-0 flex items-center gap-2 p-0 text-3xl font-medium">
-                          {pomodoro().session}
+                          {pomodoro().session == "Work"
+                            ? chrome.i18n.getMessage("work")
+                            : chrome.i18n.getMessage("break")}
                         </p>
                         <div class="flex items-center gap-3">
                           <Button
@@ -832,15 +846,7 @@ const App: Component = () => {
                             <DialogTrigger
                               aria-label={chrome.i18n.getMessage("add_widget")}
                             >
-                              <Button
-                                class="mt-2 rounded-full border-4 border-black/30 bg-black/5 p-6 text-xl backdrop-blur-lg"
-                                onmousedown={() =>
-                                  setPomodoro({
-                                    ...pomodoro(),
-                                    playing: !pomodoro().playing,
-                                  })
-                                }
-                              >
+                              <Button class="mt-2 rounded-full border-4 border-black/30 bg-black/5 p-6 text-xl backdrop-blur-lg">
                                 {chrome.i18n.getMessage("settings")}
                               </Button>
                             </DialogTrigger>
