@@ -919,7 +919,11 @@ const App: Component = () => {
                             </DialogContent>
                           </Dialog>
                         </div>
-                        <div class="h-1.25 mt-4 w-full rounded-full bg-black/30 backdrop-blur-3xl"></div>
+                        <Show when={name() == ""}>
+                          <Show when={dateContained()}>
+                            <div class="h-1.25 mt-4 w-full rounded-full bg-black/30 backdrop-blur-3xl"></div>
+                          </Show>
+                        </Show>
                       </div>
                     }
                   >
