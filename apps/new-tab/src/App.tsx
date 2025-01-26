@@ -157,6 +157,10 @@ const App: Component = () => {
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
   const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
+  const [hideSettings, setHideSettings] = createStoredSignal(
+    "hideSettings",
+    false
+  );
   const [squareWidgets, setSquareWidgets] = createStoredSignal(
     "squareWidgets",
     false
@@ -204,14 +208,19 @@ const App: Component = () => {
       }
     } catch (error) {
       localStorage.removeItem("selectedImage");
+      let selectedImage = images[Math.floor(Math.random() * images.length)];
       return JSON.stringify({
-        url: images[Math.floor(Math.random() * images.length)],
+        url: selectedImage.url,
+        author: selectedImage.author,
         expiry: Date.now() + Number(wallpaperChangeTime()),
       });
     }
 
+    let selectedImage = images[Math.floor(Math.random() * images.length)];
+
     return {
-      url: images[Math.floor(Math.random() * images.length)],
+      url: selectedImage.url,
+      author: selectedImage.author,
       expiry: Date.now() + Number(wallpaperChangeTime()),
     };
   }
@@ -466,8 +475,10 @@ const App: Component = () => {
             : JSON.parse(selectedImage()).expiry
         ) < Date.now()
       ) {
+        let selectedImage = images[Math.floor(Math.random() * images.length)];
         let newImage = {
-          url: images[Math.floor(Math.random() * images.length)],
+          url: selectedImage.url,
+          author: selectedImage.author,
           expiry: Date.now() + Number(wallpaperChangeTime()),
         };
         fetch(newImage.url, {
@@ -587,33 +598,45 @@ const App: Component = () => {
       {(background() === "image" ||
         background() === "custom-url" ||
         background() === "local-file") && (
-        <img
-          src={
-            background() === "image"
-              ? typeof selectedImage() === "object"
-                ? selectedImage().url
-                : JSON.parse(selectedImage()).url
-              : background() === "local-file"
-                ? localFileImage()
-                : customUrl()
-          }
-          alt=""
-          id="wallpaper"
-          class="absolute inset-0 h-full w-full object-cover transition-all"
-          style={{ opacity: 0 }}
-          onLoad={(e: any) => {
-            if (document.documentElement.style.colorScheme === "dark") {
-              e.target.style.opacity = opacity();
-            } else {
-              e.target.style.opacity = 1;
-              e.target.style.filter = `brightness(${opacity()})`;
+        <>
+          <img
+            src={
+              background() === "image"
+                ? typeof selectedImage() === "object"
+                  ? selectedImage().url
+                  : JSON.parse(selectedImage()).url
+                : background() === "local-file"
+                  ? localFileImage()
+                  : customUrl()
             }
-            if (wallpaperBlur() > 0) {
-              e.target.style.filter = `blur(${Number(wallpaperBlur()) / 10}px)`;
-            }
-            setImageLoaded(true);
-          }}
-        />
+            alt=""
+            id="wallpaper"
+            class="absolute inset-0 h-full w-full object-cover transition-all"
+            style={{ opacity: 0 }}
+            onLoad={(e: any) => {
+              if (document.documentElement.style.colorScheme === "dark") {
+                e.target.style.opacity = opacity();
+              } else {
+                e.target.style.opacity = 1;
+                e.target.style.filter = `brightness(${opacity()})`;
+              }
+              if (wallpaperBlur() > 0) {
+                e.target.style.filter = `blur(${Number(wallpaperBlur()) / 10}px)`;
+              }
+              setImageLoaded(true);
+            }}
+          />
+          <span class="text-md fixed bottom-4 left-4 z-50 select-none font-medium text-white">
+            Photo by{" "}
+            <a href={selectedImage().author.url}>
+              {selectedImage().author.name}
+            </a>{" "}
+            on{" "}
+            <a href="https://unsplash.com/" class="text-white">
+              Unsplash
+            </a>
+          </span>
+        </>
       )}
       <div
         class={cn(
@@ -772,7 +795,7 @@ const App: Component = () => {
               class="flex items-center justify-center"
               id="nightstand-container"
             >
-              <div class="w-full max-w-lg select-none">
+              <div class="w-fit max-w-lg select-none">
                 <h1
                   class="m-0 p-0 text-[200px] font-bold [line-height:1.2]"
                   id="nightstandClock"
@@ -855,7 +878,10 @@ const App: Component = () => {
         </div>
       </div>
       <div
-        class="group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-black/30 p-1 px-2 text-white shadow-inner shadow-white/10 backdrop-blur-3xl focus-within:gap-2 hover:gap-2 dark:text-white"
+        class={cn(
+          "group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-black/30 p-1 px-2 text-white shadow-inner shadow-white/10 backdrop-blur-3xl focus-within:gap-2 hover:gap-2 dark:text-white",
+          hideSettings() ? "opacity-0 hover:opacity-100" : ""
+        )}
         id="action-bar"
       >
         <button
