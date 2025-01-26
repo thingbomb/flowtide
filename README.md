@@ -63,6 +63,9 @@ pnpm build:firefox
 
 The extension's source code will be inside the `apps/new-tab/dist` folder.
 
+## Community
+[Join the Discord sever here!](https://discord.gg/PzwuHyQ6Pg)
+
 ## Localization
 
 If you know Spanish, French, Korean, Chinese (simplified or traditional), German, or Portugese, I'd very much appreciate you helping proofread existing translations or adding new ones. With your help, Flowtide can be enjoyed by more people.
