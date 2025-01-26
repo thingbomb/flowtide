@@ -487,5 +487,11 @@
   },
   "hide_settings_description": {
     "message": "Hide the settings button except on hover"
+  },
+  "default": {
+    "message": "Default"
+  },
+  "dashboard": {
+    "message": "Dashboard"
   }
 }

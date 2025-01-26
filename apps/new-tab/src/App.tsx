@@ -1,10 +1,4 @@
-import {
-  createEffect,
-  createSignal,
-  createUniqueId,
-  onCleanup,
-  onMount,
-} from "solid-js";
+import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
 import type { Component } from "solid-js";
 import { Button } from "./components/ui/button";
 import {
@@ -16,12 +10,12 @@ import {
   EyeOff,
   Grid,
   GripVertical,
-  Key,
+  Home,
   Menu,
   Pause,
   Play,
   Plus,
-  Settings,
+  Star,
   X,
 } from "lucide-solid";
 import { createSwapy } from "swapy";
@@ -55,8 +49,16 @@ import {
 import { createStoredSignal } from "./hooks/localStorage";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
 import { CommandPalette } from "./components/ui/cmd";
-import { number } from "mathjs";
 import { formattedClock } from "./hooks/clockFormatter";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuItemLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./components/ui/dropdown-menu";
+import { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
 
 type MessageKeys = keyof typeof data;
 
@@ -92,6 +94,17 @@ const colorPalette = [
   "#00d492",
   "#002c22",
 ];
+
+interface Pomodoro {
+  time: number;
+  session: string;
+  playing: boolean;
+}
+
+interface PomodoroConfig {
+  workMinutes: number;
+  breakMinutes: number;
+}
 
 const gradients = [
   "linear-gradient(to right, #2e3192, #1bffff)",
@@ -149,11 +162,13 @@ const App: Component = () => {
   const [widgetOrder, setWidgetOrder] = createSignal<any[]>(
     localStorage.getItem("widgetPlacement")
       ? JSON.parse(localStorage.getItem("widgetPlacement") as string)
-      : {}
+      : {
+          clock: "clock",
+          date: "date",
+        }
   );
   const [greetingNameValue, setGreetingNameValue] = createSignal("");
   const [imageLoaded, setImageLoaded] = createSignal(false);
-  const [count, setCount] = createSignal(0);
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
   const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
@@ -187,6 +202,23 @@ const App: Component = () => {
     "wallpaperBlur",
     0
   );
+  const [pomodoroContained, setPomodoroContained] = createSignal(false);
+  const [pomodoroConfig, setPomodoroConfig] = createStoredSignal<
+    Function | PomodoroConfig | string
+  >("pomodoroConfig", {
+    workMinutes: 25,
+    breakMinutes: 5,
+  });
+  const [pomodoro, setPomodoro] = createSignal<Pomodoro>({
+    time:
+      typeof pomodoroConfig() === "object"
+        ? (pomodoroConfig as Function)().workMinutes * 60
+        : JSON.parse(pomodoroConfig() as string).workMinutes * 60,
+    session: "Work",
+    playing: false,
+  });
+  const [dateContained, setDateContained] = createSignal(false);
+  const [bookmarksContained, setBookmarksContained] = createSignal(false);
 
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
@@ -195,6 +227,7 @@ const App: Component = () => {
     "localFile",
     ""
   );
+  const [pomodoroDialogOpen, setPomodoroDialogOpen] = createSignal(false);
   function getInitialSelectedImage() {
     try {
       const storedItem = localStorage.getItem("selectedImage");
@@ -238,6 +271,17 @@ const App: Component = () => {
     "itemsHidden",
     "false"
   );
+
+  function formatTime(time: number) {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, "0")}:${Math.floor(
+      Number(seconds.toString())
+    )
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
   onMount(() => {
     if (chrome.bookmarks !== undefined) {
       chrome.bookmarks.getTree((bookmarkTreeNodes) => {
@@ -257,6 +301,15 @@ const App: Component = () => {
         setBookmarks(allBookmarks);
       });
     }
+
+    setInterval(() => {
+      if (pomodoro().playing) {
+        setPomodoro({
+          ...pomodoro(),
+          time: pomodoro().time - 1,
+        });
+      }
+    }, 1000);
   });
   createEffect(() => {
     if (pageTitle()) {
@@ -280,6 +333,15 @@ const App: Component = () => {
       }
     }
   }, [opacity]);
+
+  function updateContainsValues() {
+    const entries = Object.entries(widgetOrder());
+    setDateContained(entries.some(([key, value]) => key === "date" && value));
+    setBookmarksContained(entries.some(([key, value]) => key === "bookmarks"));
+    setPomodoroContained(!entries.some(([key, value]) => key === "pomodoro"));
+  }
+
+  updateContainsValues();
 
   createEffect(() => {
     (document.getElementById("icon") as any).href = pageIconURL();
@@ -343,7 +405,7 @@ const App: Component = () => {
           <h1 class="mb-4 text-5xl font-[600]">
             {chrome.i18n.getMessage("choose_mode")}
           </h1>
-          <div class="**:data-selected:!ring-primary grid w-full grid-cols-1 grid-rows-3 gap-2">
+          <div class="**:data-selected:!ring-primary grid w-full grid-cols-2 grid-rows-2 gap-2">
             <button
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
@@ -351,9 +413,20 @@ const App: Component = () => {
                 setMode("widgets");
               }}
             >
+              <Home class="size-[32px]" />
+              <br />
+              <span class="text-xl">{chrome.i18n.getMessage("default")}</span>
+            </button>
+            <button
+              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              {...(mode() === "dashboard" ? { "data-selected": true } : {})}
+              onmousedown={() => {
+                setMode("dashboard");
+              }}
+            >
               <Grid class="size-[32px]" />
               <br />
-              <span class="text-xl">{chrome.i18n.getMessage("widgets")}</span>
+              <span class="text-xl">{chrome.i18n.getMessage("dashboard")}</span>
             </button>
             <button
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
@@ -440,7 +513,7 @@ const App: Component = () => {
   createEffect(() => updateFilteredWidgets());
 
   onMount(() => {
-    if (mode() === "widgets") {
+    if (mode() === "dashboard") {
       const container = document.querySelector(".widgets") as HTMLDivElement;
 
       const swapy = createSwapy(container, {
@@ -557,6 +630,7 @@ const App: Component = () => {
                 }
               }
               setWidgetOrder(newWidgetOrder);
+              updateContainsValues();
               localStorage.setItem(
                 "widgetPlacement",
                 JSON.stringify(newWidgetOrder)
@@ -667,6 +741,233 @@ const App: Component = () => {
           id="content-container"
         >
           {mode() === "widgets" && (
+            <>
+              <div
+                id="top-widgets-container"
+                class="fixed left-0 right-0 top-0 z-20 flex gap-4 p-2"
+              >
+                <div id="top-left-widgets-container">
+                  <Show when={bookmarksContained()}>
+                    <DropdownMenu placement="bottom">
+                      <DropdownMenuTrigger
+                        as={(props: DropdownMenuSubTriggerProps) => (
+                          <Button
+                            variant="outline"
+                            class="flex h-8 items-center gap-2 !bg-black/40 backdrop-blur-3xl hover:!bg-black/55"
+                            {...props}
+                          >
+                            <Star class="h-4 w-4 text-gray-300" />
+                            <span>Bookmarks</span>
+                          </Button>
+                        )}
+                      />
+                      <DropdownMenuContent class="max-h-96 w-56 overflow-y-auto">
+                        {bookmarks().map(
+                          (bookmark: Bookmark, index: number) => (
+                            <DropdownMenuItem
+                              onSelect={() => {
+                                window.location.href = bookmark.url;
+                              }}
+                            >
+                              {bookmark.name}
+                            </DropdownMenuItem>
+                          )
+                        )}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </Show>
+                </div>
+                <div id="top-right-widgets-container" class="flex gap-4"></div>
+              </div>
+              <div
+                class="flex items-center justify-center"
+                id="center-widgets-container"
+              >
+                <div class="w-fit max-w-lg select-none text-center">
+                  <Show
+                    when={pomodoroContained()}
+                    fallback={
+                      <div class="flex flex-col items-center justify-center">
+                        <h1
+                          class="m-0 p-0 text-[170px] font-semibold [line-height:1.2]"
+                          id="pomodoroClock"
+                        >
+                          {formatTime(pomodoro().time)}
+                        </h1>
+                        <p class="m-0 flex items-center gap-2 p-0 text-3xl font-medium">
+                          {pomodoro().session}
+                        </p>
+                        <div class="flex items-center gap-3">
+                          <Button
+                            class="mt-2 rounded-full border-4 border-black/30 bg-black/30 p-6 text-xl backdrop-blur-3xl"
+                            onmousedown={() =>
+                              setPomodoro({
+                                ...pomodoro(),
+                                playing: !pomodoro().playing,
+                              })
+                            }
+                          >
+                            {pomodoro().playing
+                              ? chrome.i18n.getMessage("stop")
+                              : chrome.i18n.getMessage("start")}
+                          </Button>
+                          <Dialog
+                            open={pomodoroDialogOpen()}
+                            onOpenChange={setPomodoroDialogOpen}
+                          >
+                            <DialogTrigger
+                              aria-label={chrome.i18n.getMessage("add_widget")}
+                            >
+                              <Button
+                                class="mt-2 rounded-full border-4 border-black/30 bg-black/5 p-6 text-xl backdrop-blur-lg"
+                                onmousedown={() =>
+                                  setPomodoro({
+                                    ...pomodoro(),
+                                    playing: !pomodoro().playing,
+                                  })
+                                }
+                              >
+                                {chrome.i18n.getMessage("settings")}
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>
+                                  {chrome.i18n.getMessage("pomodoro_settings")}
+                                </DialogTitle>
+                                <DialogDescription>
+                                  {chrome.i18n.getMessage(
+                                    "edit_the_pomodoro_settings"
+                                  )}
+                                </DialogDescription>
+                              </DialogHeader>
+                              <TextFieldRoot class="mt-1 flex-1">
+                                <TextField
+                                  placeholder={chrome.i18n.getMessage(
+                                    "work_minutes"
+                                  )}
+                                  value={
+                                    (typeof pomodoroConfig() === "object"
+                                      ? (pomodoroConfig as Function)()
+                                          .workMinutes
+                                      : pomodoroConfig()) as string
+                                  }
+                                  onInput={(e) => {
+                                    let newPomodoroConfig =
+                                      typeof pomodoroConfig() === "object"
+                                        ? JSON.parse(
+                                            JSON.stringify(pomodoroConfig())
+                                          )
+                                        : {};
+                                    newPomodoroConfig.workMinutes = Number(
+                                      e.currentTarget.value
+                                    );
+                                    setPomodoroConfig(newPomodoroConfig);
+                                  }}
+                                />
+                              </TextFieldRoot>
+                              <TextFieldRoot class="mt-2 flex-1">
+                                <TextField
+                                  placeholder={chrome.i18n.getMessage(
+                                    "break_minutes"
+                                  )}
+                                  value={
+                                    typeof pomodoroConfig() === "object"
+                                      ? (pomodoroConfig as Function)()
+                                          .breakMinutes
+                                      : pomodoroConfig()
+                                  }
+                                  onInput={(e) => {
+                                    let newPomodoroConfig =
+                                      typeof pomodoroConfig() === "object"
+                                        ? JSON.parse(
+                                            JSON.stringify(pomodoroConfig())
+                                          )
+                                        : {};
+                                    newPomodoroConfig.breakMinutes = Number(
+                                      e.currentTarget.value
+                                    );
+                                    setPomodoroConfig(newPomodoroConfig);
+                                  }}
+                                />
+                              </TextFieldRoot>
+                              <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                {chrome.i18n.getMessage(
+                                  "you_may_need_to_refresh"
+                                )}
+                              </span>
+                            </DialogContent>
+                          </Dialog>
+                        </div>
+                        <div class="h-1.25 mt-4 w-full rounded-full bg-black/30 backdrop-blur-3xl"></div>
+                      </div>
+                    }
+                  >
+                    <h1
+                      class="m-0 p-0 text-[170px] font-semibold [line-height:1.2]"
+                      id="nightstandClock"
+                    >
+                      {clock().time}
+                    </h1>
+                  </Show>
+                  <p class="mt-3 text-3xl font-medium">
+                    <Show when={name() == ""}>
+                      <Show when={dateContained()}>
+                        {dateFormat() == "normal" ? (
+                          <span id="nightstandDay">
+                            {
+                              [
+                                "Sunday",
+                                "Monday",
+                                "Tuesday",
+                                "Wednesday",
+                                "Thursday",
+                                "Friday",
+                                "Saturday",
+                              ][new Date().getDay()]
+                            }
+                            ,{" "}
+                            {
+                              [
+                                "January",
+                                "February",
+                                "March",
+                                "April",
+                                "May",
+                                "June",
+                                "July",
+                                "August",
+                                "September",
+                                "October",
+                                "November",
+                                "December",
+                              ][new Date().getMonth()]
+                            }{" "}
+                            {new Date().getDate()}
+                          </span>
+                        ) : (
+                          <span id="nightstandDay">
+                            {new Date().toISOString().split("T")[0]}
+                          </span>
+                        )}
+                      </Show>
+                    </Show>
+                    <Show when={name() != ""}>
+                      {new Date().getHours() < 12
+                        ? new Date().getHours() >= 5
+                          ? chrome.i18n.getMessage("good_morning")
+                          : chrome.i18n.getMessage("good_night")
+                        : new Date().getHours() < 18
+                          ? chrome.i18n.getMessage("good_afternoon")
+                          : chrome.i18n.getMessage("good_evening")}
+                      , {name()}.
+                    </Show>
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+          {mode() === "dashboard" && (
             <div id="widgets-container">
               <h1
                 id="greeting"
@@ -772,6 +1073,7 @@ const App: Component = () => {
                               const newWidgetOrder = widgetOrder();
                               delete newWidgetOrder[item];
                               setWidgetOrder(newWidgetOrder);
+                              updateContainsValues();
                               e.target.parentElement?.parentElement?.remove();
                               localStorage.setItem(
                                 "widgetPlacement",
@@ -796,55 +1098,7 @@ const App: Component = () => {
             <div
               class="flex items-center justify-center"
               id="nightstand-container"
-            >
-              <div class="w-fit max-w-lg select-none">
-                <h1
-                  class="m-0 p-0 text-[200px] font-bold [line-height:1.2]"
-                  id="nightstandClock"
-                >
-                  {clock().time}
-                </h1>
-                <p class="mt-3 pl-2 text-3xl font-medium">
-                  {dateFormat() == "normal" ? (
-                    <span id="nightstandDay">
-                      {
-                        [
-                          "Sunday",
-                          "Monday",
-                          "Tuesday",
-                          "Wednesday",
-                          "Thursday",
-                          "Friday",
-                          "Saturday",
-                        ][new Date().getDay()]
-                      }
-                      ,{" "}
-                      {
-                        [
-                          "January",
-                          "February",
-                          "March",
-                          "April",
-                          "May",
-                          "June",
-                          "July",
-                          "August",
-                          "September",
-                          "October",
-                          "November",
-                          "December",
-                        ][new Date().getMonth()]
-                      }{" "}
-                      {new Date().getDate()}
-                    </span>
-                  ) : (
-                    <span id="nightstandDay">
-                      {new Date().toISOString().split("T")[0]}
-                    </span>
-                  )}
-                </p>
-              </div>
-            </div>
+            ></div>
           )}
           {mode() === "speeddial" && (
             <div
@@ -897,7 +1151,7 @@ const App: Component = () => {
           class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
           title={chrome.i18n.getMessage("add_widget")}
         >
-          {mode() === "widgets" && (
+          <Show when={mode() === "widgets"}>
             <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
               <DialogTrigger aria-label={chrome.i18n.getMessage("add_widget")}>
                 <Plus class="transition-transform" />
@@ -964,11 +1218,13 @@ const App: Component = () => {
                     )}
                     key="stopwatch"
                   />
-                  <Block
-                    title={chrome.i18n.getMessage("clock")}
-                    description={chrome.i18n.getMessage("clock_description")}
-                    key="clock"
-                  />
+                  <Show when={mode() === "dashboard"}>
+                    <Block
+                      title={chrome.i18n.getMessage("clock")}
+                      description={chrome.i18n.getMessage("clock_description")}
+                      key="clock"
+                    />
+                  </Show>
                   <Block
                     title={chrome.i18n.getMessage("date")}
                     description={chrome.i18n.getMessage("date_description")}
@@ -994,7 +1250,7 @@ const App: Component = () => {
                 </DialogHeader>
               </DialogContent>
             </Dialog>
-          )}
+          </Show>
         </div>
         <div title={chrome.i18n.getMessage("settings")}>
           <SettingsTrigger triggerClass="hidden group-hover:flex peer-hover:!flex peer-focus:!flex group-focus-within:flex" />

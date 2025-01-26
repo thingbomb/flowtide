@@ -4,7 +4,8 @@ description: "Build Flowtide from source and contribute"
 ---
 
 <Info>
-  **Prerequisites**: [Git](https://git-scm.com/), [PNPM](https://pnpm.io), and a browser
+  **Prerequisites**: [Git](https://git-scm.com/), [PNPM](https://pnpm.io), and a
+  browser
 </Info>
 
 ## Building the app
@@ -18,9 +19,10 @@ Follow these steps to build Flowtide from source on your system:
   git clone https://github.com/thingbomb/flowtide
   ```
 
-  ```bash ssh
-  git clone git@github.com:thingbomb/flowtide.git
-  ```
+```bash ssh
+git clone git@github.com:thingbomb/flowtide.git
+```
+
 </CodeGroup>
 
 **Step 2**: Install the packages with [PNPM](https://pnpm.io):
@@ -36,13 +38,14 @@ pnpm install
   pnpm build:chrome
   ```
 
-  ```bash firefox
-  pnpm build:firefox
-  ```
+```bash firefox
+pnpm build:firefox
+```
 
-  ```bash web
-  pnpm build:web
-  ```
+```bash web
+pnpm build:web
+```
+
 </CodeGroup>
 
 Check the `apps/new-tab/dist` folder for the app.
@@ -51,9 +54,7 @@ Check the `apps/new-tab/dist` folder for the app.
 
 Once you have completed your build, go to `chrome://extensions` in your Chromium-based browser and select "Load unpacked". Select the `dist` folder and you're done. Open a new tab to see the result.
 
-<Info>
-  Developer mode must be enabled for "Load unpacked" to work
-</Info>
+<Info>Developer mode must be enabled for "Load unpacked" to work</Info>
 
 ## Running the code on Firefox
 
@@ -70,7 +71,10 @@ pnpm install && pnpm dev
 <CodeGroup />
 
 <Info>
-  This will open the web version which is a version without the permissions of Chrome so bookmarks and other functionality exclusive to browser APIs will not work. If you need to test a new feature that requires those, follow the steps to Build the app.
+  This will open the web version which is a version without the permissions of
+  Chrome so bookmarks and other functionality exclusive to browser APIs will not
+  work. If you need to test a new feature that requires those, follow the steps
+  to Build the app.
 </Info>
 
 Go to the URL it shows and start developing the app. Once you are done making your changing, push them to GitHub, and file a pull request.

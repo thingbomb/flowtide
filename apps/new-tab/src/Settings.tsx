@@ -9,6 +9,7 @@ import {
   CloudLightningIcon,
   File,
   Grid,
+  Home,
   Hourglass,
   Image,
   Link,
@@ -209,13 +210,21 @@ function SettingsTrigger({
               <h3 class="text-lg font-[600]">
                 {chrome.i18n.getMessage("mode")}
               </h3>
-              <div class="card-group grid-cols-3 grid-rows-1">
+              <div class="card-group grid-cols-2 grid-rows-2">
                 <BigButton
                   {...(mode() === "widgets" ? { "data-selected": true } : {})}
                   onmousedown={() => {
                     setMode("widgets");
                   }}
-                  title={chrome.i18n.getMessage("widgets")}
+                  title={chrome.i18n.getMessage("default")}
+                  icon={<Home class="size-[64px]" />}
+                />
+                <BigButton
+                  {...(mode() === "dashboard" ? { "data-selected": true } : {})}
+                  onmousedown={() => {
+                    setMode("dashboard");
+                  }}
+                  title={chrome.i18n.getMessage("dashboard")}
                   icon={<Grid class="size-[64px]" />}
                 />
                 <BigButton
