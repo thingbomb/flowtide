@@ -626,16 +626,18 @@ const App: Component = () => {
               setImageLoaded(true);
             }}
           />
-          <span class="text-md fixed bottom-4 left-4 z-50 select-none font-medium text-white">
-            Photo by{" "}
-            <a href={selectedImage().author.url}>
-              {selectedImage().author.name}
-            </a>{" "}
-            on{" "}
-            <a href="https://unsplash.com/" class="text-white">
-              Unsplash
-            </a>
-          </span>
+          {selectedImage().author && (
+            <span class="text-md fixed bottom-4 left-4 z-50 select-none font-medium text-white">
+              Photo by{" "}
+              <a href={selectedImage().author.url}>
+                {selectedImage().author.name}
+              </a>{" "}
+              on{" "}
+              <a href="https://unsplash.com/" class="text-white">
+                Unsplash
+              </a>
+            </span>
+          )}
         </>
       )}
       <div
