@@ -304,6 +304,20 @@ const App: Component = () => {
 
     setInterval(() => {
       if (pomodoro().playing) {
+        if (pomodoro().time - 1 == 0) {
+          let config =
+            typeof pomodoroConfig() === "object"
+              ? pomodoroConfig()
+              : JSON.parse(pomodoroConfig() as string);
+          setPomodoro({
+            ...pomodoro(),
+            session: pomodoro().session == "Work" ? "Break" : "Work",
+            time:
+              pomodoro().session == "Work"
+                ? config.breakMinutes * 60
+                : config.workMinutes * 60,
+          });
+        }
         setPomodoro({
           ...pomodoro(),
           time: pomodoro().time - 1,
