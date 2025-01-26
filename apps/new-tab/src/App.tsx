@@ -714,7 +714,7 @@ const App: Component = () => {
               setImageLoaded(true);
             }}
           />
-          {selectedImage().author && (
+          {selectedImage().author && background() == "image" && (
             <span class="text-md fixed bottom-4 left-4 z-50 select-none font-medium text-white">
               Photo by{" "}
               <a href={selectedImage().author.url}>
