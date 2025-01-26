@@ -208,14 +208,19 @@ const App: Component = () => {
       }
     } catch (error) {
       localStorage.removeItem("selectedImage");
+      let selectedImage = images[Math.floor(Math.random() * images.length)];
       return JSON.stringify({
-        url: images[Math.floor(Math.random() * images.length)],
+        url: selectedImage.url,
+        author: selectedImage.author,
         expiry: Date.now() + Number(wallpaperChangeTime()),
       });
     }
 
+    let selectedImage = images[Math.floor(Math.random() * images.length)];
+
     return {
-      url: images[Math.floor(Math.random() * images.length)],
+      url: selectedImage.url,
+      author: selectedImage.author,
       expiry: Date.now() + Number(wallpaperChangeTime()),
     };
   }
@@ -470,8 +475,10 @@ const App: Component = () => {
             : JSON.parse(selectedImage()).expiry
         ) < Date.now()
       ) {
+        let selectedImage = images[Math.floor(Math.random() * images.length)];
         let newImage = {
-          url: images[Math.floor(Math.random() * images.length)],
+          url: selectedImage.url,
+          author: selectedImage.author,
           expiry: Date.now() + Number(wallpaperChangeTime()),
         };
         fetch(newImage.url, {
@@ -591,33 +598,45 @@ const App: Component = () => {
       {(background() === "image" ||
         background() === "custom-url" ||
         background() === "local-file") && (
-        <img
-          src={
-            background() === "image"
-              ? typeof selectedImage() === "object"
-                ? selectedImage().url
-                : JSON.parse(selectedImage()).url
-              : background() === "local-file"
-                ? localFileImage()
-                : customUrl()
-          }
-          alt=""
-          id="wallpaper"
-          class="absolute inset-0 h-full w-full object-cover transition-all"
-          style={{ opacity: 0 }}
-          onLoad={(e: any) => {
-            if (document.documentElement.style.colorScheme === "dark") {
-              e.target.style.opacity = opacity();
-            } else {
-              e.target.style.opacity = 1;
-              e.target.style.filter = `brightness(${opacity()})`;
+        <>
+          <img
+            src={
+              background() === "image"
+                ? typeof selectedImage() === "object"
+                  ? selectedImage().url
+                  : JSON.parse(selectedImage()).url
+                : background() === "local-file"
+                  ? localFileImage()
+                  : customUrl()
             }
-            if (wallpaperBlur() > 0) {
-              e.target.style.filter = `blur(${Number(wallpaperBlur()) / 10}px)`;
-            }
-            setImageLoaded(true);
-          }}
-        />
+            alt=""
+            id="wallpaper"
+            class="absolute inset-0 h-full w-full object-cover transition-all"
+            style={{ opacity: 0 }}
+            onLoad={(e: any) => {
+              if (document.documentElement.style.colorScheme === "dark") {
+                e.target.style.opacity = opacity();
+              } else {
+                e.target.style.opacity = 1;
+                e.target.style.filter = `brightness(${opacity()})`;
+              }
+              if (wallpaperBlur() > 0) {
+                e.target.style.filter = `blur(${Number(wallpaperBlur()) / 10}px)`;
+              }
+              setImageLoaded(true);
+            }}
+          />
+          <span class="text-md fixed bottom-4 left-4 z-50 select-none font-medium text-white">
+            Photo by{" "}
+            <a href={selectedImage().author.url}>
+              {selectedImage().author.name}
+            </a>{" "}
+            on{" "}
+            <a href="https://unsplash.com/" class="text-white">
+              Unsplash
+            </a>
+          </span>
+        </>
       )}
       <div
         class={cn(
