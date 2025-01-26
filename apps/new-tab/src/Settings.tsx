@@ -518,12 +518,12 @@ function SettingsTrigger({
                 <input
                   type="checkbox"
                   class="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-blue-500 dark:checked:bg-blue-500 dark:focus:ring-offset-gray-800"
-                  id="hs-checked-checkbox"
+                  id="sw-checked-checkbox"
                   onChange={(e) => setSquareWidgets(e.currentTarget.checked)}
                   checked={squareWidgets()}
                 />
                 <label
-                  for="hs-checked-checkbox"
+                  for="sw-checked-checkbox"
                   class="ms-3 text-sm text-gray-500 dark:text-neutral-400"
                 >
                   {chrome.i18n.getMessage("square_widgets_description")}
