@@ -727,7 +727,7 @@ const App: Component = () => {
             }}
           />
           {selectedImage().author && background() == "image" && (
-            <span class="text-md fixed bottom-4 left-4 z-50 select-none font-medium text-white">
+            <span class="text-md fixed bottom-4 left-4 z-20 select-none font-medium text-white">
               Photo by{" "}
               <a href={selectedImage().author.url}>
                 {selectedImage().author.name}
