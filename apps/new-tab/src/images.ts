@@ -71,7 +71,7 @@ const images: Image[] = [
     },
   },
   {
-    url: "https://software.flowtide.app/juan-davila-P8PlK2nGwqA-unsplash.jpg",
+    url: "https://storage.flowtide.app/juan-davila-P8PlK2nGwqA-unsplash.jpg",
     author: {
       name: "Juan Davila",
       url: "https://unsplash.com/@juanster",
@@ -218,7 +218,7 @@ const images: Image[] = [
     },
   },
   {
-    url: "https://software.flowtide.app/aishwarya-gunde-U0i_By5IeG0-unsplash.jpg",
+    url: "https://storage.flowtide.app/aishwarya-gunde-U0i_By5IeG0-unsplash.jpg",
     author: {
       name: "Aishwarya Gunde",
       url: "https://unsplash.com/@aishwaryagunde",
