@@ -59,6 +59,11 @@ import {
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu";
 import { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "./components/ui/popover";
 
 type MessageKeys = keyof typeof data;
 
@@ -712,6 +717,7 @@ const App: Component = () => {
             alt=""
             id="wallpaper"
             class="absolute inset-0 h-full w-full object-cover transition-all"
+            data-author={JSON.stringify(selectedImage().author)}
             style={{ opacity: 0 }}
             onLoad={(e: any) => {
               if (document.documentElement.style.colorScheme === "dark") {
@@ -726,18 +732,6 @@ const App: Component = () => {
               setImageLoaded(true);
             }}
           />
-          {selectedImage().author && background() == "image" && (
-            <span class="text-md fixed bottom-4 left-4 z-20 select-none font-medium text-white">
-              Photo by{" "}
-              <a href={selectedImage().author.url}>
-                {selectedImage().author.name}
-              </a>{" "}
-              on{" "}
-              <a href="https://unsplash.com/" class="text-white">
-                Unsplash
-              </a>
-            </span>
-          )}
         </>
       )}
       <div
@@ -762,235 +756,440 @@ const App: Component = () => {
           style={{
             "align-content": layout() == "center" ? "center" : "flex-start",
             "padding-top": layout() == "top" ? "2.5rem" : "0",
-            display: itemsHidden() == "true" ? "none" : "",
           }}
           id="content-container"
         >
-          {mode() === "widgets" && (
-            <>
-              <div
-                id="top-widgets-container"
-                class="fixed left-0 right-0 top-0 z-20 flex gap-4 p-2"
-              >
-                <div id="top-left-widgets-container">
-                  <Show when={bookmarksContained()}>
-                    <DropdownMenu placement="bottom">
-                      <DropdownMenuTrigger
-                        as={(props: DropdownMenuSubTriggerProps) => (
-                          <Button
-                            variant="outline"
-                            class="flex h-8 items-center gap-2 !bg-black/40 backdrop-blur-3xl hover:!bg-black/55"
-                            {...props}
-                          >
-                            <Star class="h-4 w-4 text-gray-300" />
-                            <span>Bookmarks</span>
-                          </Button>
-                        )}
-                      />
-                      <DropdownMenuContent class="max-h-96 w-56 overflow-y-auto">
-                        {bookmarks().map(
-                          (bookmark: Bookmark, index: number) => (
-                            <DropdownMenuItem
-                              onSelect={() => {
-                                window.location.href = bookmark.url;
-                              }}
-                            >
-                              {bookmark.name}
-                            </DropdownMenuItem>
-                          )
-                        )}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </Show>
-                </div>
-                <div id="top-right-widgets-container" class="flex gap-4"></div>
-              </div>
-              <div
-                class="flex items-center justify-center"
-                id="center-widgets-container"
-              >
-                <div class="w-fit max-w-lg select-none text-center">
-                  <Show
-                    when={pomodoroContained()}
-                    fallback={
-                      <div class="flex flex-col items-center justify-center">
-                        <h1
-                          class="m-0 p-0 text-[170px] font-semibold [line-height:1.2]"
-                          id="pomodoroClock"
+          <Show when={mode() == "widgets"}>
+            <div
+              id="top-widgets-container"
+              class="fixed left-0 right-0 top-0 z-20 flex gap-4 p-2"
+              style={{
+                display: itemsHidden() == "true" ? "none" : "",
+              }}
+            >
+              <div id="top-left-widgets-container">
+                <Show when={bookmarksContained()}>
+                  <DropdownMenu placement="bottom">
+                    <DropdownMenuTrigger
+                      as={(props: DropdownMenuSubTriggerProps) => (
+                        <Button
+                          variant="outline"
+                          class="flex h-8 items-center gap-2 !bg-black/40 backdrop-blur-3xl hover:!bg-black/55"
+                          {...props}
                         >
-                          {formatTime(pomodoro().time)}
-                        </h1>
-                        <p class="m-0 flex items-center gap-2 p-0 text-3xl font-medium">
-                          {pomodoro().session == "Work"
-                            ? chrome.i18n.getMessage("work")
-                            : chrome.i18n.getMessage("break")}
-                        </p>
-                        <div class="flex items-center gap-3">
-                          <Button
-                            class="mt-2 rounded-full border-4 border-black/30 bg-black/30 p-6 text-xl backdrop-blur-3xl"
-                            onmousedown={() =>
-                              setPomodoro({
-                                ...pomodoro(),
-                                playing: !pomodoro().playing,
-                              })
-                            }
-                          >
-                            {pomodoro().playing
-                              ? chrome.i18n.getMessage("stop")
-                              : chrome.i18n.getMessage("start")}
-                          </Button>
-                          <Dialog
-                            open={pomodoroDialogOpen()}
-                            onOpenChange={setPomodoroDialogOpen}
-                          >
-                            <DialogTrigger
-                              aria-label={chrome.i18n.getMessage("add_widget")}
-                            >
-                              <Button class="mt-2 rounded-full border-4 border-black/30 bg-black/5 p-6 text-xl backdrop-blur-lg">
-                                {chrome.i18n.getMessage("settings")}
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>
-                                  {chrome.i18n.getMessage("pomodoro_settings")}
-                                </DialogTitle>
-                                <DialogDescription>
-                                  {chrome.i18n.getMessage(
-                                    "edit_the_pomodoro_settings"
-                                  )}
-                                </DialogDescription>
-                              </DialogHeader>
-                              <TextFieldRoot class="mt-1 flex-1">
-                                <TextField
-                                  placeholder={chrome.i18n.getMessage(
-                                    "work_minutes"
-                                  )}
-                                  value={
-                                    (typeof pomodoroConfig() === "object"
-                                      ? (pomodoroConfig as Function)()
-                                          .workMinutes
-                                      : pomodoroConfig()) as string
-                                  }
-                                  onInput={(e) => {
-                                    let newPomodoroConfig =
-                                      typeof pomodoroConfig() === "object"
-                                        ? JSON.parse(
-                                            JSON.stringify(pomodoroConfig())
-                                          )
-                                        : {};
-                                    newPomodoroConfig.workMinutes = Number(
-                                      e.currentTarget.value
-                                    );
-                                    setPomodoroConfig(newPomodoroConfig);
-                                  }}
-                                />
-                              </TextFieldRoot>
-                              <TextFieldRoot class="mt-2 flex-1">
-                                <TextField
-                                  placeholder={chrome.i18n.getMessage(
-                                    "break_minutes"
-                                  )}
-                                  value={
-                                    typeof pomodoroConfig() === "object"
-                                      ? (pomodoroConfig as Function)()
-                                          .breakMinutes
-                                      : pomodoroConfig()
-                                  }
-                                  onInput={(e) => {
-                                    let newPomodoroConfig =
-                                      typeof pomodoroConfig() === "object"
-                                        ? JSON.parse(
-                                            JSON.stringify(pomodoroConfig())
-                                          )
-                                        : {};
-                                    newPomodoroConfig.breakMinutes = Number(
-                                      e.currentTarget.value
-                                    );
-                                    setPomodoroConfig(newPomodoroConfig);
-                                  }}
-                                />
-                              </TextFieldRoot>
-                              <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                {chrome.i18n.getMessage(
-                                  "you_may_need_to_refresh"
-                                )}
-                              </span>
-                            </DialogContent>
-                          </Dialog>
-                        </div>
-                        <Show when={name() == ""}>
-                          <Show when={dateContained()}>
-                            <div class="h-1.25 mt-4 w-full rounded-full bg-black/30 backdrop-blur-3xl"></div>
-                          </Show>
-                        </Show>
-                      </div>
-                    }
-                  >
-                    <h1
-                      class="m-0 p-0 text-[170px] font-semibold [line-height:1.2]"
-                      id="nightstandClock"
-                    >
-                      {clock().time}
-                    </h1>
-                  </Show>
-                  <p class="mt-3 text-3xl font-medium">
-                    <Show when={name() == ""}>
-                      <Show when={dateContained()}>
-                        {dateFormat() == "normal" ? (
-                          <span id="nightstandDay">
-                            {
-                              [
-                                "Sunday",
-                                "Monday",
-                                "Tuesday",
-                                "Wednesday",
-                                "Thursday",
-                                "Friday",
-                                "Saturday",
-                              ][new Date().getDay()]
-                            }
-                            ,{" "}
-                            {
-                              [
-                                "January",
-                                "February",
-                                "March",
-                                "April",
-                                "May",
-                                "June",
-                                "July",
-                                "August",
-                                "September",
-                                "October",
-                                "November",
-                                "December",
-                              ][new Date().getMonth()]
-                            }{" "}
-                            {new Date().getDate()}
-                          </span>
-                        ) : (
-                          <span id="nightstandDay">
-                            {new Date().toISOString().split("T")[0]}
-                          </span>
-                        )}
-                      </Show>
-                    </Show>
-                    <Show when={name() != ""}>
-                      {new Date().getHours() < 12
-                        ? new Date().getHours() >= 5
-                          ? chrome.i18n.getMessage("good_morning")
-                          : chrome.i18n.getMessage("good_night")
-                        : new Date().getHours() < 18
-                          ? chrome.i18n.getMessage("good_afternoon")
-                          : chrome.i18n.getMessage("good_evening")}
-                      , {name()}.
-                    </Show>
-                  </p>
-                </div>
+                          <Star class="h-4 w-4 text-gray-300" />
+                          <span>Bookmarks</span>
+                        </Button>
+                      )}
+                    />
+                    <DropdownMenuContent class="max-h-96 w-56 overflow-y-auto">
+                      {bookmarks().map((bookmark: Bookmark, index: number) => (
+                        <DropdownMenuItem
+                          onSelect={() => {
+                            window.location.href = bookmark.url;
+                          }}
+                        >
+                          {bookmark.name}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </Show>
               </div>
-            </>
-          )}
+              <div id="top-right-widgets-container" class="flex gap-4"></div>
+            </div>
+          </Show>
+          <div
+            id="bottom-widgets-container"
+            class="fixed bottom-0 left-0 right-0 z-20 flex items-center justify-between gap-3 p-2.5"
+          >
+            <div
+              id="bottom-left-widgets-container"
+              class="relative flex items-center gap-4"
+            >
+              <div class="group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5 hover:bg-black/20 hover:backdrop-blur-3xl">
+                <SettingsTrigger triggerClass="text-gray-300 hover:rotate-45 group-hover:rotate-45 transition-transform" />
+                <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
+                  <DialogTrigger
+                    aria-label={chrome.i18n.getMessage("add_widget")}
+                    class="hidden group-hover:block"
+                  >
+                    <Plus class="transition-transform" />
+                  </DialogTrigger>
+                  <DialogContent
+                    class={cn(
+                      textStyle() == "uppercase" ? "**:!uppercase" : "",
+                      textStyle() == "lowercase" ? "**:lowercase" : ""
+                    )}
+                  >
+                    <DialogHeader>
+                      <DialogTitle>
+                        {chrome.i18n.getMessage("blocks")}
+                      </DialogTitle>
+                      <DialogDescription>
+                        {chrome.i18n.getMessage("blocks_description")}
+                      </DialogDescription>
+                      <br />
+                      <Block
+                        title={chrome.i18n.getMessage("bookmarks")}
+                        description={chrome.i18n.getMessage(
+                          "bookmarks_description"
+                        )}
+                        key="bookmarks"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("pomodoro")}
+                        description={chrome.i18n.getMessage(
+                          "pomodoro_description"
+                        )}
+                        key="pomodoro"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("nature_sounds")}
+                        description={chrome.i18n.getMessage(
+                          "nature_description"
+                        )}
+                        key="nature"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("mantras")}
+                        description={chrome.i18n.getMessage(
+                          "mantras_description"
+                        )}
+                        key="mantras"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("focus_sounds")}
+                        description={chrome.i18n.getMessage(
+                          "focus_sounds_description"
+                        )}
+                        key="focus"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("ambience_sounds")}
+                        description={chrome.i18n.getMessage(
+                          "ambience_sounds_description"
+                        )}
+                        key="ambience"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("todo_list")}
+                        description={chrome.i18n.getMessage(
+                          "todo_list_description"
+                        )}
+                        key="todo"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("stopwatch")}
+                        description={chrome.i18n.getMessage(
+                          "stopwatch_description"
+                        )}
+                        key="stopwatch"
+                      />
+                      <Show when={mode() === "dashboard"}>
+                        <Block
+                          title={chrome.i18n.getMessage("clock")}
+                          description={chrome.i18n.getMessage(
+                            "clock_description"
+                          )}
+                          key="clock"
+                        />
+                      </Show>
+                      <Block
+                        title={chrome.i18n.getMessage("date")}
+                        description={chrome.i18n.getMessage("date_description")}
+                        key="date"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("todo_list")}
+                        description={chrome.i18n.getMessage(
+                          "todo_list_description"
+                        )}
+                        key="todo"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("notepad")}
+                        description={chrome.i18n.getMessage(
+                          "notepad_description"
+                        )}
+                        key="notepad"
+                      />
+                      <Block
+                        title={chrome.i18n.getMessage("counter")}
+                        description={chrome.i18n.getMessage(
+                          "counter_description"
+                        )}
+                        key="counter"
+                      />
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+                <button
+                  class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex"
+                  title={
+                    itemsHidden() == "true"
+                      ? chrome.i18n.getMessage("show_items")
+                      : chrome.i18n.getMessage("hide_items")
+                  }
+                  onmousedown={() => {
+                    setItemsHidden(itemsHidden() == "true" ? "false" : "true");
+                  }}
+                >
+                  {itemsHidden() == "true" ? <EyeOff /> : <Eye />}
+                </button>
+                <button
+                  class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
+                  title={
+                    backgroundPaused() == "true"
+                      ? chrome.i18n.getMessage("start_background_changes")
+                      : chrome.i18n.getMessage("pause_background_changes")
+                  }
+                  onmousedown={() => {
+                    if (backgroundPaused() == "true") {
+                      setBackgroundPaused("false");
+                    } else {
+                      setSelectedImage(
+                        JSON.stringify({
+                          url: (
+                            document.getElementById(
+                              "wallpaper"
+                            ) as HTMLImageElement
+                          ).src,
+                          expiry: Infinity,
+                          author: document
+                            .getElementById("wallpaper")!
+                            .getAttribute("data-author")
+                            ? JSON.parse(
+                                document
+                                  .getElementById("wallpaper")!
+                                  .getAttribute("data-author") as string | "{}"
+                              )
+                            : undefined,
+                        })
+                      );
+                      setBackgroundPaused("true");
+                    }
+                  }}
+                >
+                  {backgroundPaused() == "true" ? (
+                    <Play fill="currentColor" />
+                  ) : (
+                    <Pause fill="currentColor" />
+                  )}
+                </button>
+              </div>
+              {selectedImage().author && background() == "image" && (
+                <span class="ml-10 flex h-9 select-none items-center gap-1 p-1.5 text-sm font-medium text-white">
+                  Photo by{" "}
+                  <a href={selectedImage().author.url}>
+                    {selectedImage().author.name}
+                  </a>{" "}
+                  /{" "}
+                  <a href="https://unsplash.com/" class="text-white">
+                    Unsplash
+                  </a>
+                </span>
+              )}
+            </div>
+            <Show when={mode() == "widgets"}>
+              <div
+                id="bottom-right-widgets-container"
+                style={{
+                  display: itemsHidden() == "true" ? "none" : "",
+                }}
+              ></div>
+            </Show>
+          </div>
+          <div
+            class="flex items-center justify-center"
+            id="center-widgets-container"
+          >
+            <Show when={mode() == "widgets"}>
+              <div
+                class="w-fit max-w-lg select-none text-center"
+                style={{
+                  display: itemsHidden() == "true" ? "none" : "",
+                }}
+              >
+                <Show
+                  when={pomodoroContained()}
+                  fallback={
+                    <div class="flex flex-col items-center justify-center">
+                      <h1
+                        class="m-0 p-0 text-[170px] font-semibold [line-height:1.2]"
+                        id="pomodoroClock"
+                      >
+                        {formatTime(pomodoro().time)}
+                      </h1>
+                      <p class="m-0 flex items-center gap-2 p-0 text-3xl font-medium">
+                        {pomodoro().session == "Work"
+                          ? chrome.i18n.getMessage("work")
+                          : chrome.i18n.getMessage("break")}
+                      </p>
+                      <div class="flex items-center gap-3">
+                        <Button
+                          class="mt-2 rounded-full border-4 border-black/30 bg-black/30 p-6 text-xl backdrop-blur-3xl"
+                          onmousedown={() =>
+                            setPomodoro({
+                              ...pomodoro(),
+                              playing: !pomodoro().playing,
+                            })
+                          }
+                        >
+                          {pomodoro().playing
+                            ? chrome.i18n.getMessage("stop")
+                            : chrome.i18n.getMessage("start")}
+                        </Button>
+                        <Dialog
+                          open={pomodoroDialogOpen()}
+                          onOpenChange={setPomodoroDialogOpen}
+                        >
+                          <DialogTrigger
+                            aria-label={chrome.i18n.getMessage("add_widget")}
+                          >
+                            <Button class="mt-2 rounded-full border-4 border-black/30 bg-black/5 p-6 text-xl backdrop-blur-lg">
+                              {chrome.i18n.getMessage("settings")}
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>
+                                {chrome.i18n.getMessage("pomodoro_settings")}
+                              </DialogTitle>
+                              <DialogDescription>
+                                {chrome.i18n.getMessage(
+                                  "edit_the_pomodoro_settings"
+                                )}
+                              </DialogDescription>
+                            </DialogHeader>
+                            <TextFieldRoot class="mt-1 flex-1">
+                              <TextField
+                                placeholder={chrome.i18n.getMessage(
+                                  "work_minutes"
+                                )}
+                                value={
+                                  (typeof pomodoroConfig() === "object"
+                                    ? (pomodoroConfig as Function)().workMinutes
+                                    : pomodoroConfig()) as string
+                                }
+                                onInput={(e) => {
+                                  let newPomodoroConfig =
+                                    typeof pomodoroConfig() === "object"
+                                      ? JSON.parse(
+                                          JSON.stringify(pomodoroConfig())
+                                        )
+                                      : {};
+                                  newPomodoroConfig.workMinutes = Number(
+                                    e.currentTarget.value
+                                  );
+                                  setPomodoroConfig(newPomodoroConfig);
+                                }}
+                              />
+                            </TextFieldRoot>
+                            <TextFieldRoot class="mt-2 flex-1">
+                              <TextField
+                                placeholder={chrome.i18n.getMessage(
+                                  "break_minutes"
+                                )}
+                                value={
+                                  typeof pomodoroConfig() === "object"
+                                    ? (pomodoroConfig as Function)()
+                                        .breakMinutes
+                                    : pomodoroConfig()
+                                }
+                                onInput={(e) => {
+                                  let newPomodoroConfig =
+                                    typeof pomodoroConfig() === "object"
+                                      ? JSON.parse(
+                                          JSON.stringify(pomodoroConfig())
+                                        )
+                                      : {};
+                                  newPomodoroConfig.breakMinutes = Number(
+                                    e.currentTarget.value
+                                  );
+                                  setPomodoroConfig(newPomodoroConfig);
+                                }}
+                              />
+                            </TextFieldRoot>
+                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                              {chrome.i18n.getMessage(
+                                "you_may_need_to_refresh"
+                              )}
+                            </span>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                      <Show when={name() == ""}>
+                        <Show when={dateContained()}>
+                          <div class="h-1.25 mt-4 w-full rounded-full bg-black/30 backdrop-blur-3xl"></div>
+                        </Show>
+                      </Show>
+                    </div>
+                  }
+                >
+                  <h1
+                    class="m-0 p-0 text-[170px] font-semibold [line-height:1.2]"
+                    id="nightstandClock"
+                  >
+                    {clock().time}
+                  </h1>
+                </Show>
+                <p class="mt-3 text-3xl font-medium">
+                  <Show when={name() == ""}>
+                    <Show when={dateContained()}>
+                      {dateFormat() == "normal" ? (
+                        <span id="nightstandDay">
+                          {
+                            [
+                              "Sunday",
+                              "Monday",
+                              "Tuesday",
+                              "Wednesday",
+                              "Thursday",
+                              "Friday",
+                              "Saturday",
+                            ][new Date().getDay()]
+                          }
+                          ,{" "}
+                          {
+                            [
+                              "January",
+                              "February",
+                              "March",
+                              "April",
+                              "May",
+                              "June",
+                              "July",
+                              "August",
+                              "September",
+                              "October",
+                              "November",
+                              "December",
+                            ][new Date().getMonth()]
+                          }{" "}
+                          {new Date().getDate()}
+                        </span>
+                      ) : (
+                        <span id="nightstandDay">
+                          {new Date().toISOString().split("T")[0]}
+                        </span>
+                      )}
+                    </Show>
+                  </Show>
+                  <Show when={name() != ""}>
+                    {new Date().getHours() < 12
+                      ? new Date().getHours() >= 5
+                        ? chrome.i18n.getMessage("good_morning")
+                        : chrome.i18n.getMessage("good_night")
+                      : new Date().getHours() < 18
+                        ? chrome.i18n.getMessage("good_afternoon")
+                        : chrome.i18n.getMessage("good_evening")}
+                    , {name()}.
+                  </Show>
+                </p>
+              </div>
+            </Show>
+          </div>
           {mode() === "dashboard" && (
             <div id="widgets-container">
               <h1
@@ -1157,172 +1356,7 @@ const App: Component = () => {
           )}
         </div>
       </div>
-      <div
-        class={cn(
-          "group fixed right-2 top-2 flex flex-row-reverse items-center justify-center rounded-full bg-black/30 p-1 px-2 text-white shadow-inner shadow-white/10 backdrop-blur-3xl focus-within:gap-2 hover:gap-2 dark:text-white",
-          hideSettings() ? "opacity-0 hover:opacity-100" : ""
-        )}
-        id="action-bar"
-      >
-        <button
-          class="peer group-focus-within:hidden group-hover:hidden"
-          title={chrome.i18n.getMessage("settings")}
-          id="settings-button"
-        >
-          <Menu />
-        </button>
-        <div
-          class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
-          title={chrome.i18n.getMessage("add_widget")}
-        >
-          <Show when={mode() === "widgets"}>
-            <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
-              <DialogTrigger aria-label={chrome.i18n.getMessage("add_widget")}>
-                <Plus class="transition-transform" />
-              </DialogTrigger>
-              <DialogContent
-                class={cn(
-                  textStyle() == "uppercase" ? "**:!uppercase" : "",
-                  textStyle() == "lowercase" ? "**:lowercase" : ""
-                )}
-              >
-                <DialogHeader>
-                  <DialogTitle>{chrome.i18n.getMessage("blocks")}</DialogTitle>
-                  <DialogDescription>
-                    {chrome.i18n.getMessage("blocks_description")}
-                  </DialogDescription>
-                  <br />
-                  <Block
-                    title={chrome.i18n.getMessage("bookmarks")}
-                    description={chrome.i18n.getMessage(
-                      "bookmarks_description"
-                    )}
-                    key="bookmarks"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("pomodoro")}
-                    description={chrome.i18n.getMessage("pomodoro_description")}
-                    key="pomodoro"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("nature_sounds")}
-                    description={chrome.i18n.getMessage("nature_description")}
-                    key="nature"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("mantras")}
-                    description={chrome.i18n.getMessage("mantras_description")}
-                    key="mantras"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("focus_sounds")}
-                    description={chrome.i18n.getMessage(
-                      "focus_sounds_description"
-                    )}
-                    key="focus"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("ambience_sounds")}
-                    description={chrome.i18n.getMessage(
-                      "ambience_sounds_description"
-                    )}
-                    key="ambience"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("todo_list")}
-                    description={chrome.i18n.getMessage(
-                      "todo_list_description"
-                    )}
-                    key="todo"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("stopwatch")}
-                    description={chrome.i18n.getMessage(
-                      "stopwatch_description"
-                    )}
-                    key="stopwatch"
-                  />
-                  <Show when={mode() === "dashboard"}>
-                    <Block
-                      title={chrome.i18n.getMessage("clock")}
-                      description={chrome.i18n.getMessage("clock_description")}
-                      key="clock"
-                    />
-                  </Show>
-                  <Block
-                    title={chrome.i18n.getMessage("date")}
-                    description={chrome.i18n.getMessage("date_description")}
-                    key="date"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("todo_list")}
-                    description={chrome.i18n.getMessage(
-                      "todo_list_description"
-                    )}
-                    key="todo"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("notepad")}
-                    description={chrome.i18n.getMessage("notepad_description")}
-                    key="notepad"
-                  />
-                  <Block
-                    title={chrome.i18n.getMessage("counter")}
-                    description={chrome.i18n.getMessage("counter_description")}
-                    key="counter"
-                  />
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
-          </Show>
-        </div>
-        <div title={chrome.i18n.getMessage("settings")}>
-          <SettingsTrigger triggerClass="hidden group-hover:flex peer-hover:!flex peer-focus:!flex group-focus-within:flex" />
-        </div>
-        <button
-          class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex"
-          title={
-            itemsHidden() == "true"
-              ? chrome.i18n.getMessage("show_items")
-              : chrome.i18n.getMessage("hide_items")
-          }
-          onmousedown={() => {
-            setItemsHidden(itemsHidden() == "true" ? "false" : "true");
-          }}
-        >
-          {itemsHidden() == "true" ? <EyeOff /> : <Eye />}
-        </button>
-        <button
-          class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
-          title={
-            backgroundPaused() == "true"
-              ? chrome.i18n.getMessage("start_background_changes")
-              : chrome.i18n.getMessage("pause_background_changes")
-          }
-          onmousedown={() => {
-            if (backgroundPaused() == "true") {
-              setBackgroundPaused("false");
-            } else {
-              setSelectedImage(
-                JSON.stringify({
-                  url: (
-                    document.getElementById("wallpaper") as HTMLImageElement
-                  ).src,
-                  expiry: Infinity,
-                })
-              );
-              setBackgroundPaused("true");
-            }
-          }}
-        >
-          {backgroundPaused() == "true" ? (
-            <Play fill="currentColor" />
-          ) : (
-            <Pause fill="currentColor" />
-          )}
-        </button>
-        <CommandPalette />
-      </div>
+      <CommandPalette />
     </main>
   );
 };

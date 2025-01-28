@@ -215,6 +215,7 @@ function SettingsTrigger({
                   {...(mode() === "widgets" ? { "data-selected": true } : {})}
                   onmousedown={() => {
                     setMode("widgets");
+                    window.location.reload();
                   }}
                   title={chrome.i18n.getMessage("default")}
                   icon={<Home class="size-[64px]" />}
@@ -223,6 +224,7 @@ function SettingsTrigger({
                   {...(mode() === "dashboard" ? { "data-selected": true } : {})}
                   onmousedown={() => {
                     setMode("dashboard");
+                    window.location.reload();
                   }}
                   title={chrome.i18n.getMessage("dashboard")}
                   icon={<Grid class="size-[64px]" />}
@@ -233,6 +235,7 @@ function SettingsTrigger({
                     : {})}
                   onmousedown={() => {
                     setMode("nightstand");
+                    window.location.reload();
                   }}
                   title={chrome.i18n.getMessage("nightstand")}
                   icon={<Clock class="size-[64px]" />}
@@ -241,6 +244,7 @@ function SettingsTrigger({
                   {...(mode() === "speeddial" ? { "data-selected": true } : {})}
                   onmousedown={() => {
                     setMode("speeddial");
+                    window.location.reload();
                   }}
                   title={chrome.i18n.getMessage("speed_dial")}
                   icon={<Bookmark class="size-[64px]" />}
