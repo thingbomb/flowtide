@@ -1096,10 +1096,15 @@ const App: Component = () => {
               class="relative flex items-center gap-4"
             >
               <div
-                class="group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5
+                class={cn(
+                  `group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5
                   *:text-white focus-within:bg-white/20 focus-within:backdrop-blur-3xl
                   hover:bg-white/20 hover:backdrop-blur-3xl dark:focus-within:bg-black/20
-                  dark:hover:bg-black/20"
+                  dark:hover:bg-black/20`,
+                  {
+                    "opacity-0 hover:opacity-100": hideSettings(),
+                  }
+                )}
               >
                 <SettingsTrigger triggerClass="text-gray-300 hover:rotate-45 group-hover:rotate-45 transition-transform" />
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
