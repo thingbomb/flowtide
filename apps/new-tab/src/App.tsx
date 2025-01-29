@@ -1054,7 +1054,9 @@ const App: Component = () => {
                       {formatTime(stopwatchTime())}
                     </p>
                     <button
-                      onclick={() => setStopwatchRunning(!stopwatchRunning())}
+                      onmousedown={() =>
+                        setStopwatchRunning(!stopwatchRunning())
+                      }
                     >
                       {stopwatchRunning() ? (
                         <Pause class="h-5 w-5" fill="currentColor" />
@@ -1205,46 +1207,50 @@ const App: Component = () => {
                 >
                   {itemsHidden() == "true" ? <EyeOff /> : <Eye />}
                 </button>
-                <button
-                  class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
-                  title={
-                    backgroundPaused() == "true"
-                      ? chrome.i18n.getMessage("start_background_changes")
-                      : chrome.i18n.getMessage("pause_background_changes")
-                  }
-                  onmousedown={() => {
-                    if (backgroundPaused() == "true") {
-                      setBackgroundPaused("false");
-                    } else {
-                      setSelectedImage(
-                        JSON.stringify({
-                          url: (
-                            document.getElementById(
-                              "wallpaper"
-                            ) as HTMLImageElement
-                          ).src,
-                          expiry: Infinity,
-                          author: document
-                            .getElementById("wallpaper")!
-                            .getAttribute("data-author")
-                            ? JSON.parse(
-                                document
-                                  .getElementById("wallpaper")!
-                                  .getAttribute("data-author") as string | "{}"
-                              )
-                            : undefined,
-                        })
-                      );
-                      setBackgroundPaused("true");
+                <Show when={background() == "image"}>
+                  <button
+                    class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
+                    title={
+                      backgroundPaused() == "true"
+                        ? chrome.i18n.getMessage("start_background_changes")
+                        : chrome.i18n.getMessage("pause_background_changes")
                     }
-                  }}
-                >
-                  {backgroundPaused() == "true" ? (
-                    <Play fill="currentColor" />
-                  ) : (
-                    <Pause fill="currentColor" />
-                  )}
-                </button>
+                    onmousedown={() => {
+                      if (backgroundPaused() == "true") {
+                        setBackgroundPaused("false");
+                      } else {
+                        setSelectedImage(
+                          JSON.stringify({
+                            url: (
+                              document.getElementById(
+                                "wallpaper"
+                              ) as HTMLImageElement
+                            ).src,
+                            expiry: Infinity,
+                            author: document
+                              .getElementById("wallpaper")!
+                              .getAttribute("data-author")
+                              ? JSON.parse(
+                                  document
+                                    .getElementById("wallpaper")!
+                                    .getAttribute("data-author") as
+                                    | string
+                                    | "{}"
+                                )
+                              : undefined,
+                          })
+                        );
+                        setBackgroundPaused("true");
+                      }
+                    }}
+                  >
+                    {backgroundPaused() == "true" ? (
+                      <Play fill="currentColor" />
+                    ) : (
+                      <Pause fill="currentColor" />
+                    )}
+                  </button>
+                </Show>
               </div>
               {selectedImage().author && background() == "image" ? (
                 <span class="ml-10 flex h-9 select-none items-center gap-1 p-1.5 text-sm font-medium text-white">
