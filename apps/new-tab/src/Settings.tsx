@@ -184,10 +184,10 @@ function SettingsTrigger({
               setSettingsMenu("appearance");
             }}
             id="appearanceButton"
-            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
               outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
               data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
-              dark:data-[selected]:bg-white/10"
+              dark:data-[selected]:bg-white/10`}
           >
             <Palette
               height={20}
@@ -203,10 +203,10 @@ function SettingsTrigger({
               setSettingsMenu("background");
             }}
             id="backgroundButton"
-            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
               outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
               data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
-              dark:data-[selected]:bg-white/10"
+              dark:data-[selected]:bg-white/10`}
           >
             <Image
               height={20}
