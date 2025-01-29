@@ -464,6 +464,12 @@ const App: Component = () => {
               placeholder={chrome.i18n.getMessage("enter_name")}
               value={greetingNameValue()}
               onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
+              onKeyDown={(e: KeyboardEvent) => {
+                if (e.key === "Enter") {
+                  setOnboardingScreen(3);
+                  setName(greetingNameValue());
+                }
+              }}
             />
           </TextFieldRoot>
           <br />
