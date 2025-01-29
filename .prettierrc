@@ -1,13 +1,17 @@
 {
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "jsxBracketSameLine": false,
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-sort-json",
+    "prettier-plugin-classnames"
+  ],
   "printWidth": 80,
-  "tabWidth": 2,
-  "useTabs": false,
   "semi": true,
   "singleQuote": false,
+  "tabWidth": 2,
   "trailingComma": "es5",
-  "bracketSpacing": true,
-  "jsxBracketSameLine": false,
-  "arrowParens": "always",
-  "htmlWhitespaceSensitivity": "ignore",
-  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-sort-json"]
+  "useTabs": false
 }

@@ -37,11 +37,15 @@ function ClockWidget() {
   const clock = formattedClock();
   return (
     <div
-      class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner
+        shadow-white/10 backdrop-blur-3xl"
       id="clock-widget"
     >
       <div class="relative flex h-full w-full items-center justify-center rounded-[10px]">
-        <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
+        <div
+          class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs
+            font-semibold text-gray-400"
+        >
           <div id="amPm">{clock().amPm}</div>
         </div>
         <div class="text-center text-5xl font-bold text-white" id="currentTime">
@@ -95,12 +99,16 @@ function DateWidget() {
   });
   return (
     <div
-      class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      class="absolute inset-0 !select-none rounded-[20px] bg-black/30 p-[10px] shadow-inner
+        shadow-white/10 backdrop-blur-3xl"
       id="date-widget"
     >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative flex h-full w-full items-center justify-center rounded-[10px]">
-          <div class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs font-semibold text-gray-400">
+          <div
+            class="absolute flex w-full justify-between self-start px-3.5 py-2.5 text-xs
+              font-semibold text-gray-400"
+          >
             <div id="month">{months[new Date().getMonth()]}</div>
             <div id="year">{new Date().getFullYear()}</div>
           </div>
@@ -216,7 +224,8 @@ function TodoWidget() {
 
   return (
     <div
-      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px]
+        shadow-inner shadow-white/10 backdrop-blur-3xl"
       id="todo-widget"
     >
       <div class="**:text-white h-full w-full rounded-lg">
@@ -408,7 +417,8 @@ function TodoPopover() {
                   onDragOver={handleDragOver}
                   onDragEnd={handleDragEnd}
                   onDrop={(e) => handleDrop(e, task.id)}
-                  class="task hover:bg-accent/20 flex cursor-move items-center gap-2 rounded p-1 transition-colors"
+                  class="task hover:bg-accent/20 flex cursor-move items-center gap-2 rounded p-1
+                    transition-colors"
                 >
                   <Checkbox
                     id={task.id}
@@ -487,9 +497,13 @@ function StopwatchWidget() {
   return (
     <div
       id="stopwatch-widget"
-      class="text-foreground absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl"
+      class="text-foreground absolute inset-0 overflow-hidden rounded-[20px] bg-black/30
+        p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl"
     >
-      <div class="flex h-full w-full select-none flex-col items-center justify-center gap-2 rounded-[10px] text-white">
+      <div
+        class="flex h-full w-full select-none flex-col items-center justify-center gap-2
+          rounded-[10px] text-white"
+      >
         {formatTime(time())}
         <div class="flex gap-2 text-sm text-gray-400">
           <Button
@@ -546,7 +560,8 @@ function BookmarksWidget() {
   return (
     <div
       id="bookmarks-widget"
-      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0 shadow-inner shadow-white/10 backdrop-blur-3xl"
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] pb-0
+        shadow-inner shadow-white/10 backdrop-blur-3xl"
     >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] pt-2">
@@ -568,7 +583,8 @@ function BookmarksWidget() {
                     <a
                       href={bookmark.url}
                       target="_blank"
-                      class="text-foreground flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap text-[17px] font-medium"
+                      class="text-foreground flex items-center gap-2 overflow-hidden text-ellipsis
+                        whitespace-nowrap text-[17px] font-medium"
                     >
                       <img
                         src={`https://www.google.com/s2/favicons?domain=${getDomain(bookmark.url)}&sz=64`}
@@ -614,7 +630,8 @@ function NatureWidget() {
   return (
     <div
       id="nature-widget"
-      class="**:text-white absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      class="**:text-white absolute inset-0 overflow-hidden rounded-[20px] bg-black/30
+        p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
     >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] pt-2">
@@ -642,7 +659,10 @@ function NatureWidget() {
                             key={soundscape.name}
                             index={soundscape.index}
                           />
-                          <div class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
+                          <div
+                            class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm
+                              font-medium"
+                          >
                             {soundscape.name}
                           </div>
                         </div>
@@ -717,7 +737,10 @@ function PomodoroWidget() {
       id="pomodoro-widget"
     >
       <div class="h-full w-full rounded-[10px]">
-        <div class="relative h-full w-full rounded-[10px] bg-black/30 p-[10px] pt-4 shadow-inner shadow-white/10 backdrop-blur-3xl">
+        <div
+          class="relative h-full w-full rounded-[10px] bg-black/30 p-[10px] pt-4 shadow-inner
+            shadow-white/10 backdrop-blur-3xl"
+        >
           <div class="overflow-auto">
             <div
               class="select-none px-3.5 text-left text-xl font-bold text-white"
@@ -745,7 +768,9 @@ function PomodoroWidget() {
                 </Button>
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
-                    class="inline-flex items-center gap-2 rounded-md bg-black/10 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none focus:outline-1 focus:outline-white"
+                    class="inline-flex items-center gap-2 rounded-md bg-black/10 px-3 py-1.5 text-sm/6
+                      font-semibold text-white shadow-inner shadow-white/10 focus:outline-none
+                      focus:outline-1 focus:outline-white"
                     aria-label={chrome.i18n.getMessage("add_widget")}
                   >
                     {chrome.i18n.getMessage("settings")}
@@ -817,7 +842,10 @@ function FocusSoundscapes() {
   }
 
   return (
-    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px]
+        shadow-inner shadow-white/10 backdrop-blur-3xl"
+    >
       <div class="**:text-white h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] pt-2">
           <div class="overflow-auto">
@@ -842,7 +870,10 @@ function FocusSoundscapes() {
                             key={soundscape.name}
                             index={soundscape.index}
                           />
-                          <div class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
+                          <div
+                            class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm
+                              font-medium"
+                          >
                             {soundscape.name}
                           </div>
                         </div>
@@ -896,7 +927,10 @@ function AmbienceSoundscapes() {
   }
 
   return (
-    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px]
+        shadow-inner shadow-white/10 backdrop-blur-3xl"
+    >
       <div class="h-full w-full rounded-[10px]">
         <div class="**:text-white relative h-full w-full rounded-[10px] pt-2">
           <div class="overflow-auto">
@@ -923,7 +957,10 @@ function AmbienceSoundscapes() {
                             key={soundscape.name}
                             index={soundscape.index}
                           />
-                          <div class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
+                          <div
+                            class="text-foreground overflow-hidden text-ellipsis whitespace-nowrap text-sm
+                              font-medium"
+                          >
                             {soundscape.name}
                           </div>
                         </div>
@@ -955,7 +992,8 @@ function NotepadWidget() {
   const [notepad, setNotepad] = createStoredSignal<string>("notepad", "");
   return (
     <div
-      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px]
+        shadow-inner shadow-white/10 backdrop-blur-3xl"
       id="notepad-widget"
     >
       <div class="h-full w-full rounded-[10px]">
@@ -968,7 +1006,8 @@ function NotepadWidget() {
               {chrome.i18n.getMessage("notepad")}
             </div>
             <textarea
-              class="mt-2 h-full w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white shadow-inner shadow-white/10 outline-none backdrop-blur-2xl focus:ring-2"
+              class="mt-2 h-full w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white
+                shadow-inner shadow-white/10 outline-none backdrop-blur-2xl focus:ring-2"
               value={notepad()}
               placeholder={chrome.i18n.getMessage("notepad_disclaimer")}
               onInput={(e) => setNotepad(e.currentTarget.value)}
@@ -984,7 +1023,8 @@ function CounterWidget() {
   const [counter, setCounter] = createStoredSignal("counter", 0);
   return (
     <div
-      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl"
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px]
+        shadow-inner shadow-white/10 backdrop-blur-3xl"
       id="counter-widget"
     >
       <div class="h-full w-full rounded-[10px]">
@@ -1024,7 +1064,10 @@ function CounterWidget() {
 
 function Mantras() {
   return (
-    <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
+    <div
+      class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px]
+        shadow-inner shadow-white/10 backdrop-blur-3xl"
+    >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative flex h-full w-full items-center justify-center rounded-[10px] px-4">
           <h2 class="select-none text-3xl font-semibold text-white">

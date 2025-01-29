@@ -61,13 +61,20 @@ export const PopoverContent = <T extends ValidComponent = "div">(
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
         class={cn(
-          "text-popover-foreground data-[expanded]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[expanded]:fade-in-0 data-[closed]:zoom-out-95 data-[expanded]:zoom-in-95 z-50 w-72 rounded-md border-none bg-black/30 p-4 pt-1 shadow-md outline-none backdrop-blur-3xl",
+          `text-popover-foreground data-[expanded]:animate-in data-[closed]:animate-out
+          data-[closed]:fade-out-0 data-[expanded]:fade-in-0 data-[closed]:zoom-out-95
+          data-[expanded]:zoom-in-95 z-50 w-72 rounded-md border-none bg-black/30 p-4 pt-1
+          shadow-md outline-none backdrop-blur-3xl`,
           local.class
         )}
         {...rest}
       >
         {local.children}
-        <PopoverPrimitive.CloseButton class="ring-offset-background focus:ring-ring absolute right-4 top-3 rounded-sm opacity-70 transition-[opacity,box-shadow] hover:opacity-100 focus:outline-none focus:ring-[1.5px] focus:ring-offset-2 disabled:pointer-events-none">
+        <PopoverPrimitive.CloseButton
+          class="ring-offset-background focus:ring-ring absolute right-4 top-3 rounded-sm
+            opacity-70 transition-[opacity,box-shadow] hover:opacity-100 focus:outline-none
+            focus:ring-[1.5px] focus:ring-offset-2 disabled:pointer-events-none"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

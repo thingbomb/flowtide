@@ -154,10 +154,14 @@ function SettingsTrigger({
       >
         <div
           id="sidebar"
-          class="sm:max-w-50 sticky top-0 flex h-[140px] w-full max-w-full flex-col gap-2 sm:h-full"
+          class="sm:max-w-50 sticky top-0 flex h-[140px] w-full max-w-full flex-col gap-2
+            sm:h-full"
         >
           <button
-            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10 data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5 dark:data-[selected]:bg-white/10"
+            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10"
             {...(settingsMenu() == "general"
               ? { "data-selected": "true" }
               : "")}
@@ -180,7 +184,10 @@ function SettingsTrigger({
               setSettingsMenu("appearance");
             }}
             id="appearanceButton"
-            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10 data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5 dark:data-[selected]:bg-white/10"
+            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10"
           >
             <Palette
               height={20}
@@ -196,7 +203,10 @@ function SettingsTrigger({
               setSettingsMenu("background");
             }}
             id="backgroundButton"
-            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10 data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5 dark:data-[selected]:bg-white/10"
+            class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10"
           >
             <Image
               height={20}
@@ -522,7 +532,10 @@ function SettingsTrigger({
               <div class="flex">
                 <input
                   type="checkbox"
-                  class="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-blue-500 dark:checked:bg-blue-500 dark:focus:ring-offset-gray-800"
+                  class="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600 focus:ring-blue-500
+                    disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700
+                    dark:bg-neutral-800 dark:checked:border-blue-500 dark:checked:bg-blue-500
+                    dark:focus:ring-offset-gray-800"
                   id="sw-checked-checkbox"
                   onChange={(e) => setSquareWidgets(e.currentTarget.checked)}
                   checked={actuallyBoolean(squareWidgets())}
@@ -542,7 +555,10 @@ function SettingsTrigger({
               <div class="flex">
                 <input
                   type="checkbox"
-                  class="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-blue-500 dark:checked:bg-blue-500 dark:focus:ring-offset-gray-800"
+                  class="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600 focus:ring-blue-500
+                    disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700
+                    dark:bg-neutral-800 dark:checked:border-blue-500 dark:checked:bg-blue-500
+                    dark:focus:ring-offset-gray-800"
                   id="hs-checked-checkbox"
                   onChange={(e) => setHideSettings(e.currentTarget.checked)}
                   checked={hideSettings()}
@@ -650,7 +666,9 @@ function SettingsTrigger({
                   </h3>
                   <input
                     type="color"
-                    class="block h-10 w-14 cursor-pointer rounded-lg border border-gray-200 bg-white p-1 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900"
+                    class="block h-10 w-14 cursor-pointer rounded-lg border border-gray-200 bg-white p-1
+                      disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700
+                      dark:bg-neutral-900"
                     id="hs-color-input"
                     value={color()}
                     onInput={(e) => setColor(e.currentTarget.value)}
@@ -703,7 +721,12 @@ function SettingsTrigger({
                           reader.readAsDataURL(files[0]);
                         }
                       }}
-                      class="block w-full rounded-lg border-none bg-neutral-500 text-sm text-white backdrop-blur-3xl file:me-4 file:border-0 file:bg-neutral-600 file:px-4 file:py-3 file:text-white focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-black/5 dark:text-neutral-400 dark:file:bg-white/10 dark:file:text-neutral-400"
+                      class="block w-full rounded-lg border-none bg-neutral-500 text-sm text-white
+                        backdrop-blur-3xl file:me-4 file:border-0 file:bg-neutral-600 file:px-4
+                        file:py-3 file:text-white focus:z-10 focus:border-blue-500 focus:ring-blue-500
+                        disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700
+                        dark:bg-black/5 dark:text-neutral-400 dark:file:bg-white/10
+                        dark:file:text-neutral-400"
                     />
                   </form>
                 </>

@@ -84,7 +84,8 @@ export const CommandInput = (props: VoidProps<CommandInputProps>) => {
       </svg>
       <CommandPrimitive.Input
         class={cn(
-          "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50",
+          `placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent
+          py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50`,
           local.class
         )}
         {...rest}
@@ -99,7 +100,10 @@ export const CommandItem = (props: CommandItemProps) => {
   return (
     <CommandPrimitive.Item
       class={cn(
-        "aria-selected:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-selected:bg-black/10 dark:aria-selected:bg-white/10",
+        `aria-selected:text-accent-foreground relative flex cursor-default select-none
+        items-center rounded-sm px-2 py-1.5 text-sm outline-none
+        aria-disabled:pointer-events-none aria-disabled:opacity-50
+        aria-selected:bg-black/10 dark:aria-selected:bg-white/10`,
         local.class
       )}
       data-type="command-item"
@@ -128,7 +132,13 @@ export const CommandDialog = (props: CommandDialogProps) => {
   return (
     <Dialog {...rest}>
       <DialogContent class="overflow-hidden p-0">
-        <Command class="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
+        <Command
+          class="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2
+            [&_[cmdk-group-heading]]:font-medium
+            [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2
+            [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2
+            [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5"
+        >
           {local.children}
         </Command>
       </DialogContent>
@@ -153,7 +163,9 @@ export const CommandGroup = (props: CommandGroupProps) => {
   return (
     <CommandPrimitive.Group
       class={cn(
-        "text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
+        `text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden
+        p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5
+        [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium`,
         local.class
       )}
       {...rest}

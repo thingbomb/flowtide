@@ -66,7 +66,11 @@ export const DropdownMenuContent = <T extends ValidComponent = "div">(
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
         class={cn(
-          "min-w-8rem text-popover-foreground focus-visible:ring-ring data-[expanded]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[expanded]:fade-in-0 data-[closed]:zoom-out-95 data-[expanded]:zoom-in-95 z-50 overflow-hidden rounded-md bg-black/40 p-1 shadow-md backdrop-blur-3xl transition-shadow focus-visible:outline-none focus-visible:ring-[1.5px]",
+          `min-w-8rem text-popover-foreground focus-visible:ring-ring
+          data-[expanded]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0
+          data-[expanded]:fade-in-0 data-[closed]:zoom-out-95 data-[expanded]:zoom-in-95
+          z-50 overflow-hidden rounded-md bg-black/40 p-1 shadow-md backdrop-blur-3xl
+          transition-shadow focus-visible:outline-none focus-visible:ring-[1.5px]`,
           local.class
         )}
         {...rest}
@@ -92,7 +96,9 @@ export const DropdownMenuItem = <T extends ValidComponent = "div">(
   return (
     <DropdownMenuPrimitive.Item
       class={cn(
-        "focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-black/20 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        `focus:text-accent-foreground relative flex cursor-default select-none
+        items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors
+        focus:bg-black/20 data-[disabled]:pointer-events-none data-[disabled]:opacity-50`,
         local.inset && "pl-8",
         local.class
       )}
@@ -192,7 +198,8 @@ export const DropdownMenuSubTrigger = <T extends ValidComponent = "div">(
   return (
     <DropdownMenuPrimitive.SubTrigger
       class={cn(
-        "focus:bg-accent data-[expanded]:bg-accent flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none",
+        `focus:bg-accent data-[expanded]:bg-accent flex cursor-default select-none
+        items-center rounded-sm px-2 py-1.5 text-sm outline-none`,
         local.class
       )}
       {...rest}
@@ -235,7 +242,10 @@ export const DropdownMenuSubContent = <T extends ValidComponent = "div">(
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.SubContent
         class={cn(
-          "min-w-8rem bg-popover text-popover-foreground data-[expanded]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[expanded]:fade-in-0 data-[closed]:zoom-out-95 data-[expanded]:zoom-in-95 z-50 overflow-hidden rounded-md border p-1 shadow-md",
+          `min-w-8rem bg-popover text-popover-foreground data-[expanded]:animate-in
+          data-[closed]:animate-out data-[closed]:fade-out-0 data-[expanded]:fade-in-0
+          data-[closed]:zoom-out-95 data-[expanded]:zoom-in-95 z-50 overflow-hidden
+          rounded-md border p-1 shadow-md`,
           local.class
         )}
         {...rest}
@@ -262,7 +272,9 @@ export const DropdownMenuCheckboxItem = <T extends ValidComponent = "div">(
   return (
     <DropdownMenuPrimitive.CheckboxItem
       class={cn(
-        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        `focus:bg-accent focus:text-accent-foreground relative flex cursor-default
+        select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none
+        transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50`,
         local.class
       )}
       {...rest}
@@ -306,7 +318,9 @@ export const DropdownMenuRadioItem = <T extends ValidComponent = "div">(
   return (
     <DropdownMenuPrimitive.RadioItem
       class={cn(
-        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        `focus:bg-accent focus:text-accent-foreground relative flex cursor-default
+        select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none
+        transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50`,
         local.class
       )}
       {...rest}

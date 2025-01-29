@@ -42,10 +42,16 @@ export const CheckboxControl = <T extends ValidComponent = "div">(
 
   return (
     <>
-      <CheckboxPrimitive.Input class="[&:focus-visible+div]:ring-ring [&:focus-visible+div]:ring-offset-background [&:focus-visible+div]:outline-none [&:focus-visible+div]:ring-[1.5px] [&:focus-visible+div]:ring-offset-2" />
+      <CheckboxPrimitive.Input
+        class="[&:focus-visible+div]:ring-ring [&:focus-visible+div]:ring-offset-background
+          [&:focus-visible+div]:outline-none [&:focus-visible+div]:ring-[1.5px]
+          [&:focus-visible+div]:ring-offset-2"
+      />
       <CheckboxPrimitive.Control
         class={cn(
-          "size-4 !cursor-pointer rounded-md bg-white p-1 ring-1 ring-inset ring-black/35 data-[checked]:bg-white/25 dark:bg-white/10 dark:ring-white/15 dark:data-[checked]:bg-white",
+          `size-4 !cursor-pointer rounded-md bg-white p-1 ring-1 ring-inset ring-black/35
+          data-[checked]:bg-white/25 dark:bg-white/10 dark:ring-white/15
+          dark:data-[checked]:bg-white`,
           local.class
         )}
         {...rest}

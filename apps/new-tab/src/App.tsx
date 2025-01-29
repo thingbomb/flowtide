@@ -495,7 +495,10 @@ const App: Component = () => {
           </h1>
           <div class="**:data-selected:!ring-primary grid w-[450px] grid-cols-2 grid-rows-2 gap-2">
             <button
-              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left font-normal shadow-inner shadow-white/20 ring-2 ring-transparent backdrop-blur-3xl"
+              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer
+                items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left
+                font-normal shadow-inner shadow-white/20 ring-2 ring-transparent
+                backdrop-blur-3xl"
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
               onmousedown={() => {
                 setMode("widgets");
@@ -506,7 +509,10 @@ const App: Component = () => {
               <span class="text-xl">{chrome.i18n.getMessage("default")}</span>
             </button>
             <button
-              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left font-normal shadow-inner shadow-white/20 ring-2 ring-transparent backdrop-blur-3xl"
+              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer
+                items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left
+                font-normal shadow-inner shadow-white/20 ring-2 ring-transparent
+                backdrop-blur-3xl"
               {...(mode() === "dashboard" ? { "data-selected": true } : {})}
               onmousedown={() => {
                 setMode("dashboard");
@@ -517,7 +523,10 @@ const App: Component = () => {
               <span class="text-xl">{chrome.i18n.getMessage("dashboard")}</span>
             </button>
             <button
-              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left font-normal shadow-inner shadow-white/20 ring-2 ring-transparent backdrop-blur-3xl"
+              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer
+                items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left
+                font-normal shadow-inner shadow-white/20 ring-2 ring-transparent
+                backdrop-blur-3xl"
               {...(mode() === "nightstand" ? { "data-selected": true } : {})}
               onmousedown={() => {
                 setMode("nightstand");
@@ -530,7 +539,10 @@ const App: Component = () => {
               </span>
             </button>
             <button
-              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left font-normal shadow-inner shadow-white/20 ring-2 ring-transparent backdrop-blur-3xl"
+              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer
+                items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left
+                font-normal shadow-inner shadow-white/20 ring-2 ring-transparent
+                backdrop-blur-3xl"
               {...(mode() === "speeddial" ? { "data-selected": true } : {})}
               onmousedown={() => {
                 setMode("speeddial");
@@ -744,11 +756,11 @@ const App: Component = () => {
   return (
     <main
       class={cn(
-        `font-mono`,
-        `font-serif`,
-        `font-sans`,
-        `font-comic-sans`,
-        `transition-all`,
+        "font-mono",
+        "font-serif",
+        "font-sans",
+        "font-comic-sans",
+        "transition-all",
         `font-${currentFont()}`,
         imageLoaded() ? "bg-black dark:bg-none" : "",
         textStyle() == "uppercase" ? "**:!uppercase" : "",
@@ -1077,7 +1089,12 @@ const App: Component = () => {
               id="bottom-left-widgets-container"
               class="relative flex items-center gap-4"
             >
-              <div class="group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5 *:text-white focus-within:bg-white/20 focus-within:backdrop-blur-3xl hover:bg-white/20 hover:backdrop-blur-3xl dark:focus-within:bg-black/20 dark:hover:bg-black/20">
+              <div
+                class="group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5
+                  *:text-white focus-within:bg-white/20 focus-within:backdrop-blur-3xl
+                  hover:bg-white/20 hover:backdrop-blur-3xl dark:focus-within:bg-black/20
+                  dark:hover:bg-black/20"
+              >
                 <SettingsTrigger triggerClass="text-gray-300 hover:rotate-45 group-hover:rotate-45 transition-transform" />
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
@@ -1209,7 +1226,8 @@ const App: Component = () => {
                 </button>
                 <Show when={background() == "image"}>
                   <button
-                    class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex peer-focus:!flex"
+                    class="hidden group-focus-within:flex group-hover:flex peer-hover:!flex
+                      peer-focus:!flex"
                     title={
                       backgroundPaused() == "true"
                         ? chrome.i18n.getMessage("start_background_changes")
@@ -1253,7 +1271,10 @@ const App: Component = () => {
                 </Show>
               </div>
               {selectedImage().author && background() == "image" ? (
-                <span class="ml-10 flex h-9 select-none items-center gap-1 p-1.5 text-sm font-medium text-white">
+                <span
+                  class="ml-10 flex h-9 select-none items-center gap-1 p-1.5 text-sm font-medium
+                    text-white"
+                >
                   <a href={selectedImage().author.url}>
                     {selectedImage().author.name}
                   </a>{" "}
@@ -1263,13 +1284,17 @@ const App: Component = () => {
                   </a>
                 </span>
               ) : (
-                <span class="ml-10 flex h-9 select-none items-center gap-1 p-1.5 text-sm font-medium text-white"></span>
+                <span
+                  class="ml-10 flex h-9 select-none items-center gap-1 p-1.5 text-sm font-medium
+                    text-white"
+                ></span>
               )}
             </div>
             <Show when={mode() == "widgets" && itemsHidden() == "false"}>
               <div
                 id="bottom-center-widgets-container"
-                class="text-md fixed bottom-0 left-0 right-0 -z-50 m-2.5 flex !h-[36px] items-center justify-center gap-2 text-center font-medium"
+                class="text-md fixed bottom-0 left-0 right-0 -z-50 m-2.5 flex !h-[36px] items-center
+                  justify-center gap-2 text-center font-medium"
               >
                 <Show when={mantrasContained()}>
                   <p>
@@ -1335,7 +1360,8 @@ const App: Component = () => {
                       </p>
                       <div class="flex items-center gap-3">
                         <Button
-                          class="mt-2 rounded-full border-4 border-black/30 bg-black/30 p-6 text-xl backdrop-blur-3xl"
+                          class="mt-2 rounded-full border-4 border-black/30 bg-black/30 p-6 text-xl
+                            backdrop-blur-3xl"
                           onmousedown={() =>
                             setPomodoro({
                               ...pomodoro(),
@@ -1354,7 +1380,10 @@ const App: Component = () => {
                           <DialogTrigger
                             aria-label={chrome.i18n.getMessage("add_widget")}
                           >
-                            <Button class="mt-2 rounded-full border-4 border-black/30 bg-black/5 p-6 text-xl backdrop-blur-lg">
+                            <Button
+                              class="mt-2 rounded-full border-4 border-black/30 bg-black/5 p-6 text-xl
+                                backdrop-blur-lg"
+                            >
                               {chrome.i18n.getMessage("settings")}
                             </Button>
                           </DialogTrigger>
@@ -1497,7 +1526,9 @@ const App: Component = () => {
                 <br />
                 <Show when={notepadContained()}>
                   <textarea
-                    class="mt-2 h-[150px] w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white shadow-inner shadow-white/10 outline-none backdrop-blur-2xl placeholder:text-zinc-300 focus:ring-2"
+                    class="mt-2 h-[150px] w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white
+                      shadow-inner shadow-white/10 outline-none backdrop-blur-2xl
+                      placeholder:text-zinc-300 focus:ring-2"
                     value={notepad()}
                     placeholder={chrome.i18n.getMessage("notepad_disclaimer")}
                     onInput={(e) => setNotepad(e.currentTarget.value)}
@@ -1510,7 +1541,8 @@ const App: Component = () => {
             <div id="widgets-container">
               <h1
                 id="greeting"
-                class="inset-shadow-2xl mb-6 text-5xl font-bold text-white [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
+                class="inset-shadow-2xl mb-6 text-5xl font-bold text-white
+                  [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
                 style={{
                   "text-align": layout() == "center" ? "center" : "left",
                   "padding-left": layout() == "top" ? "2.5rem" : "0",
@@ -1589,25 +1621,33 @@ const App: Component = () => {
                             <GripVertical
                               data-swapy-handle
                               height={16}
-                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white p-0.5 text-black shadow-sm hover:bg-white/90 group-hover:block"
+                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center
+                                justify-center !rounded-full bg-white p-0.5 text-black shadow-sm
+                                hover:bg-white/90 group-hover:block"
                             />
                           )}
                           {widgetOrder()[item] == "notepad" && (
                             <GripVertical
                               data-swapy-handle
                               height={16}
-                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white p-0.5 text-black shadow-sm hover:bg-white/90 group-hover:block"
+                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center
+                                justify-center !rounded-full bg-white p-0.5 text-black shadow-sm
+                                hover:bg-white/90 group-hover:block"
                             />
                           )}
                           {widgetOrder()[item] == "counter" && (
                             <GripVertical
                               data-swapy-handle
                               height={16}
-                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center justify-center !rounded-full bg-white p-0.5 text-black shadow-sm hover:bg-white/90 group-hover:block"
+                              class="absolute -top-2 right-5 hidden size-[24px] !cursor-move items-center
+                                justify-center !rounded-full bg-white p-0.5 text-black shadow-sm
+                                hover:bg-white/90 group-hover:block"
                             />
                           )}
                           <button
-                            class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block group-hover:block"
+                            class="absolute -right-2 -top-2 hidden size-[24px] items-center justify-center
+                              !rounded-full bg-white shadow-sm hover:bg-white/90 group-focus-within:block
+                              group-hover:block"
                             onmousedown={(e) => {
                               const newWidgetOrder = widgetOrder();
                               delete newWidgetOrder[item];
@@ -1661,7 +1701,8 @@ const App: Component = () => {
                       <a
                         href={bookmark.url}
                         target="_blank"
-                        class="overflow-hidden text-ellipsis whitespace-nowrap text-[28px] font-medium text-white"
+                        class="overflow-hidden text-ellipsis whitespace-nowrap text-[28px] font-medium
+                          text-white"
                       >
                         {bookmark.name}
                       </a>
