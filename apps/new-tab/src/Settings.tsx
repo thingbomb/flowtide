@@ -529,7 +529,7 @@ function SettingsTrigger({
                 />
                 <label
                   for="sw-checked-checkbox"
-                  class="ms-3 text-sm text-gray-500 dark:text-neutral-400"
+                  class="ms-3 text-sm text-gray-800 dark:text-neutral-400"
                 >
                   {chrome.i18n.getMessage("square_widgets_description")}
                 </label>
@@ -549,7 +549,7 @@ function SettingsTrigger({
                 />
                 <label
                   for="hs-checked-checkbox"
-                  class="ms-3 text-sm text-gray-500 dark:text-neutral-400"
+                  class="ms-3 text-sm text-gray-800 dark:text-neutral-400"
                 >
                   {chrome.i18n.getMessage("hide_settings_description")}
                 </label>

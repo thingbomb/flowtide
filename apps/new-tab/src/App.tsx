@@ -493,9 +493,9 @@ const App: Component = () => {
           <h1 class="mb-4 text-5xl font-[600]">
             {chrome.i18n.getMessage("choose_mode")}
           </h1>
-          <div class="**:data-selected:!ring-primary grid w-[400px] grid-cols-2 grid-rows-2 gap-2">
+          <div class="**:data-selected:!ring-primary grid w-[450px] grid-cols-2 grid-rows-2 gap-2">
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left font-normal shadow-inner shadow-white/20 ring-2 ring-transparent backdrop-blur-3xl"
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
               onmousedown={() => {
                 setMode("widgets");
@@ -506,7 +506,7 @@ const App: Component = () => {
               <span class="text-xl">{chrome.i18n.getMessage("default")}</span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left font-normal shadow-inner shadow-white/20 ring-2 ring-transparent backdrop-blur-3xl"
               {...(mode() === "dashboard" ? { "data-selected": true } : {})}
               onmousedown={() => {
                 setMode("dashboard");
@@ -517,7 +517,7 @@ const App: Component = () => {
               <span class="text-xl">{chrome.i18n.getMessage("dashboard")}</span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left font-normal shadow-inner shadow-white/20 ring-2 ring-transparent backdrop-blur-3xl"
               {...(mode() === "nightstand" ? { "data-selected": true } : {})}
               onmousedown={() => {
                 setMode("nightstand");
@@ -530,7 +530,7 @@ const App: Component = () => {
               </span>
             </button>
             <button
-              class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
+              class="card not-prose group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl bg-black/20 pl-8 text-left font-normal shadow-inner shadow-white/20 ring-2 ring-transparent backdrop-blur-3xl"
               {...(mode() === "speeddial" ? { "data-selected": true } : {})}
               onmousedown={() => {
                 setMode("speeddial");
@@ -565,7 +565,7 @@ const App: Component = () => {
   const OnboardingFlow: Component = () => {
     return (
       <div
-        class="absolute inset-0 z-50 bg-white dark:bg-[#2f2f2f]"
+        class="absolute inset-0 z-50 bg-black/30 backdrop-blur-3xl"
         id="onboarding"
       >
         {onboardingScreen() === 1 && <OnboardingScreen1 />}
@@ -1077,7 +1077,7 @@ const App: Component = () => {
               id="bottom-left-widgets-container"
               class="relative flex items-center gap-4"
             >
-              <div class="group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5 focus-within:bg-black/20 focus-within:backdrop-blur-3xl hover:bg-black/20 hover:backdrop-blur-3xl">
+              <div class="group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5 *:text-white focus-within:bg-white/20 focus-within:backdrop-blur-3xl hover:bg-white/20 hover:backdrop-blur-3xl dark:focus-within:bg-black/20 dark:hover:bg-black/20">
                 <SettingsTrigger triggerClass="text-gray-300 hover:rotate-45 group-hover:rotate-45 transition-transform" />
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
@@ -1323,12 +1323,12 @@ const App: Component = () => {
                   fallback={
                     <div class="flex flex-col items-center justify-center">
                       <h1
-                        class="m-0 p-0 text-[170px] font-semibold [line-height:1.2]"
+                        class="m-0 p-0 text-[170px] font-semibold text-white [line-height:1.2]"
                         id="pomodoroClock"
                       >
                         {formatTime(pomodoro().time)}
                       </h1>
-                      <p class="m-0 flex items-center gap-2 p-0 text-3xl font-medium">
+                      <p class="m-0 flex items-center gap-2 p-0 text-3xl font-medium text-white">
                         {pomodoro().session == "Work"
                           ? chrome.i18n.getMessage("work")
                           : chrome.i18n.getMessage("break")}
@@ -1435,13 +1435,13 @@ const App: Component = () => {
                   }
                 >
                   <h1
-                    class="m-0 p-0 text-[170px] font-semibold [line-height:1.2]"
+                    class="m-0 p-0 text-[170px] font-semibold text-white [line-height:1.2]"
                     id="nightstandClock"
                   >
                     {clock().time}
                   </h1>
                 </Show>
-                <p class="mt-3 text-3xl font-medium">
+                <p class="mt-3 text-3xl font-medium text-white">
                   <Show when={name() == ""}>
                     <Show when={dateContained()}>
                       {dateFormat() == "normal" ? (
@@ -1510,7 +1510,7 @@ const App: Component = () => {
             <div id="widgets-container">
               <h1
                 id="greeting"
-                class="inset-shadow-2xl mb-6 text-5xl font-bold [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
+                class="inset-shadow-2xl mb-6 text-5xl font-bold text-white [text-shadow:_0_10px_0_var(--tw-shadow-color)]"
                 style={{
                   "text-align": layout() == "center" ? "center" : "left",
                   "padding-left": layout() == "top" ? "2.5rem" : "0",

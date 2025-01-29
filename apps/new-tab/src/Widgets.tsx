@@ -745,7 +745,7 @@ function PomodoroWidget() {
                 </Button>
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
-                    class="inline-flex items-center gap-2 rounded-md bg-gray-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 hover:bg-gray-600 focus:outline-none focus:outline-1 focus:outline-white dark:bg-gray-800"
+                    class="inline-flex items-center gap-2 rounded-md bg-black/10 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none focus:outline-1 focus:outline-white"
                     aria-label={chrome.i18n.getMessage("add_widget")}
                   >
                     {chrome.i18n.getMessage("settings")}
