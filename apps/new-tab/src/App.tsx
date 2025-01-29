@@ -493,7 +493,7 @@ const App: Component = () => {
           <h1 class="mb-4 text-5xl font-[600]">
             {chrome.i18n.getMessage("choose_mode")}
           </h1>
-          <div class="**:data-selected:!ring-primary grid w-full grid-cols-2 grid-rows-2 gap-2">
+          <div class="**:data-selected:!ring-primary grid w-[400px] grid-cols-2 grid-rows-2 gap-2">
             <button
               class="card not-prose dark:bg-background-dark border-1 hover:!border-primary dark:hover:!border-primary-light group relative my-2 flex h-[78px] w-full cursor-pointer items-center gap-2 overflow-hidden rounded-xl border-gray-950/10 pl-8 text-left font-normal ring-2 ring-transparent dark:border-white/10"
               {...(mode() === "widgets" ? { "data-selected": true } : {})}
