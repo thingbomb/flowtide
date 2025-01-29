@@ -1,11 +1,5 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Flowtide Docs",
-  "logo": {
-    "dark": "assets/flowtide-logo.png",
-    "light": "assets/flowtide-logo.png"
-  },
-  "favicon": "assets/flowtide-logo.png",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
@@ -15,16 +9,18 @@
       "to": "#07C983"
     }
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hello@thingbomb.com"
-    }
-  ],
-  "topbarCtaButton": {
-    "name": "Home",
-    "url": "https://www.flowtide.app"
+  "favicon": "assets/flowtide-logo.png",
+  "feedback": {
+    "thumbsRating": true
   },
+  "footerSocials": {
+    "github": "https://github.com/thingbomb"
+  },
+  "logo": {
+    "dark": "assets/flowtide-logo.png",
+    "light": "assets/flowtide-logo.png"
+  },
+  "name": "Flowtide Docs",
   "navigation": [
     {
       "group": "Get Started",
@@ -39,10 +35,14 @@
       "pages": ["magic-search/overview"]
     }
   ],
-  "footerSocials": {
-    "github": "https://github.com/thingbomb"
+  "topbarCtaButton": {
+    "name": "Home",
+    "url": "https://www.flowtide.app"
   },
-  "feedback": {
-    "thumbsRating": true
-  }
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:hello@thingbomb.com"
+    }
+  ]
 }

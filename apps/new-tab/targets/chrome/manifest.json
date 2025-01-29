@@ -1,24 +1,24 @@
 {
-  "manifest_version": 3,
-  "name": "Flowtide - Beautiful New Tab",
-  "version": "3.3.2",
-  "description": "Flowtide is a beautiful new tab page for your browser.",
-  "chrome_url_overrides": {
-    "newtab": "index.html"
-  },
-  "permissions": ["bookmarks", "storage"],
-  "icons": {
-    "128": "assets/logo.png"
-  },
   "background": {
     "service_worker": "background.js"
   },
-  "default_locale": "en",
-  "host_permissions": ["https://www.flowtide.app/*"],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
   "content_scripts": [
     {
       "matches": ["https://www.flowtide.app/plugins/*"],
       "js": ["content.js"]
     }
-  ]
+  ],
+  "default_locale": "en",
+  "description": "Flowtide is a beautiful new tab page for your browser.",
+  "host_permissions": ["https://www.flowtide.app/*"],
+  "icons": {
+    "128": "assets/logo.png"
+  },
+  "manifest_version": 3,
+  "name": "Flowtide - Beautiful New Tab",
+  "permissions": ["bookmarks", "storage"],
+  "version": "3.3.2"
 }

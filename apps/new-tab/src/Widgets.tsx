@@ -221,7 +221,7 @@ function TodoWidget() {
     >
       <div class="**:text-white h-full w-full rounded-lg">
         <div class="text-foreground relative h-full w-full rounded-[20px] pt-2">
-          <div class="scrollbar-hidden max-h-[76px] overflow-auto">
+          <div class="max-h-[76px] overflow-auto">
             <div id="tasks" class="mt-2 px-4">
               {tasks()
                 .filter((task: Task) => !task.completed)
@@ -284,6 +284,174 @@ function TodoWidget() {
               {chrome.i18n.getMessage("add_task")}
             </Button>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TodoPopover() {
+  interface Task {
+    completed: boolean;
+    title: string;
+    id: string;
+  }
+
+  const getInitialTasks = () => {
+    try {
+      const stored = localStorage.getItem("tasks");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed.map((task: Task) => ({
+          ...task,
+          id: task.id || crypto.randomUUID(),
+        }));
+      }
+    } catch (error) {
+      console.error("Error loading tasks from localStorage:", error);
+    }
+    return [
+      { completed: false, title: "Task 1", id: crypto.randomUUID() },
+      { completed: false, title: "Task 2", id: crypto.randomUUID() },
+    ];
+  };
+
+  const [tasks, setTasks] = createSignal<Task[]>(getInitialTasks());
+
+  const [taskInputValue, setTaskInputValue] = createSignal("");
+  const [draggedTaskId, setDraggedTaskId] = createSignal<string | null>(null);
+
+  const handleDragStart = (e: DragEvent, taskId: string) => {
+    if (!(e.target instanceof HTMLElement)) return;
+
+    setDraggedTaskId(taskId);
+    e.dataTransfer?.setData("text/plain", taskId);
+
+    e.target.classList.add("opacity-50");
+
+    const dragImage = e.target.cloneNode(true) as HTMLElement;
+    dragImage.classList.add("fixed", "top-0", "left-0", "pointer-events-none");
+    document.body.appendChild(dragImage);
+    e.dataTransfer?.setDragImage(dragImage, 0, 0);
+    setTimeout(() => document.body.removeChild(dragImage), 0);
+  };
+
+  const handleDragOver = (e: DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer!.dropEffect = "move";
+  };
+
+  const handleDragEnd = (e: DragEvent) => {
+    if (!(e.target instanceof HTMLElement)) return;
+    e.target.classList.remove("opacity-50");
+    setDraggedTaskId(null);
+    localStorage.setItem("tasks", JSON.stringify(tasks()));
+  };
+
+  const handleDrop = (e: DragEvent, targetTaskId: string) => {
+    e.preventDefault();
+
+    const sourceTaskId = draggedTaskId();
+    if (!sourceTaskId || sourceTaskId === targetTaskId) return;
+
+    try {
+      const currentTasks = tasks();
+      const sourceIndex = currentTasks.findIndex((t) => t.id === sourceTaskId);
+      const targetIndex = currentTasks.findIndex((t) => t.id === targetTaskId);
+
+      if (sourceIndex === -1 || targetIndex === -1) return;
+
+      const newTasks = [...currentTasks];
+      const [movedTask] = newTasks.splice(sourceIndex, 1);
+      newTasks.splice(targetIndex, 0, movedTask);
+
+      setTasks(newTasks);
+      localStorage.setItem("tasks", JSON.stringify(newTasks));
+    } catch (error) {
+      console.error("Error reordering tasks:", error);
+    }
+  };
+
+  const addTask = () => {
+    if (!taskInputValue().trim()) return;
+
+    try {
+      const newTask = {
+        completed: false,
+        title: taskInputValue(),
+        id: crypto.randomUUID(),
+      };
+
+      const newTasks = [...tasks(), newTask];
+      setTasks(newTasks);
+      setTaskInputValue("");
+      localStorage.setItem("tasks", JSON.stringify(newTasks));
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
+  };
+
+  return (
+    <div id="todo-widget">
+      <div class="text-foreground flex h-full w-full flex-col">
+        <div class="flex-1 overflow-auto p-2">
+          <span class="text-sm font-semibold">
+            {chrome.i18n.getMessage("tasks")}
+          </span>
+          <div class="scrollbar-track-transparent max-h-16 overflow-auto">
+            {tasks()
+              .filter((task: Task) => !task.completed)
+              .map((task: Task, index: number) => (
+                <div
+                  draggable="true"
+                  onDragStart={(e) => handleDragStart(e, task.id)}
+                  onDragOver={handleDragOver}
+                  onDragEnd={handleDragEnd}
+                  onDrop={(e) => handleDrop(e, task.id)}
+                  class="task hover:bg-accent/20 flex cursor-move items-center gap-2 rounded p-1 transition-colors"
+                >
+                  <Checkbox
+                    id={task.id}
+                    onChange={(checked: boolean) => {
+                      try {
+                        setTasks(
+                          tasks()
+                            .map((t: Task) =>
+                              t.id === task.id
+                                ? { ...t, completed: checked }
+                                : t
+                            )
+                            .filter((t: Task) => !t.completed)
+                        );
+                        localStorage.setItem("tasks", JSON.stringify(tasks()));
+                      } catch (error) {
+                        console.error("Error updating task:", error);
+                      }
+                    }}
+                  >
+                    <CheckboxControl class="!border-white !outline-none focus:ring-2 focus:ring-offset-2" />
+                  </Checkbox>
+                  <label for={task.id} class="select-none text-xs">
+                    {task.title}
+                  </label>
+                </div>
+              ))}
+          </div>
+        </div>
+        <div class="pl-1">
+          <TextFieldRoot class="flex-1">
+            <TextField
+              placeholder={chrome.i18n.getMessage("new_task")}
+              value={taskInputValue()}
+              onInput={(e) => setTaskInputValue(e.currentTarget.value)}
+              onKeyDown={(e: KeyboardEvent) => {
+                if (e.key === "Enter") {
+                  addTask();
+                }
+              }}
+              class="text-xs !outline-white placeholder:text-white"
+            />
+          </TextFieldRoot>
         </div>
       </div>
     </div>
@@ -382,7 +550,7 @@ function BookmarksWidget() {
     >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] pt-2">
-          <div class="scrollbar-hidden **:text-white overflow-auto">
+          <div class="**:text-white overflow-auto">
             <div
               class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
@@ -450,7 +618,7 @@ function NatureWidget() {
     >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] pt-2">
-          <div class="scrollbar-hidden overflow-auto">
+          <div class="overflow-auto">
             <div
               class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
@@ -550,7 +718,7 @@ function PomodoroWidget() {
     >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] bg-black/30 p-[10px] pt-4 shadow-inner shadow-white/10 backdrop-blur-3xl">
-          <div class="scrollbar-hidden overflow-auto">
+          <div class="overflow-auto">
             <div
               class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
@@ -652,7 +820,7 @@ function FocusSoundscapes() {
     <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
       <div class="**:text-white h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px] pt-2">
-          <div class="scrollbar-hidden overflow-auto">
+          <div class="overflow-auto">
             <div
               class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
@@ -731,7 +899,7 @@ function AmbienceSoundscapes() {
     <div class="absolute inset-0 overflow-hidden rounded-[20px] bg-black/30 p-[10px] shadow-inner shadow-white/10 backdrop-blur-3xl">
       <div class="h-full w-full rounded-[10px]">
         <div class="**:text-white relative h-full w-full rounded-[10px] pt-2">
-          <div class="scrollbar-hidden overflow-auto">
+          <div class="overflow-auto">
             <div
               class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
@@ -792,7 +960,7 @@ function NotepadWidget() {
     >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px]">
-          <div class="scrollbar-hidden p-1">
+          <div class="p-1">
             <div
               class="select-none px-3.5 text-left text-xl font-bold text-white"
               id="title"
@@ -821,7 +989,7 @@ function CounterWidget() {
     >
       <div class="h-full w-full rounded-[10px]">
         <div class="relative h-full w-full rounded-[10px]">
-          <div class="scrollbar-hidden p-1">
+          <div class="p-1">
             <div class="mt-2 px-3.5">
               <h1 class="select-none text-center text-6xl font-bold text-white">
                 {counter()}
@@ -883,4 +1051,5 @@ export {
   NotepadWidget,
   CounterWidget,
   Mantras,
+  TodoPopover,
 };

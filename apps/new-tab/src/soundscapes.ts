@@ -116,7 +116,7 @@ let soundscapes = [
       "Wind__Artic__Cold.wav by cobratronik -- https://freesound.org/s/117136/ -- License: Creative Commons 0",
     ],
     index: 7,
-    categories: ["sleep", "chill", "nature", "ambience"],
+    categories: ["sleep", "chill", "ambience"],
   },
   {
     name: "Kettle",

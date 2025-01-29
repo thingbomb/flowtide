@@ -36,6 +36,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
+import { actuallyBoolean } from "./libs/boolean";
 
 function BigButton(props: any) {
   return (
@@ -524,7 +525,7 @@ function SettingsTrigger({
                   class="mt-0.5 shrink-0 rounded border-gray-200 text-blue-600 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:checked:border-blue-500 dark:checked:bg-blue-500 dark:focus:ring-offset-gray-800"
                   id="sw-checked-checkbox"
                   onChange={(e) => setSquareWidgets(e.currentTarget.checked)}
-                  checked={squareWidgets()}
+                  checked={actuallyBoolean(squareWidgets())}
                 />
                 <label
                   for="sw-checked-checkbox"

@@ -1,5 +1,9 @@
 {
   "$schema": "https://shadcn-solid.com/schema.json",
+  "alias": {
+    "component": "@/components",
+    "cn": "@/libs/cn"
+  },
   "tailwind": {
     "config": "tailwind.config.cjs",
     "css": {
@@ -8,9 +12,5 @@
     },
     "color": "zinc",
     "prefix": ""
-  },
-  "alias": {
-    "component": "@/components",
-    "cn": "@/libs/cn"
   }
 }

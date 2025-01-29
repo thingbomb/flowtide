@@ -11,11 +11,12 @@ import {
   Grid,
   GripVertical,
   Home,
-  Menu,
+  Minus,
   Pause,
   Play,
   Plus,
   Star,
+  Volume2,
   X,
 } from "lucide-solid";
 import { createSwapy } from "swapy";
@@ -32,6 +33,7 @@ import {
   NotepadWidget,
   PomodoroWidget,
   StopwatchWidget,
+  TodoPopover,
   TodoWidget,
 } from "./Widgets";
 import data from "../public/_locales/en/messages.json";
@@ -54,8 +56,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuItemLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu";
 import { DropdownMenuSubTriggerProps } from "@kobalte/core/dropdown-menu";
@@ -64,12 +64,33 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "./components/ui/popover";
+import { PopoverTriggerProps } from "@kobalte/core/popover";
+import soundscapes, { Soundscape } from "./soundscapes";
+import { actuallyBoolean } from "./libs/boolean";
 
 type MessageKeys = keyof typeof data;
 
 interface Data {
   [key: string]: { message: string };
 }
+
+const mantras = [
+  "mantra_1",
+  "mantra_2",
+  "mantra_3",
+  "mantra_4",
+  "mantra_5",
+  "mantra_6",
+  "mantra_7",
+  "mantra_8",
+  "mantra_9",
+  "mantra_10",
+  "mantra_11",
+  "mantra_12",
+  "mantra_13",
+  "mantra_14",
+  "mantra_15",
+];
 
 try {
   chrome.i18n.getMessage("work");
@@ -169,7 +190,7 @@ const App: Component = () => {
       ? JSON.parse(localStorage.getItem("widgetPlacement") as string)
       : {
           clock: "clock",
-          date: "date",
+          bookmarks: "bookmarks",
         }
   );
   const [greetingNameValue, setGreetingNameValue] = createSignal("");
@@ -185,6 +206,7 @@ const App: Component = () => {
     "squareWidgets",
     false
   );
+  const [currentlyPlaying, setCurrentlyPlaying] = createSignal<any>(null);
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
     "assets/logo.png"
@@ -193,6 +215,7 @@ const App: Component = () => {
     "dateFormat",
     "normal"
   );
+  const [notepad, setNotepad] = createStoredSignal<string>("notepad", "");
   const [layout, setLayout] = createStoredSignal("layout", "center");
   const [currentFont, setCurrentFont] = createStoredSignal("font", "sans");
   const [background, setBackground] = createStoredSignal("background", "image");
@@ -223,8 +246,11 @@ const App: Component = () => {
     playing: false,
   });
   const [dateContained, setDateContained] = createSignal(false);
+  const [counterContained, setCounterContained] = createSignal(false);
+  const [notepadContained, setNotepadContained] = createSignal(false);
+  const [stopwatchContained, setStopwatchContained] = createSignal(false);
+  const [mantrasContained, setMantrasContained] = createSignal(false);
   const [bookmarksContained, setBookmarksContained] = createSignal(false);
-
   const [wallpaperChangeTime, setWallpaperChangeTime] =
     createStoredSignal<number>("wallpaperChangeTime", 1000 * 60 * 60 * 24 * 7);
   const clock = formattedClock();
@@ -276,6 +302,14 @@ const App: Component = () => {
     "itemsHidden",
     "false"
   );
+  const [todosContained, setTodosContained] = createSignal(false);
+  const [natureSounds, setNatureSounds] = createSignal(false);
+  const [focusSounds, setFocusSounds] = createSignal(false);
+  const [ambienceSounds, setAmbienceSounds] = createSignal(false);
+  const [soundscapesEnabled, setSoundscapesEnabled] = createSignal(false);
+  const [stopwatchTime, setStopwatchTime] = createSignal(0);
+  const [stopwatchRunning, setStopwatchRunning] = createSignal(false);
+  const [counter, setCounter] = createStoredSignal("counter", 0);
 
   function formatTime(time: number) {
     const minutes = Math.floor(time / 60);
@@ -306,6 +340,12 @@ const App: Component = () => {
         setBookmarks(allBookmarks);
       });
     }
+
+    setInterval(() => {
+      if (stopwatchContained() && stopwatchRunning()) {
+        setStopwatchTime(stopwatchTime() + 1);
+      }
+    }, 1000);
 
     setInterval(() => {
       if (pomodoro().playing) {
@@ -365,11 +405,28 @@ const App: Component = () => {
     }
   }, [opacity]);
 
-  function updateContainsValues() {
-    const entries = Object.entries(widgetOrder());
-    setDateContained(entries.some(([key, value]) => key === "date" && value));
-    setBookmarksContained(entries.some(([key, value]) => key === "bookmarks"));
-    setPomodoroContained(!entries.some(([key, value]) => key === "pomodoro"));
+  function updateContainsValues(order?: any) {
+    const entries = Object.entries(order ? order : widgetOrder());
+    setDateContained(entries.some(([key, value]) => value === "date"));
+    setBookmarksContained(
+      entries.some(([key, value]) => value === "bookmarks")
+    );
+    setNotepadContained(entries.some(([key, value]) => value === "notepad"));
+    setPomodoroContained(!entries.some(([key, value]) => value === "pomodoro"));
+    setMantrasContained(entries.some(([key, value]) => value === "mantras"));
+    setStopwatchContained(
+      entries.some(([key, value]) => value === "stopwatch")
+    );
+    setTodosContained(entries.some(([key, value]) => value === "todo"));
+    setSoundscapesEnabled(
+      entries.some(([key, value]) => value === "nature") ||
+        entries.some(([key, value]) => value === "focus") ||
+        entries.some(([key, value]) => value === "ambience")
+    );
+    setNatureSounds(entries.some(([key, value]) => value === "nature"));
+    setFocusSounds(entries.some(([key, value]) => value === "focus"));
+    setAmbienceSounds(entries.some(([key, value]) => value === "ambience"));
+    setCounterContained(entries.some(([key, value]) => value === "counter"));
   }
 
   updateContainsValues();
@@ -661,12 +718,12 @@ const App: Component = () => {
                 }
               }
               setWidgetOrder(newWidgetOrder);
-              updateContainsValues();
               localStorage.setItem(
                 "widgetPlacement",
                 JSON.stringify(newWidgetOrder)
               );
               updateFilteredWidgets();
+              updateContainsValues(newWidgetOrder);
               setDialogOpen(false);
             }}
           >
@@ -762,7 +819,7 @@ const App: Component = () => {
           <Show when={mode() == "widgets"}>
             <div
               id="top-widgets-container"
-              class="fixed left-0 right-0 top-0 z-20 flex gap-4 p-2"
+              class="fixed left-0 right-0 top-0 z-20 flex justify-between gap-4 p-2"
               style={{
                 display: itemsHidden() == "true" ? "none" : "",
               }}
@@ -774,29 +831,240 @@ const App: Component = () => {
                       as={(props: DropdownMenuSubTriggerProps) => (
                         <Button
                           variant="outline"
-                          class="flex h-8 items-center gap-2 !bg-black/40 backdrop-blur-3xl hover:!bg-black/55"
+                          class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700"
                           {...props}
                         >
                           <Star class="h-4 w-4 text-gray-300" />
-                          <span>Bookmarks</span>
+                          <span>{chrome.i18n.getMessage("bookmarks")}</span>
                         </Button>
                       )}
                     />
                     <DropdownMenuContent class="max-h-96 w-56 overflow-y-auto">
-                      {bookmarks().map((bookmark: Bookmark, index: number) => (
-                        <DropdownMenuItem
-                          onSelect={() => {
-                            window.location.href = bookmark.url;
-                          }}
+                      {bookmarks().length > 0 ? (
+                        <>
+                          {bookmarks().map(
+                            (bookmark: Bookmark, index: number) => (
+                              <DropdownMenuItem
+                                onSelect={() => {
+                                  window.location.href = bookmark.url;
+                                }}
+                              >
+                                {bookmark.name}
+                              </DropdownMenuItem>
+                            )
+                          )}
+                        </>
+                      ) : (
+                        <span class="p-4 text-sm font-medium">
+                          {chrome.i18n.getMessage("no_bookmarks")}
+                        </span>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </Show>
+                <Show when={soundscapesEnabled()}>
+                  <DropdownMenu placement="bottom">
+                    <DropdownMenuTrigger
+                      as={(props: DropdownMenuSubTriggerProps) => (
+                        <Button
+                          variant="outline"
+                          class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700"
+                          {...props}
                         >
-                          {bookmark.name}
-                        </DropdownMenuItem>
-                      ))}
+                          <Volume2 class="h-4 w-4 text-gray-300" />
+                          <span>{chrome.i18n.getMessage("soundscapes")}</span>
+                        </Button>
+                      )}
+                    />
+                    <DropdownMenuContent class="max-h-96 w-56 overflow-y-auto">
+                      {soundscapes.length > 0 ? (
+                        <>
+                          <DropdownMenuItem
+                            onSelect={() => {
+                              window.open(
+                                "https://noisefill.com/credits",
+                                "_blank"
+                              );
+                            }}
+                          >
+                            View sound credits
+                          </DropdownMenuItem>
+                          <br />
+                          <Show when={natureSounds()}>
+                            <span class="select-none p-2 pb-5 pt-5 text-sm font-semibold">
+                              {chrome.i18n.getMessage("nature_sounds")}
+                            </span>
+                            {soundscapes
+                              .filter((soundscape) =>
+                                soundscape.categories.includes("nature")
+                              )
+                              .map((soundscape, index: number) => (
+                                <DropdownMenuItem
+                                  onSelect={() => {
+                                    if (
+                                      currentlyPlaying() == `nature-${index}`
+                                    ) {
+                                      setCurrentlyPlaying(null);
+                                      (
+                                        document.getElementById(
+                                          "audio"
+                                        ) as HTMLAudioElement
+                                      )?.load();
+                                    } else {
+                                      setCurrentlyPlaying(`nature-${index}`);
+                                      (
+                                        document.getElementById(
+                                          "audio"
+                                        ) as HTMLAudioElement
+                                      )?.load();
+                                    }
+                                  }}
+                                >
+                                  {soundscape.name}
+                                </DropdownMenuItem>
+                              ))}
+                          </Show>
+                          <Show when={focusSounds()}>
+                            {natureSounds() && <br />}
+                            <span class="select-none p-2 pb-5 pt-5 text-sm font-semibold">
+                              {chrome.i18n.getMessage("focus_sounds")}
+                            </span>
+                            {soundscapes
+                              .filter((soundscape) => {
+                                if (
+                                  natureSounds() &&
+                                  soundscape.categories.includes("nature")
+                                ) {
+                                  return false;
+                                }
+                                return soundscape.categories.includes("focus");
+                              })
+                              .map((soundscape, index: number) => (
+                                <DropdownMenuItem
+                                  onSelect={() => {
+                                    if (
+                                      currentlyPlaying() == `focus-${index}`
+                                    ) {
+                                      setCurrentlyPlaying(null);
+                                      (
+                                        document.getElementById(
+                                          "audio"
+                                        ) as HTMLAudioElement
+                                      )?.load();
+                                    } else {
+                                      setCurrentlyPlaying(`focus-${index}`);
+                                      (
+                                        document.getElementById(
+                                          "audio"
+                                        ) as HTMLAudioElement
+                                      )?.load();
+                                    }
+                                  }}
+                                >
+                                  {soundscape.name}
+                                </DropdownMenuItem>
+                              ))}
+                          </Show>
+                          <Show when={ambienceSounds()}>
+                            {(focusSounds() || natureSounds()) && <br />}
+                            <span class="select-none p-2 pb-5 pt-5 text-sm font-medium">
+                              {chrome.i18n.getMessage("ambience_sounds")}
+                            </span>
+                            {soundscapes
+                              .filter((soundscape) => {
+                                if (
+                                  natureSounds() &&
+                                  soundscape.categories.includes("nature")
+                                ) {
+                                  return false;
+                                }
+                                if (
+                                  focusSounds() &&
+                                  soundscape.categories.includes("focus")
+                                ) {
+                                  return false;
+                                }
+                                return soundscape.categories.includes(
+                                  "ambience"
+                                );
+                              })
+                              .map((soundscape, index: number) => (
+                                <DropdownMenuItem
+                                  onSelect={() => {
+                                    if (
+                                      currentlyPlaying() == `ambience-${index}`
+                                    ) {
+                                      setCurrentlyPlaying(null);
+                                      (
+                                        document.getElementById(
+                                          "audio"
+                                        ) as HTMLAudioElement
+                                      )?.load();
+                                    } else {
+                                      setCurrentlyPlaying(`ambience-${index}`);
+                                      (
+                                        document.getElementById(
+                                          "audio"
+                                        ) as HTMLAudioElement
+                                      )?.load();
+                                    }
+                                  }}
+                                >
+                                  {soundscape.name}
+                                </DropdownMenuItem>
+                              ))}
+                          </Show>
+                        </>
+                      ) : (
+                        <span class="p-4 text-sm font-medium">
+                          {chrome.i18n.getMessage("no_bookmarks")}
+                        </span>
+                      )}
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </Show>
               </div>
-              <div id="top-right-widgets-container" class="flex gap-4"></div>
+              <div id="top-right-widgets-container" class="flex">
+                <Show when={counterContained()}>
+                  <div
+                    id="counter-widget"
+                    class="flex items-center gap-2 px-4 py-2"
+                  >
+                    <button
+                      onmousedown={() => setCounter(Number(counter()) - 1)}
+                      class="text-sm font-semibold"
+                    >
+                      <Minus class="h-5 w-5" fill="currentColor" />
+                    </button>
+                    <p class="select-none text-sm font-semibold">{counter()}</p>
+                    <button
+                      onmousedown={() => setCounter(Number(counter()) + 1)}
+                      class="text-sm font-semibold"
+                    >
+                      <Plus class="h-5 w-5" fill="currentColor" />
+                    </button>
+                  </div>
+                </Show>
+                <Show when={stopwatchContained()}>
+                  <div
+                    id="stopwatch-widget"
+                    class="flex items-center gap-2 px-4 py-2"
+                  >
+                    <p class="select-none text-sm font-semibold">
+                      {formatTime(stopwatchTime())}
+                    </p>
+                    <button
+                      onclick={() => setStopwatchRunning(!stopwatchRunning())}
+                    >
+                      {stopwatchRunning() ? (
+                        <Pause class="h-5 w-5" fill="currentColor" />
+                      ) : (
+                        <Play class="h-5 w-5" fill="currentColor" />
+                      )}
+                    </button>
+                  </div>
+                </Show>
+              </div>
             </div>
           </Show>
           <div
@@ -807,12 +1075,12 @@ const App: Component = () => {
               id="bottom-left-widgets-container"
               class="relative flex items-center gap-4"
             >
-              <div class="group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5 hover:bg-black/20 hover:backdrop-blur-3xl">
+              <div class="group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5 focus-within:bg-black/20 focus-within:backdrop-blur-3xl hover:bg-black/20 hover:backdrop-blur-3xl">
                 <SettingsTrigger triggerClass="text-gray-300 hover:rotate-45 group-hover:rotate-45 transition-transform" />
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <DialogTrigger
                     aria-label={chrome.i18n.getMessage("add_widget")}
-                    class="hidden group-hover:block"
+                    class="hidden group-focus-within:block group-hover:block"
                   >
                     <Plus class="transition-transform" />
                   </DialogTrigger>
@@ -978,9 +1246,8 @@ const App: Component = () => {
                   )}
                 </button>
               </div>
-              {selectedImage().author && background() == "image" && (
+              {selectedImage().author && background() == "image" ? (
                 <span class="ml-10 flex h-9 select-none items-center gap-1 p-1.5 text-sm font-medium text-white">
-                  Photo by{" "}
                   <a href={selectedImage().author.url}>
                     {selectedImage().author.name}
                   </a>{" "}
@@ -989,16 +1256,50 @@ const App: Component = () => {
                     Unsplash
                   </a>
                 </span>
+              ) : (
+                <span class="ml-10 flex h-9 select-none items-center gap-1 p-1.5 text-sm font-medium text-white"></span>
               )}
             </div>
-            <Show when={mode() == "widgets"}>
+            <Show when={mode() == "widgets" && itemsHidden() == "false"}>
               <div
-                id="bottom-right-widgets-container"
-                style={{
-                  display: itemsHidden() == "true" ? "none" : "",
-                }}
-              ></div>
+                id="bottom-center-widgets-container"
+                class="text-md fixed bottom-0 left-0 right-0 -z-50 m-2.5 flex !h-[36px] items-center justify-center gap-2 text-center font-medium"
+              >
+                <Show when={mantrasContained()}>
+                  <p>
+                    {chrome.i18n.getMessage(
+                      mantras[Math.floor(Math.random() * mantras.length)]
+                    )}
+                  </p>
+                </Show>
+              </div>
             </Show>
+            <div
+              id="bottom-right-widgets-container"
+              style={{
+                display: itemsHidden() == "true" ? "none" : "",
+              }}
+            >
+              <Show when={todosContained()}>
+                <Popover placement="top-end">
+                  <PopoverTrigger
+                    as={(props: PopoverTriggerProps) => (
+                      <Button
+                        variant="outline"
+                        class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700"
+                        {...props}
+                      >
+                        <Check class="h-4 w-4 text-gray-300" />
+                        <span>{chrome.i18n.getMessage("tasks")}</span>
+                      </Button>
+                    )}
+                  />
+                  <PopoverContent class="max-h-96 w-56 overflow-y-auto">
+                    <TodoPopover />
+                  </PopoverContent>
+                </Popover>
+              </Show>
+            </div>
           </div>
           <div
             class="flex items-center justify-center"
@@ -1187,6 +1488,15 @@ const App: Component = () => {
                     , {name()}.
                   </Show>
                 </p>
+                <br />
+                <Show when={notepadContained()}>
+                  <textarea
+                    class="mt-2 h-[150px] w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white shadow-inner shadow-white/10 outline-none backdrop-blur-2xl placeholder:text-zinc-300 focus:ring-2"
+                    value={notepad()}
+                    placeholder={chrome.i18n.getMessage("notepad_disclaimer")}
+                    onInput={(e) => setNotepad(e.currentTarget.value)}
+                  ></textarea>
+                </Show>
               </div>
             </Show>
           </div>
@@ -1234,7 +1544,7 @@ const App: Component = () => {
                         <div
                           class={cn(
                             "widget group",
-                            squareWidgets()
+                            actuallyBoolean(squareWidgets())
                               ? widgetOrder()[item] === "clock" ||
                                 widgetOrder()[item] === "date"
                                 ? "widget-square"
@@ -1356,6 +1666,20 @@ const App: Component = () => {
           )}
         </div>
       </div>
+      <Show when={mode() == "widgets"}>
+        <audio
+          src={
+            currentlyPlaying()
+              ? (soundscapes as Soundscape[]).filter((item: Soundscape) =>
+                  item.categories.includes(currentlyPlaying().split("-")[0])
+                )[currentlyPlaying().split("-")[1]]?.url
+              : ""
+          }
+          id="audio"
+          autoplay
+          loop
+        ></audio>
+      </Show>
       <CommandPalette />
     </main>
   );

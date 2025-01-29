@@ -1,15 +1,36 @@
 {
-  "welcome_message": {
-    "message": "Bienvenue à Flowtide"
+  "actions": {
+    "message": "Actions"
   },
-  "get_started": {
-    "message": "Commencer"
+  "add": {
+    "message": "Ajouter"
   },
-  "resources": {
-    "message": "Ressources"
+  "add_task": {
+    "message": "Ajouter une tâche"
   },
-  "start_using": {
-    "message": "Commencer à utiliser Flowtide"
+  "add_widget": {
+    "message": "Ajouter un widget"
+  },
+  "added": {
+    "message": "Ajouté"
+  },
+  "ambience": {
+    "message": "Ambiance"
+  },
+  "ambience_sounds": {
+    "message": "Sons d'ambiance"
+  },
+  "ambience_sounds_description": {
+    "message": "Des ambiances sonores pour vous aider à vous détendre."
+  },
+  "appearance": {
+    "message": "Apparence"
+  },
+  "background": {
+    "message": "Arrière-plan"
+  },
+  "blank": {
+    "message": "Vide"
   },
   "blocks": {
     "message": "Blocs"
@@ -17,71 +38,59 @@
   "blocks_description": {
     "message": "Améliorez votre page Nouvel onglet avec des blocs magnifiquement conçus par Flowtide. Vous pouvez en ajouter autant que vous le souhaitez à votre page d'accueil."
   },
-  "add": {
-    "message": "Ajouter"
+  "bookmark_folders": {
+    "message": "Dossiers de marque-pages"
   },
-  "added": {
-    "message": "Ajouté"
+  "bookmarks": {
+    "message": "Signets"
   },
-  "settings": {
-    "message": "Réglages"
+  "bookmarks_description": {
+    "message": "Accédez facilement à vos 9 premiers signets grâce à ce widget."
   },
-  "greeting": {
-    "message": "Créer un message d'accueil"
+  "break": {
+    "message": "Pause"
   },
-  "enter_name": {
-    "message": "Entrez votre nom"
+  "break_minutes": {
+    "message": "Pause minutes"
   },
-  "skip": {
-    "message": "Sauter"
+  "center": {
+    "message": "Centre"
   },
-  "copied_to_clipboard": {
-    "message": "Copié dans le presse-papiers"
+  "choose_file": {
+    "message": "Choisir le fichier"
   },
-  "create_google_document": {
-    "message": "Créer un document Google"
+  "choose_mode": {
+    "message": "Choisir un mode"
   },
-  "create_word_document": {
-    "message": "Créer un document Word"
+  "clock": {
+    "message": "Horloge"
   },
-  "create_notion_page": {
-    "message": "Créer une page de Notion"
+  "clock_description": {
+    "message": "Ajoutez un widget horloge à votre page d'accueil."
   },
-  "create_google_sheet": {
-    "message": "Créer Google Sheet"
+  "clock_format": {
+    "message": "Format horloge"
+  },
+  "close": {
+    "message": "Fermer"
+  },
+  "comic_sans": {
+    "message": "Comic Sans"
+  },
+  "complete": {
+    "message": "Compléter"
   },
   "compose_gmail_message": {
     "message": "Écrire un message Gmail"
   },
-  "create_google_slide": {
-    "message": "Créer un slide Google"
+  "copied_to_clipboard": {
+    "message": "Copié dans le presse-papiers"
   },
-  "create_google_calendar_event": {
-    "message": "Créer un événement Google Agenda"
+  "counter": {
+    "message": "Compteur"
   },
-  "create_excel_workbook": {
-    "message": "Créer un classeur Excel"
-  },
-  "create_powerpoint_presentation": {
-    "message": "Créer une présentation PowerPoint"
-  },
-  "create_paper_document": {
-    "message": "Créer un document papier"
-  },
-  "create_todoist_task": {
-    "message": "Créer une tâche Todoist"
-  },
-  "create_github_repository": {
-    "message": "Créer un dépôt GitHub"
-  },
-  "create_github_gist": {
-    "message": "Créer une Gist GitHub"
-  },
-  "create_figma_file": {
-    "message": "Créer un fichier Figma"
-  },
-  "create_zoom_meeting": {
-    "message": "Créer une réunion Zoom"
+  "counter_description": {
+    "message": "Compter facilement les choses."
   },
   "create_bitly_link": {
     "message": "Créer un lien Bitly"
@@ -92,26 +101,116 @@
   "create_canva_video": {
     "message": "Créer une vidéo Canva"
   },
-  "type_command": {
-    "message": "Tapez une commande"
+  "create_excel_workbook": {
+    "message": "Créer un classeur Excel"
   },
-  "no_results": {
-    "message": "Aucun résultat trouvé"
+  "create_figma_file": {
+    "message": "Créer un fichier Figma"
   },
-  "actions": {
-    "message": "Actions"
+  "create_github_gist": {
+    "message": "Créer une Gist GitHub"
   },
-  "bookmarks": {
-    "message": "Signets"
+  "create_github_repository": {
+    "message": "Créer un dépôt GitHub"
   },
-  "bookmark_folders": {
-    "message": "Dossiers de marque-pages"
+  "create_google_calendar_event": {
+    "message": "Créer un événement Google Agenda"
   },
-  "good_morning": {
-    "message": "Bonjour"
+  "create_google_document": {
+    "message": "Créer un document Google"
   },
-  "good_night": {
-    "message": "Bonne nuit"
+  "create_google_sheet": {
+    "message": "Créer Google Sheet"
+  },
+  "create_google_slide": {
+    "message": "Créer un slide Google"
+  },
+  "create_notion_page": {
+    "message": "Créer une page de Notion"
+  },
+  "create_paper_document": {
+    "message": "Créer un document papier"
+  },
+  "create_powerpoint_presentation": {
+    "message": "Créer une présentation PowerPoint"
+  },
+  "create_todoist_task": {
+    "message": "Créer une tâche Todoist"
+  },
+  "create_vercel_project": {
+    "message": "Create Vercel Project"
+  },
+  "create_word_document": {
+    "message": "Créer un document Word"
+  },
+  "create_zoom_meeting": {
+    "message": "Créer une réunion Zoom"
+  },
+  "custom_color": {
+    "message": "Custom color"
+  },
+  "custom_url": {
+    "message": "URL personnalisée"
+  },
+  "dark": {
+    "message": "Sombre"
+  },
+  "date": {
+    "message": "Date"
+  },
+  "date_description": {
+    "message": "Un widget élégant qui affiche la date du jour."
+  },
+  "date_format": {
+    "message": "Format de la date"
+  },
+  "edit_the_pomodoro_settings": {
+    "message": "Modifier les paramètres pomodoro."
+  },
+  "enter_greeting": {
+    "message": "Saisir le message d'accueil"
+  },
+  "enter_name": {
+    "message": "Entrez votre nom"
+  },
+  "every_day": {
+    "message": "Tous les jours"
+  },
+  "every_hour": {
+    "message": "Toutes les heures"
+  },
+  "every_reload": {
+    "message": "Chaque recharge"
+  },
+  "every_week": {
+    "message": "Chaque semaine"
+  },
+  "feature_request": {
+    "message": "Demande de fonctionnalité"
+  },
+  "focus": {
+    "message": "Focus"
+  },
+  "focus_sounds": {
+    "message": "Focus Sounds"
+  },
+  "focus_sounds_description": {
+    "message": "Des paysages sonores pour vous aider à vous concentrer."
+  },
+  "font": {
+    "message": "Font"
+  },
+  "forum": {
+    "message": "Forum"
+  },
+  "general": {
+    "message": "Général"
+  },
+  "get_started": {
+    "message": "Commencer"
+  },
+  "go_back": {
+    "message": "Retourner"
   },
   "good_afternoon": {
     "message": "Bonjour à tous"
@@ -119,296 +218,68 @@
   "good_evening": {
     "message": "Bonsoir à tous"
   },
-  "widgets": {
-    "message": "Widgets"
+  "good_morning": {
+    "message": "Bonjour"
   },
-  "nightstand": {
-    "message": "Table de nuit"
-  },
-  "speed_dial": {
-    "message": "Numérotation rapide"
-  },
-  "choose_mode": {
-    "message": "Choisir un mode"
-  },
-  "complete": {
-    "message": "Compléter"
-  },
-  "mode": {
-    "message": "Mode"
-  },
-  "layout": {
-    "message": "Mise en page"
-  },
-  "font": {
-    "message": "Font"
-  },
-  "sans": {
-    "message": "Sans"
-  },
-  "serif": {
-    "message": "Serif"
-  },
-  "mono": {
-    "message": "Mono"
-  },
-  "theme": {
-    "message": "Thème"
-  },
-  "light": {
-    "message": "Lumière"
-  },
-  "dark": {
-    "message": "Sombre"
-  },
-  "background": {
-    "message": "Arrière-plan"
-  },
-  "image": {
-    "message": "Image"
+  "good_night": {
+    "message": "Bonne nuit"
   },
   "gradient": {
     "message": "Dégradé"
   },
-  "blank": {
-    "message": "Vide"
-  },
-  "solid_color": {
-    "message": "Couleur unie"
-  },
-  "leave_blank_to_disable": {
-    "message": "Laisser en blanc pour désactiver."
-  },
-  "set_greeting": {
-    "message": "Définir un message d'accueil."
-  },
-  "more": {
-    "message": "En savoir plus"
-  },
-  "go_back": {
-    "message": "Retourner"
-  },
-  "forum": {
-    "message": "Forum"
-  },
-  "feature_request": {
-    "message": "Demande de fonctionnalité"
-  },
-  "saved": {
-    "message": "Sauvegardé"
-  },
-  "center": {
-    "message": "Centre"
-  },
-  "top": {
-    "message": "Haut"
-  },
-  "page_title": {
-    "message": "Titre de la page"
-  },
-  "page": {
-    "message": "Titre et icône de la page"
-  },
-  "save": {
-    "message": "Économiser"
-  },
-  "lowercase": {
-    "message": "Minuscules"
-  },
-  "uppercase": {
-    "message": "Majuscules"
-  },
-  "normal": {
-    "message": "Normal"
-  },
-  "text_style": {
-    "message": "Style de texte"
-  },
-  "opacity": {
-    "message": "Opacité"
-  },
-  "wallpaper_blur": {
-    "message": "Papier peint flou"
-  },
-  "general": {
-    "message": "Général"
-  },
-  "appearance": {
-    "message": "Apparence"
-  },
-  "new_wallpaper": {
-    "message": "Nouveau papier peint"
-  },
-  "every_reload": {
-    "message": "Chaque recharge"
-  },
-  "every_hour": {
-    "message": "Toutes les heures"
-  },
-  "every_day": {
-    "message": "Tous les jours"
-  },
-  "every_week": {
-    "message": "Chaque semaine"
-  },
-  "sound_attribution": {
-    "message": "Attribution du son"
-  },
-  "ambience": {
-    "message": "Ambiance"
-  },
-  "focus": {
-    "message": "Focus"
-  },
-  "nature": {
-    "message": "Nature"
-  },
-  "pomodoro_settings": {
-    "message": "Paramètres Pomodoro"
-  },
-  "edit_the_pomodoro_settings": {
-    "message": "Modifier les paramètres pomodoro."
-  },
-  "work_minutes": {
-    "message": "Minutes de travail"
-  },
-  "break_minutes": {
-    "message": "Pause minutes"
-  },
-  "you_may_need_to_refresh": {
-    "message": "Il se peut que vous deviez actualiser la page pour voir les changements."
-  },
-  "pomodoro": {
-    "message": "Pomodoro"
-  },
-  "pomodoro_timer": {
-    "message": "Minuteur Pomodoro"
-  },
-  "reset": {
-    "message": "Remise à zéro"
-  },
-  "start": {
-    "message": "Démarrage"
-  },
-  "stop": {
-    "message": "Arrêter"
-  },
-  "add_task": {
-    "message": "Ajouter une tâche"
-  },
-  "new_task": {
-    "message": "Nouvelle tâche"
-  },
-  "focus_sounds": {
-    "message": "Focus Sounds"
-  },
-  "ambience_sounds": {
-    "message": "Sons d'ambiance"
-  },
-  "nature_sounds": {
-    "message": "Sons de la nature"
-  },
-  "todo_list": {
-    "message": "Liste des tâches à accomplir"
-  },
-  "stopwatch": {
-    "message": "Chronomètre"
-  },
-  "clock": {
-    "message": "Horloge"
-  },
-  "date": {
-    "message": "Date"
-  },
-  "bookmarks_description": {
-    "message": "Accédez facilement à vos 9 premiers signets grâce à ce widget."
-  },
-  "pomodoro_description": {
-    "message": "Utilisez la technique pomodoro pour un flux de travail basé sur les intervalles."
-  },
-  "nature_description": {
-    "message": "Écoutez des paysages sonores de la nature avec ce widget."
-  },
-  "focus_sounds_description": {
-    "message": "Des paysages sonores pour vous aider à vous concentrer."
-  },
-  "ambience_sounds_description": {
-    "message": "Des ambiances sonores pour vous aider à vous détendre."
-  },
-  "todo_list_description": {
-    "message": "Suivez vos tâches grâce à un widget facile à utiliser."
-  },
-  "stopwatch_description": {
-    "message": "Ajoutez un widget chronomètre à votre page d'accueil."
-  },
-  "clock_description": {
-    "message": "Ajoutez un widget horloge à votre page d'accueil."
-  },
-  "date_description": {
-    "message": "Un widget élégant qui affiche la date du jour."
-  },
-  "show_items": {
-    "message": "Afficher les articles"
+  "greeting": {
+    "message": "Créer un message d'accueil"
   },
   "hide_items": {
     "message": "Masquer les éléments"
   },
-  "start_background_changes": {
-    "message": "Commencer les changements d'arrière-plan"
+  "hide_settings": {
+    "message": "Hide settings button"
   },
-  "pause_background_changes": {
-    "message": "Mettre en pause les modifications de l'arrière-plan"
-  },
-  "work": {
-    "message": "Travail"
-  },
-  "break": {
-    "message": "Pause"
-  },
-  "add_widget": {
-    "message": "Ajouter un widget"
+  "hide_settings_description": {
+    "message": "Hide the settings button except on hover"
   },
   "icon": {
     "message": "Icône"
   },
-  "new_tab": {
-    "message": "Nouvel onglet"
+  "image": {
+    "message": "Image"
   },
-  "enter_greeting": {
-    "message": "Saisir le message d'accueil"
+  "layout": {
+    "message": "Mise en page"
   },
-  "close": {
-    "message": "Fermer"
+  "leave_blank_to_disable": {
+    "message": "Laisser en blanc pour désactiver."
   },
-  "search": {
-    "message": "Recherche"
+  "light": {
+    "message": "Lumière"
   },
-  "clock_format": {
-    "message": "Format horloge"
+  "local_file": {
+    "message": "Fichier local"
   },
-  "comic_sans": {
-    "message": "Comic Sans"
-  },
-  "notepad": {
-    "message": "Bloc-notes"
-  },
-  "notepad_description": {
-    "message": "Un simple widget de bloc-notes."
-  },
-  "notepad_disclaimer": {
-    "message": "Les notes sont stockées dans la mémoire locale de votre navigateur, ce qui peut être peu fiable et entraîner une perte de données."
-  },
-  "date_format": {
-    "message": "Format de la date"
-  },
-  "counter": {
-    "message": "Compteur"
-  },
-  "counter_description": {
-    "message": "Compter facilement les choses."
+  "lowercase": {
+    "message": "Minuscules"
   },
   "mantra_1": {
     "message": "Chaque jour est une chance de grandir."
+  },
+  "mantra_10": {
+    "message": "Soyez ici, en ce moment."
+  },
+  "mantra_11": {
+    "message": "Chaque souffle est un nouveau départ."
+  },
+  "mantra_12": {
+    "message": "Le présent est tout ce que nous avons vraiment."
+  },
+  "mantra_13": {
+    "message": "Rêvez grand, commencez petit."
+  },
+  "mantra_14": {
+    "message": "Concentrez-vous sur ce que vous pouvez contrôler."
+  },
+  "mantra_15": {
+    "message": "La grandeur commence par la première étape."
   },
   "mantra_2": {
     "message": "Progress, pas la perfection."
@@ -434,47 +305,122 @@
   "mantra_9": {
     "message": "Un cœur plein d'espoir voit des possibilités infinies."
   },
-  "mantra_10": {
-    "message": "Soyez ici, en ce moment."
-  },
-  "mantra_11": {
-    "message": "Chaque souffle est un nouveau départ."
-  },
-  "mantra_12": {
-    "message": "Le présent est tout ce que nous avons vraiment."
-  },
-  "mantra_13": {
-    "message": "Rêvez grand, commencez petit."
-  },
-  "mantra_14": {
-    "message": "Concentrez-vous sur ce que vous pouvez contrôler."
-  },
-  "mantra_15": {
-    "message": "La grandeur commence par la première étape."
-  },
   "mantras": {
     "message": "Mantras"
   },
   "mantras_description": {
     "message": "Des mantras inspirants dans chaque nouvel onglet."
   },
-  "toggle_theme": {
-    "message": "Totale theme"
+  "mode": {
+    "message": "Mode"
   },
-  "custom_url": {
-    "message": "URL personnalisée"
+  "mono": {
+    "message": "Mono"
   },
-  "local_file": {
-    "message": "Fichier local"
+  "more": {
+    "message": "En savoir plus"
   },
-  "choose_file": {
-    "message": "Choisir le fichier"
+  "nature": {
+    "message": "Nature"
   },
-  "create_vercel_project": {
-    "message": "Create Vercel Project"
+  "nature_description": {
+    "message": "Écoutez des paysages sonores de la nature avec ce widget."
   },
-  "custom_color": {
-    "message": "Custom color"
+  "nature_sounds": {
+    "message": "Sons de la nature"
+  },
+  "new_tab": {
+    "message": "Nouvel onglet"
+  },
+  "new_task": {
+    "message": "Nouvelle tâche"
+  },
+  "new_wallpaper": {
+    "message": "Nouveau papier peint"
+  },
+  "nightstand": {
+    "message": "Table de nuit"
+  },
+  "no_results": {
+    "message": "Aucun résultat trouvé"
+  },
+  "normal": {
+    "message": "Normal"
+  },
+  "notepad": {
+    "message": "Bloc-notes"
+  },
+  "notepad_description": {
+    "message": "Un simple widget de bloc-notes."
+  },
+  "notepad_disclaimer": {
+    "message": "Les notes sont stockées dans la mémoire locale de votre navigateur, ce qui peut être peu fiable et entraîner une perte de données."
+  },
+  "opacity": {
+    "message": "Opacité"
+  },
+  "page": {
+    "message": "Titre et icône de la page"
+  },
+  "page_title": {
+    "message": "Titre de la page"
+  },
+  "pause_background_changes": {
+    "message": "Mettre en pause les modifications de l'arrière-plan"
+  },
+  "pomodoro": {
+    "message": "Pomodoro"
+  },
+  "pomodoro_description": {
+    "message": "Utilisez la technique pomodoro pour un flux de travail basé sur les intervalles."
+  },
+  "pomodoro_settings": {
+    "message": "Paramètres Pomodoro"
+  },
+  "pomodoro_timer": {
+    "message": "Minuteur Pomodoro"
+  },
+  "reset": {
+    "message": "Remise à zéro"
+  },
+  "resources": {
+    "message": "Ressources"
+  },
+  "sans": {
+    "message": "Sans"
+  },
+  "save": {
+    "message": "Économiser"
+  },
+  "saved": {
+    "message": "Sauvegardé"
+  },
+  "search": {
+    "message": "Recherche"
+  },
+  "serif": {
+    "message": "Serif"
+  },
+  "set_greeting": {
+    "message": "Définir un message d'accueil."
+  },
+  "settings": {
+    "message": "Réglages"
+  },
+  "show_items": {
+    "message": "Afficher les articles"
+  },
+  "skip": {
+    "message": "Sauter"
+  },
+  "solid_color": {
+    "message": "Couleur unie"
+  },
+  "sound_attribution": {
+    "message": "Attribution du son"
+  },
+  "speed_dial": {
+    "message": "Numérotation rapide"
   },
   "square_widgets": {
     "message": "Square widgets (very experimental)"
@@ -482,10 +428,64 @@
   "square_widgets_description": {
     "message": "Allow the clock and date widgets to be square"
   },
-  "hide_settings": {
-    "message": "Hide settings button"
+  "start": {
+    "message": "Démarrage"
   },
-  "hide_settings_description": {
-    "message": "Hide the settings button except on hover"
+  "start_background_changes": {
+    "message": "Commencer les changements d'arrière-plan"
+  },
+  "start_using": {
+    "message": "Commencer à utiliser Flowtide"
+  },
+  "stop": {
+    "message": "Arrêter"
+  },
+  "stopwatch": {
+    "message": "Chronomètre"
+  },
+  "stopwatch_description": {
+    "message": "Ajoutez un widget chronomètre à votre page d'accueil."
+  },
+  "text_style": {
+    "message": "Style de texte"
+  },
+  "theme": {
+    "message": "Thème"
+  },
+  "todo_list": {
+    "message": "Liste des tâches à accomplir"
+  },
+  "todo_list_description": {
+    "message": "Suivez vos tâches grâce à un widget facile à utiliser."
+  },
+  "toggle_theme": {
+    "message": "Totale theme"
+  },
+  "top": {
+    "message": "Haut"
+  },
+  "type_command": {
+    "message": "Tapez une commande"
+  },
+  "uppercase": {
+    "message": "Majuscules"
+  },
+  "wallpaper_blur": {
+    "message": "Papier peint flou"
+  },
+  "welcome_message": {
+    "message": "Bienvenue à Flowtide"
+  },
+  "widgets": {
+    "message": "Widgets"
+  },
+  "work": {
+    "message": "Travail"
+  },
+  "work_minutes": {
+    "message": "Minutes de travail"
+  },
+  "you_may_need_to_refresh": {
+    "message": "Il se peut que vous deviez actualiser la page pour voir les changements."
   }
 }
