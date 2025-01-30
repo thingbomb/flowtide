@@ -19,7 +19,7 @@ import {
   Volume2,
   X,
 } from "lucide-solid";
-import { createSwapy } from "swapy";
+import { createSwapy, Swapy } from "swapy";
 import { v4 as uuidv4 } from "uuid";
 import {
   AmbienceSoundscapes,
@@ -91,6 +91,13 @@ const mantras = [
   "mantra_14",
   "mantra_15",
 ];
+
+declare global {
+  interface Window {
+    initSwapy: () => void;
+    disableSwapy: () => void;
+  }
+}
 
 try {
   chrome.i18n.getMessage("work");
@@ -288,6 +295,40 @@ const App: Component = () => {
       expiry: Date.now() + Number(wallpaperChangeTime()),
     };
   }
+
+  let swapy: Swapy;
+
+  function initSwapy() {
+    const container = document.querySelector(".widgets") as HTMLDivElement;
+
+    swapy = createSwapy(container, {
+      animation: "dynamic",
+    });
+
+    swapy.onSwap((event) => {
+      localStorage.setItem(
+        "widgetPlacement",
+        JSON.stringify(event.newSlotItemMap.asObject)
+      );
+    });
+
+    createEffect(() => {
+      if (swapy && filteredWidgets() && widgets && widgetOrder()) {
+        swapy.update();
+      }
+    });
+
+    swapy.enable(true);
+  }
+
+  function disableSwapy() {
+    if (swapy) {
+      swapy.enable(false);
+    }
+  }
+
+  window.initSwapy = initSwapy;
+  window.disableSwapy = disableSwapy;
 
   const [selectedImage, setSelectedImage] = createStoredSignal<any>(
     "selectedImage",
@@ -567,6 +608,13 @@ const App: Component = () => {
             onmousedown={() => {
               setNeedsOnboarding(true);
               setName(greetingNameValue());
+              if (mode() === "dashboard") {
+                initSwapy();
+
+                if (localStorage.getItem("widgetPlacement") === null) {
+                  localStorage.setItem("widgetPlacement", JSON.stringify({}));
+                }
+              }
             }}
           >
             {chrome.i18n.getMessage("complete")}
@@ -620,26 +668,7 @@ const App: Component = () => {
 
   onMount(() => {
     if (mode() === "dashboard") {
-      const container = document.querySelector(".widgets") as HTMLDivElement;
-
-      const swapy = createSwapy(container, {
-        animation: "dynamic",
-      });
-
-      swapy.onSwap((event) => {
-        localStorage.setItem(
-          "widgetPlacement",
-          JSON.stringify(event.newSlotItemMap.asObject)
-        );
-      });
-
-      createEffect(() => {
-        if (swapy && filteredWidgets() && widgets && widgetOrder()) {
-          swapy.update();
-        }
-      });
-
-      swapy.enable(true);
+      initSwapy();
 
       if (localStorage.getItem("widgetPlacement") === null) {
         localStorage.setItem("widgetPlacement", JSON.stringify({}));
