@@ -242,6 +242,10 @@ function TodoWidget() {
                     onDragEnd={handleDragEnd}
                     onDrop={(e) => handleDrop(e, task.id)}
                     class="task flex cursor-move items-center gap-2 rounded transition-colors"
+                    ondblclick={(e) => {
+                      (e.target as HTMLLabelElement).contentEditable = "true";
+                      (e.target as HTMLLabelElement).focus();
+                    }}
                   >
                     <Checkbox
                       id={task.id}
@@ -267,7 +271,26 @@ function TodoWidget() {
                     >
                       <CheckboxControl class="!border-white" />
                     </Checkbox>
-                    <label for={task.id} class="select-none text-sm">
+                    <label
+                      for={task.id}
+                      class="select-none text-sm"
+                      onkeydown={(e) => {
+                        if (e.key === "Enter" || e.key === "Escape") {
+                          (e.target as HTMLLabelElement).blur();
+                          (e.target as HTMLLabelElement).contentEditable =
+                            "false";
+                          let currentTasks: Task[] = tasks();
+                          currentTasks.find(
+                            (t: Task) => t.id === task.id
+                          )!.title = (e.target as HTMLLabelElement).innerText;
+                          setTasks(currentTasks);
+                          localStorage.setItem(
+                            "tasks",
+                            JSON.stringify(currentTasks)
+                          );
+                        }
+                      }}
+                    >
                       {task.title}
                     </label>
                   </div>
@@ -419,6 +442,10 @@ function TodoPopover() {
                   onDrop={(e) => handleDrop(e, task.id)}
                   class="task hover:bg-accent/20 flex cursor-move items-center gap-2 rounded p-1
                     transition-colors"
+                  ondblclick={(e) => {
+                    (e.target as HTMLLabelElement).contentEditable = "true";
+                    (e.target as HTMLLabelElement).focus();
+                  }}
                 >
                   <Checkbox
                     id={task.id}
@@ -441,7 +468,26 @@ function TodoPopover() {
                   >
                     <CheckboxControl class="!border-white !outline-none focus:ring-2 focus:ring-offset-2" />
                   </Checkbox>
-                  <label for={task.id} class="select-none text-xs">
+                  <label
+                    for={task.id}
+                    class="select-none text-xs"
+                    onkeydown={(e) => {
+                      if (e.key === "Enter" || e.key === "Escape") {
+                        (e.target as HTMLLabelElement).blur();
+                        (e.target as HTMLLabelElement).contentEditable =
+                          "false";
+                        let currentTasks: Task[] = tasks();
+                        currentTasks.find(
+                          (t: Task) => t.id === task.id
+                        )!.title = (e.target as HTMLLabelElement).innerText;
+                        setTasks(currentTasks);
+                        localStorage.setItem(
+                          "tasks",
+                          JSON.stringify(currentTasks)
+                        );
+                      }
+                    }}
+                  >
                     {task.title}
                   </label>
                 </div>
