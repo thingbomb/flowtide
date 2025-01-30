@@ -47,6 +47,12 @@
   "bookmarks_description": {
     "message": "Easy access to your first 9 bookmarks with this widget."
   },
+  "bottom_left": {
+    "message": "Bottom left"
+  },
+  "bottom_right": {
+    "message": "Bottom right"
+  },
   "break": {
     "message": "Break"
   },
@@ -478,6 +484,12 @@
   },
   "top": {
     "message": "Top"
+  },
+  "top_left": {
+    "message": "Top left"
+  },
+  "top_right": {
+    "message": "Top right"
   },
   "type_command": {
     "message": "Type a command"

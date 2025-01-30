@@ -856,10 +856,18 @@ const App: Component = () => {
         }}
       >
         <div
-          class="absolute inset-0 z-30 h-screen flex-wrap items-center justify-center gap-3 p-4"
+          class="absolute inset-0 z-30 h-screen flex-wrap items-center gap-3 p-4"
           style={{
-            "align-content": layout() == "center" ? "center" : "flex-start",
-            "padding-top": layout() == "top" ? "2.5rem" : "0",
+            "align-content":
+              layout() == "center"
+                ? "center"
+                : layout() == "top" || layout().startsWith("top-")
+                  ? "flex-start"
+                  : "flex-end",
+            "padding-top": layout().startsWith("top") ? "4.5rem" : "0",
+            "padding-bottom": layout().startsWith("bottom-") ? "4.5rem" : "0",
+            "padding-left": layout().endsWith("-left") ? "4.5rem" : "0",
+            "padding-right": layout().endsWith("-right") ? "4.5rem" : "0",
           }}
           id="content-container"
         >
@@ -1375,6 +1383,13 @@ const App: Component = () => {
           <div
             class="flex items-center justify-center"
             id="center-widgets-container"
+            style={{
+              "justify-content": !layout().includes("-")
+                ? "center"
+                : layout().endsWith("-left")
+                  ? "flex-start"
+                  : "flex-end",
+            }}
           >
             <Show when={mode() == "widgets"}>
               <div

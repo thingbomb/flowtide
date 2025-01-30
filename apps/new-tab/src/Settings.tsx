@@ -1,29 +1,29 @@
 import {
-  AlignCenter,
   AlignVerticalJustifyStart,
-  ArrowLeft,
+  ArrowDownLeft,
+  ArrowDownRight,
+  ArrowUp,
+  ArrowUpLeft,
+  ArrowUpRight,
   Bookmark,
   Calendar,
   Calendar1,
   Clock,
-  CloudLightningIcon,
+  Dot,
   File,
   Grid,
   Home,
   Hourglass,
   Image,
   Link,
-  MessageCircle,
-  Moon,
   PaintBucket,
   Palette,
   RefreshCcw,
   Settings,
   Square,
   Sunrise,
-  Text,
 } from "lucide-solid";
-import { createSignal, on, onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { createStoredSignal } from "./hooks/localStorage";
 import { cn } from "./libs/cn";
 import { TextField, TextFieldRoot } from "./components/ui/textfield";
@@ -31,7 +31,6 @@ import { Button } from "./components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -268,17 +267,17 @@ function SettingsTrigger({
                   <h3 class="text-lg font-[600]">
                     {chrome.i18n.getMessage("layout")}
                   </h3>
-                  <div class="card-group grid-cols-2 grid-rows-1">
+                  <div class="card-group grid-cols-3 grid-rows-2">
                     <BigButton
-                      {...(layout() === "center"
+                      {...(layout() === "top-left"
                         ? { "data-selected": true }
                         : {})}
                       onmousedown={() => {
-                        setLayout("center");
+                        setLayout("top-left");
                       }}
-                      title={chrome.i18n.getMessage("center")}
+                      title={chrome.i18n.getMessage("top_left")}
                       icon={
-                        <AlignCenter class="size-[64px]" fill="currentColor" />
+                        <ArrowUpLeft class="size-[64px]" fill="currentColor" />
                       }
                     />
                     <BigButton
@@ -287,8 +286,55 @@ function SettingsTrigger({
                         setLayout("top");
                       }}
                       title={chrome.i18n.getMessage("top")}
+                      icon={<ArrowUp class="size-[64px]" fill="currentColor" />}
+                    />
+                    <BigButton
+                      {...(layout() === "top-right"
+                        ? { "data-selected": true }
+                        : {})}
+                      onmousedown={() => {
+                        setLayout("top-right");
+                      }}
+                      title={chrome.i18n.getMessage("top_right")}
                       icon={
-                        <AlignVerticalJustifyStart
+                        <ArrowUpRight class="size-[64px]" fill="currentColor" />
+                      }
+                    />
+                    <BigButton
+                      {...(layout() === "bottom-left"
+                        ? { "data-selected": true }
+                        : {})}
+                      onmousedown={() => {
+                        setLayout("bottom-left");
+                      }}
+                      title={chrome.i18n.getMessage("bottom_left")}
+                      icon={
+                        <ArrowDownLeft
+                          class="size-[64px]"
+                          fill="currentColor"
+                        />
+                      }
+                    />
+                    <BigButton
+                      {...(layout() === "center"
+                        ? { "data-selected": true }
+                        : {})}
+                      onmousedown={() => {
+                        setLayout("center");
+                      }}
+                      title={chrome.i18n.getMessage("center")}
+                      icon={<Dot class="size-[64px]" fill="currentColor" />}
+                    />
+                    <BigButton
+                      {...(layout() === "bottom-right"
+                        ? { "data-selected": true }
+                        : {})}
+                      onmousedown={() => {
+                        setLayout("bottom-right");
+                      }}
+                      title={chrome.i18n.getMessage("bottom_right")}
+                      icon={
+                        <ArrowDownRight
                           class="size-[64px]"
                           fill="currentColor"
                         />
