@@ -262,7 +262,7 @@ function SettingsTrigger({
               </div>
               <br />
               <br />
-              {mode() === "widgets" && (
+              {(mode() === "widgets" || mode() === "dashboard") && (
                 <div>
                   <h3 class="text-lg font-[600]">
                     {chrome.i18n.getMessage("layout")}

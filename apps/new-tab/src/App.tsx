@@ -856,18 +856,25 @@ const App: Component = () => {
         }}
       >
         <div
-          class="absolute inset-0 z-30 h-screen flex-wrap items-center gap-3 p-4"
+          class="absolute inset-0 z-30 h-screen flex flex-wrap items-center gap-3 p-4"
           style={{
             "align-content":
               layout() == "center"
                 ? "center"
-                : layout() == "top" || layout().startsWith("top-")
+                : layout().startsWith("top-")
                   ? "flex-start"
-                  : "flex-end",
+                  : layout() == "top"
+                    ? "flex-start"
+                    : "flex-end",
             "padding-top": layout().startsWith("top") ? "4.5rem" : "0",
             "padding-bottom": layout().startsWith("bottom-") ? "4.5rem" : "0",
             "padding-left": layout().endsWith("-left") ? "4.5rem" : "0",
             "padding-right": layout().endsWith("-right") ? "4.5rem" : "0",
+            "justify-content": layout().endsWith("-left")
+              ? "flex-start"
+              : layout().endsWith("-right")
+                ? "flex-end"
+                : "center",
           }}
           id="content-container"
         >
@@ -1593,7 +1600,7 @@ const App: Component = () => {
             </Show>
           </div>
           {mode() === "dashboard" && (
-            <div id="widgets-container">
+            <div id="widgets-container" class="w-fit">
               <h1
                 id="greeting"
                 class="inset-shadow-2xl mb-6 text-5xl font-bold text-white
@@ -1621,9 +1628,11 @@ const App: Component = () => {
               </h1>
               <div
                 class={cn(
-                  "widgets m-0 flex flex-wrap gap-3 p-4",
-                  layout() == "center" && "justify-center",
-                  layout() == "top" && "!pl-8"
+                  "widgets m-0 flex flex-wrap gap-3 p-4 w-fit",
+                  layout().endsWith("-left") && "justify-start pl-8",
+                  layout().endsWith("-right") && "justify-end pr-8",
+                  layout() == "top" && "justify-center pt-8",
+                  layout().startsWith("bottom") && "justify-center pb-8"
                 )}
                 id="widgets"
               >
