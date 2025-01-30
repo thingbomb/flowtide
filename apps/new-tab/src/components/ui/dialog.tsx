@@ -16,7 +16,7 @@
   DEALINGS IN THE SOFTWARE.
 */
 
-import { cn } from "../../libs/cn";
+import { cn } from "@/libs/cn";
 import type {
   DialogContentProps,
   DialogDescriptionProps,
