@@ -1,5 +1,4 @@
 import { createEffect, createSignal, onCleanup } from "solid-js";
-import { evaluate } from "mathjs";
 import {
   Command,
   CommandDialog,
@@ -11,6 +10,7 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "./command";
+import Mexp from "math-expression-evaluator";
 
 interface Bookmark {
   name: string;
@@ -224,7 +224,8 @@ export function CommandPalette(props: any) {
   const handleMathInput = (value: string) => {
     setInputValue(value);
     try {
-      const mathResult = evaluate(value);
+      const mexp = new Mexp();
+      const mathResult = mexp.eval(value);
       if (typeof mathResult === "number") {
         setResult({
           expression: value,
