@@ -14,6 +14,9 @@
   "added": {
     "message": "Added"
   },
+  "advanced": {
+    "message": "Advanced"
+  },
   "ambience": {
     "message": "Ambience"
   },
@@ -89,6 +92,9 @@
   "compose_gmail_message": {
     "message": "Compose Gmail Message"
   },
+  "coordinates": {
+    "message": "Coordinates"
+  },
   "copied_to_clipboard": {
     "message": "Copied to clipboard"
   },
@@ -155,6 +161,9 @@
   "custom_color": {
     "message": "Custom color"
   },
+  "custom_css": {
+    "message": "Custom CSS"
+  },
   "custom_url": {
     "message": "Custom URL"
   },
@@ -178,6 +187,9 @@
   },
   "edit_the_pomodoro_settings": {
     "message": "Edit the pomodoro settings."
+  },
+  "enabled": {
+    "message": "Enabled"
   },
   "enter_greeting": {
     "message": "Enter greeting"
@@ -257,6 +269,12 @@
   "image": {
     "message": "Image"
   },
+  "imperial": {
+    "message": "Imperial"
+  },
+  "latitude": {
+    "message": "Latitude"
+  },
   "layout": {
     "message": "Layout"
   },
@@ -268,6 +286,12 @@
   },
   "local_file": {
     "message": "Local file"
+  },
+  "location": {
+    "message": "Location"
+  },
+  "longitude": {
+    "message": "Longitude"
   },
   "lowercase": {
     "message": "Lowercase"
@@ -322,6 +346,9 @@
   },
   "mantras_description": {
     "message": "Inspirational mantras on every new tab."
+  },
+  "metric": {
+    "message": "Metric"
   },
   "mode": {
     "message": "Mode"
@@ -494,11 +521,20 @@
   "type_command": {
     "message": "Type a command"
   },
+  "unit": {
+    "message": "Unit"
+  },
   "uppercase": {
     "message": "Uppercase"
   },
   "wallpaper_blur": {
     "message": "Wallpaper blur"
+  },
+  "weather": {
+    "message": "Weather"
+  },
+  "weatherDisclaimer": {
+    "message": "<a href=\"$1\">Weather data by Open-Meteo.com</a>. Weather data is provided 'as-is' without any warranty or guarantee of accuracy."
   },
   "welcome_message": {
     "message": "Welcome to Flowtide"

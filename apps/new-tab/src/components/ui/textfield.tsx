@@ -40,7 +40,13 @@ export const TextFieldRoot = <T extends ValidComponent = "div">(
 ) => {
   const [local, rest] = splitProps(props as textFieldProps, ["class"]);
 
-  return <TextFieldPrimitive class={cn("space-y-1", local.class)} {...rest} />;
+  return (
+    <TextFieldPrimitive
+      defaultValue={props.defaultValue}
+      class={cn("space-y-1", local.class)}
+      {...rest}
+    />
+  );
 };
 
 export const textfieldLabel = cva(

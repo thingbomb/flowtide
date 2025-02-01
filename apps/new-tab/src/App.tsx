@@ -6,16 +6,21 @@ import {
   Bookmark,
   Check,
   Clock,
+  CloudFog,
+  CloudSun,
+  Cloudy,
   Eye,
   EyeOff,
   Grid,
   GripVertical,
   Home,
+  LucideCloud,
   Minus,
   Pause,
   Play,
   Plus,
   Star,
+  Sun,
   Volume2,
   X,
 } from "lucide-solid";
@@ -67,6 +72,7 @@ import {
 import { PopoverTriggerProps } from "@kobalte/core/popover";
 import soundscapes, { Soundscape } from "./soundscapes";
 import { actuallyBoolean } from "./libs/boolean";
+import { useWeather } from "./hooks/weather";
 
 type MessageKeys = keyof typeof data;
 
@@ -105,11 +111,22 @@ try {
   const jsonDataTyped = data as Data;
   window.chrome = {} as any;
   chrome.i18n = {
-    getMessage: (message: MessageKeys) => {
+    getMessage: (message: MessageKeys, substitutions?: string | string[]) => {
       try {
-        return jsonDataTyped[message]?.message || message;
+        let msg = jsonDataTyped[message]?.message || message;
+        if (substitutions) {
+          if (!Array.isArray(substitutions)) {
+            substitutions = [substitutions];
+          }
+          substitutions.forEach((sub, index) => {
+            const regex = new RegExp(`\\$${index + 1}`, "g");
+            msg = msg.replace(regex, sub);
+          });
+        }
+        return msg;
       } catch (error) {
         console.log(message);
+        return message;
       }
     },
   } as any;
@@ -137,6 +154,16 @@ interface Pomodoro {
 interface PomodoroConfig {
   workMinutes: number;
   breakMinutes: number;
+}
+
+function safeParse<T>(data: any, fallback: T): T {
+  try {
+    let parsed = JSON.parse(data);
+    console.log(parsed);
+    return parsed;
+  } catch {
+    return fallback;
+  }
 }
 
 const gradients = [
@@ -186,6 +213,14 @@ type Bookmark = {
   url: string;
 };
 
+function injectUserCSS(css: string) {
+  document.getElementById("user-css")?.remove();
+  const style = document.createElement("style");
+  style.setAttribute("id", "user-css");
+  style.innerHTML = `${css}`;
+  document.head.appendChild(style);
+}
+
 const App: Component = () => {
   const [needsOnboarding, setNeedsOnboarding] = createStoredSignal(
     "onboarding",
@@ -213,6 +248,7 @@ const App: Component = () => {
     "squareWidgets",
     false
   );
+  const [userCSS, setUserCSS] = createStoredSignal("userCSS", "");
   const [currentlyPlaying, setCurrentlyPlaying] = createSignal<any>(null);
   const [pageIconURL, setPageIconURL] = createStoredSignal(
     "iconUrl",
@@ -221,6 +257,9 @@ const App: Component = () => {
   const [dateFormat, setDateFormat] = createStoredSignal(
     "dateFormat",
     "normal"
+  );
+  const [selectedColor, setSelectedColor] = createSignal(
+    colorPalette[Math.floor(Math.random() * colorPalette.length)]
   );
   const [notepad, setNotepad] = createStoredSignal<string>("notepad", "");
   const [layout, setLayout] = createStoredSignal("layout", "center");
@@ -343,6 +382,16 @@ const App: Component = () => {
     "itemsHidden",
     "false"
   );
+  const [formattedWeather, setFormattedWeather] = createSignal("--");
+  const [imperial, setImperial] = createStoredSignal("imperial", false);
+  const [location, setLocation] = createStoredSignal<Array<any>>("location", [
+    null,
+    null,
+  ]);
+  const [weather] = useWeather(
+    safeParse(location(), location())[0],
+    safeParse(location(), location())[1]
+  );
   const [todosContained, setTodosContained] = createSignal(false);
   const [natureSounds, setNatureSounds] = createSignal(false);
   const [focusSounds, setFocusSounds] = createSignal(false);
@@ -361,6 +410,17 @@ const App: Component = () => {
       .toString()
       .padStart(2, "0")}`;
   }
+
+  createEffect(() => {
+    if (weather) {
+      console.log(weather());
+      setFormattedWeather(
+        Number(weather()?.temperature)
+          ? `${imperial() ? Math.round((Number(weather()?.temperature) * 9) / 5 + 32) : Math.round(Number(weather()?.temperature))}${imperial() ? "°F" : "°C"}`
+          : "--"
+      );
+    }
+  });
 
   onMount(() => {
     if (chrome.bookmarks !== undefined) {
@@ -381,6 +441,8 @@ const App: Component = () => {
         setBookmarks(allBookmarks);
       });
     }
+
+    injectUserCSS(userCSS());
 
     setInterval(() => {
       if (stopwatchContained() && stopwatchRunning()) {
@@ -822,10 +884,11 @@ const App: Component = () => {
             id="wallpaper"
             class="absolute inset-0 h-full w-full object-cover transition-all"
             data-author={JSON.stringify(selectedImage().author)}
-            style={{ opacity: 0 }}
+            style={{ opacity: 0, filter: "brightness(0)" }}
             onLoad={(e: any) => {
               if (document.documentElement.style.colorScheme === "dark") {
                 e.target.style.opacity = opacity();
+                e.target.style.filter = `brightness(100%)`;
               } else {
                 e.target.style.opacity = 1;
                 e.target.style.filter = `brightness(${opacity()})`;
@@ -849,7 +912,7 @@ const App: Component = () => {
             background() === "solid-color"
               ? color() != "unset"
                 ? color()
-                : colorPalette[Math.floor(Math.random() * colorPalette.length)]
+                : selectedColor()
               : background() == "gradient"
                 ? gradients[Math.floor(Math.random() * gradients.length)]
                 : "",
@@ -1087,6 +1150,12 @@ const App: Component = () => {
                 </Show>
               </div>
               <div id="top-right-widgets-container" class="flex">
+                <div
+                  id="weather-widget"
+                  class="flex items-center gap-2 px-3 py-1"
+                >
+                  <span>{formattedWeather()}</span>
+                </div>
                 <Show when={counterContained()}>
                   <div
                     id="counter-widget"

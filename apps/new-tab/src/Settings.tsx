@@ -12,6 +12,7 @@ import {
   Dot,
   File,
   Grid,
+  Hammer,
   Home,
   Hourglass,
   Image,
@@ -21,12 +22,17 @@ import {
   RefreshCcw,
   Settings,
   Square,
+  Sun,
   Sunrise,
 } from "lucide-solid";
-import { createSignal, onMount } from "solid-js";
+import { createSignal, onMount, untrack } from "solid-js";
 import { createStoredSignal } from "./hooks/localStorage";
 import { cn } from "./libs/cn";
-import { TextField, TextFieldRoot } from "./components/ui/textfield";
+import {
+  TextField,
+  TextFieldLabel,
+  TextFieldRoot,
+} from "./components/ui/textfield";
 import { Button } from "./components/ui/button";
 import {
   Dialog,
@@ -36,6 +42,19 @@ import {
   DialogTrigger,
 } from "./components/ui/dialog";
 import { actuallyBoolean } from "./libs/boolean";
+import {
+  RadioGroup,
+  RadioGroupItem,
+  RadioGroupItemControl,
+  RadioGroupItemLabel,
+} from "./components/ui/radio-group";
+import {
+  Switch,
+  SwitchControl,
+  SwitchLabel,
+  SwitchThumb,
+} from "./components/ui/switch";
+import { updateWeatherManually } from "./hooks/weather";
 
 function BigButton(props: any) {
   return (
@@ -44,6 +63,24 @@ function BigButton(props: any) {
       <span class="text-xl">{props.title}</span>
     </button>
   );
+}
+
+function injectUserCSS(css: string) {
+  document.getElementById("user-css")?.remove();
+  const style = document.createElement("style");
+  style.setAttribute("id", "user-css");
+  style.innerHTML = `${css}`;
+  document.head.appendChild(style);
+}
+
+function safeParse<T>(data: any, fallback: T): T {
+  try {
+    let parsed = JSON.parse(data);
+    console.log(parsed);
+    return parsed;
+  } catch {
+    return fallback;
+  }
 }
 
 function SettingsTrigger({
@@ -107,10 +144,28 @@ function SettingsTrigger({
   const [opacity, setOpacity] = createStoredSignal<number>("opacity", 0.8);
   const [settingsMenu, setSettingsMenu] = createSignal<string>("general");
   const [dialogOpen, setDialogOpen] = createSignal(false);
+  const [imperial, setImperial] = createStoredSignal("imperial", false);
+  const [locationCity, setLocationCity] = createStoredSignal(
+    "locationCity",
+    ""
+  );
+  const [location, setLocation] = createStoredSignal<Array<any>>("location", [
+    null,
+    null,
+  ]);
+  const [latitudeInput, setLatitudeInput] = createSignal("");
+  const [longitudeInput, setLongitudeInput] = createSignal("");
+  const [locationCityValue, setLocationCityValue] =
+    createSignal(locationCity());
   const [hideSettings, setHideSettings] = createStoredSignal(
     "hideSettings",
     false
   );
+  const [weatherEnabled, setWeatherEnabled] = createStoredSignal(
+    "weatherEnabled",
+    false
+  );
+  const [userCSS, setUserCSS] = createStoredSignal("userCSS", "");
   const [wallpaperBlur, setWallpaperBlur] = createStoredSignal<number>(
     "wallpaperBlur",
     0
@@ -212,6 +267,44 @@ function SettingsTrigger({
               class="size-6 rounded-lg bg-teal-700 p-0.5 text-white"
             />
             {chrome.i18n.getMessage("background")}
+          </button>
+          <button
+            {...(settingsMenu() == "weather"
+              ? { "data-selected": "true" }
+              : "")}
+            onmousedown={() => {
+              setSettingsMenu("weather");
+            }}
+            id="weatherButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Sun
+              height={20}
+              class="size-6 rounded-lg bg-orange-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("weather")}
+          </button>
+          <button
+            {...(settingsMenu() == "advanced"
+              ? { "data-selected": "true" }
+              : "")}
+            onmousedown={() => {
+              setSettingsMenu("advanced");
+            }}
+            id="advancedButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Hammer
+              height={20}
+              class="size-6 rounded-lg bg-gray-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("advanced")}
           </button>
         </div>
         <div class="h-full w-full overflow-y-auto p-10 pt-0">
@@ -857,6 +950,176 @@ function SettingsTrigger({
                     setWallpaperBlur(Number(e.currentTarget.value) / 2.5)
                   }
                 />
+              </div>
+            </>
+          )}
+          {settingsMenu() === "weather" && (
+            <>
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("weather")}
+              </h3>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={weatherEnabled()}
+                onChange={(value) => {
+                  setWeatherEnabled(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("enabled")}
+                </SwitchLabel>
+              </Switch>
+              <br />
+              <p
+                innerHTML={chrome.i18n.getMessage("weatherDisclaimer", [
+                  "https://open-meteo.com/en/docs",
+                ])}
+              />
+              <br />
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("location")}
+              </h3>
+              <TextFieldRoot class="flex-1">
+                <TextFieldLabel class="text-sm font-medium text-muted-foreground">
+                  {chrome.i18n.getMessage("search")}
+                </TextFieldLabel>
+                <div class="flex items-center gap-2">
+                  <TextField
+                    placeholder={chrome.i18n.getMessage("location")}
+                    value={locationCityValue()}
+                    onInput={(e) => setLocationCityValue(e.currentTarget.value)}
+                  />
+                  <Button
+                    onClick={() => {
+                      setLocationCityValue(locationCityValue());
+                      fetch(
+                        `https://geocoding-api.open-meteo.com/v1/search?name=${locationCityValue()}&count=10&language=en&format=json`
+                      )
+                        .then((response) => response.json())
+                        .then((data) => {
+                          if (data.results.length > 0) {
+                            setLocationCityValue("");
+                            setLocationCity("");
+                            setLatitudeInput(data.results[0].latitude);
+                            setLongitudeInput(data.results[0].longitude);
+                            (document.getElementById(
+                              "latitude-input"
+                            ) as HTMLInputElement)!.value =
+                              data.results[0].latitude;
+                            (document.getElementById(
+                              "longitude-input"
+                            ) as HTMLInputElement)!.value =
+                              data.results[0].longitude;
+                            setLocation([
+                              data.results[0].latitude,
+                              data.results[0].longitude,
+                            ]);
+                            updateWeatherManually(
+                              data.results[0].latitude,
+                              data.results[0].longitude
+                            );
+                          }
+                        });
+                    }}
+                  >
+                    {chrome.i18n.getMessage("search")}
+                  </Button>
+                </div>
+              </TextFieldRoot>
+              <br />
+              <div class="flex flex-col">
+                <p class="text-sm font-medium text-muted-foreground">
+                  {chrome.i18n.getMessage("coordinates")}
+                </p>
+                <div class="flex items-center gap-2">
+                  <TextFieldRoot
+                    class="flex-1"
+                    defaultValue={safeParse(location(), location())[0]}
+                  >
+                    <TextField
+                      placeholder={chrome.i18n.getMessage("latitude")}
+                      onInput={(e) => setLatitudeInput(e.currentTarget.value)}
+                      id="latitude-input"
+                    />
+                  </TextFieldRoot>
+                  <TextFieldRoot
+                    class="flex-1"
+                    defaultValue={safeParse(location(), location())[1]}
+                  >
+                    <TextField
+                      placeholder={chrome.i18n.getMessage("longitude")}
+                      onInput={(e) => setLongitudeInput(e.currentTarget.value)}
+                      id="longitude-input"
+                    />
+                  </TextFieldRoot>
+                  <Button
+                    onClick={() => {
+                      setLocationCity("");
+                      setLocationCityValue("");
+                      setLocation([
+                        Number(latitudeInput()),
+                        Number(longitudeInput()),
+                      ]);
+                      updateWeatherManually(
+                        Number(latitudeInput()),
+                        Number(longitudeInput())
+                      );
+                    }}
+                  >
+                    {chrome.i18n.getMessage("set")}
+                  </Button>
+                </div>
+              </div>
+              <br />
+              <h3 class="text-lg font-[600]">
+                {chrome.i18n.getMessage("unit")}
+              </h3>
+              <RadioGroup
+                defaultValue={imperial() ? "imperical" : "metric"}
+                onChange={(value) => {
+                  setImperial(value === "imperical");
+                }}
+              >
+                <RadioGroupItem value="metric" class="flex items-center gap-2">
+                  <RadioGroupItemControl />
+                  <RadioGroupItemLabel class="text-sm">
+                    {chrome.i18n.getMessage("metric")}
+                  </RadioGroupItemLabel>
+                </RadioGroupItem>
+                <RadioGroupItem
+                  value="imperical"
+                  class="flex items-center gap-2"
+                >
+                  <RadioGroupItemControl />
+                  <RadioGroupItemLabel class="text-sm">
+                    {chrome.i18n.getMessage("imperial")}
+                  </RadioGroupItemLabel>
+                </RadioGroupItem>
+              </RadioGroup>
+            </>
+          )}
+          {settingsMenu() === "advanced" && (
+            <>
+              <h3 class="text-lg font-[600]">
+                {chrome.i18n.getMessage("custom_css")}
+              </h3>
+              <div class="flex gap-2 items-center">
+                <textarea
+                  class="mt-2 h-full w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white
+                    shadow-inner shadow-white/10 outline-none backdrop-blur-2xl focus:ring-2"
+                  value={userCSS()}
+                  placeholder={chrome.i18n.getMessage("custom_css")}
+                  onInput={(e) => {
+                    setUserCSS(e.currentTarget.value);
+                    injectUserCSS(e.currentTarget.value);
+                  }}
+                ></textarea>
               </div>
             </>
           )}
