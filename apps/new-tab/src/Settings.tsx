@@ -25,7 +25,7 @@ import {
   Sun,
   Sunrise,
 } from "lucide-solid";
-import { createSignal, onMount, untrack } from "solid-js";
+import { createSignal, onMount, Show, untrack } from "solid-js";
 import { createStoredSignal } from "./hooks/localStorage";
 import { cn } from "./libs/cn";
 import {
@@ -145,18 +145,14 @@ function SettingsTrigger({
   const [settingsMenu, setSettingsMenu] = createSignal<string>("general");
   const [dialogOpen, setDialogOpen] = createSignal(false);
   const [imperial, setImperial] = createStoredSignal("imperial", false);
-  const [locationCity, setLocationCity] = createStoredSignal(
-    "locationCity",
-    ""
-  );
+  const [city, setCity] = createStoredSignal("locationCity", "");
   const [location, setLocation] = createStoredSignal<Array<any>>("location", [
     null,
     null,
   ]);
   const [latitudeInput, setLatitudeInput] = createSignal("");
   const [longitudeInput, setLongitudeInput] = createSignal("");
-  const [locationCityValue, setLocationCityValue] =
-    createSignal(locationCity());
+  const [locationCityValue, setLocationCityValue] = createSignal(city());
   const [hideSettings, setHideSettings] = createStoredSignal(
     "hideSettings",
     false
@@ -975,133 +971,142 @@ function SettingsTrigger({
                   {chrome.i18n.getMessage("enabled")}
                 </SwitchLabel>
               </Switch>
-              <br />
-              <p
-                innerHTML={chrome.i18n.getMessage("weatherDisclaimer", [
-                  "https://open-meteo.com/en/docs",
-                ])}
-              />
-              <br />
-              <h3 class="text-lg font-[600] mb-2">
-                {chrome.i18n.getMessage("location")}
-              </h3>
-              <TextFieldRoot class="flex-1">
-                <TextFieldLabel class="text-sm font-medium text-muted-foreground">
-                  {chrome.i18n.getMessage("search")}
-                </TextFieldLabel>
-                <div class="flex items-center gap-2">
-                  <TextField
-                    placeholder={chrome.i18n.getMessage("location")}
-                    value={locationCityValue()}
-                    onInput={(e) => setLocationCityValue(e.currentTarget.value)}
-                  />
-                  <Button
-                    onClick={() => {
-                      setLocationCityValue(locationCityValue());
-                      fetch(
-                        `https://geocoding-api.open-meteo.com/v1/search?name=${locationCityValue()}&count=10&language=en&format=json`
-                      )
-                        .then((response) => response.json())
-                        .then((data) => {
-                          if (data.results.length > 0) {
-                            setLocationCityValue("");
-                            setLocationCity("");
-                            setLatitudeInput(data.results[0].latitude);
-                            setLongitudeInput(data.results[0].longitude);
-                            (document.getElementById(
-                              "latitude-input"
-                            ) as HTMLInputElement)!.value =
-                              data.results[0].latitude;
-                            (document.getElementById(
-                              "longitude-input"
-                            ) as HTMLInputElement)!.value =
-                              data.results[0].longitude;
-                            setLocation([
-                              data.results[0].latitude,
-                              data.results[0].longitude,
-                            ]);
-                            updateWeatherManually(
-                              data.results[0].latitude,
-                              data.results[0].longitude
-                            );
-                          }
-                        });
-                    }}
-                  >
+              <Show when={weatherEnabled()}>
+                <br />
+                <p
+                  innerHTML={chrome.i18n.getMessage("weatherDisclaimer", [
+                    "https://open-meteo.com/en/docs",
+                  ])}
+                />
+                <br />
+                <h3 class="text-lg font-[600] mb-2">
+                  {chrome.i18n.getMessage("location")}
+                </h3>
+                <TextFieldRoot class="flex-1">
+                  <TextFieldLabel class="text-sm font-medium text-muted-foreground">
                     {chrome.i18n.getMessage("search")}
-                  </Button>
-                </div>
-              </TextFieldRoot>
-              <br />
-              <div class="flex flex-col">
-                <p class="text-sm font-medium text-muted-foreground">
-                  {chrome.i18n.getMessage("coordinates")}
-                </p>
-                <div class="flex items-center gap-2">
-                  <TextFieldRoot
-                    class="flex-1"
-                    defaultValue={safeParse(location(), location())[0]}
-                  >
+                  </TextFieldLabel>
+                  <div class="flex items-center gap-2">
                     <TextField
-                      placeholder={chrome.i18n.getMessage("latitude")}
-                      onInput={(e) => setLatitudeInput(e.currentTarget.value)}
-                      id="latitude-input"
+                      placeholder={chrome.i18n.getMessage("location")}
+                      value={locationCityValue()}
+                      onInput={(e) =>
+                        setLocationCityValue(e.currentTarget.value)
+                      }
                     />
-                  </TextFieldRoot>
-                  <TextFieldRoot
-                    class="flex-1"
-                    defaultValue={safeParse(location(), location())[1]}
-                  >
-                    <TextField
-                      placeholder={chrome.i18n.getMessage("longitude")}
-                      onInput={(e) => setLongitudeInput(e.currentTarget.value)}
-                      id="longitude-input"
-                    />
-                  </TextFieldRoot>
-                  <Button
-                    onClick={() => {
-                      setLocationCity("");
-                      setLocationCityValue("");
-                      setLocation([
-                        Number(latitudeInput()),
-                        Number(longitudeInput()),
-                      ]);
-                      updateWeatherManually(
-                        Number(latitudeInput()),
-                        Number(longitudeInput())
-                      );
-                    }}
-                  >
-                    {chrome.i18n.getMessage("set")}
-                  </Button>
+                    <Button
+                      onClick={() => {
+                        setLocationCityValue(locationCityValue());
+                        fetch(
+                          `https://geocoding-api.open-meteo.com/v1/search?name=${locationCityValue()}&count=10&language=en&format=json`
+                        )
+                          .then((response) => response.json())
+                          .then((data) => {
+                            if (data.results.length > 0) {
+                              setLocationCityValue("");
+                              setCity(data.results[0].name);
+                              setLatitudeInput(data.results[0].latitude);
+                              setLongitudeInput(data.results[0].longitude);
+                              (document.getElementById(
+                                "latitude-input"
+                              ) as HTMLInputElement)!.value =
+                                data.results[0].latitude;
+                              (document.getElementById(
+                                "longitude-input"
+                              ) as HTMLInputElement)!.value =
+                                data.results[0].longitude;
+                              setLocation([
+                                data.results[0].latitude,
+                                data.results[0].longitude,
+                              ]);
+                              updateWeatherManually(
+                                data.results[0].latitude,
+                                data.results[0].longitude
+                              );
+                            }
+                          });
+                      }}
+                    >
+                      {chrome.i18n.getMessage("search")}
+                    </Button>
+                  </div>
+                </TextFieldRoot>
+                <br />
+                <div class="flex flex-col">
+                  <p class="text-sm font-medium text-muted-foreground">
+                    {chrome.i18n.getMessage("coordinates")}
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <TextFieldRoot
+                      class="flex-1"
+                      defaultValue={safeParse(location(), location())[0]}
+                    >
+                      <TextField
+                        placeholder={chrome.i18n.getMessage("latitude")}
+                        onInput={(e) => setLatitudeInput(e.currentTarget.value)}
+                        id="latitude-input"
+                      />
+                    </TextFieldRoot>
+                    <TextFieldRoot
+                      class="flex-1"
+                      defaultValue={safeParse(location(), location())[1]}
+                    >
+                      <TextField
+                        placeholder={chrome.i18n.getMessage("longitude")}
+                        onInput={(e) =>
+                          setLongitudeInput(e.currentTarget.value)
+                        }
+                        id="longitude-input"
+                      />
+                    </TextFieldRoot>
+                    <Button
+                      onClick={() => {
+                        setCity("");
+                        setLocationCityValue("");
+                        setLocation([
+                          Number(latitudeInput()),
+                          Number(longitudeInput()),
+                        ]);
+                        updateWeatherManually(
+                          Number(latitudeInput()),
+                          Number(longitudeInput())
+                        );
+                      }}
+                    >
+                      {chrome.i18n.getMessage("set")}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-              <br />
-              <h3 class="text-lg font-[600]">
-                {chrome.i18n.getMessage("unit")}
-              </h3>
-              <RadioGroup
-                defaultValue={imperial() ? "imperical" : "metric"}
-                onChange={(value) => {
-                  setImperial(value === "imperical");
-                }}
-              >
-                <RadioGroupItem value="metric" class="flex items-center gap-2">
-                  <RadioGroupItemControl />
-                  <RadioGroupItemLabel class="text-sm">
-                    {chrome.i18n.getMessage("metric")}
-                  </RadioGroupItemLabel>
-                </RadioGroupItem>
-                <RadioGroupItem
-                  value="imperical"
-                  class="flex items-center gap-2"
+                <br />
+                <h3 class="text-lg font-[600]">
+                  {chrome.i18n.getMessage("unit")}
+                </h3>
+                <RadioGroup
+                  defaultValue={imperial() ? "imperical" : "metric"}
+                  onChange={(value) => {
+                    setImperial(value === "imperical");
+                  }}
                 >
-                  <RadioGroupItemControl />
-                  <RadioGroupItemLabel class="text-sm">
-                    {chrome.i18n.getMessage("imperial")}
-                  </RadioGroupItemLabel>
-                </RadioGroupItem>
-              </RadioGroup>
+                  <RadioGroupItem
+                    value="metric"
+                    class="flex items-center gap-2"
+                  >
+                    <RadioGroupItemControl />
+                    <RadioGroupItemLabel class="text-sm">
+                      {chrome.i18n.getMessage("metric")}
+                    </RadioGroupItemLabel>
+                  </RadioGroupItem>
+                  <RadioGroupItem
+                    value="imperical"
+                    class="flex items-center gap-2"
+                  >
+                    <RadioGroupItemControl />
+                    <RadioGroupItemLabel class="text-sm">
+                      {chrome.i18n.getMessage("imperial")}
+                    </RadioGroupItemLabel>
+                  </RadioGroupItem>
+                </RadioGroup>
+              </Show>
             </>
           )}
           {settingsMenu() === "advanced" && (

@@ -239,6 +239,10 @@ const App: Component = () => {
   const [imageLoaded, setImageLoaded] = createSignal(false);
   const [filteredWidgets, setFilteredWidgets] = createSignal<any[]>([]);
   const [dialogOpen, setDialogOpen] = createSignal<boolean>(false);
+  const [weatherContained, setWeatherContained] = createStoredSignal(
+    "weatherEnabled",
+    false
+  );
   const [customUrl, setCustomUrl] = createStoredSignal("customUrl", "");
   const [hideSettings, setHideSettings] = createStoredSignal(
     "hideSettings",
@@ -400,6 +404,7 @@ const App: Component = () => {
   const [stopwatchTime, setStopwatchTime] = createSignal(0);
   const [stopwatchRunning, setStopwatchRunning] = createSignal(false);
   const [counter, setCounter] = createStoredSignal("counter", 0);
+  const [city, setCity] = createStoredSignal("locationCity", "");
 
   function formatTime(time: number) {
     const minutes = Math.floor(time / 60);
@@ -413,10 +418,9 @@ const App: Component = () => {
 
   createEffect(() => {
     if (weather) {
-      console.log(weather());
       setFormattedWeather(
         Number(weather()?.temperature)
-          ? `${imperial() ? Math.round((Number(weather()?.temperature) * 9) / 5 + 32) : Math.round(Number(weather()?.temperature))}${imperial() ? "°F" : "°C"}`
+          ? `${imperial() ? Math.round((Number(weather()?.temperature) * 9) / 5 + 32) : Math.round(Number(weather()?.temperature))}°`
           : "--"
       );
     }
@@ -1150,12 +1154,6 @@ const App: Component = () => {
                 </Show>
               </div>
               <div id="top-right-widgets-container" class="flex">
-                <div
-                  id="weather-widget"
-                  class="flex items-center gap-2 px-3 py-1"
-                >
-                  <span>{formattedWeather()}</span>
-                </div>
                 <Show when={counterContained()}>
                   <div
                     id="counter-widget"
@@ -1195,6 +1193,17 @@ const App: Component = () => {
                         <Play class="h-5 w-5" fill="currentColor" />
                       )}
                     </button>
+                  </div>
+                </Show>
+                <Show when={weatherContained()}>
+                  <div
+                    id="weather-widget"
+                    class="flex items-center gap-2 px-3 py-1 w-full select-none"
+                  >
+                    <span>
+                      {city() != "" && `${city()} • `}
+                      {formattedWeather()}
+                    </span>
                   </div>
                 </Show>
               </div>
@@ -1472,6 +1481,9 @@ const App: Component = () => {
                 class="w-fit max-w-lg select-none text-center"
                 style={{
                   display: itemsHidden() == "true" ? "none" : "",
+                  "text-align": layout().startsWith("bottom")
+                    ? "left"
+                    : "center",
                 }}
               >
                 <Show

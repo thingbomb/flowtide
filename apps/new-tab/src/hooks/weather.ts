@@ -7,6 +7,10 @@ function useWeather(latitude: number, longitude: number) {
   const [weather, setWeather] = createSignal<WeatherData | null>(null);
 
   const fetchWeather = async (lat?: number, long?: number) => {
+    if ((lat || latitude) == null || (long || longitude) == null) {
+      setWeather(null);
+      return;
+    }
     const cacheKey = `weather-${lat || latitude}-${long || longitude}`;
     const cachedData = localStorage.getItem(cacheKey);
     const cachedTime = localStorage.getItem(`${cacheKey}-time`);

@@ -175,3 +175,7 @@ html[data-kb-theme="dark"] .card-style:not([data-selected]):hover .icon {
   -moz-box-shadow: inset 0px 0px 300px 0px rgba(0, 0, 0, 0.75);
   box-shadow: inset 0px 0px 300px 0px rgba(0, 0, 0, 0.75);
 }
+
+body {
+  font-size: 16px;
+}
