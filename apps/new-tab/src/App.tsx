@@ -327,6 +327,7 @@ const App: Component = () => {
         url: selectedImage.url,
         author: selectedImage.author,
         expiry: Date.now() + Number(wallpaperChangeTime()),
+        location: selectedImage.location,
       });
     }
 
@@ -754,6 +755,7 @@ const App: Component = () => {
           url: selectedImage.url,
           author: selectedImage.author,
           expiry: Date.now() + Number(wallpaperChangeTime()),
+          location: selectedImage.location,
         };
         fetch(newImage.url, {
           mode: "no-cors",
@@ -764,6 +766,10 @@ const App: Component = () => {
           localStorage.setItem("selectedImage", JSON.stringify(newImage));
         });
       } else {
+        localStorage.setItem(
+          "selectedImage",
+          JSON.stringify(getInitialSelectedImage())
+        );
       }
     }
 
@@ -888,6 +894,7 @@ const App: Component = () => {
             id="wallpaper"
             class="absolute inset-0 h-full w-full object-cover transition-all"
             data-author={JSON.stringify(selectedImage().author)}
+            data-location={selectedImage().location}
             style={{ opacity: 0, filter: "brightness(0)" }}
             onLoad={(e: any) => {
               if (document.documentElement.style.colorScheme === "dark") {
@@ -1219,12 +1226,13 @@ const App: Component = () => {
             >
               <div
                 class={cn(
-                  `group absolute bottom-0 flex flex-col-reverse gap-1 rounded-full p-1.5
-                  *:text-white focus-within:bg-white/20 focus-within:backdrop-blur-3xl
-                  hover:bg-white/20 hover:backdrop-blur-3xl dark:focus-within:bg-black/20
-                  dark:hover:bg-black/20`,
+                  `group absolute flex flex-col-reverse gap-1 rounded-full p-1.5 *:text-white
+                  focus-within:bg-white/20 focus-within:backdrop-blur-3xl hover:bg-white/20
+                  hover:backdrop-blur-3xl dark:focus-within:bg-black/20 dark:hover:bg-black/20`,
                   {
                     "opacity-0 hover:opacity-100": hideSettings(),
+                    "bottom-0": !selectedImage().location,
+                    "bottom-[8px]": selectedImage().location,
                   }
                 )}
               >
@@ -1370,27 +1378,30 @@ const App: Component = () => {
                       if (backgroundPaused() == "true") {
                         setBackgroundPaused("false");
                       } else {
-                        setSelectedImage(
-                          JSON.stringify({
-                            url: (
-                              document.getElementById(
-                                "wallpaper"
-                              ) as HTMLImageElement
-                            ).src,
-                            expiry: Infinity,
-                            author: document
-                              .getElementById("wallpaper")!
-                              .getAttribute("data-author")
-                              ? JSON.parse(
-                                  document
-                                    .getElementById("wallpaper")!
-                                    .getAttribute("data-author") as
-                                    | string
-                                    | "{}"
-                                )
-                              : undefined,
-                          })
-                        );
+                        setSelectedImage({
+                          url: (
+                            document.getElementById(
+                              "wallpaper"
+                            ) as HTMLImageElement
+                          ).src,
+                          expiry: Infinity,
+                          author: document
+                            .getElementById("wallpaper")!
+                            .getAttribute("data-author")
+                            ? JSON.parse(
+                                document
+                                  .getElementById("wallpaper")!
+                                  .getAttribute("data-author") as string | "{}"
+                              )
+                            : undefined,
+                          location: document
+                            .getElementById("wallpaper")!
+                            .getAttribute("data-location")
+                            ? document
+                                .getElementById("wallpaper")!
+                                .getAttribute("data-location")
+                            : undefined,
+                        });
                         setBackgroundPaused("true");
                       }
                     }}
@@ -1405,16 +1416,24 @@ const App: Component = () => {
               </div>
               {selectedImage().author && background() == "image" ? (
                 <span
-                  class="ml-10 flex h-9 select-none items-center gap-1 p-1.5 text-sm font-medium
+                  class="ml-10 flex h-fit select-none items-start p-1.5 text-sm font-medium flex-col
                     text-white"
                 >
-                  <a href={selectedImage().author.url}>
-                    {selectedImage().author.name}
-                  </a>{" "}
-                  /{" "}
-                  <a href="https://unsplash.com/" class="text-white">
-                    Unsplash
-                  </a>
+                  {selectedImage().location ? (
+                    <span class="text-white">{selectedImage().location}</span>
+                  ) : (
+                    <span></span>
+                  )}
+                  <span
+                    class={cn(
+                      selectedImage().location ? "text-gray-300" : "text-white"
+                    )}
+                  >
+                    <a href={selectedImage().author.url}>
+                      {selectedImage().author.name}
+                    </a>{" "}
+                    / <a href="https://unsplash.com/">Unsplash</a>
+                  </span>
                 </span>
               ) : (
                 <span
