@@ -347,7 +347,7 @@ export function CommandPalette(props: any) {
             onSelect={() => {
               setOpen(false);
               setInputValue("");
-              let currentTheme =
+              const currentTheme =
                 document.documentElement.getAttribute("data-kb-theme");
               if (currentTheme === "dark") {
                 document.documentElement.setAttribute("data-kb-theme", "light");

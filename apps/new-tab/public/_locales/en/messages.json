@@ -62,6 +62,9 @@
   "break_minutes": {
     "message": "Break minutes"
   },
+  "cancel": {
+    "message": "Cancel"
+  },
   "center": {
     "message": "Center"
   },
@@ -70,6 +73,12 @@
   },
   "choose_mode": {
     "message": "Choose a mode"
+  },
+  "clear_data": {
+    "message": "Clear data"
+  },
+  "clear_data_description": {
+    "message": "Clear all data from the extension. THIS CANNOT BE UNDONE."
   },
   "clock": {
     "message": "Clock"
@@ -497,6 +506,9 @@
   "text_style": {
     "message": "Text style"
   },
+  "thanks": {
+    "message": "Thank you for using Flowtide!"
+  },
   "theme": {
     "message": "Theme"
   },
@@ -534,7 +546,7 @@
     "message": "Weather"
   },
   "weatherDisclaimer": {
-    "message": "<a href=\"$1\">Weather data by Open-Meteo.com</a>. Weather data is provided 'as-is' without any warranty or guarantee of accuracy."
+    "message": "<a href=\"$1\">Weather data by Open-Meteo.com</a>. Weather data is provided 'as-is' without any warranty or guarantee of accuracy. Location data is handled by Open-Meteo and subject to their privacy policy."
   },
   "welcome_message": {
     "message": "Welcome to Flowtide"

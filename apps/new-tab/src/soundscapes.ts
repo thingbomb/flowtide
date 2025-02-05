@@ -21,7 +21,7 @@ interface Soundscape {
   categories: Category[];
 }
 
-let soundscapes = [
+const soundscapes = [
   {
     name: "Ocean",
     emoji: "🌊",

@@ -68,7 +68,7 @@ export const DialogContent = <T extends ValidComponent = "div">(
           <DialogPrimitive.CloseButton
             class="ring-offset-background focus:ring-ring absolute right-4 top-4 rounded-sm
               opacity-70 transition-[opacity,box-shadow] hover:opacity-100 focus:outline-none
-              focus:ring-[1.5px] focus:ring-offset-2 disabled:pointer-events-none"
+              focus:ring-[1.5px] focus:ring-offset-2 disabled:pointer-events-none mr-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

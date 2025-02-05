@@ -41,7 +41,7 @@ function createStoredSignal<T>(key: string, defaultValue: T): Signal<T> {
     return null;
   };
 
-  let initialValue = getFromStorage() ?? defaultValue;
+  const initialValue = getFromStorage() ?? defaultValue;
 
   const [value, setValue] = createSignal<T>(initialValue);
 

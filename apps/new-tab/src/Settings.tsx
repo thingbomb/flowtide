@@ -8,6 +8,7 @@ import {
   Bookmark,
   Calendar,
   Calendar1,
+  Check,
   Clock,
   Dot,
   File,
@@ -17,13 +18,18 @@ import {
   Hourglass,
   Image,
   Link,
+  Notebook,
   PaintBucket,
   Palette,
+  Plus,
+  Quote,
   RefreshCcw,
   Settings,
   Square,
   Sun,
   Sunrise,
+  Timer,
+  Volume2,
 } from "lucide-solid";
 import { createSignal, onMount, Show, untrack } from "solid-js";
 import { createStoredSignal } from "./hooks/localStorage";
@@ -37,6 +43,8 @@ import { Button } from "./components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -75,7 +83,7 @@ function injectUserCSS(css: string) {
 
 function safeParse<T>(data: any, fallback: T): T {
   try {
-    let parsed = JSON.parse(data);
+    const parsed = JSON.parse(data);
     console.log(parsed);
     return parsed;
   } catch {
@@ -134,7 +142,6 @@ function SettingsTrigger({
     false
   );
   const [name, setName] = createStoredSignal("name", "");
-  const [mode, setMode] = createStoredSignal("mode", "widgets");
   const [greetingNameValue, setGreetingNameValue] = createSignal(name());
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   const [pageTitleValue, setPageTitleValue] = createSignal(pageTitle());
@@ -146,6 +153,7 @@ function SettingsTrigger({
   const [dialogOpen, setDialogOpen] = createSignal(false);
   const [imperial, setImperial] = createStoredSignal("imperial", false);
   const [city, setCity] = createStoredSignal("locationCity", "");
+  const [clearDataDialogOpen, setClearDataDialogOpen] = createSignal(false);
   const [location, setLocation] = createStoredSignal<Array<any>>("location", [
     null,
     null,
@@ -159,6 +167,50 @@ function SettingsTrigger({
   );
   const [weatherEnabled, setWeatherEnabled] = createStoredSignal(
     "weatherEnabled",
+    false
+  );
+  const [dateContained, setDateContained] = createStoredSignal(
+    "dateContained",
+    false
+  );
+  const [counterContained, setCounterContained] = createStoredSignal(
+    "counterContained",
+    false
+  );
+  const [notepadContained, setNotepadContained] = createStoredSignal(
+    "notepadContained",
+    false
+  );
+  const [stopwatchContained, setStopwatchContained] = createStoredSignal(
+    "stopwatchContained",
+    false
+  );
+  const [mantrasContained, setMantrasContained] = createStoredSignal(
+    "mantrasContained",
+    false
+  );
+  const [bookmarksContained, setBookmarksContained] = createStoredSignal(
+    "bookmarksContained",
+    false
+  );
+  const [natureSounds, setNatureSounds] = createStoredSignal(
+    "natureSounds",
+    false
+  );
+  const [focusSounds, setFocusSounds] = createStoredSignal(
+    "focusSounds",
+    false
+  );
+  const [todosContained, setTodosContained] = createStoredSignal(
+    "todosContained",
+    false
+  );
+  const [ambienceSounds, setAmbienceSounds] = createStoredSignal(
+    "ambienceSounds",
+    false
+  );
+  const [pomodoroContained, setPomodoroContained] = createStoredSignal(
+    "pomodoroContained",
     false
   );
   const [userCSS, setUserCSS] = createStoredSignal("userCSS", "");
@@ -195,18 +247,24 @@ function SettingsTrigger({
   function SettingsPage() {
     return (
       <div
-        class={cn("text-foreground flex flex-col sm:flex-row", {
-          "**:font-sans": font() == "sans",
-          "**:font-serif": font() == "serif",
-          "**:font-mono": font() == "mono",
-          "**:font-comic-sans": font() == "comic-sans",
-        })}
+        class={cn(
+          "text-foreground flex flex-col sm:flex-row absolute inset-0 overflow-auto p-0",
+          {
+            "**:font-sans": font() == "sans",
+            "**:font-serif": font() == "serif",
+            "**:font-mono": font() == "mono",
+            "**:font-comic-sans": font() == "comic-sans",
+          }
+        )}
       >
         <div
           id="sidebar"
-          class="sm:max-w-50 sticky top-0 flex h-[140px] w-full max-w-full flex-col gap-2
-            sm:h-full"
+          class="sm:max-w-50 p-6 sticky top-0 flex h-[140px] w-full max-w-full flex-col gap-2
+            sm:h-full overflow-y-auto scrollbar-track-transparent pr-3"
         >
+          <h2 class="text-lg font-[600] mb-2 pl-4">
+            {chrome.i18n.getMessage("settings")}
+          </h2>
           <button
             class="flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
               outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
@@ -264,6 +322,46 @@ function SettingsTrigger({
             />
             {chrome.i18n.getMessage("background")}
           </button>
+
+          <button
+            {...(settingsMenu() == "advanced"
+              ? { "data-selected": "true" }
+              : "")}
+            onmousedown={() => {
+              setSettingsMenu("advanced");
+            }}
+            id="advancedButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Hammer
+              height={20}
+              class="size-6 rounded-lg bg-gray-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("advanced")}
+          </button>
+          <br />
+          <hr />
+          <br />
+          <button
+            {...(settingsMenu() == "todos" ? { "data-selected": "true" } : "")}
+            onmousedown={() => {
+              setSettingsMenu("todos");
+            }}
+            id="todosButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Check
+              height={20}
+              class="size-6 rounded-lg bg-teal-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("tasks")}
+          </button>
           <button
             {...(settingsMenu() == "weather"
               ? { "data-selected": "true" }
@@ -284,154 +382,232 @@ function SettingsTrigger({
             {chrome.i18n.getMessage("weather")}
           </button>
           <button
-            {...(settingsMenu() == "advanced"
+            {...(settingsMenu() == "notepad"
               ? { "data-selected": "true" }
               : "")}
             onmousedown={() => {
-              setSettingsMenu("advanced");
+              setSettingsMenu("notepad");
             }}
-            id="advancedButton"
+            id="notepadButton"
             class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
               outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
               data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
               dark:data-[selected]:bg-white/10`}
           >
-            <Hammer
+            <Notebook
               height={20}
-              class="size-6 rounded-lg bg-gray-700 p-0.5 text-white"
+              class="size-6 rounded-lg bg-white p-0.5 text-black"
             />
-            {chrome.i18n.getMessage("advanced")}
+            {chrome.i18n.getMessage("notepad")}
+          </button>
+          <button
+            {...(settingsMenu() == "date" ? { "data-selected": "true" } : "")}
+            onmousedown={() => {
+              setSettingsMenu("date");
+            }}
+            id="dateButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Calendar
+              height={20}
+              class="size-6 rounded-lg bg-amber-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("date")}
+          </button>
+          <button
+            {...(settingsMenu() == "bookmarks"
+              ? { "data-selected": "true" }
+              : "")}
+            onmousedown={() => {
+              setSettingsMenu("bookmarks");
+            }}
+            id="bookmarksButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Bookmark
+              height={20}
+              class="size-6 rounded-lg bg-purple-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("bookmarks")}
+          </button>
+          <button
+            {...(settingsMenu() == "counter"
+              ? { "data-selected": "true" }
+              : "")}
+            onmousedown={() => {
+              setSettingsMenu("counter");
+            }}
+            id="counterButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Plus
+              height={20}
+              class="size-6 rounded-lg bg-cyan-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("counter")}
+          </button>
+          <button
+            {...(settingsMenu() == "stopwatch"
+              ? { "data-selected": "true" }
+              : "")}
+            onmousedown={() => {
+              setSettingsMenu("stopwatch");
+            }}
+            id="stopwatchButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Timer
+              height={20}
+              class="size-6 rounded-lg bg-orange-500 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("stopwatch")}
+          </button>
+          <button
+            {...(settingsMenu() == "pomodoro"
+              ? { "data-selected": "true" }
+              : "")}
+            onmousedown={() => {
+              setSettingsMenu("pomodoro");
+            }}
+            id="pomodoroButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Clock
+              height={20}
+              class="size-6 rounded-lg bg-blue-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("pomodoro")}
+          </button>
+          <button
+            {...(settingsMenu() == "soundscapes"
+              ? { "data-selected": "true" }
+              : "")}
+            onmousedown={() => {
+              setSettingsMenu("soundscapes");
+            }}
+            id="soundscapesButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Volume2
+              height={20}
+              class="size-6 rounded-lg bg-zinc-700 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("soundscapes")}
+          </button>
+          <button
+            {...(settingsMenu() == "mantras"
+              ? { "data-selected": "true" }
+              : "")}
+            onmousedown={() => {
+              setSettingsMenu("mantras");
+            }}
+            id="mantrasButton"
+            class={`flex items-center gap-2 rounded-lg px-4 py-2 text-left text-sm text-black
+              outline-none hover:bg-black/5 active:opacity-80 data-[selected]:bg-black/10
+              data-[selected]:backdrop-blur-2xl dark:text-white dark:hover:bg-white/5
+              dark:data-[selected]:bg-white/10`}
+          >
+            <Quote
+              height={20}
+              class="size-6 rounded-lg bg-orange-900 p-0.5 text-white"
+            />
+            {chrome.i18n.getMessage("mantras")}
           </button>
         </div>
-        <div class="h-full w-full overflow-y-auto p-10 pt-0">
+        <div class="h-full w-full overflow-y-auto p-10 pt-6 pr-10">
           {settingsMenu() === "general" && (
             <>
-              <h3 class="text-lg font-[600]">
-                {chrome.i18n.getMessage("mode")}
-              </h3>
-              <div class="card-group grid-cols-2 grid-rows-2">
-                <BigButton
-                  {...(mode() === "widgets" ? { "data-selected": true } : {})}
-                  onmousedown={() => {
-                    setMode("widgets");
-                    window.disableSwapy();
-                  }}
-                  title={chrome.i18n.getMessage("default")}
-                  icon={<Home class="size-[64px]" />}
-                />
-                <BigButton
-                  {...(mode() === "dashboard" ? { "data-selected": true } : {})}
-                  onmousedown={() => {
-                    setMode("dashboard");
-                    window.initSwapy();
-                  }}
-                  title={chrome.i18n.getMessage("dashboard")}
-                  icon={<Grid class="size-[64px]" />}
-                />
-                <BigButton
-                  {...(mode() === "nightstand"
-                    ? { "data-selected": true }
-                    : {})}
-                  onmousedown={() => {
-                    setMode("nightstand");
-                    window.disableSwapy();
-                  }}
-                  title={chrome.i18n.getMessage("nightstand")}
-                  icon={<Clock class="size-[64px]" />}
-                />
-                <BigButton
-                  {...(mode() === "speeddial" ? { "data-selected": true } : {})}
-                  onmousedown={() => {
-                    setMode("speeddial");
-                    window.disableSwapy();
-                  }}
-                  title={chrome.i18n.getMessage("speed_dial")}
-                  icon={<Bookmark class="size-[64px]" />}
-                />
-              </div>
-              <br />
-              <br />
-              {(mode() === "widgets" || mode() === "dashboard") && (
-                <div>
-                  <h3 class="text-lg font-[600]">
-                    {chrome.i18n.getMessage("layout")}
-                  </h3>
-                  <div class="card-group grid-cols-3 grid-rows-2">
-                    <BigButton
-                      {...(layout() === "top-left"
-                        ? { "data-selected": true }
-                        : {})}
-                      onmousedown={() => {
-                        setLayout("top-left");
-                      }}
-                      title={chrome.i18n.getMessage("top_left")}
-                      icon={
-                        <ArrowUpLeft class="size-[64px]" fill="currentColor" />
-                      }
-                    />
-                    <BigButton
-                      {...(layout() === "top" ? { "data-selected": true } : {})}
-                      onmousedown={() => {
-                        setLayout("top");
-                      }}
-                      title={chrome.i18n.getMessage("top")}
-                      icon={<ArrowUp class="size-[64px]" fill="currentColor" />}
-                    />
-                    <BigButton
-                      {...(layout() === "top-right"
-                        ? { "data-selected": true }
-                        : {})}
-                      onmousedown={() => {
-                        setLayout("top-right");
-                      }}
-                      title={chrome.i18n.getMessage("top_right")}
-                      icon={
-                        <ArrowUpRight class="size-[64px]" fill="currentColor" />
-                      }
-                    />
-                    <BigButton
-                      {...(layout() === "bottom-left"
-                        ? { "data-selected": true }
-                        : {})}
-                      onmousedown={() => {
-                        setLayout("bottom-left");
-                      }}
-                      title={chrome.i18n.getMessage("bottom_left")}
-                      icon={
-                        <ArrowDownLeft
-                          class="size-[64px]"
-                          fill="currentColor"
-                        />
-                      }
-                    />
-                    <BigButton
-                      {...(layout() === "center"
-                        ? { "data-selected": true }
-                        : {})}
-                      onmousedown={() => {
-                        setLayout("center");
-                      }}
-                      title={chrome.i18n.getMessage("center")}
-                      icon={<Dot class="size-[64px]" fill="currentColor" />}
-                    />
-                    <BigButton
-                      {...(layout() === "bottom-right"
-                        ? { "data-selected": true }
-                        : {})}
-                      onmousedown={() => {
-                        setLayout("bottom-right");
-                      }}
-                      title={chrome.i18n.getMessage("bottom_right")}
-                      icon={
-                        <ArrowDownRight
-                          class="size-[64px]"
-                          fill="currentColor"
-                        />
-                      }
-                    />
-                  </div>
+              <div>
+                <h3 class="text-lg font-[600]">
+                  {chrome.i18n.getMessage("layout")}
+                </h3>
+                <div class="card-group grid-cols-3 grid-rows-2">
+                  <BigButton
+                    {...(layout() === "top-left"
+                      ? { "data-selected": true }
+                      : {})}
+                    onmousedown={() => {
+                      setLayout("top-left");
+                    }}
+                    title={chrome.i18n.getMessage("top_left")}
+                    icon={
+                      <ArrowUpLeft class="size-[64px]" fill="currentColor" />
+                    }
+                  />
+                  <BigButton
+                    {...(layout() === "top" ? { "data-selected": true } : {})}
+                    onmousedown={() => {
+                      setLayout("top");
+                    }}
+                    title={chrome.i18n.getMessage("top")}
+                    icon={<ArrowUp class="size-[64px]" fill="currentColor" />}
+                  />
+                  <BigButton
+                    {...(layout() === "top-right"
+                      ? { "data-selected": true }
+                      : {})}
+                    onmousedown={() => {
+                      setLayout("top-right");
+                    }}
+                    title={chrome.i18n.getMessage("top_right")}
+                    icon={
+                      <ArrowUpRight class="size-[64px]" fill="currentColor" />
+                    }
+                  />
+                  <BigButton
+                    {...(layout() === "bottom-left"
+                      ? { "data-selected": true }
+                      : {})}
+                    onmousedown={() => {
+                      setLayout("bottom-left");
+                    }}
+                    title={chrome.i18n.getMessage("bottom_left")}
+                    icon={
+                      <ArrowDownLeft class="size-[64px]" fill="currentColor" />
+                    }
+                  />
+                  <BigButton
+                    {...(layout() === "center"
+                      ? { "data-selected": true }
+                      : {})}
+                    onmousedown={() => {
+                      setLayout("center");
+                    }}
+                    title={chrome.i18n.getMessage("center")}
+                    icon={<Dot class="size-[64px]" fill="currentColor" />}
+                  />
+                  <BigButton
+                    {...(layout() === "bottom-right"
+                      ? { "data-selected": true }
+                      : {})}
+                    onmousedown={() => {
+                      setLayout("bottom-right");
+                    }}
+                    title={chrome.i18n.getMessage("bottom_right")}
+                    icon={
+                      <ArrowDownRight class="size-[64px]" fill="currentColor" />
+                    }
+                  />
                 </div>
-              )}
+              </div>
               <br />
               <br />
               <h3 class="text-lg font-[600]">
@@ -949,6 +1125,115 @@ function SettingsTrigger({
               </div>
             </>
           )}
+          {settingsMenu() === "advanced" && (
+            <>
+              <h3 class="text-lg font-[600]">
+                {chrome.i18n.getMessage("custom_css")}
+              </h3>
+              <div class="flex gap-2 items-center">
+                <textarea
+                  class="mt-2 h-full w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white
+                    shadow-inner shadow-white/10 outline-none backdrop-blur-2xl focus:ring-2"
+                  value={userCSS()}
+                  placeholder={chrome.i18n.getMessage("custom_css")}
+                  onInput={(e) => {
+                    setUserCSS(e.currentTarget.value);
+                    injectUserCSS(e.currentTarget.value);
+                  }}
+                ></textarea>
+              </div>
+              <br />
+              <h3 class="text-lg font-[600]">
+                {chrome.i18n.getMessage("clear_data")}
+              </h3>
+              <Dialog
+                open={clearDataDialogOpen()}
+                onOpenChange={setClearDataDialogOpen}
+              >
+                <DialogTrigger
+                  aria-label={chrome.i18n.getMessage("clear_data")}
+                >
+                  <Button>{chrome.i18n.getMessage("clear_data")}</Button>
+                </DialogTrigger>
+                <DialogContent class="h-fit w-80 overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>
+                      {chrome.i18n.getMessage("clear_data")}
+                    </DialogTitle>
+                    <DialogDescription>
+                      {chrome.i18n.getMessage("clear_data_description")}
+                    </DialogDescription>
+                  </DialogHeader>
+                  <br />
+                  <DialogFooter class="flex !justify-start mt-4">
+                    <Button onClick={() => setClearDataDialogOpen(false)}>
+                      {chrome.i18n.getMessage("cancel")}
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        localStorage.clear();
+                        if (chrome.storage) {
+                          chrome.storage.local.clear();
+                          chrome.storage.sync.clear();
+                        }
+                        window.location.reload();
+                      }}
+                    >
+                      {chrome.i18n.getMessage("clear_data")}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </>
+          )}
+          {settingsMenu() === "date" && (
+            <>
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("date")}
+              </h3>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={dateContained()}
+                onChange={(value) => {
+                  setDateContained(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("enabled")}
+                </SwitchLabel>
+              </Switch>
+            </>
+          )}
+          {settingsMenu() === "todos" && (
+            <>
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("tasks")}
+              </h3>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={todosContained()}
+                onChange={(value) => {
+                  setTodosContained(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("enabled")}
+                </SwitchLabel>
+              </Switch>
+            </>
+          )}
           {settingsMenu() === "weather" && (
             <>
               <h3 class="text-lg font-[600] mb-2">
@@ -1109,23 +1394,208 @@ function SettingsTrigger({
               </Show>
             </>
           )}
-          {settingsMenu() === "advanced" && (
+          {settingsMenu() === "bookmarks" && (
             <>
-              <h3 class="text-lg font-[600]">
-                {chrome.i18n.getMessage("custom_css")}
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("bookmarks")}
               </h3>
-              <div class="flex gap-2 items-center">
-                <textarea
-                  class="mt-2 h-full w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white
-                    shadow-inner shadow-white/10 outline-none backdrop-blur-2xl focus:ring-2"
-                  value={userCSS()}
-                  placeholder={chrome.i18n.getMessage("custom_css")}
-                  onInput={(e) => {
-                    setUserCSS(e.currentTarget.value);
-                    injectUserCSS(e.currentTarget.value);
-                  }}
-                ></textarea>
-              </div>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={bookmarksContained()}
+                onChange={(value) => {
+                  setBookmarksContained(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("enabled")}
+                </SwitchLabel>
+              </Switch>
+            </>
+          )}
+          {settingsMenu() === "pomodoro" && (
+            <>
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("pomodoro")}
+              </h3>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={pomodoroContained()}
+                onChange={(value) => {
+                  setPomodoroContained(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("enabled")}
+                </SwitchLabel>
+              </Switch>
+            </>
+          )}
+          {settingsMenu() === "soundscapes" && (
+            <>
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("soundscapes")}
+              </h3>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={natureSounds()}
+                onChange={(value) => {
+                  setNatureSounds(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("nature_sounds")}
+                </SwitchLabel>
+              </Switch>
+              <br />
+              <Switch
+                class="flex items-center space-x-2"
+                checked={focusSounds()}
+                onChange={(value) => {
+                  setFocusSounds(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("focus_sounds")}
+                </SwitchLabel>
+              </Switch>
+              <br />
+              <Switch
+                class="flex items-center space-x-2"
+                checked={ambienceSounds()}
+                onChange={(value) => {
+                  setAmbienceSounds(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("ambience_sounds")}
+                </SwitchLabel>
+              </Switch>
+            </>
+          )}
+          {settingsMenu() === "mantras" && (
+            <>
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("mantras")}
+              </h3>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={mantrasContained()}
+                onChange={(value) => {
+                  setMantrasContained(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("enabled")}
+                </SwitchLabel>
+              </Switch>
+            </>
+          )}
+          {settingsMenu() === "stopwatch" && (
+            <>
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("stopwatch")}
+              </h3>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={stopwatchContained()}
+                onChange={(value) => {
+                  setStopwatchContained(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("enabled")}
+                </SwitchLabel>
+              </Switch>
+            </>
+          )}
+          {settingsMenu() === "counter" && (
+            <>
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("counter")}
+              </h3>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={counterContained()}
+                onChange={(value) => {
+                  setCounterContained(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("enabled")}
+                </SwitchLabel>
+              </Switch>
+            </>
+          )}
+          {settingsMenu() === "notepad" && (
+            <>
+              <h3 class="text-lg font-[600] mb-2">
+                {chrome.i18n.getMessage("notepad")}
+              </h3>
+              <Switch
+                class="flex items-center space-x-2"
+                checked={notepadContained()}
+                onChange={(value) => {
+                  setNotepadContained(value);
+                }}
+              >
+                <SwitchControl>
+                  <SwitchThumb />
+                </SwitchControl>
+                <SwitchLabel
+                  class="text-sm font-medium leading-none data-[disabled]:cursor-not-allowed
+                    data-[disabled]:opacity-70"
+                >
+                  {chrome.i18n.getMessage("enabled")}
+                </SwitchLabel>
+              </Switch>
             </>
           )}
           <br />
@@ -1153,17 +1623,17 @@ function SettingsTrigger({
       </DialogTrigger>
       <DialogContent
         class={cn(
-          "max-w-3xl",
+          "max-w-3xl overflow-hidden",
           textStyle() == "uppercase" ? "**:!uppercase" : "",
           textStyle() == "lowercase" ? "**:lowercase" : ""
         )}
       >
         <DialogHeader>
-          <DialogTitle class="mb-4 pl-4">
+          <DialogTitle class="mb-4 pl-4 sr-only">
             {chrome.i18n.getMessage("settings")}
           </DialogTitle>
-          <SettingsPage />
         </DialogHeader>
+        <SettingsPage />
       </DialogContent>
     </Dialog>
   );
