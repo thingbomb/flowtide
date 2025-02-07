@@ -294,6 +294,7 @@ const App: Component = () => {
         author: selectedImage.author,
         expiry: Date.now() + Number(wallpaperChangeTime()),
         location: selectedImage.location,
+        directLink: selectedImage.directLink,
       });
     }
 
@@ -303,6 +304,7 @@ const App: Component = () => {
       url: selectedImage.url,
       author: selectedImage.author,
       expiry: Date.now() + Number(wallpaperChangeTime()),
+      directLink: selectedImage.directLink,
     };
   }
 
@@ -586,6 +588,7 @@ const App: Component = () => {
           author: selectedImage.author,
           expiry: Date.now() + Number(wallpaperChangeTime()),
           location: selectedImage.location,
+          directLink: selectedImage.directLink,
         };
         fetch(newImage.url, {
           mode: "no-cors",
@@ -650,6 +653,7 @@ const App: Component = () => {
             class="absolute inset-0 h-full w-full object-cover transition-all"
             data-author={JSON.stringify(selectedImage().author)}
             data-location={selectedImage().location}
+            data-direct-link={selectedImage().directLink}
             style={{ opacity: 0, filter: "brightness(0)" }}
             onLoad={(e: any) => {
               if (document.documentElement.style.colorScheme === "dark") {
@@ -1031,6 +1035,13 @@ const App: Component = () => {
                                 .getElementById("wallpaper")!
                                 .getAttribute("data-location")
                             : undefined,
+                          directLink: document
+                            .getElementById("wallpaper")!
+                            .getAttribute("data-direct-link")
+                            ? document
+                                .getElementById("wallpaper")!
+                                .getAttribute("data-direct-link")
+                            : undefined,
                         });
                         setBackgroundPaused("true");
                       }
@@ -1068,7 +1079,16 @@ const App: Component = () => {
                     <a href={selectedImage().author.url}>
                       {selectedImage().author.name}
                     </a>{" "}
-                    / <a href="https://unsplash.com/">Unsplash</a>
+                    /{" "}
+                    <a
+                      href={
+                        selectedImage().directLink
+                          ? selectedImage().directLink
+                          : "https://unsplash.com/"
+                      }
+                    >
+                      Unsplash
+                    </a>
                   </span>
                 </span>
               ) : (
