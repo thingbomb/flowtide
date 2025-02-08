@@ -719,7 +719,7 @@ const App: Component = () => {
             }}
           >
             <div id="top-left-widgets-container">
-              <Show when={bookmarksContained()}>
+              <Show when={actuallyBoolean(bookmarksContained())}>
                 <DropdownMenu placement="bottom">
                   <DropdownMenuTrigger
                     as={(props: DropdownMenuSubTriggerProps) => (
@@ -913,7 +913,7 @@ const App: Component = () => {
               </Show>
             </div>
             <div id="top-right-widgets-container" class="flex">
-              <Show when={counterContained()}>
+              <Show when={actuallyBoolean(counterContained())}>
                 <div
                   id="counter-widget"
                   class="flex items-center gap-2 px-4 py-2"
@@ -933,7 +933,7 @@ const App: Component = () => {
                   </button>
                 </div>
               </Show>
-              <Show when={stopwatchContained()}>
+              <Show when={actuallyBoolean(stopwatchContained())}>
                 <div
                   id="stopwatch-widget"
                   class="flex items-center gap-2 px-4 py-2"
@@ -952,7 +952,7 @@ const App: Component = () => {
                   </button>
                 </div>
               </Show>
-              <Show when={weatherContained()}>
+              <Show when={actuallyBoolean(weatherContained())}>
                 <div
                   id="weather-widget"
                   class="flex items-center gap-2 px-3 py-1 w-full select-none"
@@ -1104,7 +1104,7 @@ const App: Component = () => {
                 class="text-md fixed bottom-0 left-0 right-0 -z-50 m-2.5 flex !h-[36px] items-center
                   justify-center gap-2 text-center font-medium"
               >
-                <Show when={mantrasContained()}>
+                <Show when={actuallyBoolean(mantrasContained())}>
                   <p>
                     {chrome.i18n.getMessage(
                       mantras[Math.floor(Math.random() * mantras.length)]
@@ -1119,7 +1119,7 @@ const App: Component = () => {
                 display: itemsHidden() == "true" ? "none" : "",
               }}
             >
-              <Show when={todosContained()}>
+              <Show when={actuallyBoolean(todosContained())}>
                 <Popover placement="top-end">
                   <PopoverTrigger
                     as={(props: PopoverTriggerProps) => (
@@ -1159,7 +1159,7 @@ const App: Component = () => {
               }}
             >
               <Show
-                when={pomodoroContained()}
+                when={actuallyBoolean(pomodoroContained())}
                 fallback={
                   <h1
                     class="m-0 p-0 text-[170px] font-semibold text-white [line-height:1.2]"
@@ -1270,7 +1270,7 @@ const App: Component = () => {
                     </Dialog>
                   </div>
                   <Show when={name() == ""}>
-                    <Show when={dateContained()}>
+                    <Show when={actuallyBoolean(dateContained())}>
                       <div class="h-1.25 mt-4 w-full rounded-full bg-black/30 backdrop-blur-3xl"></div>
                     </Show>
                   </Show>
@@ -1278,7 +1278,7 @@ const App: Component = () => {
               </Show>
               <p class="mt-3 text-3xl font-medium text-white">
                 <Show when={name() == ""}>
-                  <Show when={dateContained()}>
+                  <Show when={actuallyBoolean(dateContained())}>
                     {dateFormat() == "normal" ? (
                       <span id="nightstandDay">
                         {
@@ -1330,7 +1330,7 @@ const App: Component = () => {
                 </Show>
               </p>
               <br />
-              <Show when={notepadContained()}>
+              <Show when={actuallyBoolean(notepadContained())}>
                 <textarea
                   class="mt-2 h-[150px] w-full resize-none rounded-xl bg-black/10 p-3 text-sm text-white
                     shadow-inner shadow-white/10 outline-none backdrop-blur-2xl
