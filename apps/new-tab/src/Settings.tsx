@@ -187,11 +187,11 @@ function SettingsTrigger({
   );
   const [mantrasContained, setMantrasContained] = createStoredSignal(
     "mantrasContained",
-    false
+    true
   );
   const [bookmarksContained, setBookmarksContained] = createStoredSignal(
     "bookmarksContained",
-    false
+    true
   );
   const [natureSounds, setNatureSounds] = createStoredSignal(
     "natureSounds",
@@ -203,7 +203,7 @@ function SettingsTrigger({
   );
   const [todosContained, setTodosContained] = createStoredSignal(
     "todosContained",
-    false
+    true
   );
   const [ambienceSounds, setAmbienceSounds] = createStoredSignal(
     "ambienceSounds",
@@ -342,8 +342,6 @@ function SettingsTrigger({
             />
             {chrome.i18n.getMessage("advanced")}
           </button>
-          <br />
-          <hr />
           <br />
           <button
             {...(settingsMenu() == "todos" ? { "data-selected": "true" } : "")}
@@ -1193,7 +1191,7 @@ function SettingsTrigger({
               </h3>
               <Switch
                 class="flex items-center space-x-2"
-                checked={dateContained()}
+                checked={actuallyBoolean(dateContained())}
                 onChange={(value) => {
                   setDateContained(value);
                 }}
@@ -1217,7 +1215,7 @@ function SettingsTrigger({
               </h3>
               <Switch
                 class="flex items-center space-x-2"
-                checked={todosContained()}
+                checked={actuallyBoolean(todosContained())}
                 onChange={(value) => {
                   setTodosContained(value);
                 }}
@@ -1401,7 +1399,7 @@ function SettingsTrigger({
               </h3>
               <Switch
                 class="flex items-center space-x-2"
-                checked={bookmarksContained()}
+                checked={actuallyBoolean(bookmarksContained())}
                 onChange={(value) => {
                   setBookmarksContained(value);
                 }}
@@ -1425,7 +1423,7 @@ function SettingsTrigger({
               </h3>
               <Switch
                 class="flex items-center space-x-2"
-                checked={pomodoroContained()}
+                checked={actuallyBoolean(pomodoroContained())}
                 onChange={(value) => {
                   setPomodoroContained(value);
                 }}
@@ -1509,7 +1507,7 @@ function SettingsTrigger({
               </h3>
               <Switch
                 class="flex items-center space-x-2"
-                checked={mantrasContained()}
+                checked={actuallyBoolean(mantrasContained())}
                 onChange={(value) => {
                   setMantrasContained(value);
                 }}
@@ -1533,7 +1531,7 @@ function SettingsTrigger({
               </h3>
               <Switch
                 class="flex items-center space-x-2"
-                checked={stopwatchContained()}
+                checked={actuallyBoolean(stopwatchContained())}
                 onChange={(value) => {
                   setStopwatchContained(value);
                 }}
@@ -1557,7 +1555,7 @@ function SettingsTrigger({
               </h3>
               <Switch
                 class="flex items-center space-x-2"
-                checked={counterContained()}
+                checked={actuallyBoolean(counterContained())}
                 onChange={(value) => {
                   setCounterContained(value);
                 }}
@@ -1581,7 +1579,7 @@ function SettingsTrigger({
               </h3>
               <Switch
                 class="flex items-center space-x-2"
-                checked={notepadContained()}
+                checked={actuallyBoolean(notepadContained())}
                 onChange={(value) => {
                   setNotepadContained(value);
                 }}

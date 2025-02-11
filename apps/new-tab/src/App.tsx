@@ -330,7 +330,7 @@ const App: Component = () => {
   );
   const [todosContained, setTodosContained] = createStoredSignal(
     "todosContained",
-    false
+    true
   );
   const [natureSounds, setNatureSounds] = createStoredSignal(
     "natureSounds",
