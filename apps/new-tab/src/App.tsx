@@ -221,7 +221,7 @@ const App: Component = () => {
   const [background] = createStoredSignal("background", "image");
   const [name, setName] = createStoredSignal("name", "");
   const [bookmarks, setBookmarks] = createSignal<any[]>([]);
-  const [pageTitle] = createStoredSignal("pageTitle", "");
+  const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
   const [textStyle] = createStoredSignal("textStyle", "normal");
   const [color] = createStoredSignal("color", "unset");
   const [opacity] = createStoredSignal("opacity", "0.8");
@@ -420,11 +420,12 @@ const App: Component = () => {
       }
     }, 1000);
   });
+
   createEffect(() => {
     if (pageTitle()) {
       document.title = pageTitle();
     }
-  }, [pageTitle]);
+  });
 
   createEffect(() => {
     if (pomodoro().playing) {
@@ -574,6 +575,9 @@ const App: Component = () => {
   };
 
   onMount(() => {
+    if (pageTitle()) {
+      document.title = pageTitle();
+    }
     if (backgroundPaused() == "false") {
       if (
         Number(
