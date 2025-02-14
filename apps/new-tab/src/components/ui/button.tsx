@@ -26,16 +26,14 @@ import type { ValidComponent } from "solid-js";
 import { splitProps } from "solid-js";
 
 export const buttonVariants = cva(
-  "inline-flex !select-none !cursor-default	items-center justify-center rounded-md text-sm font-medium transition-[color,background-color,box-shadow] focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex !select-none	items-center justify-center rounded-md text-sm font-medium transition-[color,background-color,box-shadow] focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default:
-          "inline-flex items-center gap-2 rounded-md bg-black/20 backdrop-filter-3px text-white shadow-inner shadow-white/10 focus:outline-none hover:bg-black/30 focus:outline-1 focus:outline-white",
+        default: "button",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline:
-          "inline-flex items-center gap-2 rounded-md bg-zinc-400 dark:bg-zinc-800 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner dark:shadow-white/10 focus:outline-none hover:bg-zinc-600 dark:hover:bg-zinc-600 focus:outline-1 focus:outline-white",
+        outline: "button-outline",
         secondary:
           "bg-black text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",

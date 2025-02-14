@@ -48,6 +48,7 @@ module.exports = {
         },
       },
       fontFamily: {
+        sans: "'Inter Variable', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, sans-serif",
         "comic-sans": "Comic Sans MS, Comic Sans, cursive",
       },
       borderRadius: {

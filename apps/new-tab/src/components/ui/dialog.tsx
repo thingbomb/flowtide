@@ -33,6 +33,7 @@ export const DialogTrigger = DialogPrimitive.Trigger;
 type dialogContentProps<T extends ValidComponent = "div"> = ParentProps<
   DialogContentProps<T> & {
     class?: string;
+    overlayClass?: string;
   }
 >;
 
@@ -42,6 +43,7 @@ export const DialogContent = <T extends ValidComponent = "div">(
   const [local, rest] = splitProps(props as dialogContentProps, [
     "class",
     "children",
+    "overlayClass",
   ]);
 
   return (
@@ -50,7 +52,8 @@ export const DialogContent = <T extends ValidComponent = "div">(
         class={cn(
           `dark:bg-background/80 data-[expanded]:animate-in data-[closed]:animate-out
           data-[closed]:fade-out-0 data-[expanded]:fade-in-0 fixed inset-0 z-50
-          bg-black/80`
+          bg-black/80`,
+          local.overlayClass
         )}
         {...rest}
       />

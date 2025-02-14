@@ -131,7 +131,7 @@ export const CommandDialog = (props: CommandDialogProps) => {
 
   return (
     <Dialog {...rest}>
-      <DialogContent class="overflow-hidden p-0 max-h-[40vh]">
+      <DialogContent class="overflow-hidden p-0 max-h-[40vh] h-fit">
         <Command
           class="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2
             [&_[cmdk-group-heading]]:font-medium

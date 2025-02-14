@@ -2,6 +2,7 @@ import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
 import type { Component } from "solid-js";
 import { Button } from "./components/ui/button";
 import {
+  ArrowLeft,
   ArrowRight,
   Bookmark,
   Check,
@@ -58,14 +59,46 @@ import { PopoverTriggerProps } from "@kobalte/core/popover";
 import soundscapes, { Soundscape } from "./soundscapes";
 import { actuallyBoolean } from "./libs/boolean";
 import { useWeather } from "./hooks/weather";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./components/ui/select";
 
 type MessageKeys = keyof typeof data;
 
-interface Data {
-  [key: string]: { message: string };
+interface BookmarkTreeNode {
+  children?: BookmarkTreeNode[];
+  dateAdded?: number;
+  dateGroupModified?: number;
+  id: string;
+  index?: number;
+  parentId?: string;
+  title: string;
+  unmodifiable?: "managed";
+  url?: string;
 }
 
-const mantras = [
+type Mantra =
+  | "mantra_1"
+  | "mantra_2"
+  | "mantra_3"
+  | "mantra_4"
+  | "mantra_5"
+  | "mantra_6"
+  | "mantra_7"
+  | "mantra_8"
+  | "mantra_9"
+  | "mantra_10"
+  | "mantra_11"
+  | "mantra_12"
+  | "mantra_13"
+  | "mantra_14"
+  | "mantra_15";
+
+const mantras: Mantra[] = [
   "mantra_1",
   "mantra_2",
   "mantra_3",
@@ -86,28 +119,22 @@ const mantras = [
 try {
   chrome.i18n.getMessage("work");
 } catch (error) {
-  const jsonDataTyped = data as Data;
   window.chrome = {} as any;
   chrome.i18n = {
-    getMessage: (message: MessageKeys, substitutions?: string | string[]) => {
-      try {
-        let msg = jsonDataTyped[message]?.message || message;
-        if (substitutions) {
-          if (!Array.isArray(substitutions)) {
-            substitutions = [substitutions];
-          }
-          substitutions.forEach((sub, index) => {
-            const regex = new RegExp(`\\$${index + 1}`, "g");
-            msg = msg.replace(regex, sub);
-          });
-        }
-        return msg;
-      } catch (error) {
-        console.log(message);
-        return message;
+    getMessage: (
+      message: MessageKeys | string,
+      substitutions?: string | string[]
+    ) => {
+      let msg = data[message as MessageKeys]?.message || message;
+      if (substitutions) {
+        if (!Array.isArray(substitutions)) substitutions = [substitutions];
+        substitutions.forEach((sub, index) => {
+          msg = msg.replace(new RegExp(`\\$${index + 1}`, "g"), sub);
+        });
       }
+      return msg;
     },
-  } as any;
+  };
 }
 
 const colorPalette = [
@@ -215,10 +242,11 @@ const App: Component = () => {
   const [selectedColor] = createSignal(
     colorPalette[Math.floor(Math.random() * colorPalette.length)]
   );
+  const [clockFormat, setClockFormat] = createStoredSignal("clockFormat", "");
   const [notepad, setNotepad] = createStoredSignal<string>("notepad", "");
   const [layout] = createStoredSignal("layout", "center");
-  const [currentFont] = createStoredSignal("font", "sans");
-  const [background] = createStoredSignal("background", "image");
+  const [currentFont, setFont] = createStoredSignal("font", "sans");
+  const [background, setBackground] = createStoredSignal("background", "image");
   const [name, setName] = createStoredSignal("name", "");
   const [bookmarks, setBookmarks] = createSignal<any[]>([]);
   const [pageTitle, setPageTitle] = createStoredSignal("pageTitle", "");
@@ -371,7 +399,7 @@ const App: Component = () => {
 
   onMount(() => {
     if (chrome.bookmarks !== undefined) {
-      chrome.bookmarks.getTree((bookmarkTreeNodes) => {
+      chrome.bookmarks.getTree((bookmarkTreeNodes: BookmarkTreeNode[]) => {
         const flattenBookmarks = (nodes: any[]): Bookmark[] => {
           let bookmarks: Bookmark[] = [];
           for (const node of nodes) {
@@ -462,56 +490,224 @@ const App: Component = () => {
 
   const OnboardingScreen1: Component = () => {
     return (
-      <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
-        <h1 class="text-7xl font-[600]">
+      <div>
+        <h1 class="text-[26px] font-semibold m-0 p-0">
           {chrome.i18n.getMessage("welcome_message")}
         </h1>
-        <Button class="group" onmousedown={() => setOnboardingScreen(2)}>
-          {chrome.i18n.getMessage("get_started")}
-          <ArrowRight
-            class="transition-transform group-hover:translate-x-1"
-            height={16}
+        <p class="text-[#B2B7BD] text-[15px]">
+          {chrome.i18n.getMessage("greeting_description")}
+        </p>
+        <br />
+        <TextFieldRoot class="flex-1">
+          <TextField
+            placeholder={chrome.i18n.getMessage("display_name")}
+            value={greetingNameValue()}
+            onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
+            onKeyDown={(e) => {
+              if (e.key == "Enter") {
+                setOnboardingScreen(2);
+              }
+            }}
+            autofocus={true}
           />
-        </Button>
+        </TextFieldRoot>
+        <br />
+        <div class="flex items-center gap-2 p-7.5 absolute bottom-0 left-0 right-0 bg-[#18191B]">
+          <Button
+            variant={"outline"}
+            class="px-2.5"
+            disabled
+            title={chrome.i18n.getMessage("go_back")}
+          >
+            <ArrowLeft class="transition-transform group-hover:translate-x-1 size-[13.3px]" />
+          </Button>
+          <Button
+            class="group flex items-center gap-1"
+            onmousedown={() => {
+              setOnboardingScreen(2);
+              setName(greetingNameValue());
+            }}
+          >
+            {greetingNameValue() == ""
+              ? chrome.i18n.getMessage("skip")
+              : chrome.i18n.getMessage("next")}
+            <ArrowRight class="transition-transform group-hover:translate-x-1 size-[13.3px]" />
+          </Button>
+        </div>
       </div>
     );
   };
   const OnboardingScreen2: Component = () => {
     return (
-      <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
-        <div>
-          <h1 class="mb-4 text-5xl font-[600]">
-            {chrome.i18n.getMessage("greeting")}
-          </h1>
-          <TextFieldRoot class="flex-1">
-            <TextField
-              class="not-focus:border-zinc-400"
-              placeholder={chrome.i18n.getMessage("enter_name")}
-              value={greetingNameValue()}
-              onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
-              onKeyDown={(e: KeyboardEvent) => {
-                if (e.key === "Enter") {
-                  setOnboardingScreen(3);
-                  setName(greetingNameValue());
-                }
-              }}
-            />
-          </TextFieldRoot>
-          <br />
+      <div class="overflow-y-auto max-h-[70%]">
+        <h1 class="text-[26px] font-semibold m-0 p-0">
+          {chrome.i18n.getMessage("customize")}
+        </h1>
+        <p class="text-[#B2B7BD] text-[15px]">
+          {chrome.i18n.getMessage("customize_desc")}
+        </p>
+        <br />
+        <span class="text-sm">{chrome.i18n.getMessage("background")}</span>
+        <Select
+          options={["image", "solid_color", "gradient", "blank"]}
+          placeholder={chrome.i18n.getMessage("background")}
+          defaultValue={background().replaceAll("-", "_")}
+          onChange={(value) => {
+            if (value == "image") {
+              setBackground("image");
+              return;
+            }
+            if (value == "solid_color") {
+              setBackground("solid-color");
+              return;
+            }
+            if (value == "gradient") {
+              setBackground("gradient");
+              return;
+            }
+            if (value == "blank") {
+              setBackground("blank");
+              return;
+            }
+            if (value == "custom_url") {
+              setBackground("custom-url");
+              return;
+            }
+            if (value == "local_file") {
+              setBackground("local-file");
+              return;
+            }
+          }}
+          itemComponent={(props) => (
+            <SelectItem
+              item={props.item}
+              class={cn({
+                "!font-sans": props.item.rawValue == "sans",
+                "!font-serif": props.item.rawValue == "serif",
+                "!font-mono": props.item.rawValue == "mono",
+                "!font-comic-sans": props.item.rawValue == "comic_sans",
+              })}
+            >
+              {chrome.i18n.getMessage(
+                props.item.rawValue as "sans" | "serif" | "mono" | "comic_sans"
+              )}
+            </SelectItem>
+          )}
+        >
+          <SelectTrigger class="w-[180px] bg-[#111113]">
+            <SelectValue<string>>
+              {(state) =>
+                chrome.i18n.getMessage(
+                  state.selectedOption() as
+                    | "sans"
+                    | "serif"
+                    | "mono"
+                    | "comic_sans"
+                )
+              }
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent class="bg-[#111113]" />
+        </Select>
+        <br />
+        <span class="text-sm">{chrome.i18n.getMessage("font")}</span>
+        <Select
+          options={["sans", "serif", "mono", "comic_sans"]}
+          placeholder={chrome.i18n.getMessage("select_font")}
+          defaultValue={currentFont()}
+          onChange={(value) => {
+            if (value == "sans") {
+              setFont("sans");
+              return;
+            }
+            if (value == "serif") {
+              setFont("serif");
+              return;
+            }
+            if (value == "mono") {
+              setFont("mono");
+              return;
+            }
+            if (value == "comic_sans") {
+              setFont("comic-sans");
+              return;
+            }
+          }}
+          itemComponent={(props) => (
+            <SelectItem
+              item={props.item}
+              class={cn({
+                "!font-sans": props.item.rawValue == "sans",
+                "!font-serif": props.item.rawValue == "serif",
+                "!font-mono": props.item.rawValue == "mono",
+                "!font-comic-sans": props.item.rawValue == "comic_sans",
+              })}
+            >
+              {chrome.i18n.getMessage(
+                props.item.rawValue as "sans" | "serif" | "mono" | "comic_sans"
+              )}
+            </SelectItem>
+          )}
+        >
+          <SelectTrigger class="w-[180px] bg-[#111113]">
+            <SelectValue<string>>
+              {(state) =>
+                chrome.i18n.getMessage(
+                  state.selectedOption() as
+                    | "sans"
+                    | "serif"
+                    | "mono"
+                    | "comic_sans"
+                )
+              }
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent class="bg-[#111113]" />
+        </Select>
+        <br />
+        <span class="text-sm">{chrome.i18n.getMessage("clock_format")}</span>
+        <Select
+          options={["12h", "24h"]}
+          placeholder={chrome.i18n.getMessage("clock_format")}
+          defaultValue={clockFormat()}
+          onChange={(value) => {
+            if (value == "12h") {
+              setClockFormat("12h");
+              return;
+            }
+            if (value == "24h") {
+              setClockFormat("24h");
+              return;
+            }
+          }}
+          itemComponent={(props) => (
+            <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
+          )}
+        >
+          <SelectTrigger class="w-[180px] bg-[#111113]">
+            <SelectValue<string>>
+              {(state) => state.selectedOption()}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent class="bg-[#111113]" />
+        </Select>
+        <div class="flex items-center gap-2 p-7.5 absolute bottom-0 left-0 right-0 bg-[#18191B]">
           <Button
-            class="group"
+            variant={"outline"}
+            class="px-2.5"
+            onMouseDown={() => setOnboardingScreen(1)}
+            title={chrome.i18n.getMessage("go_back")}
+          >
+            <ArrowLeft class="transition-transform group-hover:translate-x-1 size-[13.3px]" />
+          </Button>
+          <Button
+            class="group flex items-center gap-1"
             onmousedown={() => {
               setOnboardingScreen(3);
-              setName(greetingNameValue());
             }}
           >
-            {greetingNameValue()
-              ? chrome.i18n.getMessage("set_greeting")
-              : chrome.i18n.getMessage("skip")}
-            <ArrowRight
-              class="transition-transform group-hover:translate-x-1"
-              height={16}
-            />
+            {chrome.i18n.getMessage("next")}
+            <ArrowRight class="transition-transform group-hover:translate-x-1 size-[13.3px]" />
           </Button>
         </div>
       </div>
@@ -519,42 +715,45 @@ const App: Component = () => {
   };
   const OnboardingScreen3: Component = () => {
     return (
-      <div class="fixed inset-0 flex flex-col items-center justify-center gap-6">
-        <div>
-          <h1 class="mb-4 text-5xl font-[600]">
-            {chrome.i18n.getMessage("thanks")}
-          </h1>
-          <br />
-          <div class="flex gap-2">
-            <a
-              href="https://discord.gg/QEPd4MA3zF"
-              class="text-white py-4 px-7 bg-black/30 backdrop-blur-3xl rounded-2xl shadow-inner
-                shadow-white/10 text-xl"
-            >
-              Discord
-            </a>
-            <a
-              href="https://github.com"
-              class="text-white py-4 px-7 bg-black/30 backdrop-blur-3xl rounded-2xl shadow-inner
-                shadow-white/10 text-xl"
-            >
-              GitHub
-            </a>
-          </div>
-          <br />
-          <br />
+      <div>
+        <h1 class="text-[26px] font-semibold m-0 p-0">
+          {chrome.i18n.getMessage("join_the_community")}
+        </h1>
+        <p class="text-[#B2B7BD] text-[15px]">
+          {chrome.i18n.getMessage("community_desc")}
+        </p>
+        <br />
+        <a
+          href="https://discord.gg/hhPuurkvua"
+          target="_blank"
+          class="text-white"
+        >
           <Button
-            class="group"
+            variant={"outline"}
+            class="px-2.5"
+            title={chrome.i18n.getMessage("discord")}
+          >
+            {chrome.i18n.getMessage("discord")}
+          </Button>
+        </a>
+        <br />
+        <div class="flex items-center gap-2 p-7.5 absolute bottom-0 left-0 right-0 bg-[#18191B]">
+          <Button
+            variant={"outline"}
+            class="px-2.5"
+            onMouseDown={() => setOnboardingScreen(2)}
+            title={chrome.i18n.getMessage("go_back")}
+          >
+            <ArrowLeft class="transition-transform group-hover:translate-x-1 size-[13.3px]" />
+          </Button>
+          <Button
+            class="group flex items-center gap-1"
             onmousedown={() => {
               setNeedsOnboarding(true);
-              setName(greetingNameValue());
             }}
           >
-            {chrome.i18n.getMessage("complete")}
-            <ArrowRight
-              class="transition-transform group-hover:translate-x-1"
-              height={16}
-            />
+            {chrome.i18n.getMessage("finish")}
+            <ArrowRight class="transition-transform group-hover:translate-x-1 size-[13.3px]" />
           </Button>
         </div>
       </div>
@@ -563,14 +762,29 @@ const App: Component = () => {
 
   const OnboardingFlow: Component = () => {
     return (
-      <div
-        class="absolute inset-0 z-50 bg-black/30 backdrop-blur-3xl"
-        id="onboarding"
-      >
-        {onboardingScreen() === 1 && <OnboardingScreen1 />}
-        {onboardingScreen() === 2 && <OnboardingScreen2 />}
-        {onboardingScreen() === 3 && <OnboardingScreen3 />}
-      </div>
+      <Dialog open={true}>
+        <DialogContent
+          class={cn("max-h-[550px] max-w-[800px] border-[#2E3235] border-1")}
+          overlayClass="!backdrop-blur-xl"
+        >
+          <div
+            class={cn(
+              "absolute inset-0 z-50 bg-[#18191B] backdrop-blur-3xl p-7.5 overflow-y-auto",
+              {
+                "font-sans": currentFont() == "sans",
+                "font-serif": currentFont() == "serif",
+                "font-mono": currentFont() == "mono",
+                "font-comic-sans": currentFont() == "comic-sans",
+              }
+            )}
+            id="onboarding"
+          >
+            {onboardingScreen() === 1 && <OnboardingScreen1 />}
+            {onboardingScreen() === 2 && <OnboardingScreen2 />}
+            {onboardingScreen() === 3 && <OnboardingScreen3 />}
+          </div>
+        </DialogContent>
+      </Dialog>
     );
   };
 
@@ -625,12 +839,13 @@ const App: Component = () => {
   return (
     <main
       class={cn(
-        "font-mono",
-        "font-serif",
-        "font-sans",
-        "font-comic-sans",
+        {
+          "font-mono": currentFont() == "mono",
+          "font-serif": currentFont() == "serif",
+          "font-sans": currentFont() == "sans",
+          "font-comic-sans": currentFont() == "comic-sans",
+        },
         "transition-all",
-        `font-${currentFont()}`,
         imageLoaded() ? "bg-black dark:bg-none" : "",
         textStyle() == "uppercase" ? "**:!uppercase" : "",
         textStyle() == "lowercase" ? "**:lowercase" : ""
@@ -1111,7 +1326,9 @@ const App: Component = () => {
                 <Show when={actuallyBoolean(mantrasContained())}>
                   <p>
                     {chrome.i18n.getMessage(
-                      mantras[Math.floor(Math.random() * mantras.length)]
+                      mantras[
+                        Math.floor(Math.random() * mantras.length)
+                      ] as Mantra
                     )}
                   </p>
                 </Show>

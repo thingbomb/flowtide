@@ -95,6 +95,9 @@
   "comic_sans": {
     "message": "Comic Sans"
   },
+  "community_desc": {
+    "message": "Join the Flowtide community on Discord to share your creations, get help, and stay up to date with the latest updates."
+  },
   "complete": {
     "message": "Complete"
   },
@@ -176,6 +179,12 @@
   "custom_url": {
     "message": "Custom URL"
   },
+  "customize": {
+    "message": "Customize your new tab"
+  },
+  "customize_desc": {
+    "message": "Give your New Tab a personal touch with a variety of customization options. These are just a few options; the possibilities are almost limitless."
+  },
   "dark": {
     "message": "Dark"
   },
@@ -193,6 +202,12 @@
   },
   "default": {
     "message": "Default"
+  },
+  "discord": {
+    "message": "Join the Discord"
+  },
+  "display_name": {
+    "message": "Display name"
   },
   "edit_the_pomodoro_settings": {
     "message": "Edit the pomodoro settings."
@@ -220,6 +235,15 @@
   },
   "feature_request": {
     "message": "Feature request"
+  },
+  "file_read_error": {
+    "message": "We couldn't read the file. Please try again."
+  },
+  "file_too_large": {
+    "message": "File too large (max size is ~2.5 MB)"
+  },
+  "finish": {
+    "message": "Finish"
   },
   "focus": {
     "message": "Focus"
@@ -263,6 +287,9 @@
   "greeting": {
     "message": "Set up a greeting"
   },
+  "greeting_description": {
+    "message": "What should we call you?"
+  },
   "hide_items": {
     "message": "Hide items"
   },
@@ -280,6 +307,12 @@
   },
   "imperial": {
     "message": "Imperial"
+  },
+  "invalid_file_type": {
+    "message": "Invalid file type. Please upload an image file."
+  },
+  "join_the_community": {
+    "message": "Join the community"
   },
   "latitude": {
     "message": "Latitude"
@@ -386,6 +419,9 @@
   "new_wallpaper": {
     "message": "New wallpaper"
   },
+  "next": {
+    "message": "Next"
+  },
   "nightstand": {
     "message": "Nightstand"
   },
@@ -449,8 +485,14 @@
   "search": {
     "message": "Search"
   },
+  "select_font": {
+    "message": "Select a font"
+  },
   "serif": {
     "message": "Serif"
+  },
+  "set": {
+    "message": "Set"
   },
   "set_greeting": {
     "message": "Set greeting"

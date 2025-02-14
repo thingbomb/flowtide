@@ -679,7 +679,7 @@ function SettingsTrigger({
               </h3>
               <div class="flex gap-2">
                 <a
-                  href="https://discord.gg/QEPd4MA3zF"
+                  href="https://discord.gg/hhPuurkvua"
                   class="text-gray-800 dark:text-white"
                 >
                   Discord
