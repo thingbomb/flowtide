@@ -64,7 +64,7 @@ pnpm build:firefox
 The extension's source code will be inside the `apps/new-tab/dist` folder.
 
 ## Community
-[Join the Discord sever here!](https://discord.gg/PzwuHyQ6Pg)
+[Join the Discord server here!](https://discord.gg/hhPuurkvua)
 
 ## Localization
 
