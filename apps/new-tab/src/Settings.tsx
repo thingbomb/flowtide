@@ -64,6 +64,11 @@ import {
 } from "./components/ui/switch";
 import { updateWeatherManually } from "./hooks/weather";
 
+interface PomodoroConfig {
+  workMinutes: number;
+  breakMinutes: number;
+}
+
 function BigButton(props: any) {
   return (
     <button class="card-style" {...props}>
@@ -154,6 +159,12 @@ function SettingsTrigger({
   const [imperial, setImperial] = createStoredSignal("imperial", false);
   const [city, setCity] = createStoredSignal("locationCity", "");
   const [clearDataDialogOpen, setClearDataDialogOpen] = createSignal(false);
+  const [pomodoroConfig, setPomodoroConfig] = createStoredSignal<
+    Function | PomodoroConfig | string
+  >("pomodoroConfig", {
+    workMinutes: 25,
+    breakMinutes: 5,
+  });
   const [location, setLocation] = createStoredSignal<Array<any>>("location", [
     null,
     null,
@@ -612,12 +623,18 @@ function SettingsTrigger({
                 {chrome.i18n.getMessage("greeting")}
               </h3>
               <div class="flex max-w-full items-start gap-2">
-                <TextFieldRoot class="flex-1">
+                <TextFieldRoot class="flex-1 w-full">
                   <TextField
                     placeholder={chrome.i18n.getMessage("enter_greeting")}
                     value={greetingNameValue()}
-                    onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
+                    class="w-full h-[30.6px] text-sm"
+                    onInput={(e: InputEvent) =>
+                      setGreetingNameValue(
+                        (e.currentTarget as HTMLInputElement)?.value
+                      )
+                    }
                   />
+                  <br />
                   <span class="text-muted-foreground text-sm">
                     {chrome.i18n.getMessage("leave_blank_to_disable")}
                   </span>
@@ -637,18 +654,26 @@ function SettingsTrigger({
                 {chrome.i18n.getMessage("page")}
               </h3>
               <div class="flex items-start gap-2">
-                <TextFieldRoot class="flex flex-1 gap-2">
+                <TextFieldRoot class="flex flex-1 gap-2 w-full">
                   <TextField
                     placeholder={chrome.i18n.getMessage("icon")}
-                    class="h-10 w-10"
+                    class="w-10 h-[30.6px] text-sm"
                     value={pageIconValue()}
-                    onInput={(e) => setPageIconValue(e.currentTarget.value)}
+                    onInput={(e: InputEvent) =>
+                      setPageIconValue(
+                        (e.currentTarget as HTMLInputElement)?.value
+                      )
+                    }
                   />
                   <TextField
                     placeholder={chrome.i18n.getMessage("new_tab")}
-                    class="h-10"
+                    class="flex-1 h-[30.6px] text-sm"
                     value={pageTitleValue()}
-                    onInput={(e) => setPageTitleValue(e.currentTarget.value)}
+                    onInput={(e: InputEvent) =>
+                      setPageTitleValue(
+                        (e.currentTarget as HTMLInputElement)?.value
+                      )
+                    }
                   />
                 </TextFieldRoot>
                 <Button
@@ -959,8 +984,10 @@ function SettingsTrigger({
                     <TextField
                       placeholder={chrome.i18n.getMessage("custom_url")}
                       value={customUrl()}
-                      onInput={(e) =>
-                        setCustomUrl(e.currentTarget.value.trim())
+                      onInput={(e: InputEvent) =>
+                        setCustomUrl(
+                          (e.currentTarget as HTMLInputElement)?.value.trim()
+                        )
                       }
                     />
                   </TextFieldRoot>
@@ -1192,7 +1219,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={actuallyBoolean(dateContained())}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setDateContained(value);
                 }}
               >
@@ -1216,7 +1243,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={actuallyBoolean(todosContained())}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setTodosContained(value);
                 }}
               >
@@ -1240,7 +1267,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={weatherEnabled()}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setWeatherEnabled(value);
                 }}
               >
@@ -1273,8 +1300,10 @@ function SettingsTrigger({
                     <TextField
                       placeholder={chrome.i18n.getMessage("location")}
                       value={locationCityValue()}
-                      onInput={(e) =>
-                        setLocationCityValue(e.currentTarget.value)
+                      onInput={(e: InputEvent) =>
+                        setLocationCityValue(
+                          (e.currentTarget as HTMLInputElement)?.value
+                        )
                       }
                     />
                     <Button
@@ -1326,7 +1355,11 @@ function SettingsTrigger({
                     >
                       <TextField
                         placeholder={chrome.i18n.getMessage("latitude")}
-                        onInput={(e) => setLatitudeInput(e.currentTarget.value)}
+                        onInput={(e: InputEvent) =>
+                          setLatitudeInput(
+                            (e.currentTarget as HTMLInputElement)?.value
+                          )
+                        }
                         id="latitude-input"
                       />
                     </TextFieldRoot>
@@ -1336,8 +1369,10 @@ function SettingsTrigger({
                     >
                       <TextField
                         placeholder={chrome.i18n.getMessage("longitude")}
-                        onInput={(e) =>
-                          setLongitudeInput(e.currentTarget.value)
+                        onInput={(e: InputEvent) =>
+                          setLongitudeInput(
+                            (e.currentTarget as HTMLInputElement)?.value
+                          )
                         }
                         id="longitude-input"
                       />
@@ -1366,7 +1401,7 @@ function SettingsTrigger({
                 </h3>
                 <RadioGroup
                   defaultValue={imperial() ? "imperical" : "metric"}
-                  onChange={(value) => {
+                  onChange={(value: "imperical" | "metric") => {
                     setImperial(value === "imperical");
                   }}
                 >
@@ -1400,7 +1435,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={actuallyBoolean(bookmarksContained())}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setBookmarksContained(value);
                 }}
               >
@@ -1424,7 +1459,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={actuallyBoolean(pomodoroContained())}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setPomodoroContained(value);
                 }}
               >
@@ -1438,6 +1473,63 @@ function SettingsTrigger({
                   {chrome.i18n.getMessage("enabled")}
                 </SwitchLabel>
               </Switch>
+              <br />
+              {pomodoroContained() && (
+                <div>
+                  <TextFieldRoot class="mt-1 flex-1">
+                    <span class="text-sm font-medium text-muted-foreground">
+                      {chrome.i18n.getMessage("work_minutes")}
+                    </span>
+                    <br />
+                    <TextField
+                      placeholder={chrome.i18n.getMessage("work_minutes")}
+                      value={
+                        (typeof pomodoroConfig() === "object"
+                          ? (pomodoroConfig as Function)().workMinutes
+                          : pomodoroConfig()) as string
+                      }
+                      onInput={(e: InputEvent) => {
+                        const newPomodoroConfig =
+                          typeof pomodoroConfig() === "object"
+                            ? JSON.parse(JSON.stringify(pomodoroConfig()))
+                            : {};
+                        newPomodoroConfig.workMinutes = Number(
+                          (e.currentTarget as HTMLInputElement)?.value
+                        );
+                        setPomodoroConfig(newPomodoroConfig);
+                      }}
+                    />
+                  </TextFieldRoot>
+                  <br />
+                  <TextFieldRoot class="mt-2 flex-1">
+                    <span class="text-sm font-medium text-muted-foreground">
+                      {chrome.i18n.getMessage("break_minutes")}
+                    </span>
+                    <br />
+                    <TextField
+                      placeholder={chrome.i18n.getMessage("break_minutes")}
+                      value={
+                        typeof pomodoroConfig() === "object"
+                          ? (pomodoroConfig as Function)().breakMinutes
+                          : pomodoroConfig()
+                      }
+                      onInput={(e: InputEvent) => {
+                        const newPomodoroConfig =
+                          typeof pomodoroConfig() === "object"
+                            ? JSON.parse(JSON.stringify(pomodoroConfig()))
+                            : {};
+                        newPomodoroConfig.breakMinutes = Number(
+                          (e.currentTarget as HTMLInputElement)?.value
+                        );
+                        setPomodoroConfig(newPomodoroConfig);
+                      }}
+                    />
+                  </TextFieldRoot>
+                  <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {chrome.i18n.getMessage("you_may_need_to_refresh")}
+                  </span>
+                </div>
+              )}
             </>
           )}
           {settingsMenu() === "soundscapes" && (
@@ -1448,7 +1540,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={natureSounds()}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setNatureSounds(value);
                 }}
               >
@@ -1466,7 +1558,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={focusSounds()}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setFocusSounds(value);
                 }}
               >
@@ -1484,7 +1576,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={ambienceSounds()}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setAmbienceSounds(value);
                 }}
               >
@@ -1508,7 +1600,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={actuallyBoolean(mantrasContained())}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setMantrasContained(value);
                 }}
               >
@@ -1532,7 +1624,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={actuallyBoolean(stopwatchContained())}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setStopwatchContained(value);
                 }}
               >
@@ -1556,7 +1648,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={actuallyBoolean(counterContained())}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setCounterContained(value);
                 }}
               >
@@ -1580,7 +1672,7 @@ function SettingsTrigger({
               <Switch
                 class="flex items-center space-x-2"
                 checked={actuallyBoolean(notepadContained())}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   setNotepadContained(value);
                 }}
               >

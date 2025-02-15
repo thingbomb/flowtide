@@ -66,6 +66,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./components/ui/select";
+import { SelectItemProps } from "@kobalte/core/select";
 
 type MessageKeys = keyof typeof data;
 
@@ -502,8 +503,10 @@ const App: Component = () => {
           <TextField
             placeholder={chrome.i18n.getMessage("display_name")}
             value={greetingNameValue()}
-            onInput={(e) => setGreetingNameValue(e.currentTarget.value)}
-            onKeyDown={(e) => {
+            onInput={(e: InputEvent) =>
+              setGreetingNameValue((e.currentTarget as HTMLInputElement)?.value)
+            }
+            onKeyDown={(e: KeyboardEvent) => {
               if (e.key == "Enter") {
                 setOnboardingScreen(2);
               }
@@ -552,7 +555,7 @@ const App: Component = () => {
           options={["image", "solid_color", "gradient", "blank"]}
           placeholder={chrome.i18n.getMessage("background")}
           defaultValue={background().replaceAll("-", "_")}
-          onChange={(value) => {
+          onChange={(value: "image" | "solid_color" | "gradient" | "blank") => {
             if (value == "image") {
               setBackground("image");
               return;
@@ -569,16 +572,8 @@ const App: Component = () => {
               setBackground("blank");
               return;
             }
-            if (value == "custom_url") {
-              setBackground("custom-url");
-              return;
-            }
-            if (value == "local_file") {
-              setBackground("local-file");
-              return;
-            }
           }}
-          itemComponent={(props) => (
+          itemComponent={(props: SelectItemProps) => (
             <SelectItem
               item={props.item}
               class={cn({
@@ -596,7 +591,7 @@ const App: Component = () => {
         >
           <SelectTrigger class="w-[180px] bg-[#111113]">
             <SelectValue<string>>
-              {(state) =>
+              {(state: any) =>
                 chrome.i18n.getMessage(
                   state.selectedOption() as
                     | "sans"
@@ -615,7 +610,7 @@ const App: Component = () => {
           options={["sans", "serif", "mono", "comic_sans"]}
           placeholder={chrome.i18n.getMessage("select_font")}
           defaultValue={currentFont()}
-          onChange={(value) => {
+          onChange={(value: "sans" | "serif" | "mono" | "comic_sans") => {
             if (value == "sans") {
               setFont("sans");
               return;
@@ -633,7 +628,7 @@ const App: Component = () => {
               return;
             }
           }}
-          itemComponent={(props) => (
+          itemComponent={(props: SelectItemProps) => (
             <SelectItem
               item={props.item}
               class={cn({
@@ -651,7 +646,7 @@ const App: Component = () => {
         >
           <SelectTrigger class="w-[180px] bg-[#111113]">
             <SelectValue<string>>
-              {(state) =>
+              {(state: any) =>
                 chrome.i18n.getMessage(
                   state.selectedOption() as
                     | "sans"
@@ -670,7 +665,7 @@ const App: Component = () => {
           options={["12h", "24h"]}
           placeholder={chrome.i18n.getMessage("clock_format")}
           defaultValue={clockFormat()}
-          onChange={(value) => {
+          onChange={(value: "12h" | "24h") => {
             if (value == "12h") {
               setClockFormat("12h");
               return;
@@ -680,13 +675,13 @@ const App: Component = () => {
               return;
             }
           }}
-          itemComponent={(props) => (
+          itemComponent={(props: SelectItemProps) => (
             <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
           )}
         >
           <SelectTrigger class="w-[180px] bg-[#111113]">
             <SelectValue<string>>
-              {(state) => state.selectedOption()}
+              {(state: any) => state.selectedOption()}
             </SelectValue>
           </SelectTrigger>
           <SelectContent class="bg-[#111113]" />
@@ -764,7 +759,7 @@ const App: Component = () => {
     return (
       <Dialog open={true}>
         <DialogContent
-          class={cn("max-h-[550px] max-w-[800px] border-[#2E3235] border-1")}
+          class={cn("max-h-[550px] max-w-[800px]")}
           overlayClass="!backdrop-blur-xl"
         >
           <div
@@ -944,7 +939,7 @@ const App: Component = () => {
                     as={(props: DropdownMenuSubTriggerProps) => (
                       <Button
                         variant="outline"
-                        class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700"
+                        class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700 !border-none"
                         {...props}
                       >
                         <Star class="h-4 w-4 text-gray-300" />
@@ -1346,7 +1341,7 @@ const App: Component = () => {
                     as={(props: PopoverTriggerProps) => (
                       <Button
                         variant="outline"
-                        class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700"
+                        class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700 !border-none"
                         {...props}
                       >
                         <Check class="h-4 w-4 text-gray-300" />
@@ -1383,7 +1378,8 @@ const App: Component = () => {
                 when={actuallyBoolean(pomodoroContained())}
                 fallback={
                   <h1
-                    class="m-0 p-0 text-[170px] font-semibold text-white [line-height:1.2]"
+                    class="m-0 p-0 text-[170px] font-semibold text-white [line-height:1.2]
+                      tracking-[-0.06em]"
                     id="nightstandClock"
                   >
                     {clock().time}
@@ -1392,104 +1388,38 @@ const App: Component = () => {
               >
                 <div class="flex flex-col items-center justify-center">
                   <h1
-                    class="m-0 p-0 text-[170px] font-semibold text-white [line-height:1.2]"
+                    class="m-0 p-0 text-[170px] font-semibold text-white [line-height:1.2]
+                      tracking-[-0.06em]"
                     id="pomodoroClock"
                   >
                     {formatTime(pomodoro().time)}
                   </h1>
-                  <p class="m-0 flex items-center gap-2 p-0 text-3xl font-medium text-white">
-                    {pomodoro().session == "Work"
-                      ? chrome.i18n.getMessage("work")
-                      : chrome.i18n.getMessage("break")}
-                  </p>
-                  <div class="flex items-center gap-3">
-                    <Button
-                      class="mt-2 rounded-full border-4 border-black/30 bg-black/30 p-6 text-xl
-                        backdrop-blur-3xl"
+                  <p class="m-0 flex items-center gap-2 p-0 text-3xl font-medium text-white tracking-tight">
+                    <span>
+                      {pomodoro().session == "Work"
+                        ? chrome.i18n.getMessage("work")
+                        : chrome.i18n.getMessage("break")}
+                    </span>
+                    <button
                       onmousedown={() =>
                         setPomodoro({
                           ...pomodoro(),
                           playing: !pomodoro().playing,
                         })
                       }
+                      title={
+                        pomodoro().playing
+                          ? chrome.i18n.getMessage("stop")
+                          : chrome.i18n.getMessage("start")
+                      }
                     >
-                      {pomodoro().playing
-                        ? chrome.i18n.getMessage("stop")
-                        : chrome.i18n.getMessage("start")}
-                    </Button>
-                    <Dialog
-                      open={pomodoroDialogOpen()}
-                      onOpenChange={setPomodoroDialogOpen}
-                    >
-                      <DialogTrigger
-                        aria-label={chrome.i18n.getMessage("add_widget")}
-                      >
-                        <Button
-                          class="mt-2 rounded-full border-4 border-black/30 bg-black/5 p-6 text-xl
-                            backdrop-blur-lg"
-                        >
-                          {chrome.i18n.getMessage("settings")}
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>
-                            {chrome.i18n.getMessage("pomodoro_settings")}
-                          </DialogTitle>
-                          <DialogDescription>
-                            {chrome.i18n.getMessage(
-                              "edit_the_pomodoro_settings"
-                            )}
-                          </DialogDescription>
-                        </DialogHeader>
-                        <TextFieldRoot class="mt-1 flex-1">
-                          <TextField
-                            placeholder={chrome.i18n.getMessage("work_minutes")}
-                            value={
-                              (typeof pomodoroConfig() === "object"
-                                ? (pomodoroConfig as Function)().workMinutes
-                                : pomodoroConfig()) as string
-                            }
-                            onInput={(e) => {
-                              const newPomodoroConfig =
-                                typeof pomodoroConfig() === "object"
-                                  ? JSON.parse(JSON.stringify(pomodoroConfig()))
-                                  : {};
-                              newPomodoroConfig.workMinutes = Number(
-                                e.currentTarget.value
-                              );
-                              setPomodoroConfig(newPomodoroConfig);
-                            }}
-                          />
-                        </TextFieldRoot>
-                        <TextFieldRoot class="mt-2 flex-1">
-                          <TextField
-                            placeholder={chrome.i18n.getMessage(
-                              "break_minutes"
-                            )}
-                            value={
-                              typeof pomodoroConfig() === "object"
-                                ? (pomodoroConfig as Function)().breakMinutes
-                                : pomodoroConfig()
-                            }
-                            onInput={(e) => {
-                              const newPomodoroConfig =
-                                typeof pomodoroConfig() === "object"
-                                  ? JSON.parse(JSON.stringify(pomodoroConfig()))
-                                  : {};
-                              newPomodoroConfig.breakMinutes = Number(
-                                e.currentTarget.value
-                              );
-                              setPomodoroConfig(newPomodoroConfig);
-                            }}
-                          />
-                        </TextFieldRoot>
-                        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                          {chrome.i18n.getMessage("you_may_need_to_refresh")}
-                        </span>
-                      </DialogContent>
-                    </Dialog>
-                  </div>
+                      {pomodoro().playing ? (
+                        <Pause class="h-6 w-6" fill="currentColor" />
+                      ) : (
+                        <Play class="h-6 w-6" fill="currentColor" />
+                      )}
+                    </button>
+                  </p>
                   <Show when={name() == ""}>
                     <Show when={actuallyBoolean(dateContained())}>
                       <div class="h-1.25 mt-4 w-full rounded-full bg-black/30 backdrop-blur-3xl"></div>

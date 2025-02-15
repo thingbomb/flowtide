@@ -205,6 +205,7 @@ button[disabled=""] {
   height: 30.6px;
   border: 1px solid #2f3336;
   font-size: 13.3px;
+  gap: 4px;
   transition: all 0.1s ease-in-out;
 }
 
@@ -215,4 +216,9 @@ button[disabled=""] {
 
 div[data-popper-positioner=""] {
   z-index: 100000 !important;
+}
+
+::selection {
+  background-color: #009689;
+  color: #fff;
 }

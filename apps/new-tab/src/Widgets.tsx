@@ -179,7 +179,9 @@ function TodoPopover() {
             <TextField
               placeholder={chrome.i18n.getMessage("new_task")}
               value={taskInputValue()}
-              onInput={(e) => setTaskInputValue(e.currentTarget.value)}
+              onInput={(e: InputEvent) =>
+                setTaskInputValue((e.currentTarget as HTMLInputElement)?.value)
+              }
               onKeyDown={(e: KeyboardEvent) => {
                 if (e.key === "Enter") {
                   addTask();
