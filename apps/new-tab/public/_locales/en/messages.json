@@ -29,6 +29,9 @@
   "appearance": {
     "message": "Appearance"
   },
+  "available_bookmarks": {
+    "message": "Available bookmarks"
+  },
   "background": {
     "message": "Background"
   },
@@ -454,6 +457,9 @@
   },
   "pause_background_changes": {
     "message": "Pause background changes"
+  },
+  "pinned_bookmarks": {
+    "message": "Pinned bookmarks"
   },
   "pomodoro": {
     "message": "Pomodoro"

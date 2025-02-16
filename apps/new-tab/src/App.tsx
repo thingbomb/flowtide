@@ -281,6 +281,10 @@ const App: Component = () => {
     "counterContained",
     false
   );
+  const [bookmarksShown, setBookmarksShown] = createStoredSignal(
+    "bookmarksShown",
+    []
+  );
   const [notepadContained, setNotepadContained] = createStoredSignal(
     "notepadContained",
     false
@@ -495,7 +499,7 @@ const App: Component = () => {
         <h1 class="text-[26px] font-semibold m-0 p-0">
           {chrome.i18n.getMessage("welcome_message")}
         </h1>
-        <p class="text-[#B2B7BD] text-[15px]">
+        <p class="text-[#4D4842] dark:text-[#B2B7BD] text-[15px]">
           {chrome.i18n.getMessage("greeting_description")}
         </p>
         <br />
@@ -515,7 +519,7 @@ const App: Component = () => {
           />
         </TextFieldRoot>
         <br />
-        <div class="flex items-center gap-2 p-7.5 absolute bottom-0 left-0 right-0 bg-[#18191B]">
+        <div class="flex items-center gap-2 p-7.5 absolute bottom-0 left-0 right-0 bg-transparent">
           <Button
             variant={"outline"}
             class="px-2.5"
@@ -546,7 +550,7 @@ const App: Component = () => {
         <h1 class="text-[26px] font-semibold m-0 p-0">
           {chrome.i18n.getMessage("customize")}
         </h1>
-        <p class="text-[#B2B7BD] text-[15px]">
+        <p class="text-[#4D4842] dark:text-[#B2B7BD] text-[15px]">
           {chrome.i18n.getMessage("customize_desc")}
         </p>
         <br />
@@ -555,7 +559,7 @@ const App: Component = () => {
           options={["image", "solid_color", "gradient", "blank"]}
           placeholder={chrome.i18n.getMessage("background")}
           defaultValue={background().replaceAll("-", "_")}
-          onChange={(value: "image" | "solid_color" | "gradient" | "blank") => {
+          onChange={(value: string | null) => {
             if (value == "image") {
               setBackground("image");
               return;
@@ -589,7 +593,7 @@ const App: Component = () => {
             </SelectItem>
           )}
         >
-          <SelectTrigger class="w-[180px] bg-[#111113]">
+          <SelectTrigger class="w-[180px] bg-[#DFDEDC] dark:bg-[#111113]">
             <SelectValue<string>>
               {(state: any) =>
                 chrome.i18n.getMessage(
@@ -602,7 +606,7 @@ const App: Component = () => {
               }
             </SelectValue>
           </SelectTrigger>
-          <SelectContent class="bg-[#111113]" />
+          <SelectContent class="bg-[#DFDEDC] dark:bg-[#111113]" />
         </Select>
         <br />
         <span class="text-sm">{chrome.i18n.getMessage("font")}</span>
@@ -610,7 +614,7 @@ const App: Component = () => {
           options={["sans", "serif", "mono", "comic_sans"]}
           placeholder={chrome.i18n.getMessage("select_font")}
           defaultValue={currentFont()}
-          onChange={(value: "sans" | "serif" | "mono" | "comic_sans") => {
+          onChange={(value: string | null) => {
             if (value == "sans") {
               setFont("sans");
               return;
@@ -644,7 +648,7 @@ const App: Component = () => {
             </SelectItem>
           )}
         >
-          <SelectTrigger class="w-[180px] bg-[#111113]">
+          <SelectTrigger class="w-[180px] bg-[#DFDEDC] dark:bg-[#111113]">
             <SelectValue<string>>
               {(state: any) =>
                 chrome.i18n.getMessage(
@@ -657,7 +661,7 @@ const App: Component = () => {
               }
             </SelectValue>
           </SelectTrigger>
-          <SelectContent class="bg-[#111113]" />
+          <SelectContent class="bg-[#DFDEDC] dark:bg-[#111113]" />
         </Select>
         <br />
         <span class="text-sm">{chrome.i18n.getMessage("clock_format")}</span>
@@ -665,7 +669,7 @@ const App: Component = () => {
           options={["12h", "24h"]}
           placeholder={chrome.i18n.getMessage("clock_format")}
           defaultValue={clockFormat()}
-          onChange={(value: "12h" | "24h") => {
+          onChange={(value: string | null) => {
             if (value == "12h") {
               setClockFormat("12h");
               return;
@@ -679,14 +683,14 @@ const App: Component = () => {
             <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
           )}
         >
-          <SelectTrigger class="w-[180px] bg-[#111113]">
+          <SelectTrigger class="w-[180px] bg-[#DFDEDC] dark:bg-[#111113]">
             <SelectValue<string>>
               {(state: any) => state.selectedOption()}
             </SelectValue>
           </SelectTrigger>
-          <SelectContent class="bg-[#111113]" />
+          <SelectContent class="bg-[#DFDEDC] dark:bg-[#111113]" />
         </Select>
-        <div class="flex items-center gap-2 p-7.5 absolute bottom-0 left-0 right-0 bg-[#18191B]">
+        <div class="flex items-center gap-2 p-7.5 absolute bottom-0 left-0 right-0 bg-transparent">
           <Button
             variant={"outline"}
             class="px-2.5"
@@ -714,7 +718,7 @@ const App: Component = () => {
         <h1 class="text-[26px] font-semibold m-0 p-0">
           {chrome.i18n.getMessage("join_the_community")}
         </h1>
-        <p class="text-[#B2B7BD] text-[15px]">
+        <p class="text-[#4D4842] dark:text-[#B2B7BD] text-[15px]">
           {chrome.i18n.getMessage("community_desc")}
         </p>
         <br />
@@ -732,7 +736,7 @@ const App: Component = () => {
           </Button>
         </a>
         <br />
-        <div class="flex items-center gap-2 p-7.5 absolute bottom-0 left-0 right-0 bg-[#18191B]">
+        <div class="flex items-center gap-2 p-7.5 absolute bottom-0 left-0 right-0 bg-transparent">
           <Button
             variant={"outline"}
             class="px-2.5"
@@ -764,7 +768,8 @@ const App: Component = () => {
         >
           <div
             class={cn(
-              "absolute inset-0 z-50 bg-[#18191B] backdrop-blur-3xl p-7.5 overflow-y-auto",
+              `absolute inset-0 z-50 bg-white dark:bg-[#18191B] backdrop-blur-3xl p-7.5
+              overflow-y-auto`,
               {
                 "font-sans": currentFont() == "sans",
                 "font-serif": currentFont() == "serif",
@@ -939,7 +944,7 @@ const App: Component = () => {
                     as={(props: DropdownMenuSubTriggerProps) => (
                       <Button
                         variant="outline"
-                        class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700 !border-none"
+                        class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700 !border-none !text-white"
                         {...props}
                       >
                         <Star class="h-4 w-4 text-gray-300" />
@@ -1319,7 +1324,7 @@ const App: Component = () => {
                   justify-center gap-2 text-center font-medium"
               >
                 <Show when={actuallyBoolean(mantrasContained())}>
-                  <p>
+                  <p class="text-white">
                     {chrome.i18n.getMessage(
                       mantras[
                         Math.floor(Math.random() * mantras.length)
@@ -1341,7 +1346,7 @@ const App: Component = () => {
                     as={(props: PopoverTriggerProps) => (
                       <Button
                         variant="outline"
-                        class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700 !border-none"
+                        class="!bg-transparent text-sm !shadow-none hover:!bg-zinc-700 !border-none !text-white"
                         {...props}
                       >
                         <Check class="h-4 w-4 text-gray-300" />
@@ -1480,6 +1485,35 @@ const App: Component = () => {
                   , {name()}.
                 </Show>
               </p>
+              <Show when={bookmarksContained()}>
+                <Show when={safeParse(bookmarksShown(), bookmarksShown())[0]}>
+                  <br />
+                  <div class="flex gap-2 flex-wrap justify-center">
+                    {(
+                      safeParse(
+                        bookmarksShown(),
+                        bookmarksShown()
+                      ) as Array<Bookmark>
+                    ).map((bookmark, index) => (
+                      <a
+                        href={bookmark.url}
+                        onmousedown={(e) => {
+                          e.preventDefault();
+                          if (!(e.ctrlKey || e.metaKey)) {
+                            window.location.href = bookmark.url;
+                          } else {
+                            window.open(bookmark.url);
+                          }
+                        }}
+                        class="font-medium text-xl h-[45px] p-4 text-white bg-black/40 backdrop-blur-3xl flex
+                          items-center justify-center gap-2 rounded-lg hover:bg-black/60"
+                      >
+                        <span>{bookmark.name}</span>
+                      </a>
+                    ))}
+                  </div>
+                </Show>
+              </Show>
               <br />
               <Show when={actuallyBoolean(notepadContained())}>
                 <textarea

@@ -61,8 +61,8 @@ export const DialogContent = <T extends ValidComponent = "div">(
         <DialogPrimitive.Content
           class={cn(
             `data-[closed]:transform-[scale(95%)] z-50 grid max-h-[60vh] h-full w-full
-            max-w-md overflow-y-auto rounded-xl bg-[#18191B] border-[#2E3235] border-1 p-6
-            backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0`,
+            max-w-md overflow-y-auto rounded-xl bg-white dark:bg-[#18191B] border-[#2E3235]
+            border-1 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:opacity-0`,
             local.class
           )}
           {...rest}

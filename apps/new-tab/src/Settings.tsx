@@ -78,6 +78,23 @@ function BigButton(props: any) {
   );
 }
 
+interface BookmarkTreeNode {
+  children?: BookmarkTreeNode[];
+  dateAdded?: number;
+  dateGroupModified?: number;
+  id: string;
+  index?: number;
+  parentId?: string;
+  title: string;
+  unmodifiable?: "managed";
+  url?: string;
+}
+
+type Bookmark = {
+  name: string;
+  url: string;
+};
+
 function injectUserCSS(css: string) {
   document.getElementById("user-css")?.remove();
   const style = document.createElement("style");
@@ -158,6 +175,9 @@ function SettingsTrigger({
   const [dialogOpen, setDialogOpen] = createSignal(false);
   const [imperial, setImperial] = createStoredSignal("imperial", false);
   const [city, setCity] = createStoredSignal("locationCity", "");
+  const [bookmarksShown, setBookmarksShown] = createStoredSignal<
+    Array<Bookmark> | string
+  >("bookmarksShown", []);
   const [clearDataDialogOpen, setClearDataDialogOpen] = createSignal(false);
   const [pomodoroConfig, setPomodoroConfig] = createStoredSignal<
     Function | PomodoroConfig | string
@@ -204,6 +224,7 @@ function SettingsTrigger({
     "bookmarksContained",
     true
   );
+  const [bookmarks, setBookmarks] = createSignal<Bookmark[]>([]);
   const [natureSounds, setNatureSounds] = createStoredSignal(
     "natureSounds",
     false
@@ -1401,7 +1422,7 @@ function SettingsTrigger({
                 </h3>
                 <RadioGroup
                   defaultValue={imperial() ? "imperical" : "metric"}
-                  onChange={(value: "imperical" | "metric") => {
+                  onChange={(value: string) => {
                     setImperial(value === "imperical");
                   }}
                 >
@@ -1449,6 +1470,113 @@ function SettingsTrigger({
                   {chrome.i18n.getMessage("enabled")}
                 </SwitchLabel>
               </Switch>
+              <br />
+              {bookmarksContained() && (
+                <>
+                  <span class="text-sm font-medium text-muted-foreground">
+                    {chrome.i18n.getMessage("pinned_bookmarks")}
+                  </span>
+                  <div class="flex gap-2 flex-wrap">
+                    {(
+                      safeParse(
+                        bookmarksShown(),
+                        bookmarksShown()
+                      ) as Array<Bookmark>
+                    ).map((bookmark, index) => (
+                      <button
+                        onClick={() => {
+                          const currentBookmarksShown = safeParse(
+                            bookmarksShown(),
+                            bookmarksShown()
+                          ) as Array<Bookmark>;
+                          if (
+                            currentBookmarksShown.some(
+                              (bookmarkShown: Bookmark) =>
+                                bookmarkShown.url == bookmark.url
+                            )
+                          ) {
+                            const newBookmarksShown =
+                              currentBookmarksShown.filter(
+                                (bookmarkShown: Bookmark) =>
+                                  bookmarkShown.url != bookmark.url
+                              );
+                            setBookmarksShown(newBookmarksShown);
+                          } else {
+                            setBookmarksShown(
+                              JSON.stringify([
+                                ...currentBookmarksShown,
+                                bookmark,
+                              ])
+                            );
+                          }
+                        }}
+                        class="font-medium text-black rounded-lg dark:text-white text-sm p-4 bg-[#EDECEB]
+                          border-1 border-[#C0C0B8] h-[30px] flex justify-center items-center gap-2
+                          dark:bg-[#121314] dark:border-[#3F3F47]"
+                      >
+                        <span>{bookmark.name}</span>
+                        <Check class="h-4 w-4" />
+                      </button>
+                    ))}
+                  </div>
+                  <br />
+                  <span class="text-sm font-medium text-muted-foreground">
+                    {chrome.i18n.getMessage("available_bookmarks")}
+                  </span>
+                  <div class="flex gap-2 flex-wrap">
+                    {bookmarks()
+                      .filter((bookmark: Bookmark) => {
+                        return !(
+                          safeParse(
+                            bookmarksShown(),
+                            bookmarksShown()
+                          ) as Array<Bookmark>
+                        ).some(
+                          (bookmarkShown: Bookmark) =>
+                            bookmarkShown.url == bookmark.url
+                        );
+                      })
+                      .map((bookmark, index) => (
+                        <button
+                          onClick={() => {
+                            const currentBookmarksShown = safeParse(
+                              bookmarksShown(),
+                              bookmarksShown()
+                            ) as Array<Bookmark>;
+                            if (
+                              currentBookmarksShown.some(
+                                (bookmarkShown: Bookmark) =>
+                                  bookmarkShown.url == bookmark.url
+                              )
+                            ) {
+                              const newBookmarksShown =
+                                currentBookmarksShown.filter(
+                                  (bookmarkShown: Bookmark) =>
+                                    bookmarkShown.url != bookmark.url
+                                );
+                              setBookmarksShown(
+                                JSON.stringify(newBookmarksShown)
+                              );
+                            } else {
+                              setBookmarksShown(
+                                JSON.stringify([
+                                  ...currentBookmarksShown,
+                                  bookmark,
+                                ])
+                              );
+                            }
+                          }}
+                          class="font-medium text-black rounded-lg dark:text-white text-sm p-4 bg-[#EDECEB]
+                            border-1 border-[#C0C0B8] h-[30px] flex justify-center items-center gap-2
+                            dark:bg-[#121314] dark:border-[#3F3F47]"
+                        >
+                          <span>{bookmark.name}</span>
+                          <Plus class="h-4 w-4" />
+                        </button>
+                      ))}
+                  </div>
+                </>
+              )}
             </>
           )}
           {settingsMenu() === "pomodoro" && (
@@ -1701,6 +1829,27 @@ function SettingsTrigger({
       </div>
     );
   }
+
+  onMount(() => {
+    if (chrome.bookmarks !== undefined) {
+      chrome.bookmarks.getTree((bookmarkTreeNodes: BookmarkTreeNode[]) => {
+        const flattenBookmarks = (nodes: any[]): Bookmark[] => {
+          let bookmarks: Bookmark[] = [];
+          for (const node of nodes) {
+            if (node.url) {
+              bookmarks.push({ name: node.title, url: node.url });
+            }
+            if (node.children) {
+              bookmarks = bookmarks.concat(flattenBookmarks(node.children));
+            }
+          }
+          return bookmarks;
+        };
+        const allBookmarks = flattenBookmarks(bookmarkTreeNodes);
+        setBookmarks(allBookmarks);
+      });
+    }
+  });
 
   return (
     <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>

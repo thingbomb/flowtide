@@ -144,8 +144,9 @@ export const TextField = <T extends ValidComponent = "input">(
   return (
     <TextFieldPrimitive.Input
       class={cn(
-        `bg-[#121314] text-[15px] placeholder-#787C84 rounded-[8px] h-9 border-1
-        border-zinc-700 ring-2 ring-transparent focus:ring-white`,
+        `bg-[#EDECEB] dark:bg-[#121314] text-[15px] placeholder-#787C84 rounded-[8px] h-9
+        border-1 border-[#C0C0B8] dark:border-zinc-700 ring-2 ring-transparent
+        focus:ring-black dark:focus:ring-white`,
         local.class
       )}
       {...rest}

@@ -185,6 +185,16 @@ button[disabled=""] {
 }
 
 .button {
+  background-color: #12110f;
+  border-radius: 8.55px;
+  height: 30.6px;
+  border: 1px solid #12110f;
+  color: white;
+  font-size: 13.3px;
+  transition: all 0.1s ease-in-out;
+}
+
+.dark .button {
   background-color: #edeef0;
   border-radius: 8.55px;
   height: 30.6px;
@@ -194,22 +204,36 @@ button[disabled=""] {
   transition: all 0.1s ease-in-out;
 }
 
-.button:hover {
+.dark .button:hover {
   border: 1px solid #fff;
   background-color: #fff !important;
 }
-
 .button-outline {
+  background-color: #e0dedc;
+  border-radius: 8.55px;
+  height: 30.6px;
+  border: 1px solid #d0ccc9;
+  color: black;
+  font-size: 13.3px;
+  gap: 4px;
+  transition: all 0.1s ease-in-out;
+}
+.dark .button-outline {
   background-color: #1f2123;
   border-radius: 8.55px;
   height: 30.6px;
   border: 1px solid #2f3336;
   font-size: 13.3px;
+  color: white;
   gap: 4px;
   transition: all 0.1s ease-in-out;
 }
 
 .button-outline:hover {
+  background-color: #dfdedc !important;
+}
+
+.dark .button-outline:hover {
   border: 1px solid #3d4447;
   background-color: #202123 !important;
 }
